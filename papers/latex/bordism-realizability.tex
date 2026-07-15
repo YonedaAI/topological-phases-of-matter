@@ -1,0 +1,1284 @@
+\documentclass[12pt]{article}
+
+% ---- core math ----
+% amsmath/amssymb must precede cleveref (loaded below); the canonical macro block
+% re-declares them verbatim later, which is an idempotent no-op.
+\usepackage{amsmath,amssymb,amsthm}
+
+% ---- diagrams ----
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% ---- references / links ----
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% ---- graphics / layout ----
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+
+% ---- tables ----
+\usepackage{array}
+\usepackage{booktabs}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}  % ragged-right fixed-width column
+
+% ---- GrokRxiv sidebar ----
+\usepackage{xcolor}
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+\usepackage{amsmath,amssymb,amsfonts}
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = Q^{Z^d} (Q = local-configuration alphabet; NOT the F-function)
+% ==== end canonical macros ====
+
+% ==== Part V local notation (appended to coordination/notation.md symbol table) ====
+\newcommand{\real}{\rho}                         % comparison / realizability map on pi_0
+\newcommand{\SRE}{\mathrm{SRE}}                  % short-range-entangled sub-spectrum
+\newcommand{\CP}{\mathrm{CP}}                    % commuting-projector qualifier
+\newcommand{\Maj}{\mathcal{M}}                   % Majorana number (Kitaev chain Z2 invariant)
+\newcommand{\winding}{w}                         % winding number
+\newcommand{\Ztwo}{\mathbb{Z}_2}
+\newcommand{\Zint}{\mathbb{Z}}
+\newcommand{\Circ}{\mathbb{T}}                   % circle group U(1)=T (Ogata index target)
+\newcommand{\im}{\operatorname{im}}
+\DeclareMathOperator{\Pf}{Pf}
+\DeclareMathOperator{\sgn}{sgn}
+% ==== end local notation ====
+
+% ---- theorem environments ----
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---- GrokRxiv DOI sidebar (page 1 only) ----
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/background}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.bordism-realizability\quad
+       [\,cond-mat.str-el\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!45!black,
+  urlcolor=blue!60!black
+}
+
+% Absorb the occasional stubborn line rather than overflow the margin.
+\emergencystretch=2em
+
+\title{\bfseries Physical Realizability of Bordism and Homotopy Classes\\ by Gapped Lattice Systems}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+\textit{YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026\\[4pt]\small Part V of a six-part series}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The invertible condensed phase spectrum $\IPcond_{d,G}$ of Part~IV assigns to each
+short-range-entangled phase an abstract class in a bordism- or homotopy-theoretic
+classification. The present paper asks the converse question: which of those classes are
+actually produced by an explicit uniformly gapped lattice Hamiltonian? We formalize
+realizability as the essential surjectivity, on $\pi_0$, of the comparison map
+$\real$ from the stabilized stack of lattice models to the abstract spectrum, and we
+separate two nested notions: realizability by \emph{some} gapped local Hamiltonian, and
+realizability by a local \emph{commuting-projector} model. On the positive side we record,
+in the condensed language, three facts that are theorems today: every group-cohomology
+class in $H^{d+1}(G,U(1))$ is realized by an explicit $G$-symmetric commuting-projector
+model carrying the prescribed edge anomaly (Chen--Gu--Liu--Wen; Else--Nayak); in spatial
+dimension one Ogata's operator-algebraic index is a \emph{complete} invariant of
+symmetry-protected phases with on-site finite symmetry, so the realized set coincides with the
+invariant set there, while in dimension two the same index is known to exist and every
+in-cohomology class is realized but its completeness is open; and commuting-projector
+realizations face a hard obstruction: no local commuting-projector Hamiltonian carries a
+nonzero electric Hall conductance (Kapustin--Fidkowski, under $U(1)$) or a nonzero chiral
+central charge (Kapustin--Spodyneiko), so every chiral invertible class lies outside the
+commuting-projector image. We assemble the known
+constructions (group-cohomology models, Walker--Wang models for beyond-cohomology classes
+in $3+1$ dimensions, the $E_8$ state, the Kitaev Majorana chain, cluster states) and the
+known obstructions into a dimension-by-symmetry status table separating the torsion part
+from the free part. We then state three numbered conjectures on the realizability image:
+that it is exactly the short-range-entangled subspectrum; that chiral classes are
+realizable by non-commuting gapped Hamiltonians though never by commuting projectors; and
+that realizability descends over profinite disorder hulls $\dis=Q^{\Zint^d}$ precisely when
+a condensed-cohomological obstruction vanishes. Accompanying Haskell computes the
+Kitaev-chain $\Ztwo$ invariant across the parameter plane and the cluster-state string
+order, verifying quantization, phase-boundary detection, and degradation under a
+symmetry-breaking perturbation.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The realizability gap}
+
+A classification theorem for topological phases produces an abstract invariant: a bordism
+group, a stable-homotopy group, a value of some generalized cohomology theory. Part~IV of
+this series constructs the target of such a classification inside the condensed-mathematics
+program: the invertible condensed phase spectrum $\IPcond_{d,G}$, a connective condensed
+spectrum whose homotopy groups are meant to enumerate the invertible gapped phases in
+spatial dimension $d$ with symmetry $G$. What a spectrum enumerates and what a laboratory,
+or a finite-dimensional local Hilbert space, can produce are not the same thing. A class
+$c\in\pi_0\IPcond_{d,G}$ is an equivalence class of abstract data; to say that $c$ is
+\emph{physically realizable} is to exhibit a concrete uniformly gapped local Hamiltonian
+whose phase maps to $c$. The prospectus for this program names the discrepancy plainly:
+the gap between abstract homotopy-TQFT classifications and explicit local lattice
+realizations is a recognized issue, and not every abstract invertible field theory is known
+to arise from a microscopic gapped system.
+
+This paper is about that gap. We take the classification of Part~IV as given and study the
+image of the comparison map
+\[
+  \real \colon \pi_0\Shape\bigl(\Phase_{d,G}\bigr) \longrightarrow \pi_0\IPcond_{d,G},
+\]
+from the set of phases of genuine lattice systems (components of the stabilized condensed
+stack of Part~III) to the abstract spectrum. Realizability is the question of which
+classes lie in $\im\real$; more precisely, since a phase is by definition already a class of
+lattice systems, realizability is the essential surjectivity of $\real$ onto a
+physically-meaningful subspectrum. We will argue that the honest present-day answer has
+three parts: a large \emph{constructive} region where explicit models are known; a sharp
+\emph{obstructed} region governed by a no-go theorem; and a residual \emph{open} region.
+
+\subsection{Two notions of realizability}
+
+The single most important distinction in this paper is between two nested classes of
+Hamiltonians. Say that a class $c$ is
+\begin{itemize}
+  \item \emph{gapped-realizable} if some uniformly gapped local (or quasi-local) Hamiltonian
+        has phase $c$; and
+  \item \emph{commuting-projector realizable} (\emph{$\CP$-realizable}) if some Hamiltonian
+        $H=\sum_x P_x$ with each $P_x$ a finite-range projector, $[P_x,P_y]=0$, has phase
+        $c$.
+\end{itemize}
+Commuting-projector models are the exactly-solvable backbone of the field: they have exact
+ground states, exact gaps, string operators, and a transparent entanglement structure. Every
+$\CP$-realizable class is gapped-realizable, but (and this is the crux) the converse
+fails, and it fails for a reason that is a rigorous theorem rather than a modeling
+inconvenience. The Kapustin--Fidkowski theorem \cite{kapustin-fidkowski} states that a local
+commuting-projector Hamiltonian has vanishing Hall conductance. A Chern insulator, an
+integer quantum Hall state, the $E_8$ state (all manifestly gapped-realizable, all with
+nonzero Hall response) are therefore \emph{not} $\CP$-realizable. Conflating the two
+notions is the characteristic error this subject invites, and much of what follows is an
+effort to keep them apart.
+
+\subsection{What is proved, what is conjectured}
+
+In keeping with the stance of the whole series, we label a statement a Theorem or
+Proposition only when it follows from cited present-day results, and everything else is a
+numbered Conjecture. The rigorous content of this paper is:
+\begin{itemize}
+  \item \textbf{Theorem~V-A} (\Cref{thm:VA}): every class in $H^{d+1}(G,U(1))$ is
+        $\CP$-realizable, by the Chen--Gu--Liu--Wen fixed-point construction
+        \cite{cglw-cohomology} with the Else--Nayak edge characterization \cite{else-nayak}.
+  \item \textbf{Theorem~V-B} (\Cref{thm:VB}): in $d=1$, for on-site finite symmetry, Ogata's
+        operator-algebraic index \cite{ogata-spt-chains,ogata-classification-review} is a
+        complete invariant, so realized $=$ invariant there; in $d=2$ the $H^3$ index exists
+        \cite{ogata-h3-index} and every in-cohomology class is realized, but completeness is
+        open (\Cref{rem:VB2d}).
+  \item \textbf{Theorem~V-C} (\Cref{thm:VC}): the commuting-projector no-go, zero electric
+        Hall conductance under $U(1)$ (Kapustin--Fidkowski \cite{kapustin-fidkowski}) and zero
+        chiral central charge (Kapustin--Spodyneiko \cite{kapustin-spodyneiko-thermal}),
+        exactly bounds the $\CP$-image.
+  \item Two elementary Propositions with complete proofs: the Kitaev-chain winding invariant
+        (\Cref{prop:kitaev}) and the cluster-state string order (\Cref{prop:cluster}), both
+        of which are also checked by the accompanying Haskell.
+\end{itemize}
+The conjectural content is three numbered statements about the global shape of $\im\real$
+(\Cref{sec:image}): that it is the short-range-entangled subspectrum (Conjecture~V-1); that
+chiral classes are gapped-realizable but never $\CP$-realizable (Conjecture~V-2); and that
+realizability descends over profinite disorder hulls under a condensed-cohomological
+obstruction (Conjecture~V-3).
+
+\subsection{Relation to companion papers}
+\label{sec:companions}
+
+This is Part~V of a six-part program that recasts topological phases of matter in the
+condensed-mathematics paradigm of Clausen--Scholze \cite{clausen-scholze-condensed}. The
+parts compose as a modular hierarchy, each taking the previous as input.
+
+Part~I, \emph{Condensed Locality} \cite{paperLocality}, makes the interaction space a Banach
+space $\BF$ and promotes the Heisenberg dynamics to a morphism of condensed objects; it
+supplies the Lieb--Robinson control that gives meaning to a ``uniformly gapped family'' over
+a profinite base. Part~II, \emph{Positivity and Condensed State Spaces}
+\cite{paperPositivity}, attaches the quasi-local $C^*$-algebra and, through Aoki's
+solidification bridge \cite{aoki-solidification}, a solid-$K$-theory invariant; the
+operator-$K$ invariants that
+appear in our status table (Hall conductance, Chern number) are values of that functor.
+Part~III, \emph{The Uniformly Gapped Substack} \cite{paperGap}, cuts out the substack
+$\Gap_{d,G}$ whose stabilized $\pi_0$ is the set $\Phases_{d,G}$ that our map $\real$ starts
+from; the robustness of that $\pi_0$ under perturbation is what makes ``the phase of a
+lattice model'' well defined. Part~IV, \emph{From Lattice Models to Effective Field
+Theories} \cite{paperEFT}, group-completes the invertible sector into the target spectrum
+$\IPcond_{d,G}$; realizability is precisely the surjectivity question for the comparison map
+that Part~IV constructs. Part~VI, the synthesis \cite{paperSynthesis}, assembles the five
+modules into a single program and records the Master Conjecture; our obstruction subgroup is
+one of the two hard walls (the other being the undecidability of the gap in Part~III) that
+bound the synthesis.
+
+The reader needs from Parts~III--IV only the following interface, restated in
+\Cref{sec:framework}: a phase is a component of a stabilized condensed stack, stacking gives
+it an abelian-group structure, and $\IPcond_{d,G}$ is the invertible part group-completed.
+No result of this paper depends on the conjectural global stack structure; we use the
+module-level theorems of the companions and cite them where needed.
+
+\subsection{Outline}
+
+\Cref{sec:framework} sets up the comparison map and the two realizability notions inside the
+condensed program. \Cref{sec:cohomology,sec:beyond} survey positive constructions: the
+group-cohomology models and the cluster state, then beyond-cohomology and topological-order
+models together with the Kitaev Majorana chain. \Cref{sec:complete} states the low-dimension
+completeness theorem and is careful about its scope. \Cref{sec:nogo} states the
+Kapustin--Fidkowski obstruction and draws the $\CP$-versus-gapped line. \Cref{sec:table}
+gathers everything into a status table. \Cref{sec:image} states the conjectures on the
+realizability image, and \Cref{sec:disorder} treats disorder-robust realizability over
+profinite hulls. \Cref{sec:haskell} describes the computational checks.
+\Cref{sec:discussion,sec:conclusion} discuss limitations and conclude.
+
+\section{The realizability question in the condensed program}
+\label{sec:framework}
+
+\subsection{The interface from Parts III and IV}
+
+We recall only what we need. Fix a spatial dimension $d$, a lattice $L$, on-site Hilbert
+spaces, an $F$-function locality class, and a symmetry group $G$ with condensation $\cg{G}$.
+Part~I organizes the admissible $G$-symmetric interactions into the condensed moduli object
+$\Ham_{d,G}$, whose value on a profinite probe $S$ is the set of $S$-continuous families of
+interactions. Part~III singles out the \emph{uniformly} gapped substack
+\[
+  \Gap_{d,G}(S) \;=\; \bigcup_{\gapbound>0}\Bigl\{\,H\in\Ham_{d,G}(S) : \inf_{s\in S}\gapof{H_s}\ge\gapbound \,\Bigr\},
+\]
+where the word \emph{uniformly} (the infimum over the probe) is essential: a family
+with $\inf_s\gapof{H_s}=0$ is not a member. Inverting the class $\Weq$ of gapped adiabatic /
+finite-depth equivalences \cite{bmns-automorphic} and stabilizing by product-state ancillas gives the phase
+$\infty$-groupoid $\Phase_{d,G}=(\Gap_{d,G}[\Weq^{-1}])^{\st}$, and the set of phases is
+\[
+  \Phases_{d,G} \;=\; \pi_0\Shape\bigl(\Phase_{d,G}\bigr).
+\]
+Stacking $\boxtimes$ makes $\Phase_{d,G}$ symmetric monoidal; its invertible objects form a
+Picard $\infty$-groupoid, and Part~IV group-completes them into the connective condensed
+spectrum $\IPcond_{d,G}$. Writing $\Phases^{\times}_{d,G}\subseteq\Phases_{d,G}$ for the
+invertible (short-range-entangled) phases, group completion is a map
+\[
+  \gamma \colon \Phases^{\times}_{d,G} \longrightarrow \pi_0\IPcond_{d,G}.
+\]
+
+\subsection{The comparison map and realizability}
+
+Part~IV's central comparison is between the microscopic invariant computed on the lattice
+and the deformation class of the associated effective field theory. Composing the lattice
+phase with that comparison gives a map to the abstract bordism/homotopy classification;
+denote its value on $\pi_0$ by
+\[
+  \real \colon \Phases_{d,G} \longrightarrow \mathcal{C}_{d,G},
+\]
+where $\mathcal{C}_{d,G}$ is the abstract classification group of the relevant EFT: for
+invertible phases, $\pi_0\IPcond_{d,G}$ after realification, conjecturally a connective cover
+of Kubota's $\Omega$-spectrum \cite{kubota-omega-spectrum} or the Freed--Hopkins bordism
+target \cite{freed-hopkins}. The direction of $\real$ matters. Constructing a lattice model
+and reading off its abstract class is the ``forward'' direction and is always available.
+Realizability is the ``backward'' question: given $c\in\mathcal{C}_{d,G}$, is there a phase
+$P\in\Phases_{d,G}$ with $\real(P)=c$?
+
+\begin{definition}[Realizability]
+\label{def:realizable}
+A class $c\in\mathcal{C}_{d,G}$ is \emph{gapped-realizable} if $c\in\im\real$, i.e.\ there is
+a uniformly gapped $G$-symmetric local Hamiltonian whose phase $P$ satisfies $\real(P)=c$. It
+is \emph{$\CP$-realizable} if such an $H$ can moreover be taken to be a local
+commuting-projector Hamiltonian $H=\sum_x P_x$, $P_x^2=P_x=P_x^\ast$, $[P_x,P_y]=0$, each
+$P_x$ of finite range. Write
+\[
+  \im\real \;\supseteq\; \im\real^{\CP}
+\]
+for the two images; $\im\real^{\CP}\subseteq\im\real$ always.
+\end{definition}
+
+The whole paper is the study of the two subsets $\im\real^{\CP}\subseteq\im\real\subseteq
+\mathcal{C}_{d,G}$. We record the reformulation that ties realizability to the language of
+the program.
+
+\begin{proposition}[Realizability as essential surjectivity]
+\label{prop:esssurj}
+$c$ is gapped-realizable if and only if the comparison functor
+$\Phase_{d,G}\to\mathcal{C}_{d,G}$ (viewing $\mathcal{C}_{d,G}$ as a discrete groupoid) hits
+the object $c$ up to isomorphism; that is, $c\in\im\real$ iff $c$ is in the essential image
+on $\pi_0$. Equivalently, gapped-realizability of all of $\mathcal{C}_{d,G}$ is the
+statement that $\real$ is surjective.
+\end{proposition}
+
+\begin{proof}
+Immediate from the definitions: $\pi_0$ of the comparison functor is the map $\real$ of
+sets, and a set map hits $c$ iff $c$ is in its image, which for a functor into a discrete
+groupoid is the essential image on objects. There is no content beyond unwinding the
+notation; the content is entirely in \emph{which} $c$ are hit, addressed in the following
+sections.
+\end{proof}
+
+\begin{remark}[Why $\CP$ is not a technicality]
+\label{rem:cp}
+One might hope that $\CP$-realizability and gapped-realizability coincide up to stable
+equivalence, so that the exactly-solvable models exhaust the phases. They do not:
+\Cref{thm:VC} exhibits a permanent obstruction. The correct picture is that
+$\im\real^{\CP}$ is a proper subgroup of $\im\real$ whenever chiral phases exist (i.e.\ for
+$d=2$ without antiunitary protection, and in higher dimensions with the appropriate
+gravitational response). Keeping the two apart is what lets us state positive results
+(constructions are usually $\CP$) and the obstruction (which is about $\CP$) without
+contradiction.
+\end{remark}
+
+\subsection{Short-range entanglement}
+
+The invertible phases are the short-range-entangled ones \cite{freed-sre}: a phase $P$ is invertible for
+$\boxtimes$ iff there is $P'$ with $P\boxtimes P'$ trivial (a product state) after
+stabilization. We write $\SRE_{d,G}\subseteq\Phases_{d,G}$ for this subset; group completion
+$\gamma$ restricts to it. Non-invertible topological order (nonzero total quantum dimension,
+anyons that cannot be condensed away) lies outside $\SRE$ and outside the spectrum-level
+classification altogether; it needs the higher-categorical machinery flagged in Part~VI and
+is not classified by $\IPcond_{d,G}$. Our realizability question for the \emph{spectrum} is
+therefore a question about $\SRE$; topologically ordered models such as the toric code enter
+only as $\CP$-realizations of \emph{trivial} invertible class (they are invertible-trivial
+but intrinsically ordered), and the chiral topological orders (e.g.\ Kitaev's non-abelian
+phase) enter through their invertible \emph{edge} data, the chiral central charge.
+
+\section[Positive realizability I: group-cohomology SPT phases]{Positive realizability I:\\ group-cohomology SPT phases}
+\label{sec:cohomology}
+
+\subsection{The Chen--Gu--Liu--Wen construction}
+
+The first and largest constructive region is the group-cohomology part of the
+symmetry-protected topological (SPT) classification. Let $G$ be a finite group acting
+on-site and unitarily; work in spatial dimension $d$, so the relevant cocycle degree is
+$d+1$.
+
+\begin{theorem}[Cohomological classes are realized; V-A]
+\label{thm:VA}
+For every finite group $G$ and every class $\omega\in H^{d+1}(G,U(1))$ there is an explicit
+$G$-symmetric local commuting-projector Hamiltonian $H_\omega$ on a lattice with on-site
+$G$-representation, such that:
+\begin{enumerate}
+  \item[(i)] $H_\omega$ has a unique gapped ground state on any closed $d$-manifold; the
+        ground state is a renormalization-group fixed-point wavefunction and is
+        short-range-entangled (preparable from a product state by a finite-depth circuit once
+        the on-site $G$-symmetry constraint is dropped --- no $G$-symmetric finite-depth
+        circuit prepares it, which is exactly what makes the phase a nontrivial SPT);
+  \item[(ii)] the phase of $H_\omega$ is trivial as an ungauged state but nontrivial as a
+        $G$-SPT, and the assignment $\omega\mapsto[H_\omega]$ is a group homomorphism
+        $H^{d+1}(G,U(1))\to\SRE_{d,G}$ that is injective on the group-cohomology subgroup;
+  \item[(iii)] the boundary of $H_\omega$ carries an anomalous $G$-action whose obstruction
+        to being realized on-site is exactly $\omega$.
+\end{enumerate}
+In particular every group-cohomology class is $\CP$-realizable.
+\end{theorem}
+
+\begin{proof}
+This is the content of \cite{cglw-cohomology}, with the edge statement (iii) supplied by
+\cite{else-nayak}; we give the structure of the argument and cite the theorems for the
+analytic steps. Chen--Gu--Liu--Wen construct, from a representative inhomogeneous
+$(d+1)$-cocycle $\nu_{d+1}\colon G^{d+1}\to U(1)$, a fixed-point wavefunction on a
+triangulated $d$-manifold: to each branched triangulation one assigns an amplitude that is a
+product of cocycle phases $\nu_{d+1}$ over the $(d+1)$-simplices of a filling, and the
+cocycle condition guarantees that the amplitude is independent of the filling and defines a
+short-range-correlated state. The parent Hamiltonian is a sum of projectors, one per local
+patch, each projecting onto the local fixed-point subspace; because the fixed-point
+conditions on overlapping patches are compatible, the projectors commute, giving a
+commuting-projector Hamiltonian with the wavefunction as its unique frustration-free ground
+state. That establishes (i). The map on classes is additive because stacking two decorated
+wavefunctions multiplies their cocycle phases, i.e.\ adds the cohomology classes; injectivity
+on the group-cohomology subgroup is the statement that distinct classes give
+non-adiabatically-connected models, proved by the edge obstruction of (iii). For (iii),
+Else--Nayak show that the boundary of such an SPT carries a $G$-action that cannot be
+extended to an on-site action of $G$ on the boundary Hilbert space alone; the obstruction to
+on-site-ness lives in $H^{d+1}(G,U(1))$ and equals $\omega$. This anomalous edge action is
+what protects the bulk phase and certifies nontriviality.
+\end{proof}
+
+\begin{remark}[Scope of Theorem~V-A]
+\label{rem:VAscope}
+Theorem~V-A covers exactly the \emph{in-cohomology} subgroup of the SPT classification. It
+does \emph{not} claim to realize classes outside $H^{d+1}(G,U(1))$: the beyond-group-cohomology
+classes of Kapustin \cite{kapustin-cobordism}, detected by cobordism invariants rather than
+group cohomology, require different constructions (\Cref{sec:beyond}). Nor does on-site
+finiteness extend for free to continuous $G$ or to spatial symmetry; those need their own
+constructions and are not asserted here.
+\end{remark}
+
+\subsection{The cluster state as a worked example}
+
+The one-dimensional cluster state is the smallest nontrivial instance of \Cref{thm:VA} and
+the model our Haskell computes with, so we give it explicitly. Take a chain of qubits with
+the symmetry $G=\Ztwo\times\Ztwo$ generated by
+$X_{\mathrm{even}}=\prod_{j\ \mathrm{even}}X_j$ and
+$X_{\mathrm{odd}}=\prod_{j\ \mathrm{odd}}X_j$. The relevant cohomology is
+$H^2(\Ztwo\times\Ztwo,U(1))\cong\Ztwo$, so there is exactly one nontrivial SPT class, and it
+is realized by the cluster state.
+
+\begin{definition}[Cluster state]
+\label{def:cluster}
+The cluster state $\lvert C\rangle$ on a chain of $n$ qubits is the unique (up to boundary
+conditions) common $+1$ eigenstate of the commuting stabilizers
+\[
+  K_j \;=\; Z_{j-1}\,X_j\,Z_{j+1}, \qquad 1<j<n,
+\]
+together with boundary stabilizers. It is the frustration-free ground state of
+$H_{\mathrm{cl}}=-\sum_j K_j$, a commuting-projector Hamiltonian (after $P_j=(1+K_j)/2$).
+\end{definition}
+
+The SPT order of $\lvert C\rangle$ is invisible to any local order parameter but visible to a
+nonlocal string operator. The following is elementary and is verified exactly by the Haskell
+stabilizer engine.
+
+\begin{proposition}[Cluster-state string order]
+\label{prop:cluster}
+Fix $a<b$ with $b-a$ even, and set
+\[
+  S_{a,b} \;=\; Z_{a}\,\Bigl(\textstyle\prod_{r=0}^{(b-a)/2-1} X_{a+1+2r}\Bigr)\,Z_{b}
+  \;=\; Z_a\,X_{a+1}X_{a+3}\cdots X_{b-1}\,Z_b .
+\]
+Then in the cluster state $\langle C\rvert S_{a,b}\lvert C\rangle = +1$ exactly, while every
+single-site expectation vanishes, $\langle C\rvert Z_j\lvert C\rangle=\langle C\rvert
+X_j\lvert C\rangle=0$. Moreover, under the symmetry-breaking on-site rotation
+$U(\theta)=\prod_j e^{-i\theta Z_j/2}$ (which breaks $X_{\mathrm{even}},X_{\mathrm{odd}}$),
+\[
+  \langle C\rvert U(\theta)^\ast\,S_{a,b}\,U(\theta)\lvert C\rangle \;=\; (\cos\theta)^{m},
+  \qquad m=\tfrac{b-a}{2} = \#\{\text{$X$ factors in }S_{a,b}\},
+\]
+so the string order degrades monotonically from $1$ at $\theta=0$ to $0$ at
+$\theta=\pi/2$.
+\end{proposition}
+
+\begin{proof}
+The stabilizer group $\mathcal{S}=\langle K_j\rangle$ is abelian and $\lvert C\rangle$ is its
+unique $+1$ eigenvector, so for a Pauli operator $P$ one has $\langle C\rvert P\lvert
+C\rangle=+1$ if $P\in\mathcal{S}$, $=-1$ if $-P\in\mathcal{S}$, and $=0$ otherwise (because
+then $P$ anticommutes with some stabilizer $g$, whence $\langle C\rvert P\lvert
+C\rangle=\langle C\rvert PggP^{-1}\cdots\rangle$ forces a sign flip and the value is its own
+negative). The telescoping identity
+\[
+  K_{a+1}K_{a+3}\cdots K_{b-1}
+  = \bigl(Z_a X_{a+1}Z_{a+2}\bigr)\bigl(Z_{a+2}X_{a+3}Z_{a+4}\bigr)\cdots
+  = Z_a\,X_{a+1}X_{a+3}\cdots X_{b-1}\,Z_b ,
+\]
+where the internal $Z^2=1$ cancellations occur at the shared even-offset sites, shows that
+this product of alternate stabilizers equals $S_{a,b}$ exactly. Hence $S_{a,b}\in\mathcal{S}$
+and $\langle C\rvert S_{a,b}\lvert C\rangle=+1$. The single-site $Z_j$ anticommutes with $K_j$
+(through the central $X_j$), and the single-site $X_j$ anticommutes with $K_{j\pm1}$ (through
+their $Z_j$ factors); hence each has expectation $0$. No product of a single $Z$ or $X$ with a
+stabilizer lands back in $\mathcal{S}$, so these are genuinely zero. For the rotated expectation, $U(\theta)^\ast Z_j U(\theta)=Z_j$ and
+$U(\theta)^\ast X_j U(\theta)=\cos\theta\,X_j-\sin\theta\,Y_j$, so expanding
+$U^\ast S_{a,b}U$ over the $m$ rotated $X$ factors gives $2^m$ Pauli terms. The all-$X$ term
+is $(\cos\theta)^m S_{a,b}$ with expectation $(\cos\theta)^m$. Any other term differs from
+$S_{a,b}$ by replacing at least one $X_k$ with $Y_k=iX_kZ_k$, i.e.\ equals a phase times
+$S_{a,b}\cdot\prod_{k\in T}Z_k$ for a nonempty set $T$ of the $X$-sites; since the only
+$X$-free element of $\mathcal{S}$ is the identity, $\prod_{k\in T}Z_k\notin\mathcal{S}$ for
+$T\ne\varnothing$, so $S_{a,b}\prod_{k\in T}Z_k\notin\mathcal{S}$ (up to sign) and its
+expectation is $0$. Thus all cross terms vanish and the total is $(\cos\theta)^m$. Monotone
+decrease on $[0,\pi/2]$ is clear.
+\end{proof}
+
+\begin{remark}
+\Cref{prop:cluster} is exactly the SPT-diagnostic behaviour: a nonlocal string order that is
+quantized in the protected phase and destroyed only when the protecting symmetry is broken,
+with no accompanying local order parameter. It realizes the nontrivial class of
+$H^2(\Ztwo\times\Ztwo,U(1))\cong\Ztwo$, the smallest case of \Cref{thm:VA}. The Haskell of
+\Cref{sec:haskell} computes $\langle S_{a,b}\rangle$ and its $\theta$-degradation from the
+stabilizer group directly, with no closed-form shortcut.
+\end{remark}
+
+\section[Positive realizability II: beyond cohomology and topological order]{Positive realizability II:\\ beyond cohomology and topological order}
+\label{sec:beyond}
+
+\subsection{Beyond group cohomology: Walker--Wang models}
+
+Not every invertible or topologically ordered phase is captured by group cohomology. In
+$3+1$ dimensions there are SPT and symmetry-enriched phases whose invariants are cobordism
+classes outside the image of group cohomology \cite{kapustin-cobordism}. A general
+commuting-projector construction for a large class of these is available.
+
+\begin{proposition}[Walker--Wang realizations]
+\label{prop:ww}
+Given a premodular (braided fusion) category $\mathcal{B}$, the Walker--Wang construction
+\cite{walker-wang} produces a $3+1$-dimensional local commuting-projector Hamiltonian whose
+ground state on a closed $3$-manifold is a fixed-point state, and whose $2$-dimensional
+boundary carries the topological order associated with $\mathcal{B}$. When $\mathcal{B}$ is
+modular the bulk is invertible (a $3+1$d SPT-like state) with a chiral boundary; when
+$\mathcal{B}$ is a symmetric fusion category the construction reproduces group-cohomology and
+certain beyond-cohomology SPTs.
+\end{proposition}
+
+\begin{proof}
+Cited: \cite{walker-wang} construct the state sum and its commuting-projector parent
+Hamiltonian from the premodular data, and identify the boundary theory. We use it only as a
+source of $\CP$-realizations for classes beyond \Cref{thm:VA}; no new argument is supplied.
+\end{proof}
+
+\begin{remark}[The chiral boundary caveat]
+\label{rem:wwchiral}
+Walker--Wang models are $\CP$ in the $3+1$d bulk, but a modular input forces the $2+1$d
+boundary to be chiral, and by \Cref{thm:VC} that boundary cannot itself be a $\CP$ model.
+This is not a contradiction (the bulk is $\CP$, the boundary is not), but it is a clean
+illustration of why $\CP$-realizability is a property of a specific model in a specific
+dimension, not a phase-intrinsic and dimension-blind attribute.
+\end{remark}
+
+\subsection{Chiral invertible phases: the \texorpdfstring{$E_8$}{E8} state}
+
+The cleanest bosonic example of the obstruction to come is the $E_8$ state: a $2+1$d bosonic
+short-range-entangled phase with no symmetry, nontrivial because its edge carries eight
+chiral bosons with chiral central charge $c_-=8$ and a thermal Hall response. It generates
+the free part $\Zint$ of the $2+1$d bosonic invertible classification. The $E_8$ state is
+gapped-realizable (it is a genuine gapped phase, described by a $K$-matrix Chern--Simons
+theory and realizable in coupled-layer and network constructions), but because $c_-\ne0$ it
+has a nonzero thermal Hall conductance, and \Cref{thm:VC}(ii) (Kapustin--Spodyneiko
+\cite{kapustin-spodyneiko-thermal}) forbids any local commuting-projector realization. This
+obstruction rests on the chiral central charge, \emph{not} on the electric Kapustin--Fidkowski
+no-go: the bosonic $E_8$ state carries no $U(1)$ charge and has $\sigma_H=0$, so part (i) of
+\Cref{thm:VC} does not apply to it and part (ii) is what does the work. It is the bosonic
+analogue, at the level of gravitational response, of the fermionic integer quantum Hall state
+\cite{tknn-1982}; its nonzero chiral
+central charge is the edge datum that also governs chiral topological order more broadly
+\cite{kitaev-honeycomb}.
+
+\subsection{Fermionic \texorpdfstring{$\Ztwo$}{Z2}: the Kitaev Majorana chain}
+
+The canonical fermionic example is the Kitaev chain \cite{kitaev-majorana-wire}, the $1+1$d
+class-$D$/BDI superconductor whose two phases are distinguished by a $\Ztwo$ invariant and
+whose topological phase binds an unpaired Majorana zero mode at each end. Its $\Ztwo$ label is
+the class-$D$ entry of the periodic table of free-fermion phases \cite{kitaev-periodic-table},
+whose systematic form is the operator-$K$-theoretic classification of topological insulators
+and superconductors \cite{thiang-ktheory,prodan-sb} together with its bulk-edge correspondence
+\cite{bourne-kellendonk-rennie,kubota-controlled}; the closely related Su--Schrieffer--Heeger
+chain \cite{ssh-1979} is its chiral-symmetric cousin. It is the fermionic counterpart of the
+cluster state, and our Haskell computes its invariant across the parameter plane.
+
+Write the chain with spinless fermions $c_j$, hopping $t$, chemical potential $\mu$, and
+$p$-wave pairing amplitude $\Delta_{\mathrm{p}}$ (written with a subscript to keep it visibly
+distinct from the uniform gap bound $\gapbound=\Delta$ of \Cref{sec:framework}):
+\[
+  H = \sum_j\Bigl[-t\,(c_j^\dagger c_{j+1}+\mathrm{h.c.})
+      -\mu\bigl(c_j^\dagger c_j-\tfrac12\bigr)
+      +\Delta_{\mathrm{p}}\,(c_j c_{j+1}+\mathrm{h.c.})\Bigr].
+\]
+In momentum space the Bogoliubov--de Gennes Bloch Hamiltonian is
+$h(k)=d_z(k)\,\tau_z+d_y(k)\,\tau_y$ in the Nambu basis, with
+\[
+  d_z(k) = -2t\cos k-\mu, \qquad d_y(k) = 2\Delta_{\mathrm{p}}\sin k, \qquad d_x(k)\equiv 0,
+\]
+where $\tau_{x,y,z}$ are Pauli matrices in particle--hole space and the $\tau_x$ component
+$d_x$ vanishes identically because the pairing is real. The single-particle spectrum is
+$\pm\sqrt{d_y^2+d_z^2}$, so the bulk gap closes exactly when $d_y=d_z=0$, i.e.\ at
+$\sin k=0$ and $\mu=\mp2t$, i.e.\ on the discriminant $|\mu|=2|t|$ (for $\Delta_{\mathrm{p}}\ne0$).
+
+\begin{proposition}[Kitaev-chain $\Ztwo$ invariant]
+\label{prop:kitaev}
+For $\Delta_{\mathrm{p}}\ne0$ and $|\mu|\ne2|t|$ the map $k\mapsto(d_y(k),d_z(k))\in\mathbb{R}^2\setminus\{0\}$,
+$k\in[0,2\pi)$, has a well-defined winding number $\winding\in\Zint$ about the origin, and
+\[
+  \winding =
+  \begin{cases}
+    1, & |\mu|<2|t| \quad(\text{topological}),\\[2pt]
+    0, & |\mu|>2|t| \quad(\text{trivial}).
+  \end{cases}
+\]
+Equivalently the Majorana number $\Maj=\sgn\!\bigl(d_z(0)\bigr)\,\sgn\!\bigl(d_z(\pi)\bigr)
+=\sgn\!\bigl((\mu+2t)(\mu-2t)\bigr)=\sgn(\mu^2-4t^2)$ equals $-1$ in the topological phase
+and $+1$ in the trivial phase. The invariant is quantized on the gapped locus and jumps
+precisely on $\Sig=\{|\mu|=2|t|\}$; the jump is the $1$d instance of the relative transition
+charge $\rc$ of the program.
+\end{proposition}
+
+\begin{proof}
+The curve $k\mapsto(d_y(k),d_z(k))=(2\Delta_{\mathrm{p}}\sin k,\,-2t\cos k-\mu)$ is an ellipse with
+semi-axes $2|\Delta_{\mathrm{p}}|$ (horizontal) and $2|t|$ (vertical) centered at $(0,-\mu)$. For
+$\Delta_{\mathrm{p}},t\ne0$ it is a nondegenerate closed curve; its winding number about the origin is
+$1$ if the origin lies inside the ellipse and $0$ if outside (the ellipse is convex and
+traversed once). The origin is inside iff $\mu^2/(2t)^2<1$, i.e.\ $|\mu|<2|t|$, giving the
+stated $\winding$. The Majorana number is the product of the signs of $d_z$ at the two
+particle--hole-invariant momenta $k=0,\pi$ (where $d_y=0$), a standard $\Ztwo$ Pfaffian
+invariant for class $D$; here $d_z(0)=-2t-\mu$ and $d_z(\pi)=2t-\mu$, so
+$\Maj=\sgn(-2t-\mu)\sgn(2t-\mu)=\sgn(\mu^2-4t^2)$. Both $\winding\bmod2$ and $\Maj$ change
+value exactly across $|\mu|=2|t|$, where the curve passes through the origin and the bulk gap
+closes; on the gapped locus each is locally constant and integer/sign quantized.
+\end{proof}
+
+\begin{remark}[What this realizes, and what it does not]
+\label{rem:kitaevfree}
+The Kitaev chain $\CP$-realizes nothing chiral: it is $1+1$d and its invariant is
+torsion ($\Ztwo$), and at the fixed point $\mu=0,\ t=\Delta_{\mathrm{p}}$ it is itself a
+commuting-(Majorana-)projector model. It illustrates the torsion, $\CP$-realizable corner of
+the table. The free ($\Zint$) invariants live in even space dimension (Chern number,
+$d=2$) and are governed by the obstruction of \Cref{sec:nogo}; the Kitaev chain does not
+reach them.
+\end{remark}
+
+In two dimensions the fermionic story is richer and, importantly, also constructive: the
+group-supercohomology models of Gu--Wen \cite{gu-wen-supercohomology} realize a large class of
+interacting fermionic SPTs, the discrete-spin-structure construction of Tarantino--Fidkowski
+\cite{tarantino-fidkowski} gives explicit commuting-projector models for \emph{all} $2+1$d
+fermionic SPTs with symmetry $G_f=G\times\Ztwo^f$ (including all eight members of the
+$\Zint_8$ classification for $G=\Ztwo$), and the general construction-and-classification
+programme of Wang--Gu \cite{wang-gu-fermionic} extends this. These are torsion classes and are
+$\CP$-realizable; they populate the fermionic rows of the status table (\Cref{tab:status}).
+
+\subsection{Homotopy of the space of models}
+
+Realizability is not only a $\pi_0$ question. The higher homotopy of the space of gapped
+Hamiltonians records adiabatic pumps ($\pi_1$) and higher families ($\pi_n$); realizing a
+class in $\pi_n$ means building an $n$-parameter family of gapped models with the prescribed
+higher invariant; the $\pi_1$ generator is the adiabatic charge pump of Thouless
+\cite{thouless-pump}, whose rigorous lattice avatar is the higher Berry class of
+Kapustin--Sopenko \cite{kapustin-sopenko-noether}, and the homotopical foundations of such
+parametrized families are set up by Beaudry et al.\ \cite{beaudry-etal}; a complementary
+classification by the homotopy of the space of states of a $C^*$-algebra appears in
+\cite{denittis-states,denittis-rendel-weyl}. For $2+1$d topological order,
+Aasen--Wang--Hastings
+\cite{aasen-wang-hastings} propose explicit generators of $\pi_1$, $\pi_2$, $\pi_3$ of the
+space of Hamiltonians via automorphisms of topological order and honeycomb/automorphism
+codes. We stress that these homotopy groups are \emph{conjectural}: \cite{aasen-wang-hastings}
+give constructions and strong evidence but not a proof that these are the full homotopy
+groups, and we cite them as such. The moduli-space perspective of Hsin--Wang
+\cite{hsin-wang-moduli} is the closest ordinary-topology precedent for the object Part~IV
+condenses.
+
+\section{Completeness in low dimension}
+\label{sec:complete}
+
+In dimension one, realizability is completely settled for on-site finite symmetry, because the
+operator-algebraic invariant is a \emph{complete} invariant: the realized set is forced to
+equal the invariant set. In dimension two the same operator-algebraic index is known to exist
+and every in-cohomology class is realized, but its completeness is open, so only the
+surjectivity half survives there. The abstract target is the group-cohomology classification,
+itself a special case of the generalized-cohomology description of SPT phases
+\cite{gaiotto-jf,xiong-minimalist}.
+
+\begin{theorem}[Completeness in one dimension; V-B]
+\label{thm:VB}
+Let $G$ be a finite group acting on-site on a quantum spin chain, and consider $G$-symmetric
+gapped ground-state phases in the operator-algebraic (split/approximately-factorized) sense.
+Then in $d=1$ the $H^2(G,U(1))$-valued index is a \emph{complete} invariant of the symmetric
+phase \cite{ogata-spt-chains,ogata-classification-review}. Consequently, in $d=1$ with
+on-site finite symmetry, the map $\real$ restricted to these SPT phases is a \emph{bijection}
+onto $H^2(G,U(1))$: every class is realized (by \Cref{thm:VA}) and no two inequivalent models
+share an index. Realizability is settled there: realized $=$ invariant.
+\end{theorem}
+
+\begin{proof}
+The completeness statement is Ogata's theorem: the $d=1$ classification of $G$-symmetric
+gapped phases by the second-cohomology index is proved in
+\cite{ogata-spt-chains,ogata-classification-review}, for on-site finite $G$ in the stated
+operator-algebraic framework. Surjectivity onto $H^2(G,U(1))$ is \Cref{thm:VA} (the CGLW
+models realize every class). Injectivity of $\real$ on these phases is exactly the
+completeness of the index. Composing, $\real$ is a bijection in $d=1$.
+\end{proof}
+
+\begin{remark}[Two dimensions: the index exists, completeness is open; V-B$'$]
+\label{rem:VB2d}
+In $d=2$ the situation is genuinely weaker, and it is important not to overstate it. Ogata
+constructs an $H^3(G,\Circ)$-valued index for $G$-symmetric gapped phases with on-site finite
+symmetry \cite{ogata-h3-index}, and proves it is a \emph{well-defined invariant}; combined
+with the CGLW construction (\Cref{thm:VA}), the map $\real$ is therefore \emph{surjective}
+onto the in-cohomology classes $H^3(G,\Circ)$, so every such class is realized. But whether
+this index is a \emph{complete} invariant (whether it separates all $d=2$ SPT phases with
+on-site finite symmetry) is \emph{not} established: Ogata's theorem gives existence and
+invariance of the index, not completeness. We therefore record $d=2$ completeness as an
+\textbf{open problem}, not a theorem, and do \emph{not} assert realized $=$ invariant in
+$d=2$; only the surjectivity half (every in-cohomology class is realized) is settled there.
+This matches the identical treatment in Part~IV~\cite{paperEFT}.
+\end{remark}
+
+\begin{remark}[Scope: do not extrapolate]
+\label{rem:VBscope}
+Theorem~V-B is a completeness statement only for \emph{on-site finite} symmetry in $d=1$; its
+$d=2$ analogue is the open problem of \Cref{rem:VB2d} (the index exists but completeness is
+unproven). It must not be read as a completeness statement for:
+\begin{itemize}
+  \item continuous symmetry groups (e.g.\ $U(1)$, $SU(2)$), where the index theory and the
+        classification differ;
+  \item spatial (crystalline) symmetry, which requires the action-stack $\quotstack{Y}{\cg{G}}$
+        formalism and different invariants;
+  \item dimensions $d\ge3$, where no analogous completeness theorem is available and where
+        beyond-cohomology classes (\Cref{sec:beyond}) appear;
+  \item intrinsic topological order, which is not an SPT and not covered by these indices.
+\end{itemize}
+Within its scope the theorem is sharp; outside it, realizability is open or obstructed, and
+conflating the two is precisely the over-extrapolation the program's editorial stance
+forbids.
+\end{remark}
+
+\section{The obstruction: the Kapustin--Fidkowski no-go}
+\label{sec:nogo}
+
+We now state the hard wall. It is the single result that most sharply bounds realizability,
+and it is about the commuting-projector class specifically.
+
+\begin{theorem}[Commuting-projector no-go; V-C]
+\label{thm:VC}
+Let $H=\sum_x P_x$ be a local commuting-projector Hamiltonian on a two-dimensional lattice
+--- each $P_x$ a projector of bounded range, $[P_x,P_y]=0$ --- with a gapped ground state.
+\begin{enumerate}
+  \item[(i)] \emph{Electric (Kapustin--Fidkowski \cite{kapustin-fidkowski}).} If $H$ is
+        $U(1)$-symmetric, the zero-temperature electric Hall conductance of the ground state
+        vanishes, $\sigma_H=0$.
+  \item[(ii)] \emph{Thermal (Kapustin--Spodyneiko \cite{kapustin-spodyneiko-thermal}).} The
+        relative chiral central charge of the ground state vanishes, $c_-=0$, with \emph{no}
+        symmetry hypothesis.
+\end{enumerate}
+Consequently: a $U(1)$-symmetric invertible phase with $\sigma_H\ne0$ (the integer quantum
+Hall states and Chern insulators) is not $\CP$-realizable, by (i); and \emph{any} invertible
+phase with $c_-\ne0$ (the $E_8$ state, and every chiral phase) is not $\CP$-realizable, by
+(ii):
+\[
+  c\in\im\real,\ \bigl(\text{$\sigma_H(c)\ne0$ with $U(1)$}\bigr)\ \text{or}\ \bigl(c_-(c)\ne0\bigr)
+  \quad\Longrightarrow\quad c\notin\im\real^{\CP}.
+\]
+The two obstructions are logically independent: $\sigma_H$ and $c_-$ are distinct invariants
+--- the bosonic $E_8$ state has $\sigma_H=0$ (no $U(1)$ charge) yet $c_-=8$ --- and part (ii)
+requires no symmetry, whereas part (i) needs $U(1)$.
+\end{theorem}
+
+\begin{proof}
+Both parts are cited, not reproved. Part (i) is the theorem of Kapustin--Fidkowski
+\cite{kapustin-fidkowski}: a $U(1)$-symmetric local commuting-projector Hamiltonian has
+vanishing zero-temperature electric Hall conductance, taken here as the locally-computable,
+integer-quantized index of \cite{kapustin-sopenko-hall}. Part (ii) is the theorem of
+Kapustin--Spodyneiko \cite{kapustin-spodyneiko-thermal}, who derive a Kubo-type formula for
+the thermal Hall conductance of a two-dimensional lattice system and prove that the relative
+chiral central charge of any local commuting-projector Hamiltonian vanishes. The stated
+obstructions are the contrapositives.
+\end{proof}
+
+\begin{remark}[How absolute is the wall?]
+\label{rem:wallscope}
+The vanishing in \Cref{thm:VC} is for the \emph{ordinary} on-site $U(1)$ electric response
+(part (i)) and for the standard relative chiral central charge (part (ii)). Recent work of
+Hsin--Kobayashi \cite{hsin-kobayashi-generalized} realizes nonzero \emph{generalized} Hall
+conductivities in local commuting-projector models by using symmetries that are not
+expressible through on-site charge operators; this does not contradict \Cref{thm:VC} but
+shows the no-go is sharp about \emph{which} response it annihilates. The invertible-phase
+obstruction we use ($\sigma_H$ for $U(1)$ phases (i), $c_-$ for chiral phases (ii)) is
+unaffected.
+\end{remark}
+
+\begin{remark}[Exactly what is and is not obstructed]
+\label{rem:nogo}
+The theorem obstructs $\CP$-realizability, not gapped-realizability. Chern insulators exist;
+the integer quantum Hall effect is a laboratory fact; the $E_8$ state is a genuine gapped
+phase. What \Cref{thm:VC} says is that none of these admits an \emph{exactly-solvable
+commuting-projector} description: their entanglement cannot be brought to a strict
+finite-depth fixed point compatible with the nonzero gravitational/electromagnetic response.
+The obstruction is thus a statement about the \emph{method} (exact solvability) as much as
+about the phase. This is why the honest realizability picture must always name which class of
+Hamiltonians is meant.
+\end{remark}
+
+\begin{corollary}[The $\CP$-image is a proper subgroup when chiral phases exist]
+\label{cor:proper}
+In any $(d,G)$ for which $\mathcal{C}_{d,G}$ contains a class with nonzero Hall conductance
+or nonzero chiral central charge (in particular $d=2$ with no antiunitary protection),
+$\im\real^{\CP}\subsetneq\im\real$: the inclusion of \Cref{def:realizable} is strict.
+\end{corollary}
+
+\begin{proof}
+By \Cref{thm:VC} such a chiral class is not in $\im\real^{\CP}$; it is in $\im\real$ because
+the phase exists as a gapped lattice system (Chern insulator / $E_8$ construction). Hence the
+inclusion is strict.
+\end{proof}
+
+\begin{remark}[Relation to the completeness theorem]
+There is no tension with \Cref{thm:VB}: the completeness theorem is about SPT phases with
+on-site finite symmetry, whose invariants are torsion group-cohomology classes with zero Hall
+conductance; the obstruction is about chiral (free-part) invertible phases, which are not SPT
+in that sense and lie outside the scope of \Cref{thm:VB}. The two results partition the
+$d=2$ landscape cleanly: torsion SPT (every in-cohomology class $\CP$-realized by
+\Cref{thm:VA}, with completeness itself open, \Cref{rem:VB2d}) versus chiral free part
+(obstructed for $\CP$, open in general).
+\end{remark}
+
+\section{A status table for realizability}
+\label{sec:table}
+
+We collect the state of knowledge into \Cref{tab:status}, organized by spatial dimension and
+symmetry class, separating the torsion part of the classification from the free part, and
+recording for each the best available construction, the applicable obstruction, and whether
+realizability is settled, constructive, obstructed-for-$\CP$, or open. The entries are the
+theorems and constructions cited above; nothing in the table is claimed beyond them.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}L{0.13\textwidth}L{0.18\textwidth}L{0.17\textwidth}L{0.21\textwidth}L{0.22\textwidth}@{}}
+\toprule
+\textbf{Dim.\ / class} & \textbf{Invariant (torsion / free)} & \textbf{Construction} &
+\textbf{Obstruction} & \textbf{Realizability status} \\
+\midrule
+$d=1$, on-site finite $G$ &
+$H^2(G,U(1))$ (torsion); no free part &
+CGLW / cluster (\Cref{thm:VA}) &
+none (no chiral in $1+1$d) &
+\textbf{Settled}: $\CP$, complete (\Cref{thm:VB}) \\
+
+$d=1$, fermionic $\Ztwo$ &
+$\Ztwo$ (torsion) &
+Kitaev chain (\Cref{prop:kitaev}) &
+none &
+\textbf{Settled}: $\CP$ at fixed point \\
+
+$d=2$, on-site finite $G$ &
+$H^3(G,\Circ)$ (torsion); no bosonic free SPT &
+CGLW (\Cref{thm:VA}) &
+none for torsion &
+\textbf{$\CP$-realized} (\Cref{thm:VA}); completeness open (\Cref{rem:VB2d}) \\
+
+$d=2$, fermionic SPT ($G_f{=}G{\times}\Ztwo^f$) &
+supercohomology $+$ beyond (torsion; e.g.\ $\Zint_8$ for $G{=}\Ztwo$) &
+Gu--Wen \cite{gu-wen-supercohomology}; Tarantino--Fidkowski \cite{tarantino-fidkowski}; Wang--Gu \cite{wang-gu-fermionic} &
+none (torsion) &
+\textbf{Constructive}: $\CP$ for all $2{+}1$d fermionic SPTs \\
+
+$d=2$, no symmetry (bosonic) &
+free part $\Zint$, generator $E_8$ ($c_-=8$) &
+$E_8$ / $K$-matrix (gapped, non-$\CP$) &
+$c_-\ne0$: Kapustin--Spodyneiko (\Cref{thm:VC}(ii)) &
+\textbf{Gapped yes, $\CP$ no} \\
+
+$d=2$, fermionic (class A) &
+free part $\Zint$, Chern number &
+Chern insulator (gapped, non-$\CP$) &
+$\sigma_H\ne0$, $U(1)$: Kapustin--Fidkowski (\Cref{thm:VC}(i)) &
+\textbf{Gapped yes, $\CP$ no} \\
+
+$d=3$, on-site finite $G$ &
+$H^4(G,U(1))$ (torsion) + beyond-cohomology &
+CGLW (in-coh.); Walker--Wang (beyond) &
+partial; higher chiral data &
+\textbf{Constructive} (in-coh.\ + WW); open in general \\
+
+$d=3$, beyond cohomology &
+cobordism classes (Kapustin) &
+Walker--Wang (\Cref{prop:ww}) &
+chiral boundary non-$\CP$ (\Cref{rem:wwchiral}) &
+\textbf{Constructive} (bulk $\CP$); open in general \\
+
+general $d$, invertible SRE &
+$\pi_0\IPcond_{d,G}$ (torsion $\oplus$ free) &
+per-class (above) &
+$\sigma_H$/$c_-$ no-go on free/chiral part &
+\textbf{Conjectural} (\Cref{sec:image}) \\
+\bottomrule
+\end{tabular}
+\caption{Realizability status by spatial dimension and symmetry class. Here ``$\CP$''
+abbreviates commuting-projector realizability; ``Gapped yes, $\CP$ no'' marks classes
+realizable by some gapped local Hamiltonian but obstructed for commuting projectors by
+\Cref{thm:VC} --- Kapustin--Fidkowski for the electric $U(1)$ response, Kapustin--Spodyneiko
+for the chiral central charge.}
+\label{tab:status}
+\end{table}
+
+Two patterns organize the table. First, the \emph{torsion} part of the classification is,
+wherever a construction is known, realized by commuting-projector models, and in $d=1,2$ with
+on-site finite symmetry this is complete. Second, the \emph{free} (chiral) part is
+gapped-realizable but never $\CP$-realizable, uniformly, by \Cref{thm:VC}. The next section
+turns these two patterns into conjectures about the whole image.
+
+\section{The realizability image: conjectures}
+\label{sec:image}
+
+The theorems above describe $\im\real$ and $\im\real^{\CP}$ in the regions where
+constructions and completeness results exist. The global shape of the two images is not a
+theorem today; it is the conjectural content of this paper. We state three numbered
+conjectures, in decreasing order of confidence, and phrase them in the condensed language so
+that they interlock with the rest of the program.
+
+\subsection{The image is the short-range-entangled subspectrum}
+
+\begin{conjecture}[Realizability image; V-1]
+\label{conj:V1}
+The image of the comparison map
+\[
+  \real\colon\Phases_{d,G}\to\mathcal{C}_{d,G}
+\]
+restricted to uniformly gapped lattice families is exactly the short-range-entangled subspectrum:
+$\im\real=\SRE_{d,G}$ as a subgroup of $\pi_0\IPcond_{d,G}$. Equivalently, an invertible
+abstract class is gapped-realizable if and only if it is short-range-entangled, and the
+non-realized classes form an identifiable obstruction subgroup
+\[
+  \mathrm{Obs}_{d,G} \;=\; \pi_0\IPcond_{d,G}\big/\im\real ,
+\]
+which contains, in the commuting-projector image, the chiral classes of \Cref{thm:VC}.
+\end{conjecture}
+
+\begin{remark}
+Conjecture~V-1 is the essential-surjectivity statement of \Cref{prop:esssurj} made precise:
+it asserts that the only obstruction to realizing an invertible abstract class is that the
+class actually be invertible in the physical (short-range-entangled) sense, not merely
+formally invertible in the spectrum. It is supported by every case in the table (each
+realized class is SRE and each SRE class with a known construction is realized), but a
+proof would require the yet-unproven identification of $\mathcal{C}_{d,G}$ with
+$\pi_0\IPcond_{d,G}$ from Part~IV (Conjecture~IV-2) together with a general construction
+theorem, neither of which is available.
+\end{remark}
+
+\subsection{Chiral classes: gapped yes, commuting-projector no}
+
+\begin{conjecture}[Chiral realizability; V-2]
+\label{conj:V2}
+Every chiral invertible class --- one with nonzero chiral central charge or nonzero Hall
+conductance --- is gapped-realizable by a non-commuting uniformly gapped local Hamiltonian,
+but is never $\CP$-realizable. In symbols, writing $\mathcal{C}^{\chi}_{d,G}$ for the chiral
+part,
+\[
+  \mathcal{C}^{\chi}_{d,G}\subseteq\im\real, \qquad
+  \mathcal{C}^{\chi}_{d,G}\cap\im\real^{\CP}=\{0\}.
+\]
+Thus the no-go of \Cref{thm:VC} is specific to the commuting-projector class and not to
+gapped lattice systems: $\im\real^{\CP}$ is exactly the non-chiral (zero-Hall) part of
+$\im\real$.
+\end{conjecture}
+
+\begin{remark}
+The second half of Conjecture~V-2 (never $\CP$) is the theorem \Cref{thm:VC} for the
+electric/thermal Hall response; the conjectural part is that this is the \emph{only}
+obstruction to $\CP$-realizability, i.e.\ that every non-chiral SRE class \emph{is}
+$\CP$-realizable, and that every chiral class \emph{is} gapped-realizable by some (necessarily
+non-commuting) model. The forward direction is known case by case (Chern insulators, $E_8$,
+coupled-wire constructions) but not as a theorem for all chiral classes at once. This
+conjecture is the precise sense in which ``exactly solvable'' and ``physically realizable''
+part ways.
+\end{remark}
+
+\subsection{Realizability over profinite disorder hulls}
+
+The third conjecture is where the condensed formalism does work that ordinary topology does
+not: it concerns realizability not over a point but over a profinite disorder hull, as a
+descent statement.
+
+\begin{conjecture}[Profinite-family realizability; V-3]
+\label{conj:V3}
+Let $\dis=Q^{\Zint^d}$ be a profinite disorder hull ($Q$ a finite local-configuration set), so
+a disordered family of models is an $\dis$-point $H\in\Ham_{d,G}(\dis)$. Suppose a class
+$c\in\mathcal{C}_{d,G}$ is realized over a point (a translation-invariant model). Then $c$ is
+realized by a \emph{uniformly gapped} $\dis$-family --- realizability is disorder-robust ---
+if and only if a descent obstruction
+\[
+  o(c)\in H^1_{\mathrm{cond}}\bigl(\dis,\, \underline{\mathrm{Aut}}(c)\bigr)
+\]
+in the relevant condensed cohomology of $\dis$ with coefficients in the (condensed)
+automorphisms of the realizing model vanishes. Finite quotients of $\dis$ detect $o(c)$: the
+family is uniformly-gapped-realizable iff it is realizable at every finite resolution with a
+common gap bound $\gapbound$.
+\end{conjecture}
+
+\begin{remark}
+Conjecture~V-3 is the realizability analogue of the descent threads that run through the
+whole program (Part~I's Lieb--Robinson descent, Part~II's crossed-product functoriality,
+Part~III's uniform-gap descent). Its content is that disorder-robust realizability is not a
+new hard analytic problem but a cohomological one \emph{once} the point-realizability and the
+uniform gap (Part~III) are in hand: the profinite probe $\dis$ matches the physical
+configuration space exactly, and the sheaf condition over its finite quotients is what
+``disorder-robust'' should mean. The vanishing of $o(c)$ is the obstruction to gluing
+finite-resolution realizations into a genuine $\dis$-family; when it vanishes, the crossed
+product $C(\dis)\rtimes\Zint^d$ of Part~II \cite{bellissard-ncg-qhe,kellendonk-tilings}
+carries the disorder-averaged invariant of $c$.
+\end{remark}
+
+\subsection{The comparison square}
+
+The three conjectures fit into one diagram, which is the realizability face of the program.
+Writing $\real^{\CP}$ for the restriction to commuting-projector models and $\gamma$ for
+group completion, the square
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+\{\text{$\CP$ lattice models}\}/\Weq \arrow[r, "\real^{\CP}"] \arrow[d, hook]
+  & \im\real^{\CP} \arrow[d, hook] \\
+\{\text{gapped lattice models}\}/\Weq \arrow[r, "\real"']
+  & \mathcal{C}_{d,G}
+\end{tikzcd}
+\]
+commutes, the left vertical is the honest inclusion of exactly-solvable models into all
+gapped models, and the right vertical is the strict inclusion of \Cref{cor:proper}.
+Conjecture~V-1 identifies the bottom image with $\SRE_{d,G}$; Conjecture~V-2 identifies the
+top image with the non-chiral part; Conjecture~V-3 promotes the whole square from a point to a
+profinite base $\dis$.
+
+\section{Disorder-robust realizability over profinite hulls}
+\label{sec:disorder}
+
+We expand the profinite thread, since it is the part of the realizability story that the
+condensed formalism is built for. Ordinary topology treats a disordered family as a section
+of a bundle over a compact metric space; condensed mathematics treats it as an $\dis$-point,
+where $\dis=Q^{\Zint^d}$ is genuinely profinite and its finite quotients are finite-resolution
+disorder data. The realizability question then acquires a resolution-by-resolution structure.
+
+\begin{definition}[Finite-resolution realizability]
+\label{def:finres}
+Let $\dis=\varprojlim_i\dis_i$ be the inverse limit of its finite quotients. A class $c$ is
+\emph{realizable at resolution $i$} if there is a uniformly gapped family
+$H^{(i)}\in\Gap_{d,G}(\dis_i)$ whose fibrewise phase is $c$. It is \emph{profinitely
+realizable} if there is a compatible system $(H^{(i)})_i$ with a common gap bound
+$\gapbound>0$, equivalently an $\dis$-point $H\in\Gap_{d,G}(\dis)$ with fibrewise phase $c$.
+\end{definition}
+
+The content of Conjecture~V-3 is that the passage from resolutionwise realizability to
+profinite realizability is governed by a single condensed-cohomological obstruction. Two
+structural facts, both consequences of the companion papers, make this plausible and are
+theorems modulo their stated hypotheses.
+
+\begin{proposition}[Uniform-gap descent enables gluing, assuming Conjecture~III-2]
+\label{prop:descent}
+Assume Conjecture~III-2 of Part~III (uniform-gap descent on the stated stability stratum).
+Suppose each $H^{(i)}$ is uniformly gapped with the \emph{same} bound $\gapbound$, and that
+the stability hypotheses of Part~III (LTQO / frustration-free with uniform constants) hold
+across the tower. Then the compatible system $(H^{(i)})_i$ defines an $\dis$-point of
+$\Gap_{d,G}$, and the fibrewise phase is locally constant over $\dis$.
+\end{proposition}
+
+\begin{proof}
+By Part~III (the uniform-gap descent, its Conjecture~III-2 on the stated stratum) a family
+over $\dis$ is uniformly gapped iff each finite-resolution approximation is gapped with a
+common $\gapbound$; the hypothesis is exactly this. The sheaf/limit description of Part~I
+(profinite family $=$ compatible finite data) then assembles the $H^{(i)}$ into an
+$\dis$-point of $\Ham_{d,G}$, which lands in $\Gap_{d,G}$ by the uniform bound. Local
+constancy of the phase is the Lieb--Robinson-continuity of the invariant (Part~II) over the
+connected components of $\dis$'s finite quotients.
+\end{proof}
+
+\begin{remark}[Why an obstruction can remain]
+\Cref{prop:descent} assumes a \emph{common} gap bound and a \emph{compatible} system. Neither
+is automatic: the finite-resolution realizations may exist with gaps $\gapbound_i\to0$ (not
+uniformly gapped, excluded from $\Gap$), or may fail to be compatible across the tower
+(the phase at resolution $i$ may not lift to resolution $i+1$ without a discontinuity). The
+first failure is an analytic one addressed by Part~III's hypotheses; the second is the
+cohomological obstruction $o(c)$ of Conjecture~V-3, living in $H^1_{\mathrm{cond}}$ of the
+hull with automorphism coefficients. This is the precise place where ``realizable at every
+finite resolution'' can fail to give ``realizable over the hull,'' and it is a genuinely
+condensed phenomenon: it has no counterpart for a single translation-invariant model.
+\end{remark}
+
+\begin{example}[Disorder cannot create chiral realizability]
+\label{ex:disorderchiral}
+Disorder does not evade \Cref{thm:VC}. If $c$ is chiral ($\sigma_H(c)\ne0$), then no
+$\dis$-family of commuting-projector models realizes $c$ at any resolution, because each
+fibre would be a $\CP$ model with $\sigma_H=0$; averaging over $\dis$ cannot produce a
+nonzero Hall conductance from fibrewise-zero data. Thus $\im\real^{\CP}$ over $\dis$ is still
+non-chiral, consistent with Conjecture~V-2. Disorder can, however, change \emph{which}
+non-chiral class is realized (mobility gaps, disorder-induced transitions), and that is the
+content the condensed crossed-product invariant of Part~II \cite{prodan-sb} is designed to track.
+\end{example}
+
+\section{Computational verification}
+\label{sec:haskell}
+
+The accompanying Haskell package \texttt{src/bordism-realizability/} makes the two elementary
+propositions executable and self-checking. It is not a proof assistant; it is a battery of
+exact finite computations that would fail loudly if the propositions were misstated, together
+with QuickCheck properties that sample the parameter space.
+
+\subsection{Kitaev-chain invariant sweep}
+
+The module \texttt{Kitaev.hs} implements the Bogoliubov--de Gennes $d$-vector
+$(d_y(k),d_z(k))$ of \Cref{prop:kitaev} and computes two invariants directly from it: the
+winding number $\winding$, by summing signed angle increments of $(d_y,d_z)$ around
+$k\in[0,2\pi)$ on a fine grid and rounding; and the Majorana number
+$\Maj=\sgn(d_z(0))\sgn(d_z(\pi))$. \texttt{Main.hs} prints an invariant table as $\mu$ sweeps
+across the transition at fixed $t=\Delta_{\mathrm{p}}=1$:
+\begin{quote}\small
+for $|\mu|<2$ the winding is $1$ and $\Maj=-1$ (topological); for $|\mu|>2$ the winding is
+$0$ and $\Maj=+1$ (trivial); the two invariants agree (mod $2$) on the gapped locus and jump
+together at $|\mu|=2$.
+\end{quote}
+A second routine sweeps the full $(\mu,t)$ plane and reports the phase boundary as the locus
+where the winding changes, recovering $|\mu|=2|t|$. The transition is \emph{detected}, not
+hard-coded: the code locates the grid cell where the invariant changes and reports the
+midpoint.
+
+\subsection{Cluster-state string order}
+
+The module \texttt{Stabilizer.hs} implements an exact stabilizer-formalism engine over the
+binary symplectic (check-matrix) representation of Pauli operators with $i$-power phase
+tracking. It builds the cluster-state stabilizer group $\langle K_j\rangle$ of
+\Cref{def:cluster}, computes $\langle P\rangle\in\{+1,-1,0\}$ for any Pauli string $P$ by
+testing membership in the group via Gaussian elimination over $\mathbb{F}_2$, and evaluates
+the string order parameter $S_{a,b}$ of \Cref{prop:cluster}. It confirms $\langle
+S_{a,b}\rangle=+1$, $\langle Z_j\rangle=\langle X_j\rangle=0$, and computes the
+symmetry-breaking degradation $\langle U(\theta)^\ast S_{a,b}U(\theta)\rangle$ by expanding
+the rotated string into its $2^m$ Pauli terms and summing exact stabilizer expectations ---
+recovering $(\cos\theta)^m$ without assuming the closed form.
+
+\subsection{QuickCheck properties}
+
+\texttt{Properties.hs} states one property per claim of the two propositions:
+\begin{itemize}
+  \item \emph{Invariant quantization}: for random $(\mu,t,\Delta_{\mathrm{p}})$ off the discriminant, the
+        computed winding is exactly $0$ or $1$ and equals $\tfrac12(1-\Maj)$.
+  \item \emph{Phase-boundary detection}: for random $t,\Delta_{\mathrm{p}}\ne0$, the winding is $1$ iff
+        $|\mu|<2|t|$, and the detected boundary matches $|\mu|=2|t|$ within grid resolution.
+  \item \emph{String-order quantization}: for random even-length windows, $\langle
+        S_{a,b}\rangle=+1$ in the cluster state and $\langle Z_j\rangle=0$.
+  \item \emph{String-order degradation}: for random $\theta\in[0,\pi/2]$ and window length,
+        the computed degraded string order equals $(\cos\theta)^m$ within tolerance and is
+        monotone decreasing in $\theta$.
+\end{itemize}
+\texttt{Main.hs} runs the demonstrations and all properties and exits nonzero on any failure,
+so the package doubles as a regression test of \Cref{prop:kitaev,prop:cluster}.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What the condensed viewpoint adds here}
+
+Realizability is, at bottom, a question about explicit Hamiltonians, and one might ask what
+the condensed formalism contributes beyond bookkeeping. Three things. First, it gives the
+right home for the \emph{disorder} thread: Conjecture~V-3 and \Cref{sec:disorder} are
+statements about $\dis$-points and descent that are awkward to phrase with ordinary bundles
+and natural with profinite probes. Second, it makes the comparison map $\real$ a morphism in
+a category with exact derived operations, so that ``obstruction subgroup''
+$\mathrm{Obs}_{d,G}=\mathcal{C}_{d,G}/\im\real$ is a well-behaved condensed object rather
+than a set-theoretic quotient. Third, it aligns realizability with the rest of the tower: the
+same $\Weq$, the same stabilization, the same spectrum appear in Parts~III--V, so
+realizability is literally the surjectivity of a map the program already constructs, not a
+separate theory.
+
+\subsection{Limitations}
+
+We are candid about the boundaries of the rigorous content. The three Theorems are
+repackagings of cited results into the realizability language; their mathematical substance
+is due to Chen--Gu--Liu--Wen, Else--Nayak, Ogata, Kapustin--Fidkowski, and
+Kapustin--Spodyneiko, and we claim only the translation and the clean $\CP$-versus-gapped
+framing. The two Propositions are
+elementary and self-contained but concern the simplest ($1$d, torsion) corner. Everything
+about the global image (Conjectures~V-1, V-2, V-3) is open and depends on Part~IV's
+still-conjectural identification of $\mathcal{C}_{d,G}$ with $\pi_0\IPcond_{d,G}$. In
+particular we do \emph{not} prove that every SRE class is realizable, nor that every
+non-chiral class is $\CP$-realizable; we prove the obstruction (chiral $\Rightarrow$ not
+$\CP$) and organize the positive evidence.
+
+\subsection{Non-invertible order}
+
+The entire spectrum-level story is about invertible (SRE) phases. Intrinsic topological order
+(anyons, modular tensor categories, nonzero total quantum dimension) is not classified
+by $\IPcond_{d,G}$ and its realizability is a different question, requiring the condensed
+\emph{higher} stack of phases and defects that Part~VI flags as out of current scope.
+Commuting-projector models realize a great deal of non-chiral topological order (toric code,
+string-net / Levin--Wen, Walker--Wang), but the chiral topological orders (e.g.\ the
+non-abelian Ising phase with $c_-=1/2$) inherit the obstruction of \Cref{thm:VC} through
+their edge and are not $\CP$-realizable.
+
+\subsection{Open directions}
+
+The most consequential open problem is a \emph{general construction theorem}: a procedure
+that, given an arbitrary SRE class in $\pi_0\IPcond_{d,G}$, outputs a uniformly gapped
+lattice model realizing it (non-commuting where the class is chiral). Conjecture~V-1 asserts
+such a procedure exists; the coupled-wire and network constructions are the closest existing
+approximations for chiral phases. A second direction is to prove or refute the descent
+obstruction picture of Conjecture~V-3 in a tractable family (e.g.\ the disordered Kitaev
+chain over a Bernoulli hull), where the crossed-product invariant of Part~II is computable and
+the obstruction $o(c)$ should be explicitly checkable.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have separated the realizability question, which abstract bordism/homotopy classes are
+produced by explicit gapped lattice models, into a constructive region, an obstructed
+region, and an open region, all inside the condensed program of this series. The constructive
+region is governed by two theorems: every group-cohomology class is realized by a
+commuting-projector model (Theorem~V-A), and in $d=1$ with on-site finite symmetry the
+operator-algebraic index is complete, so realized equals invariant (Theorem~V-B); in $d=2$ the
+index exists and every in-cohomology class is realized, though completeness is open. The
+obstructed region is governed by one theorem in two parts: local commuting-projector
+Hamiltonians have zero electric Hall conductance under $U(1)$ (Kapustin--Fidkowski) and zero
+chiral central charge (Kapustin--Spodyneiko), so every chiral class lies outside the
+commuting-projector image (Theorem~V-C), and the inclusion
+$\im\real^{\CP}\subsetneq\im\real$ is strict wherever chiral phases exist. The open region is the global shape of the realizability image, stated as three
+numbered conjectures: that the image is exactly the short-range-entangled subspectrum
+(V-1), that chiral classes are gapped-realizable but never commuting-projector realizable
+(V-2), and that realizability descends over profinite disorder hulls under a
+condensed-cohomological obstruction (V-3). The two elementary propositions (the Kitaev
+chain winding invariant and the cluster-state string order) anchor the torsion corner
+concretely and are verified by the accompanying Haskell. Throughout, the discipline that
+makes the picture coherent is the distinction between realizability by \emph{some} gapped
+local Hamiltonian and realizability by a \emph{commuting-projector} model; the
+Kapustin--Fidkowski (electric) and Kapustin--Spodyneiko (thermal) walls are exactly the gap
+between them.
+
+\paragraph{Code availability.}
+{\hbadness=10000
+\begin{sloppypar}
+The accompanying Haskell package (the Kitaev-chain invariant sweep and the exact
+cluster-state stabilizer engine that verify \Cref{prop:kitaev,prop:cluster}) is available
+at \href{https://github.com/YonedaAI/topological-phases-of-matter}{\nolinkurl{github.com/YonedaAI/topological-phases-of-matter}}
+in the directory \texttt{src/bordism-realizability/}.
+\end{sloppypar}}
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

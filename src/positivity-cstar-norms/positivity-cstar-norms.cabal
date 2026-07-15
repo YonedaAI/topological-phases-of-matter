@@ -1,0 +1,51 @@
+cabal-version:      2.4
+name:               positivity-cstar-norms
+version:            0.1.0.0
+synopsis:           Companion code for Part II -- positivity, C*-norms, condensed state spaces
+description:        Finite-dimensional C*-algebras (matrix algebras): positivity by
+                    Jacobi eigenvalues and by Cholesky, the explicit GNS construction
+                    from a state on M_n, and the Bloch-ball geometry of qubit states,
+                    with QuickCheck properties and deterministic identity checks.
+license:            MIT
+author:             Matthew Long
+maintainer:         matthew@yonedaai.com
+build-type:         Simple
+
+-- Main.hs runs the demonstrations, the QuickCheck property suite, and the
+-- deterministic identity checks, exiting non-zero on any verification failure;
+-- `cabal run positivity-cstar` is therefore both the demo and the test. The
+-- `test-suite` stanza below builds the identical sources as an
+-- exitcode-stdio-1.0 target, so `cabal test` also runs the full
+-- Properties/Proofs suite (not just `cabal run`).
+--
+-- Dependency bounds: `base >=4.20` because 'Core.hs' uses 'foldl'' via the
+-- Prelude re-export introduced in that version (GHC 9.10), rather than an
+-- explicit `Data.List` import that -Werror would flag as redundant on any
+-- base satisfying this bound; QuickCheck is bounded to the 2.1x series this
+-- suite is written against and tested with (2.15/2.18).
+executable positivity-cstar
+    main-is:          Main.hs
+    other-modules:    Core
+                      GNS
+                      CrossedProduct
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4.20 && <5
+                    , QuickCheck >=2.14 && <2.19
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+test-suite properties
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    other-modules:    Core
+                      GNS
+                      CrossedProduct
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4.20 && <5
+                    , QuickCheck >=2.14 && <2.19
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror

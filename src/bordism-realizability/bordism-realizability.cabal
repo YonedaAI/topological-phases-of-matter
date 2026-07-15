@@ -1,0 +1,52 @@
+cabal-version:      2.4
+name:               bordism-realizability
+version:            0.1.0.0
+synopsis:           Companion code for Part V -- realizability of bordism/homotopy classes by gapped lattice systems
+description:        The Kitaev p-wave chain Z2 invariant (winding number / Majorana number)
+                    swept across the mu/t plane with phase-boundary detection, and an exact
+                    stabilizer engine for the 1D cluster-state Z2xZ2 SPT string order and its
+                    degradation under a symmetry-breaking rotation. Together these verify the
+                    two elementary propositions (Kitaev-chain invariant; cluster-state string
+                    order) of the paper.
+license:            MIT
+author:             Matthew Long
+maintainer:         matthew@yonedaai.com
+build-type:         Simple
+
+-- NOTE on structure: a `library` stanza exposing Kitaev/Stabilizer/Properties/
+-- Proofs was tried (so the executable and test-suite below would share one
+-- compiled copy instead of each compiling their own), but a library and an
+-- executable/test-suite cannot share `hs-source-dirs` in cabal: GHC then sees
+-- the library modules' source files on the executable's own search path and
+-- refuses to compile it (-Werror=missing-home-modules), since it cannot tell
+-- they are meant to come from the library dependency instead. Fixing that
+-- cleanly needs the library's sources in a separate directory from Main.hs,
+-- which would make this topic's layout inconsistent with the other four
+-- Haskell topics in this project (all flat, single-directory). We keep the
+-- flat layout and the resulting duplication (Main.hs runs both the demo and
+-- doubles as the test, so both stanzas need the same modules) and instead
+-- bound QuickCheck's version range below.
+executable bordism-realizability
+    main-is:          Main.hs
+    other-modules:    Kitaev
+                      Stabilizer
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck >=2.14 && <2.19
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+test-suite properties
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    other-modules:    Kitaev
+                      Stabilizer
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck >=2.14 && <2.19
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror

@@ -1,0 +1,343 @@
+Topological phase transitions and topological phases of matter within a condensed-mathematics paradigm
+
+Abstract
+
+A natural synthesis is to regard quantum phases not merely as elements of a classification table, but as components of a condensed moduli object of uniformly gapped local Hamiltonians. Continuous, profinite, disordered, and inverse-limit families of quantum systems are then treated through the same sheaf-theoretic language. Stacking equips the moduli object with a symmetric monoidal structure; its invertible sector can be group-completed into a condensed spectrum. A topological phase transition is the failure of a family to remain inside the gapped subobject: it crosses a gapless discriminant locus, and the change of topological invariant becomes a relative or local-cohomological obstruction supported on that locus.
+
+This should presently be viewed as a coherent research program, not as a completed standard theory. Condensed mathematics supplies the foundations for topological algebra, while topological phases are already studied through gapped homotopy, operator algebras, K-theory, bordism, and spectra. The most concrete existing bridge is that solidification of algebraic K-theory can recover operator K-theory for Banach algebras.
+
+⸻
+
+1. The central proposal
+
+Fix:
+
+* a spatial dimension d;
+* a lattice or coarse metric space L;
+* local Hilbert spaces;
+* a locality or interaction-decay condition;
+* an internal or spatial symmetry G.
+
+Let \mathcal I_{d,G} denote the topological space of admissible G-symmetric local or quasi-local interactions. Rather than using \mathcal I_{d,G} only as an ordinary topological space, pass to its associated condensed object
+
+\underline{\mathcal I}_{d,G}(S)
+=\operatorname{Cont}(S,\mathcal I_{d,G}),
+
+where S ranges over profinite sets.
+
+This follows the basic condensed-mathematics translation
+
+X\longmapsto \underline X,
+\qquad
+\underline X(S)=\operatorname{Cont}(S,X).
+
+A condensed set is a sheaf on the category of profinite sets with finite jointly surjective families as covers. For compactly generated spaces, the passage X\mapsto\underline X is fully faithful, so ordinary coupling spaces, tori, manifolds, Banach spaces, and compact disorder spaces are not discarded; they are embedded into a category with better algebraic and homological behavior.
+
+The correct object is generally a condensed anima or stack, rather than a condensed set, because Hamiltonians can have automorphisms, gauge equivalences, and higher equivalences.
+
+⸻
+
+2. The condensed gapped moduli stack
+
+For a profinite test object S, define schematically
+
+\mathfrak{Ham}_{d,G}(S)
+=
+\left\{
+\begin{array}{c}
+S\text{-continuous families of }G\text{-symmetric}\\
+\text{local or quasi-local quantum interactions}
+\end{array}
+\right\}.
+
+Inside it, define the uniformly gapped substack
+
+\mathfrak{Gap}_{d,G}(S)
+=
+\bigcup_{\Delta>0}
+\left\{
+H\in\mathfrak{Ham}_{d,G}(S):
+\inf_{s\in S}\operatorname{gap}(H_s)\geq \Delta
+\right\}.
+
+The word uniformly is essential. A family in which every individual Hamiltonian is gapped but whose gaps approach zero along the parameter space should not be treated as a single safely gapped family.
+
+One should then impose three physically motivated identifications:
+
+\mathfrak{Phase}_{d,G}
+:=
+\left(
+\mathfrak{Gap}_{d,G}[\mathcal W^{-1}]
+\right)^{\mathrm{st}},
+
+where:
+
+* \mathcal W contains gapped adiabatic or quasi-local equivalences;
+* “st” permits stabilization by adding trivial product-state ancillas;
+* finite-depth or quasi-local unitary equivalences may also be inverted.
+
+The ordinary set of phases is recovered from the path components—or, more precisely, the appropriate shape—of this condensed moduli object:
+
+\operatorname{Phases}_{d,G}
+=
+\pi_0\,\operatorname{Shape}
+\bigl(\mathfrak{Phase}_{d,G}\bigr).
+
+This formulation makes explicit an important subtlety: isomorphism, gapped homotopy, stable equivalence, and K-theoretic equivalence need not coincide automatically. The chosen class \mathcal W is part of the definition of the physical phase problem. Quasi-adiabatic continuation supplies a key connection between uniformly gapped paths and quasi-local transformations of observables.
+
+Thus the basic slogan is
+
+\boxed{
+\text{topological phase}
+=
+\text{a component of the stabilized condensed stack of gapped systems}.
+}
+
+⸻
+
+3. Why the whole homotopy type matters
+
+Classification by \pi_0 records only which phases exist. The higher homotopy groups of the gapped moduli object contain additional physics:
+
+\pi_1(\mathfrak{Phase}_{d,G})
+\quad\text{describes loops of gapped Hamiltonians,}
+
+which can represent adiabatic pumps or automorphisms of topological order. Higher groups \pi_n describe n-parameter families, higher pumps, and families of defects. Work on adiabatic paths already emphasizes that loops and higher homotopy in the space of gapped Hamiltonians can implement nontrivial automorphisms.
+
+Stacking systems gives a multiplication
+
+\boxtimes:
+\mathfrak{Phase}_{d,G}\times
+\mathfrak{Phase}_{d,G}
+\longrightarrow
+\mathfrak{Phase}_{d,G},
+
+making the phase object a symmetric monoidal or E_\infty-object. Restricting to invertible phases and group-completing should produce a connective condensed spectrum,
+
+\mathbf{IP}^{\mathrm{cond}}_{d,G}.
+
+This is the condensed analogue of the spectrum-of-phases viewpoint. Freed and Hopkins formulate invertible phases through stable homotopy and bordism under effective-field-theory assumptions, while recent operator-algebraic work constructs an \Omega-spectrum whose homotopy groups describe invertible gapped quantum spin systems. The latter uses sheaves on smooth manifolds rather than condensed objects, but it is especially close in spirit to the proposed framework.
+
+Internal symmetry is represented by a condensed group \underline G. Depending on the physical problem, symmetric systems should be described through strict fixed points or homotopy fixed points,
+
+\mathfrak{Phase}_{d}^{\,h\underline G}.
+
+Spatial symmetry can instead be encoded through an action stack such as
+
+[Y/\underline G],
+
+with Y representing physical space, a lattice, or a disorder hull.
+
+⸻
+
+4. Phase transitions as the gapless discriminant
+
+Let B be a parameter space of couplings, external fields, pressures, disorder configurations, or boundary conditions. Regard it as a condensed object \underline B, and let
+
+f:\underline B\longrightarrow\mathfrak{Ham}_{d,G}
+
+be a family of systems.
+
+Define the gapped locus
+
+U_f
+=
+\underline B
+\times_{\mathfrak{Ham}_{d,G}}
+\mathfrak{Gap}_{d,G},
+
+and the gapless or critical locus
+
+\Sigma_f
+=
+\underline B\setminus U_f.
+
+On U_f, the phase label is locally constant:
+
+\nu_f:
+U_f\longrightarrow
+\pi_0(\mathfrak{Phase}_{d,G}).
+
+A topological phase transition occurs when a path in B begins and ends in regions carrying different values of \nu_f. Such a path cannot remain entirely inside U_f; it must intersect \Sigma_f. In this language,
+
+\boxed{
+\text{topological transition}
+=
+\text{crossing the gapless discriminant in the Hamiltonian moduli stack}.
+}
+
+Suppose the invariant takes values in a generalized cohomology theory E. On the gapped region it may be represented by
+
+\nu\in E^q(U_f).
+
+The obstruction to extending this invariant across the critical set is measured by the relative group
+
+\partial\nu\in E^{q+1}(B,U_f).
+
+This relative class is a mathematical candidate for the topological charge of the transition. Locally, a small sphere linking a component of \Sigma_f detects the jump. This expresses the familiar idea that a critical node, Dirac point, Weyl point, or other band degeneracy acts as a source or sink of topological charge, but does so in a form applicable to generalized cohomology and interacting phase spectra.
+
+⸻
+
+5. Example: the SSH transition
+
+Consider the two-band one-dimensional Hamiltonian
+
+H(k;t_1,t_2)
+=
+(t_1+t_2\cos k)\sigma_x
++
+t_2\sin k\,\sigma_y.
+
+Writing
+
+q(k)=t_1+t_2e^{ik},
+
+the energies are
+
+E_\pm(k)=\pm |q(k)|.
+
+The system is gapped when
+
+|t_1|\neq |t_2|,
+
+and the gap closes on the discriminant
+
+\Sigma=\{(t_1,t_2):|t_1|=|t_2|\}.
+
+The winding number of q:S^1\to\mathbb C^\times is
+
+\nu=
+\begin{cases}
+1,& |t_1|<|t_2|,\\[2mm]
+0,& |t_1|>|t_2|,
+\end{cases}
+
+up to orientation conventions.
+
+In the condensed formulation, one replaces the ordinary parameter space and Brillouin circle by
+
+\underline B,\qquad \underline{S^1},
+
+and treats the family as a morphism into the condensed gapped moduli stack. The numerical winding number does not change simply because the language has changed. The benefit is that the invariant is now part of a functorial theory of families, descent, completions, symmetries, and generalized parameter spaces. Free-fermion band systems constitute the best-developed setting for this type of topological classification.
+
+⸻
+
+6. The strongest concrete bridge: solid K-theory
+
+For free fermions and many disordered systems, topological invariants are naturally classes in the operator K-theory of a Banach or C^*-algebra of observables.
+
+Given a topological algebra A, its condensed version is schematically
+
+\underline A(S)=C(S,A).
+
+Ko Aoki proved that solidification of the algebraic K-theory of such condensed algebras recovers semitopological K-theory and, for Banach algebras, topological or operator K-theory. Schematically,
+
+K_{\mathrm{op}}(A)
+\simeq
+\operatorname{Solid}
+\bigl(K_{\mathrm{alg}}(\underline A)\bigr),
+
+with the precise connective and Bott-periodic qualifications given in the theorem.
+
+This is important because it gives more than a philosophical analogy. It says that a central invariant of topological band theory can arise from an intrinsically condensed-mathematical operation.
+
+One possible route is therefore
+
+\begin{aligned}
+\text{Hamiltonian}
+&\longmapsto
+\text{condensed algebra of observables}\\
+&\longmapsto
+K_{\mathrm{alg}}(\underline A)\\
+&\longmapsto
+\operatorname{Solid}\bigl(K_{\mathrm{alg}}(\underline A)\bigr)\\
+&\longmapsto
+\text{operator-}K\text{ phase invariant}.
+\end{aligned}
+
+⸻
+
+7. Disorder and aperiodicity
+
+Condensed mathematics is particularly natural for disorder spaces. If F is a finite set of local configurations, then
+
+\Omega=F^{\mathbb Z^d}
+
+is a compact totally disconnected, hence profinite, configuration space. A disordered Hamiltonian family
+
+\omega\longmapsto H_\omega
+
+is literally an \Omega-point of the condensed Hamiltonian moduli object:
+
+H\in\mathfrak{Ham}_{d,G}(\Omega).
+
+Finite quotients of \Omega represent finite-resolution disorder data. The sheaf condition expresses compatibility of Hamiltonian families and invariants across such finite approximations. This suggests a systematic framework for:
+
+* disorder-robust phase labels;
+* quasicrystalline or substitution-system hulls;
+* inverse limits of finite-volume parameter spaces;
+* crossed-product observable algebras;
+* continuously or profinitely varying symmetry data.
+
+Here condensed mathematics is not merely repackaging an ordinary smooth parameter manifold; its profinite probes directly match the structure of the physical configuration space.
+
+⸻
+
+8. What the paradigm contributes—and what it does not
+
+The proposed framework contributes three main structural advantages.
+
+First, ordinary continuous families, profinite disorder families, compact inverse limits, and topological symmetry groups can be handled in one category.
+
+Second, condensed abelian groups, solid modules, and solid spectra provide exact derived operations where ordinary categories of topological groups or modules are poorly behaved. Condensed abelian groups form a well-behaved Grothendieck abelian category, which is precisely the type of environment needed for derived invariants and descent.
+
+Third, the sheaf and stack viewpoint naturally organizes local families, defects, interfaces, boundary conditions, symmetry actions, and gluing.
+
+It does not, by itself, solve the difficult analytic parts of quantum many-body theory. One must still establish:
+
+* locality and Lieb–Robinson-type estimates;
+* positivity and C^*-norm conditions;
+* existence and stability of a thermodynamic spectral gap;
+* equivalence between microscopic lattice systems and effective field theories;
+* physical realizability of abstract bordism or homotopy classes.
+
+Nor does a spectrum completely classify noninvertible topological order. General anyon theories and noninvertible phases require higher categories of excitations and defects, braided or modular tensor categories in 2+1 dimensions, and appropriate higher-categorical analogues in greater dimensions. A condensed enhancement would therefore need a condensed higher stack of phases and defects, not only a condensed K-theory spectrum.
+
+The gap between abstract homotopy-TQFT classifications and explicit local lattice realizations is a recognized issue: not every abstract invertible field theory is automatically known to arise from a microscopic gapped system.
+
+⸻
+
+9. A concise research formulation
+
+The entire program can be summarized by the sequence
+
+\boxed{
+\begin{array}{c}
+\text{local quantum interactions}\\
+\downarrow\\
+\text{condensed moduli stack of Hamiltonians}\\
+\downarrow\\
+\text{uniformly gapped substack}\\
+\downarrow\\
+\text{stabilized phase }\infty\text{-groupoid}\\
+\downarrow\\
+\text{invertible condensed phase spectrum}.
+\end{array}
+}
+
+Within this picture:
+
+\begin{aligned}
+\pi_0
+&=\text{phases},\\
+\pi_1
+&=\text{adiabatic pumps and phase automorphisms},\\
+\pi_n
+&=\text{higher families and higher defects},\\
+\Sigma
+&=\text{gapless transition locus},\\
+E^{q+1}(B,B\setminus\Sigma)
+&=\text{relative charge of a transition}.
+\end{aligned}
+
+The genuinely new thesis is therefore not that condensed mathematics produces a different Chern number. It is that it may provide a single categorical and homological environment in which continuous families, profinite disorder, analytic completions, operator K-theory, symmetry, stacking, defects, and phase-transition loci can be treated simultaneously.

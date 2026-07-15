@@ -1,0 +1,1365 @@
+\documentclass[12pt]{article}
+
+% Core math
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+
+% Diagrams
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% Tables
+\usepackage{array}
+\usepackage{booktabs}
+
+% Spacing helpers
+\usepackage{needspace}
+\usepackage{placeins}   % \FloatBarrier to keep Table 1 with its section
+
+% References
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Graphics
+\usepackage{graphicx}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% GrokRxiv sidebar
+\usepackage{xcolor}
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = F^{Z^d}
+% ==== end canonical macros ====
+
+% --- local convenience macros (not overriding canonical glyphs) ---
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\Uone}{U(1)}
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\qA}{\mathcal{A}}                  % quasi-local algebra
+\newcommand{\St}{\mathcal{S}}                  % state space S(A)
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\SRE}{\mathrm{SRE}}
+\newcommand{\Groth}{\operatorname{Groth}}      % group completion
+\newcommand{\IFH}{I_{\mathrm{FH}}}             % Freed--Hopkins invertible-TQFT spectrum
+\newcommand{\real}{\operatorname{real}}        % realization/comparison map
+\newcommand{\CPr}{\mathrm{cp}}                  % commuting-projector superscript
+\newcommand{\Obs}{\operatorname{Obs}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\set}[1]{\{\,#1\,\}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator*{\einf}{inf}
+
+% Theorem environments. We use aliascnt so that each environment carries its own
+% counter (aliased to the Theorem counter for shared numbering); this lets cleveref
+% name cross-references correctly ("Proposition 2.3", "Recollection 3.1") instead of
+% collapsing them all to "Theorem".
+\usepackage{aliascnt}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\newaliascnt{recollection}{theorem}
+\newtheorem{recollection}[recollection]{Recollection}
+\aliascntresetthe{recollection}
+% Numbered program-level conjectures, tagged VI-k per the series convention
+% (own counter so cross-references resolve to "Conjecture VI-k", not the section).
+\newtheorem{progconj}{Conjecture}
+\renewcommand{\theprogconj}{VI-\arabic{progconj}}
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+% cleveref display names for the aliased environments.
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{recollection}{Recollection}{Recollections}
+\Crefname{recollection}{Recollection}{Recollections}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{example}{Example}{Examples}
+\Crefname{example}{Example}{Examples}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+\crefname{progconj}{Conjecture}{Conjectures}
+\Crefname{progconj}{Conjecture}{Conjectures}
+
+% GrokRxiv DOI sidebar
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/foreground}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.synthesis\quad
+       [\,math-ph\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!45!black,
+  urlcolor=blue!55!black
+}
+
+\title{\textbf{Topological Phases of Matter in the Condensed-Mathematics Paradigm:\\
+A Modular Research Program}\\[0.4em]
+\large Part VI of \emph{Topological Phases of Matter in the Condensed-Mathematics Paradigm}}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+\textit{YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This synthesis assembles the five analytic and topological modules of the preceding
+Parts into one research program: topological phases of matter, read as the components
+of a condensed moduli stack of uniformly gapped local Hamiltonians. The spine is a
+single sequence:
+local quantum interactions $\rightsquigarrow$ condensed moduli stack $\Ham_{d,G}$
+$\rightsquigarrow$ uniformly gapped substack $\Gap_{d,G}$ $\rightsquigarrow$ stabilized
+phase $\infty$-groupoid $\Phase_{d,G}$ $\rightsquigarrow$ invertible condensed phase
+spectrum $\IPcond_{d,G}$, and each arrow is owned by a Part. Part~I makes the
+interaction space a condensed Banach object and the Heisenberg flow a condensed
+morphism with a base-uniform Lieb--Robinson light cone; Part~II attaches the
+quasi-local $C^\ast$-algebra, its compact condensed state space, and the solid
+$K$-theory invariant obtained from Aoki's solidification theorem (correctly, only
+after inverting the Bott class); Part~III cuts out the uniformly gapped substack and
+proves its stability on the frustration-free / LTQO stratum against the wall of
+Cubitt--P\'erez-Garc\'ia--Wolf undecidability; Part~IV group-completes the invertible
+sector into the condensed spectrum and sets it against the Freed--Hopkins bordism
+target; Part~V asks which spectral classes a lattice model realizes, bounded by the
+commuting-projector no-gos of Kapustin--Fidkowski and Kapustin--Spodyneiko. We treat the
+program as a \emph{modular composition}: each
+Part is a module whose output is the next module's input, and structure emerges at
+each level: functorial invariants of disordered families, a robust set of phases, the
+higher homotopy of pumps and defects, an obstruction subgroup of unrealized classes.
+We develop the transition calculus, in which a topological phase transition is the
+crossing of the gapless discriminant $\Sig_f$ and its charge is the relative class
+$\rc\in E^{q+1}(B,B\setminus\Sig_f)$, an obstruction detected by linking spheres; we
+work the SSH chain through all five modules; and we run the profinite disorder thread
+$\dis=\Ffun^{\ZZ^d}$ through the whole. The module-level results are theorems, cited to
+Parts~I--V\@. The program-level statements (that the modules glue into a single
+condensed higher stack with $\IPcond_{d,G}$ its invertible spectrum, that the
+microscopic and field-theoretic classifications agree, that the relative charge is a
+spectral boundary map, that all invariants descend along disorder hulls) are stated as
+numbered Conjectures~VI-1 through VI-4 and never as proven. A consolidated table
+records all nineteen module conjectures with their dependencies. The genuinely new
+thesis is not a different Chern number; it is a single categorical and homological
+environment for continuous families, profinite disorder, completions, symmetry,
+stacking, defects, and transition loci.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The proposal}
+\label{sec:proposal}
+
+A quantum phase is usually presented as an entry in a classification table. This
+program takes a different starting point, due in outline to the seed prospectus of the
+series and realized in detail across Parts~I--V\@: a phase is a \emph{component of a
+condensed moduli object of uniformly gapped local Hamiltonians}. Fix a spatial
+dimension $d$, a lattice or coarse metric space $L$, on-site Hilbert spaces, a locality
+(interaction-decay) class, and an internal or spatial symmetry group $G$. Let
+$\Int_{d,G}$ be the space of admissible $G$-symmetric local or quasi-local
+interactions. Rather than use $\Int_{d,G}$ as an ordinary topological space, pass to
+its condensation
+\begin{equation}
+\label{eq:condensation}
+X\longmapsto\cond{X},\qquad \cond{X}(S)=\Cont(S,X),\qquad S\ \text{profinite},
+\end{equation}
+a sheaf on the site of profinite sets with finite jointly surjective covers. On
+compactly generated spaces the passage $X\mapsto\cond{X}$ is fully faithful
+\cite{clausen-scholze-condensed,barwick-haine-pyknotic}, so coupling tori, Banach
+interaction spaces, and compact disorder hulls are not discarded but embedded into a
+category with exact homological algebra. Because Hamiltonians carry gauge and
+quasi-local automorphisms, the right object is a condensed \emph{anima} or
+\emph{stack}, not a condensed set.
+
+The whole program is the study of one geometric object and one substack. Over a
+profinite probe $S$ let $\Ham_{d,G}(S)$ be the $S$-continuous families of
+$G$-symmetric quasi-local interactions, and let
+\begin{equation}
+\label{eq:gapdef}
+\Gap_{d,G}(S)=\bigcup_{\gapbound>0}\set{H\in\Ham_{d,G}(S):\einf_{s\in S}\gapof{H_s}\ge\gapbound}
+\end{equation}
+be the \emph{uniformly} gapped substack (the word uniformly being load-bearing, since
+a family whose pointwise gaps degenerate to zero must be excluded). Inverting a class
+$\Weq$ of gapped adiabatic / quasi-local equivalences and stabilizing by trivial
+ancillas produces the phase $\infty$-groupoid, and its shape records the phases:
+\begin{equation}
+\label{eq:phase}
+\Phase_{d,G}:=\bigl(\Gap_{d,G}[\Weq^{-1}]\bigr)^{\st},
+\qquad
+\Phases_{d,G}=\pi_0\,\Shape(\Phase_{d,G}).
+\end{equation}
+Stacking systems, $\boxtimes$, makes $\Phase_{d,G}$ symmetric monoidal; group-completing
+its invertible sector yields the connective condensed spectrum $\IPcond_{d,G}$. The two
+slogans of the program are the anchors of everything below:
+\begin{equation}
+\label{eq:slogans}
+\boxed{\;\text{topological phase}=\text{a component of the stabilized condensed stack of gapped systems}\;}
+\end{equation}
+and
+\begin{equation}
+\label{eq:slogan2}
+\boxed{\;
+\begin{array}{c}
+\text{topological transition}={}\\[2pt]
+\text{crossing the gapless discriminant in the Hamiltonian moduli stack}.
+\end{array}
+\;}
+\end{equation}
+
+\subsection{The program as a modular hierarchy}
+\label{sec:modular}
+
+What Parts~I--V supply is not a monolith but five interoperable \emph{modules}, each of
+which takes the previous module's output as its input and produces new structure. This
+is the sense in which the program is modular: the composition is a hierarchy, and at
+each level of the hierarchy a property emerges that was not visible one level down.
+
+\begin{enumerate}
+\item \textbf{Locality (Part I \cite{paperLocality}).} Makes $\Int_{d,G}$ a real Banach
+  space $\BF$ through a Nachtergaele--Sims--Young $\Ffun$-function locality norm, and
+  promotes the Heisenberg dynamics to a morphism of condensed sets with a
+  \emph{base-uniform} Lieb--Robinson light cone. Emergent structure: the ground floor
+  $\Ham_{d,G}$ exists as a condensed object with a well-defined notion of quasi-local
+  time evolution over any profinite base.
+\item \textbf{Positivity and $C^\ast$-norms (Part II \cite{paperPositivity}).} Attaches
+  the quasi-local $C^\ast$-algebra $\qA$, its compact condensed state space, and, via
+  Aoki's solidification theorem, a \emph{solid} $K$-theory invariant. Emergent
+  structure: functorial topological invariants of disordered families over profinite
+  hulls, produced by an intrinsically condensed operation.
+\item \textbf{The gap (Part III \cite{paperGap}).} Cuts out the uniformly gapped
+  substack $\Gap_{d,G}$ and proves its stability where a stability theory holds with
+  uniform constants. Emergent structure: a robust set of phases $\Phases_{d,G}$, once
+  $\Weq$ is inverted and ancillas are added.
+\item \textbf{Stabilization and effective field theory (Part IV \cite{paperEFT}).}
+  Group-completes the invertible sector into the connective condensed spectrum
+  $\IPcond_{d,G}$ and compares it with the Freed--Hopkins bordism classification.
+  Emergent structure: the higher homotopy of pumps and defects, and the relative charge
+  $\rc$ as a spectral boundary map.
+\item \textbf{Realizability (Part V \cite{paperRealizability}).} Identifies which
+  spectral classes are produced by an explicit gapped lattice Hamiltonian. Emergent
+  structure: an obstruction subgroup separating abstract classes from lattice-realizable
+  ones.
+\end{enumerate}
+
+Two threads cut across all five modules and are what make the composition cohere rather
+than merely stack. The first is the \emph{transition calculus}
+$(U_f,\Sig_f,\nu_f,\rc)$, which ties modules III--V together: the gapped locus of a
+family, its gapless discriminant, the locally constant phase label, and the relative
+charge of a crossing. The second is the \emph{profinite disorder thread}
+$\dis=\Ffun^{\ZZ^d}$, which runs through every module: descent of Lieb--Robinson
+estimates in Part~I, crossed-product observable algebras in Part~II, uniform-gap descent
+in Part~III, parametrized invariants in Part~IV, and functorial realizability in
+Part~V\@.
+
+\subsection{What is proved and what is conjectured}
+\label{sec:stance}
+
+The stance of this synthesis is the stance of the whole series: a rigorous research
+\emph{program}, not a finished theory. We are strict about the boundary. The
+\emph{module-level} results (Theorems~I-A through V-C, and the citations of Aoki,
+Kubota, Freed--Hopkins, Ogata, and Kapustin--Fidkowski as rigorous anchors) are
+theorems, and we restate them (as Recollections, with citations to the Parts that prove
+them) rather than reprove them. The \emph{program-level} claims are open. That the
+modules glue into a single condensed higher stack with $\IPcond_{d,G}$ as its invertible
+spectrum; that the microscopic and field-theoretic classifications agree; that the
+relative charge is the boundary map of that spectrum; that every program invariant
+descends along disorder hulls; each of these is stated below as a numbered
+Conjecture~VI-$k$ and is never asserted as proven.
+
+Two hard theorems bound the program from outside and are quoted wherever they bite.
+Cubitt--P\'erez-Garc\'ia--Wolf \cite{cpw-undecidable} proved that the spectral gap is
+undecidable, so there is no algorithm and no uniform criterion deciding membership in
+$\Gap_{d,G}$; existence of a thermodynamic gap is a \emph{hypothesis that defines} the
+substack, not a computable property. Two commuting-projector no-gos bound realizability:
+Kapustin--Fidkowski \cite{kapustin-fidkowski} proved that a $U(1)$-symmetric local
+commuting-projector Hamiltonian has zero electric Hall conductance ($\sigma_H=0$), and
+Kapustin--Spodyneiko \cite{kapustin-spodyneiko-thermal} proved that its chiral central charge
+vanishes ($c_-=0$) with no symmetry hypothesis; so every chiral invertible class (nonzero
+$\sigma_H$ under $U(1)$, or nonzero $c_-$) lies outside the commuting-projector image.
+Neither wall is ever crossed in what follows.
+
+\subsection{Relation to companion papers}
+\label{sec:companions}
+
+This paper is the capstone of a six-part series and consumes the outputs of Parts~I--V\@;
+it imports the canonical notation of the series verbatim and does not restate it. We
+summarize each companion in one paragraph, and \Cref{sec:spine} develops the
+composition in full.
+
+\emph{Part~I, Condensed Locality} \cite{paperLocality}, is the analytic ground floor.
+Fixing an $\Ffun$-function it makes the $G$-symmetric interactions of finite
+$\Ffun$-norm a real Banach space $\BF$, condenses it to $\cond{\BF}(S)=\Cont(S,\BF)$,
+and proves that Heisenberg dynamics is a strongly continuous group of $\ast$-automorphisms
+obeying a Lieb--Robinson bound (Theorem~I-A), that its assignment is a morphism of light
+condensed sets (Theorem~I-B), and that a profinite family is exactly compatible finite
+data with a base-uniform light cone (Theorem~I-C)\@. It generates the equivalence class
+$\Weq$ from quasi-adiabatic continuation and states Conjectures~I-1 (condensed higher
+stack), I-2 (condensed group of quasi-local automorphisms), and I-3 (descent of
+Lieb--Robinson estimates along a disorder hull).
+
+\emph{Part~II, Positivity, $C^\ast$-Norms, and Condensed State Spaces}
+\cite{paperPositivity}, is the observable side. It shows the state space
+$\St(\qA)$ condenses to a compact Hausdorff condensed set cut out by positivity and
+normalization (Theorem~II-A), that Aoki's solidification recovers operator $K$-theory
+after Bott inversion (Theorem~II-B), and that Bellissard's crossed product
+$C(\dis)\rtimes\ZZ^d$ condenses functorially in the finite quotients of the hull
+(Theorem~II-C)\@. It records Conjectures~II-1 through II-5 (closed condensed substack;
+naturality of the solid invariant; Real/$KKO$ refinement; solid classifying object;
+condensed superselection). Following Part~II we write the disorder alphabet as $Q$, not
+$\Ffun$, to avoid collision with the $\Ffun$-function of Part~I; see
+\Cref{sec:disorder}.
+
+\emph{Part~III, The Uniformly Gapped Substack} \cite{paperGap}, is the gap module. It
+proves that the finite-volume gap is Lipschitz and the gapped locus is open at finite
+resolution (Theorem~III-A), that $\Gap_{d,G}$ is condensed-open on the frustration-free
+/ LTQO stratum (Theorem~III-B), and that a uniform gap forces uniform clustering
+(Theorem~III-C), all against the CPW undecidability wall; it states Conjectures~III-1
+(openness on the physical
+stratum), III-2 (uniform-gap descent), and III-3 (quasi-adiabatic continuation realizes
+$\Weq$).
+
+\emph{Part~IV, From Lattice Models to Effective Field Theories} \cite{paperEFT}, is the
+stabilization module. It makes $\boxtimes$ a symmetric-monoidal structure, group-completes
+$\Phases_{d,G}$, assembles $\IPcond_{d,G}$ with Kubota's $\Omega$-spectrum as its
+rigorous carrier, and sets the lattice classification against Freed--Hopkins. It states
+Conjectures~IV-1 (condensed/solid refinement), IV-2 (lattice--EFT comparison
+equivalence), IV-3 (relative charge as spectral boundary map), IV-4 (solidification
+commutes with group completion), and IV-5 (renormalization functor).
+
+\emph{Part~V, Physical Realizability} \cite{paperRealizability}, is the realizability
+module. It proves that every group-cohomology class is realized by a commuting-projector
+model (Theorem~V-A), completeness of the operator-algebraic index in $d=1$ for on-site
+finite symmetry, with the $d=2$ index surjective but its completeness open
+(Theorem~V-B and Remark~V-B$'$), and the two commuting-projector no-gos, electric
+(Kapustin--Fidkowski) and thermal/chiral (Kapustin--Spodyneiko) (Theorem~V-C)\@. It states
+Conjectures~V-1 (realizability image is the SRE subspectrum),
+V-2 (chiral realizability by non-commuting models), and V-3 (profinite-family
+realizability).
+
+\subsection{Outline}
+\label{sec:outline}
+
+\Cref{sec:substrate} recalls the condensed-mathematics substrate and fixes conventions.
+\Cref{sec:spine} is the spine: the boxed sequence, arrow by arrow, with each module's
+theorems restated and cited and its emergent structure named.
+\Cref{sec:composition} makes modular composition explicit: the composition diagram, the
+emergent properties, and the two walls. \Cref{sec:dictionary} states the homotopy
+dictionary. \Cref{sec:transitions} develops the relative-charge formalism.
+\Cref{sec:ssh} works the SSH chain through all five modules.
+\Cref{sec:disorder} runs the profinite disorder thread. \Cref{sec:conjectures} states
+the program-level Conjectures~VI-1 through VI-4 and consolidates all nineteen module
+conjectures with dependencies. \Cref{sec:contributions} weighs what the paradigm
+contributes and what it does not, and \Cref{sec:conclusion} concludes.
+
+\section{The condensed-mathematics substrate}
+\label{sec:substrate}
+
+We recall only what the composition uses; Parts~I and II give the careful development.
+
+\subsection{Condensation and profinite probes}
+
+A condensed set is a sheaf on the site of profinite sets $S$ with covers the finite
+jointly surjective families \cite{clausen-scholze-condensed}; the pyknotic variant of
+Barwick--Haine \cite{barwick-haine-pyknotic} differs only in set-theoretic
+bookkeeping. The functor \eqref{eq:condensation} embeds compactly generated topological
+spaces fully faithfully, so no information is lost in passing from $X$ to $\cond{X}$.
+The point of the passage is algebraic: condensed abelian groups form a Grothendieck
+abelian category with exact products and derived functors, where ordinary topological
+abelian groups do not, and this is precisely the environment in which derived
+invariants, descent, and completions behave. A condensed object is \emph{light} when it
+is generated under the site by a countable family (the case for separable Banach spaces
+and separable $C^\ast$-algebras), which is why Parts~I and II take care to work with
+separable data.
+
+\subsection{Stacks, anima, and shape}
+
+Because a Hamiltonian carries automorphisms (gauge transformations, on-site symmetry
+actions, quasi-local unitaries), the moduli problem $S\mapsto\{S\text{-families of
+Hamiltonians}\}$ valued in groupoids (or $\infty$-groupoids) is a candidate
+\emph{condensed stack}, not merely a condensed set. Whether it satisfies descent along
+profinite covers is the content of Conjecture~I-1 and is not proved. The \emph{shape}
+$\Shape(-)$ of a condensed anima is its underlying homotopy type; $\pi_0\Shape$
+extracts the ordinary set of components, hence $\Phases_{d,G}$ in \eqref{eq:phase}.
+Throughout, fraktur denotes the moduli stacks ($\Ham,\Gap,\Phase$), calligraphic the
+interaction space and the equivalence class ($\Int,\Weq$), boldface the spectra
+($\IPcond$), and $\cond{(-)}$ condensation.
+
+\subsection{The boxed sequence}
+
+The program is summarized by one sequence, quoted from the prospectus and realized in
+Parts~I--V\@:
+\begin{equation}
+\label{eq:boxseq}
+\boxed{
+\begin{array}{c}
+\text{local quantum interactions}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part I}\\[2pt]
+\text{condensed moduli stack of Hamiltonians }\Ham_{d,G}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part II}\\[2pt]
+\text{condensed observable algebras and solid }K\text{-theory}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part III}\\[2pt]
+\text{uniformly gapped substack }\Gap_{d,G}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part IV}\\[2pt]
+\text{stabilized phase }\infty\text{-groupoid }\Phase_{d,G}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part IV}\\[2pt]
+\text{invertible condensed phase spectrum }\IPcond_{d,G}\\[2pt]
+\big\downarrow\ \text{\footnotesize Part V}\\[2pt]
+\text{realized subspectrum inside }\IPcond_{d,G}.
+\end{array}}
+\end{equation}
+The prospectus states the middle five lines; Parts~II and V add the observable-algebra
+and realization refinements. Each arrow is a module. \Cref{sec:spine} treats them in
+turn.
+
+\section{The spine: the boxed sequence and its five modules}
+\label{sec:spine}
+
+We walk down \eqref{eq:boxseq}. For each module we recall its principal theorems (as
+Recollections, attributed to the Part that proves them) and name the structure that
+emerges. Nothing in this section is claimed as new; the novelty of the synthesis is the
+composition, treated in \Cref{sec:composition}.
+
+\subsection{Arrow I: local interactions to the condensed stack}
+\label{sec:arrowI}
+
+The first arrow turns a physicist's list of local couplings into a condensed object
+that can be probed by profinite sets. Part~I fixes an $\Ffun$-function $\Ffun$ encoding
+interaction decay and defines the interaction Banach space $\BF$.
+
+\begin{recollection}[Banach interaction space and condensed dynamics; Part~I, Theorems~I-A and I-B \cite{paperLocality}]
+\label{rec:I}
+$\BF$ is a real Banach space; for $\Phi\in\BF$ the infinite-volume Heisenberg dynamics
+$\tau^\Phi_t=\lim_{\Lambda\uparrow L}\tau^{\Phi,\Lambda}_t$ exists in operator norm,
+uniformly for $t$ in compact sets, and is a strongly continuous one-parameter group of
+$\ast$-automorphisms of the quasi-local algebra $\qA$ obeying a Lieb--Robinson bound. Its
+condensation
+\[
+\cond{D}:\cond{\RR}\times\cond{\BF}\longrightarrow\cond{\Aut(\qA)},
+\qquad (t,\Phi)\mapsto\tau^\Phi_t,
+\]
+is a morphism of (light, when the interactions are separable) condensed sets.
+\end{recollection}
+
+\begin{recollection}[Base-uniform light cone; Part~I, Theorem~I-C \cite{paperLocality}]
+\label{rec:Ic}
+Let $S=\varprojlim_i S_i$ be profinite and $\Phi_\bullet\in\Cont(S,\BF)=\cond{\BF}(S)$.
+Then $\Phi_\bullet$ is a norm limit of families factoring through finite quotients
+$S\to S_i$; $B=\sup_{s\in S}\norm{\Phi_s}_\Ffun<\infty$; and if
+$\sup_{s}\norm{\Phi_s}_{\Ffun_a}<\infty$ for a reweighting $\Ffun_a(r)=e^{-ar}\Ffun(r)$,
+the Lieb--Robinson bound holds for all $s\in S$ simultaneously with one velocity
+$v=2\sup_s\norm{\Phi_s}_{\Ffun_a}C_{\Ffun_a}/a$.
+\end{recollection}
+
+\emph{Emergent structure.} The ground floor $\Ham_{d,G}$ is a condensed object over
+which time evolution is quasi-local \emph{uniformly in the probe}. Uniformity is what
+makes every later module's ``family over a base'' well-posed: it is the reason a
+disordered family has a single light cone, a single clustering length, a single set of
+constants. Part~I's Conjectures~I-1, I-2, I-3 mark the edge: stack descent, a condensed
+automorphism group, and Lieb--Robinson descent along a hull; none proved.
+
+\subsection{Arrow II: observable algebras and solid \texorpdfstring{$K$}{K}-theory}
+\label{sec:arrowII}
+
+The second arrow attaches to the stack the algebra of observables and the $K$-theory
+from which topological invariants are built. For a spin system with finite on-site
+dimension $\qA$ is a separable unital AF algebra (UHF in the homogeneous case), and its
+condensation is a sheaf of $C^\ast$-algebras, light because $\qA$ is separable.
+
+\begin{recollection}[Condensed state space; Part~II, Theorem~II-A \cite{paperPositivity}]
+\label{rec:IIa}
+For a unital $C^\ast$-algebra $A$, the state space $\cond{\St(A)}$ is a compact
+Hausdorff condensed set on which condensation is fully faithful, and positivity together
+with normalization exhibit it as a closed condensed subobject of the condensed dual
+ball. On a uniformly gapped family the ground-state section is weak-$\ast$ continuous by
+the Bachmann--Michalakis--Nachtergaele--Sims spectral-flow cocycle
+\cite{bmns-automorphic}, a genuine point of $\cond{\St(A)}$ over the gapped locus.
+\end{recollection}
+
+The load-bearing bridge is Aoki's theorem, and the honesty of the whole program depends
+on stating it with its Bott-inversion caveat, exactly as Part~II now does.
+
+\begin{recollection}[Solidification and operator $K$-theory; Part~II, Theorem~II-B, after Aoki \cite{aoki-solidification,paperPositivity}]
+\label{rec:aoki}
+Let $A$ be a real associative algebra and $\cond{A}$ its condensation. Solidification of
+the \emph{connective} algebraic $K$-theory of $\cond{A}$ is discrete and recovers the
+connective semitopological $K$-theory of $A$ (Friedlander--Walker, and Blanc),
+\[
+\Solid\bigl(\Kalg(\cond{A})\bigr)\;\simeq\;K^{\mathrm{semi}}(A).
+\]
+If $A$ is a real Banach algebra this is the connective part of operator $K$-theory; the
+full, Bott-periodic operator $K$-theory is recovered only after inverting the Bott class
+$\beta$,
+\begin{equation}
+\label{eq:bottinv}
+\Kop(A)\;\simeq\;\Solid\bigl(\Kalg(\cond{A})\bigr)\bigl[\beta^{-1}\bigr],
+\end{equation}
+with $\beta\in K_2^{\mathrm{top}}(\CC)\cong\ZZ$ complex, the period-eight real Bott class
+in the $KO$ case (an infinite-order generator of the eightfold $KO$ periodicity).
+\end{recollection}
+
+We stress the bookkeeping because it is easy to get wrong and consequential when
+composed. Writing $\Kop(A)\simeq\Solid(\Kalg(\cond{A}))$ without the inversion
+$[\beta^{-1}]$ is false in negative degrees: solidification of connective algebraic
+$K$-theory lands in a connective spectrum with no negative homotopy, whereas operator
+$K$-theory is periodic. The two agree in nonnegative degrees, which is all the SSH
+winding (a degree-$\ge 0$ class) needs, but the periodic identification requires
+\eqref{eq:bottinv}. Every later use of ``the solid invariant'' in this synthesis carries
+this qualification.
+
+\begin{recollection}[Crossed-product disorder algebra; Part~II, Theorem~II-C \cite{paperPositivity}]
+\label{rec:crossed}
+For $\dis=Q^{\ZZ^d}$ with the shift action $T$, the covariant observable algebra of a
+homogeneous disordered family is the crossed product $C(\dis)\rtimes_T\ZZ^d$
+\cite{bellissard-ncg-qhe}, a separable unital $C^\ast$-algebra whose $K_0$-trace range is
+the gap-labelling group; its condensation is functorial in the finite quotients of
+$\dis$.
+\end{recollection}
+
+\emph{Emergent structure.} The composition of Arrows~I and II produces \emph{functorial
+topological invariants of disordered families over profinite hulls}, computed by an
+intrinsically condensed operation (solidification) rather than imported by hand. This is
+the first place the condensed language does work an ordinary smooth-parameter treatment
+does not: the profinite probes of \eqref{eq:condensation} match the physical
+configuration space $\dis$ of \Cref{rec:crossed}, they do not approximate it. Part~II's
+Conjectures~II-1 through II-5 record what is open here.
+
+\subsection{Arrow III: the uniformly gapped substack}
+\label{sec:arrowIII}
+
+The third arrow selects the systems on which a phase invariant is even defined. The
+selection is governed by a wall.
+
+\begin{recollection}[Undecidability of the gap; Cubitt--P\'erez-Garc\'ia--Wolf \cite{cpw-undecidable}]
+\label{rec:cpw}
+There is a family of translation-invariant nearest-neighbour Hamiltonians on a
+two-dimensional lattice, depending computably on a parameter, for which no algorithm
+decides whether the thermodynamic-limit system is gapped or gapless; the property is
+$\Pi_1$-complete.
+\end{recollection}
+
+Consequently membership in $\Gap_{d,G}$ is not, in general, decidable, and Part~III does
+not attempt to decide it. Existence of a thermodynamic gap \emph{defines} the substack;
+the content is stability.
+
+\begin{recollection}[Gap continuity and stability; Part~III, Theorems~III-A and III-B \cite{paperGap}]
+\label{rec:III}
+At fixed finite volume the $n$-gap is $2C_\Lambda$-Lipschitz in the interaction norm, so
+the finite-volume gapped locus is open and the gap is continuous along continuous
+families (III-A)\@. On a frustration-free / LTQO stratum, the
+Bravyi--Hastings--Michalakis and Michalakis--Zwolak stability theorems with the
+Nachtergaele--Sims--Young bulk-gap result \cite{bhm-stability,michalakis-zwolak,nsy-bulkgap}
+give a size-independent perturbation threshold $\varepsilon_0$: for
+$\Phi$ in the stratum and a quasi-local direction $V$, the segment
+$\set{\Phi+tV:0\le t<\varepsilon_0}\subseteq\Gap_{d,G}$ with gap bounded below by
+$\gamma/2$. Hence $\Gap_{d,G}$ is condensed-open along the quasi-local direction class at
+each stratum point.
+\end{recollection}
+
+\begin{recollection}[Uniform clustering; Part~III, Theorem~III-C \cite{paperGap}]
+\label{rec:IIIc}
+A uniformly gapped family over a profinite base, with a uniform Lieb--Robinson velocity
+from \Cref{rec:Ic}, has exponential clustering with constants---hence a correlation
+length---bounded uniformly over the base \cite{hastings-koma,nachtergaele-sims-clustering}.
+\end{recollection}
+
+\emph{Emergent structure.} Inverting $\Weq$ and stabilizing on $\Gap_{d,G}$ yields a
+\emph{robust} $\pi_0$: a set of phases stable under quasi-local deformation, disorder
+averaging, and finite-depth circuits. The robustness is exactly what
+\Cref{rec:III,rec:IIIc} buy: openness so a phase label does not
+change under small perturbations, clustering so it is detected locally. But
+the openness holds only on the stratum where the stability hypotheses hold; Conjecture~III-1
+asks for it on the full physical stratum, III-2 for descent along hulls, III-3 for the
+identification of $\Weq$-components with Ogata's operator-algebraic phases
+\cite{ogata-classification-review}.
+
+\subsection[Arrow IV: stabilization and the phase spectrum]{Arrow IV: stabilization and the invertible condensed phase spectrum}
+\label{sec:arrowIV}
+
+The fourth arrow group-completes the invertible sector into a spectrum. On components
+$\boxtimes$ makes $\Phases_{d,G}$ a commutative monoid with unit the trivial product
+state; the short-range-entangled (SRE) phases are exactly its invertible elements.
+
+\begin{recollection}[Group completion and the stabilization element; Part~IV \cite{paperEFT}]
+\label{rec:groth}
+For a commutative monoid $M$, the Grothendieck group $\Groth(M)$ has the universal
+property that monoid maps $M\to A$ into abelian groups factor uniquely through
+$M\to\Groth(M)$; $\gamma_M(a)=\gamma_M(b)$ iff $a+e=b+e$ for some $e\in M$, so
+$\gamma_M$ is injective iff $M$ is cancellative. The element $e$ is the algebraic shadow
+of ancilla stabilization.
+\end{recollection}
+
+\begin{recollection}[Kubota's $\Omega$-spectrum; Part~IV, after Kubota \cite{kubota-omega-spectrum,paperEFT}]
+\label{rec:kubota}
+There is an $\Omega$-spectrum $\mathit{IP}^\ast$, built from the operator-algebraic
+formulation of invertible gapped quantum spin systems, whose homotopy groups are the
+groups of invertible gapped systems in each dimension. It realizes Kitaev's proposal
+\cite{kitaev-periodic-table} that invertible phases are the homotopy groups of a
+spectrum and is the rigorous carrier for the homotopy of $\IPcond_{d,G}$.
+\end{recollection}
+
+Applying the recognition principle for grouplike $E_\infty$-spaces to the invertible
+sector yields a connective spectrum, the invertible condensed phase spectrum
+$\IPcond_{d,G}$ \cite{beaudry-etal}. Against it Part~IV sets the effective-field-theory
+target: the Freed--Hopkins Anderson-dual bordism spectrum $\IFH$ classifying invertible
+topological field theories \cite{freed-hopkins,freed-sre}.
+
+\begin{recollection}[Hall conductance as a phase invariant; Part~IV, after Kapustin--Sopenko \cite{kapustin-sopenko-hall,kapustin-sopenko-noether,paperEFT}]
+\label{rec:hall}
+For a two-dimensional SRE lattice state the Hall conductance is locally computable, an
+integer multiple of $e^2/h$, and constant on gapped phases, hence a homomorphism
+$\Phases_{2,G}^\times\to\ZZ$; the higher Berry class generalizes it to families and
+unifies it with the Thouless pump \cite{thouless-pump}.
+\end{recollection}
+
+\emph{Emergent structure.} Two things appear only at the spectrum level. First, the
+\emph{higher homotopy}: $\pi_1$ of the phase object is loops of gapped Hamiltonians,
+which implement adiabatic pumps and automorphisms of topological order
+\cite{aasen-wang-hastings}; $\pi_n$ is $n$-parameter families and higher defects.
+Second, the \emph{transition calculus} becomes a long-exact-sequence computation, the
+relative charge $\rc$ appearing as a boundary map (\Cref{sec:transitions}). Part~IV's
+Conjectures~IV-1 through IV-5 govern the condensed refinement, the lattice--EFT
+comparison, the boundary-map identity, the compatibility of solidification with group
+completion, and the renormalization functor.
+
+\subsection{Arrow V: realizability}
+\label{sec:arrowV}
+
+The fifth arrow asks the converse question: which classes in $\IPcond_{d,G}$ are
+produced by an explicit uniformly gapped lattice Hamiltonian? Part~V formalizes
+realizability as essential surjectivity on $\pi_0$ of the comparison map $\real$ from
+the stack of lattice models to the abstract spectrum, and separates realizability by
+\emph{some} gapped local model from realizability by a local \emph{commuting-projector}
+model.
+
+\begin{recollection}[Cohomological realizability; Part~V, Theorem~V-A \cite{paperRealizability}]
+\label{rec:VA}
+For every finite $G$ and every $\omega\in H^{d+1}(G,\Uone)$ there is an explicit
+$G$-symmetric local commuting-projector Hamiltonian $H_\omega$ with a unique
+short-range-entangled ground state on any closed $d$-manifold, whose boundary carries the
+anomalous $G$-action with obstruction $\omega$; $\omega\mapsto[H_\omega]$ is a
+homomorphism $H^{d+1}(G,\Uone)\to\SRE_{d,G}$ injective on the group-cohomology subgroup
+\cite{cglw-cohomology,else-nayak}.
+\end{recollection}
+
+\begin{recollection}[Low-dimensional completeness; Part~V, Theorem~V-B and Remark~V-B$'$ \cite{paperRealizability}]
+\label{rec:VB}
+For on-site finite symmetry in $d=1$, Ogata's $H^2(G,\Uone)$-valued index is a
+\emph{complete} invariant of the symmetric phase
+\cite{ogata-spt-chains,ogata-classification-review}, so $\real$ is a bijection onto
+$H^2(G,\Uone)$ and realized $=$ invariant. In $d=2$ the situation is genuinely weaker:
+Ogata's $H^3(G,\Uone)$-valued index \emph{exists} and is a well-defined invariant
+\cite{ogata-h3-index}, and together with the group-cohomology models of \Cref{rec:VA} this
+makes $\real$ \emph{surjective} onto the in-cohomology classes---so every such class is
+realized---but whether the index is \emph{complete} (separates all $d=2$ SPT phases with
+on-site finite symmetry) is open. We therefore do \emph{not} assert realized $=$ invariant
+in $d=2$; only the surjectivity half is settled there.
+\end{recollection}
+
+\begin{recollection}[Commuting-projector no-gos; Part~V, Theorem~V-C \cite{kapustin-fidkowski,kapustin-spodyneiko-thermal,paperRealizability}]
+\label{rec:VC}
+A local commuting-projector Hamiltonian in two dimensions obeys two logically independent
+no-gos. (i) \emph{Electric} (Kapustin--Fidkowski \cite{kapustin-fidkowski}): if it is
+$U(1)$-symmetric, its zero-temperature electric Hall conductance vanishes, $\sigma_H=0$.
+(ii) \emph{Thermal} (Kapustin--Spodyneiko \cite{kapustin-spodyneiko-thermal}): its chiral
+central charge vanishes, $c_-=0$, with no symmetry hypothesis. Hence a $U(1)$-symmetric
+phase with $\sigma_H\ne0$ (the integer quantum Hall states, Chern insulators) is excluded by
+(i), and \emph{any} phase with $c_-\ne0$---including the bosonic $E_8$ state, which carries
+no $U(1)$ charge (so $\sigma_H=0$) yet has $c_-=8$---is excluded by the chiral mechanism (ii),
+not by $\sigma_H$.
+\end{recollection}
+
+\emph{Emergent structure.} The composition of all five arrows produces an
+\emph{obstruction subgroup} $\Obs_{d,G}=\pi_0\IPcond_{d,G}/\im\real$ separating abstract
+classes from lattice-realizable ones, with the chiral classes of \Cref{rec:VC} sitting
+inside the commuting-projector obstruction. Part~V's Conjectures~V-1, V-2, V-3 describe
+the image, the chiral classes, and profinite-family realizability.
+
+\section{Modular composition}
+\label{sec:composition}
+
+The previous section walked the arrows in isolation. Here we make the \emph{composition}
+explicit: how the modules compose, what emerges from composition that is invisible in any
+single module, and what bounds the composition from outside.
+
+\subsection{The composition diagram}
+\label{sec:compdiagram}
+
+Read as modules, the five Parts form a diagram in which each object is the input to the
+next and each module contributes a functor. Write $\mathsf{Loc}$, $\mathsf{Obs}$,
+$\mathsf{Gap}$, $\mathsf{Stab}$, $\mathsf{Real}$ for the five modules.
+
+\begin{equation}
+\label{eq:compdiagram}
+\begin{tikzcd}[column sep=1.5em, row sep=2.6em]
+\{\text{loc.\ int.}\}
+  \arrow[r, "\mathsf{Loc}"]
+& \Ham_{d,G}
+  \arrow[r, "\mathsf{Gap}"]
+  \arrow[d, "\mathsf{Obs}"']
+& \Gap_{d,G}
+  \arrow[r, "\mathsf{Stab}"]
+& \Phase_{d,G}
+  \arrow[r, "\boxtimes\text{, }\Groth"]
+& \IPcond_{d,G}
+  \arrow[d, "c_{d,G}"]
+  \arrow[dl, dashed, "\real"'] \\
+& (\qA,\ \cond{\St(\qA)},\ \Solid\Kalg)
+&& \{\text{realized}\}
+& \IFH
+\end{tikzcd}
+\end{equation}
+
+Here $\mathsf{Loc}$, $\mathsf{Obs}$, $\mathsf{Gap}$, $\mathsf{Stab}$, and the
+group-completion arrow are the functors of Parts~I, II, III, III--IV, and IV\@; the solid
+arrows are functors the modules construct, with the caveat that $\mathsf{Stab}$ inverts
+$\Weq$, whose generation from quasi-adiabatic continuation is Conjecture~III-3. The dashed
+arrow $\real$ is the realization comparison of \Cref{sec:arrowV} (Part~V), whose essential
+image is Conjecture~V-1; the vertical comparison $c_{d,G}:\IPcond_{d,G}\to\IFH$ to the
+Freed--Hopkins target is Conjecture~IV-2. The observable data
+$(\qA,\cond{\St(\qA)},\Solid\Kalg)$ produced by $\mathsf{Obs}$ feeds the homotopy of the
+spectrum through the solid refinement of Conjecture~IV-1. The diagram commutes at the level
+of $\pi_0$ exactly where those conjectures hold---in $d=1$ for on-site finite symmetry
+(\Cref{rec:VB}), and for the free-fermion tenfold way
+\cite{kitaev-periodic-table,altland-zirnbauer}---and its global commutativity is the Master
+Conjecture of \Cref{sec:conjectures}.
+
+\subsection{Emergent properties at each level}
+\label{sec:emergent}
+
+The characteristic feature of a modular composition is that structure emerges at each
+level which is not a property of the parts. We collect the four emergences named in
+\Cref{sec:spine}.
+
+\begin{enumerate}
+\item \textbf{Uniformity} (I$\circ$nothing). A single light cone, clustering length, and
+  constant set over a whole profinite base: the precondition for every ``family'' below.
+\item \textbf{Functorial disordered invariants} (II$\circ$I). Topological invariants of
+  disordered families computed by solidification, matched to the physical configuration
+  space rather than a smooth approximation of it.
+\item \textbf{A robust phase set} (III$\circ$II$\circ$I). $\Phases_{d,G}=\pi_0\Shape\Phase_{d,G}$,
+  stable under quasi-local deformation once $\Weq$ is inverted and ancillas added.
+\item \textbf{Higher homotopy and an obstruction subgroup}
+  (V$\circ$IV$\circ$III$\circ$II$\circ$I). Pumps and defects as $\pi_{\ge1}$, and
+  $\Obs_{d,G}$ separating abstract from realizable.
+\end{enumerate}
+
+None of these emergences is forced by the module below it alone; each requires the
+composite. That is the precise content of calling the program modular rather than
+layered: the modules interoperate, and the interoperation is where the physics of
+families, disorder, and defects lives.
+
+\subsection{The two walls}
+\label{sec:walls}
+
+Two theorems bound the composition and must be respected at every level.
+
+The \emph{undecidability wall} (\Cref{rec:cpw}) forbids any claim that $\Gap_{d,G}$ is
+decidable or algorithmically presentable. It does not forbid stability results: openness
+on a stratum, uniform clustering, and descent along a hull are all statements about the
+\emph{neighborhood} of a gapped system, not tests for gappedness, and Part~III is careful
+to scope them to strata with uniform constants. The wall is why the program is organized
+around stability, not existence.
+
+The \emph{no-go wall} (\Cref{rec:VC}), combining the electric Kapustin--Fidkowski and the
+thermal Kapustin--Spodyneiko no-gos, forbids any claim that a chiral invertible class is
+realized by commuting projectors. It bounds $\im\real^{\CPr}$ to the non-chiral sector and
+makes the separation between ``exactly solvable'' and ``physically realizable''
+structural, not incidental. Every realizability statement in the program excludes the
+chiral commuting-projector case by hypothesis.
+
+A third boundary is not a theorem but a scope limit: a spectrum classifies only
+invertible order. General anyon theories and non-invertible phases need higher categories
+of excitations (braided or modular tensor categories in $2{+}1$ dimensions and their
+higher analogues), so a condensed treatment of them would require a condensed higher stack
+of phases and defects, not a condensed $K$-theory spectrum. That extension is outside the
+present program.
+
+\section{The homotopy dictionary}
+\label{sec:dictionary}
+
+Classification by $\pi_0$ records only which phases exist. The higher homotopy of the
+phase object carries more, and the program fixes a dictionary between homotopy-theoretic
+and physical data. We quote it verbatim from the prospectus, now with each line anchored
+to the module that supplies it.
+
+\begin{equation}
+\label{eq:dictionary}
+\boxed{
+\begin{aligned}
+\pi_0 &= \text{phases},\\
+\pi_1 &= \text{adiabatic pumps and phase automorphisms},\\
+\pi_n &= \text{higher families and higher defects},\\
+\Sig &= \text{gapless transition locus},\\
+E^{q+1}(B,B\setminus\Sig) &= \text{relative charge of a transition}.
+\end{aligned}}
+\end{equation}
+
+The first line is Arrow~III's emergent structure, made precise by Conjecture~III-3: the
+components of $\Gap_{d,G}[\Weq^{-1}]$ are the operator-algebraic gapped phases of Ogata
+\cite{ogata-classification-review}. The second and third are Arrow~IV's: loops and
+higher families of gapped Hamiltonians realize pumps and defects, carried by the homotopy
+of Kubota's spectrum \cite{kubota-omega-spectrum} and, conjecturally, by the higher
+homotopy solid modules of $\IPcond_{d,G}$ (Conjecture~IV-1); the automorphism content of
+$\pi_1$ is the subject of \cite{aasen-wang-hastings}, whose $\pi_1,\pi_2,\pi_3$
+computations are themselves conjectural. The last two lines are the transition calculus,
+developed next.
+
+\section{Phase transitions and the relative-charge formalism}
+\label{sec:transitions}
+
+This section develops the fourth and fifth lines of \eqref{eq:dictionary}: what a
+transition is, and what its charge is. The development is honest obstruction theory (the
+long exact sequence of a pair and excision, valid for any generalized cohomology), and
+the only conjectural step is the identification of the abstract boundary map with the
+spectral boundary map of $\IPcond_{d,G}$, which is Conjecture~IV-3 lifted to the program.
+
+\subsection{The gapped locus, the discriminant, and the phase label}
+\label{sec:locus}
+
+Let $B$ be a parameter space (couplings, fields, pressures, disorder configurations,
+boundary conditions), regarded as a condensed object $\cond{B}$, and let
+$f:\cond{B}\to\Ham_{d,G}$ be a family of systems.
+
+\begin{definition}[gapped locus and discriminant]
+\label{def:locus}
+The \emph{gapped locus} of $f$ is the pullback
+\[
+U_f=\cond{B}\times_{\Ham_{d,G}}\Gap_{d,G},
+\]
+and the \emph{gapless (critical) locus} or \emph{discriminant} is its complement
+$\Sig_f=\cond{B}\setminus U_f$. On $U_f$ the phase label
+\[
+\nu_f:U_f\longrightarrow\pi_0(\Phase_{d,G})=\Phases_{d,G}
+\]
+is locally constant.
+\end{definition}
+
+That $\nu_f$ is locally constant on $U_f$ is exactly \Cref{rec:III}: the gapped locus is
+condensed-open on the physical stratum, and openness of each phase's preimage is what
+``locally constant'' means. A topological phase transition is a path in $B$ whose
+endpoints carry different values of $\nu_f$; such a path cannot stay in $U_f$ and must
+meet $\Sig_f$. This is the boxed slogan \eqref{eq:slogan2}.
+
+\subsection{The relative charge as an obstruction}
+\label{sec:relcharge}
+
+Suppose the invariant is valued in a (condensed) generalized cohomology theory $E$; in
+the invertible case $E$ is represented by $\IPcond_{d,G}$. On the gapped locus the
+invariant is a class $\nu\in E^q(U_f)$. The question of the transition is whether $\nu$
+extends over the critical set to all of $B$. Obstruction theory answers it through the
+long exact sequence of the pair $(B,U_f)$:
+\begin{equation}
+\label{eq:les}
+\cdots\to E^q(B)\xrightarrow{\ j^\ast\ }E^q(U_f)\xrightarrow{\ \partial\ }
+E^{q+1}(B,U_f)\xrightarrow{\ \ }E^{q+1}(B)\to\cdots,
+\end{equation}
+with $j:U_f\hookrightarrow B$ the inclusion.
+
+\begin{definition}[relative transition charge]
+\label{def:relcharge}
+The \emph{relative transition charge} of the family $f$ carrying the invariant $\nu\in
+E^q(U_f)$ is
+\[
+\rc:=\partial\nu\in E^{q+1}(B,U_f)=E^{q+1}(B,B\setminus\Sig_f),
+\]
+the image of $\nu$ under the connecting map of \eqref{eq:les}.
+\end{definition}
+
+\begin{proposition}[extension obstruction]
+\label{prop:obstruction}
+$\rc=0$ if and only if $\nu$ is the restriction of a class on all of $B$; that is,
+$\rc$ is the obstruction to extending the phase invariant across the discriminant. In
+particular, if $\rc\ne0$ the family has a genuine transition: no global invariant
+restricts to $\nu$ on $U_f$.
+\end{proposition}
+
+\begin{proof}
+Exactness of \eqref{eq:les} at $E^q(U_f)$: $\nu\in\im(j^\ast)$ if and only if
+$\partial\nu=0$. A class in $\im(j^\ast)$ is by definition the restriction of a class on
+$B$. This is the standard long exact sequence of a pair in a generalized cohomology
+theory and requires nothing beyond the Eilenberg--Steenrod axioms that $E$ satisfies as
+a spectrum-represented theory.
+\end{proof}
+
+\subsection{Locality: linking spheres}
+\label{sec:linking}
+
+The relative group $E^{q+1}(B,B\setminus\Sig_f)$ is local along $\Sig_f$. When $\Sig_f$
+is a reasonable (say, closed, locally-flat, finite-codimension) condensed subobject with
+components $\{\Sig_f^{(\alpha)}\}$, excision identifies the relative cohomology with a sum
+of contributions supported near the components:
+\begin{equation}
+\label{eq:excision}
+E^{q+1}(B,B\setminus\Sig_f)\ \cong\ \bigoplus_\alpha E^{q+1}\bigl(N_\alpha,N_\alpha\setminus\Sig_f^{(\alpha)}\bigr),
+\end{equation}
+$N_\alpha$ a tubular neighborhood of $\Sig_f^{(\alpha)}$. If $\Sig_f^{(\alpha)}$ has
+codimension $c$ with an $E$-oriented normal bundle, the Thom isomorphism identifies each
+summand with a degree-shifted absolute group of the component,
+\begin{equation}
+\label{eq:linking}
+E^{q+1}\bigl(N_\alpha,N_\alpha\setminus\Sig_f^{(\alpha)}\bigr)\ \cong\
+E^{q+1-c}\bigl(\Sig_f^{(\alpha)}\bigr),
+\end{equation}
+the Thom class shifting degree by the codimension $c$. The local charge is read off on a
+linking sphere: over a point $x\in\Sig_f^{(\alpha)}$ the unit sphere $S^{c-1}_{\mathrm{link}}$
+of the normal fibre lies in $B\setminus\Sig_f$ and links the component, and the restriction
+$\nu|_{S^{c-1}_{\mathrm{link}}}\in E^{q}\bigl(S^{c-1}_{\mathrm{link}}\bigr)$ has reduced part
+$\widetilde E^{\,q}(S^{c-1})\cong E^{q-c+1}(\mathrm{pt})$ equal to that local charge: the
+same degree shift as \eqref{eq:linking}. In words: the relative charge decomposes as a sum
+of local charges, one per component of the critical set, each detected by evaluating $E$ on
+a small sphere linking the component. This is the precise form of the physical picture that
+a band degeneracy (a Dirac node, a Weyl point) acts as a source or sink of topological
+charge, now valid for a generalized cohomology theory and an interacting phase spectrum
+rather than only for Chern numbers of free bands. This relative, defect-localized reading
+has a free-fermion precedent: Teo and Kane classify topological defects by the $K$-theory of
+a sphere linking the defect \cite{teo-kane}, within the $K$-theoretic classification of
+topological phases \cite{thiang-ktheory}; the condensed formulation of
+\Cref{def:relcharge} is the extension of that relative-charge picture to a generalized
+theory represented by $\IPcond_{d,G}$. The low-codimension case $c=1$ (a wall
+$\Sig_f$ separating two gapped regions) reduces the linking sphere to $S^0$: two points,
+one in each phase, and the local charge is the \emph{difference} of the two phase
+labels: the jump of $\nu_f$ across the wall.
+
+\subsection{The spectral boundary map}
+\label{sec:boundary}
+
+\Cref{prop:obstruction} and \eqref{eq:linking} are unconditional facts about any
+$E$. The program's substantive claim is that, for $E=\IPcond_{d,G}$-cohomology, the
+connecting map $\partial$ of \eqref{eq:les} is the boundary map of the cofiber sequence
+of the pair for the spectrum $\IPcond_{d,G}$, so the transition charge is computed by a
+single long exact sequence in every dimension and every generalized theory
+simultaneously. This is Conjecture~IV-3, restated at the program level as
+Conjecture~VI-3 in \Cref{sec:conjectures}. Its low-dimensional shadow (the SSH winding
+jump, the Dirac node as a unit source of charge) is classical; the conjecture is that
+this is systematically the spectral boundary map.
+
+\section{The SSH transition end to end}
+\label{sec:ssh}
+
+We now run one example through all five modules, to show that the composition is not
+merely formal. The Su--Schrieffer--Heeger chain \cite{ssh-1979} is the smallest system in
+which every module has something to say, and its winding number is a degree-$\ge0$ class,
+so it sits safely on the nonnegative side of the Bott-inversion caveat of \Cref{rec:aoki}.
+
+\begin{example}[SSH through the spine]
+\label{ex:ssh}
+The SSH Bloch Hamiltonian and its off-diagonal function are
+\[
+H(k;t_1,t_2)=(t_1+t_2\cos k)\,\sigma_x+(t_2\sin k)\,\sigma_y,
+\qquad q(k)=t_1+t_2 e^{ik},
+\]
+with spectrum $E_\pm(k)=\pm\abs{q(k)}$.
+\end{example}
+
+\begin{proposition}[gap and winding of the SSH chain]
+\label{prop:sshgap}
+The chain is gapped if and only if $\abs{t_1}\ne\abs{t_2}$; the gap closes on the
+discriminant $\Sig=\set{(t_1,t_2):\abs{t_1}=\abs{t_2}}$. On the gapped locus the winding
+number of $q:S^1\to\CC^\times$ is
+\[
+\nu=\begin{cases}1,&\abs{t_1}<\abs{t_2},\\ 0,&\abs{t_1}>\abs{t_2},\end{cases}
+\]
+up to orientation, and jumps by $\pm1$ across $\Sig$.
+\end{proposition}
+
+\begin{proof}
+$E_\pm(k)=\pm\abs{q(k)}$ vanishes for some $k$ iff $q(k)=0$, i.e.\ iff $t_1+t_2e^{ik}=0$
+for some $k$, which happens iff $\abs{t_1}=\abs{t_2}$; hence the gap is open exactly off
+$\Sig$. On the gapped locus $q$ misses the origin, so its winding number is defined; for
+$\abs{t_1}>\abs{t_2}$ the curve $k\mapsto t_1+t_2e^{ik}$ is a circle of radius
+$\abs{t_2}$ about $t_1\ne0$ not enclosing the origin (winding $0$), and for
+$\abs{t_1}<\abs{t_2}$ it encloses the origin once (winding $1$). The two regions are
+separated by $\Sig$, across which the winding jumps by $\pm1$.
+\end{proof}
+
+Now the five modules, in order.
+
+\emph{Part~I (dynamics).} The SSH couplings define a finite-range interaction of finite
+$\Ffun$-norm, so the family lives in $\cond{\BF}$ and, by \Cref{rec:Ic}, over any compact
+region of the $(t_1,t_2)$-plane away from $\Sig$ carries one Lieb--Robinson velocity. The
+parameter torus and Brillouin circle are replaced by their condensations
+$\cond{B},\cond{S^1}$; the light cone is uniform over the probe.
+
+\emph{Part~II (algebra and $K$-theory).} SSH is a class $\mathit{AIII}$ system in $d=1$,
+whose tenfold-way entry is $\ZZ$ \cite{kitaev-periodic-table,altland-zirnbauer}, the
+winding number valued in $K^1$ of the observable algebra. Because the winding is a
+nonnegative-degree class, \Cref{rec:aoki} applies without invoking the Bott inversion:
+the solid invariant $\Solid(\Kalg(\cond{A}))$ computes it directly, and its provenance is
+condensed even though the number is the classical winding.
+
+\emph{Part~III (gap).} \Cref{prop:sshgap} is exactly the finite-volume/thermodynamic gap
+statement of \Cref{rec:III} for this family: the gapped locus is
+$U=\set{\abs{t_1}\ne\abs{t_2}}$, open, and the phase label $\nu$ is locally constant on
+it, with the discriminant $\Sig=\set{\abs{t_1}=\abs{t_2}}$.
+
+\emph{Part~IV (stabilization and EFT).} The low-energy theory at the gap-closing
+$\abs{t_1}=\abs{t_2}$, $k=\pi$ is a massive $1{+}1$-dimensional Dirac fermion, and the
+winding number is the sign of the Dirac mass---the deformation class of the Dirac
+effective field theory. So the comparison map $c_{1,\mathit{AIII}}$ sends the SSH phase to
+its EFT class and the two agree: Conjecture~IV-2 holds at the level of $\pi_0$ in this
+box.
+
+\emph{Part~V (realizability).} The nontrivial SSH phase is short-range-entangled and
+realized by the explicit dimerized chain; being non-chiral ($\sigma_H=0$ and $c_-=0$), it is
+excluded by neither no-go of \Cref{rec:VC} and is in fact commuting-projector realizable in
+the flat-band (fully dimerized) limit. It sits in $\im\real$.
+
+\emph{The transition charge.} In the parameter plane $B=(t_1,t_2)$ the invariant relevant to
+the transition calculus is not the momentum-space $K^1$ class of the tenfold way but the
+\emph{winding number} it produces: a locally constant $\ZZ$-valued label on the gapped locus,
+an element $\nu\in K^0(U)$ of degree $q=0$. The discriminant $\Sig=\set{\abs{t_1}=\abs{t_2}}$
+is the pair of lines $t_1=\pm t_2$; away from their intersection it has codimension $c=1$, so
+the linking sphere of \eqref{eq:linking} is $S^0$ and the local charge is read in the reduced
+group $\widetilde K^0(S^0)\cong\ZZ$---the winding difference $\pm1$ across the wall, in
+agreement with the degree shift $E^{q-c+1}(\mathrm{pt})=K^0(\mathrm{pt})=\ZZ$ of
+\eqref{eq:linking}. (At the origin $(0,0)$ the two lines cross, the gap closes at $k=0$ and
+$k=\pi$ simultaneously, and the codimension jumps to $2$; the generic crossing is the
+codimension-one one just described.) By \Cref{prop:obstruction} the relative charge
+$\rc\in K^{1}(B,U)$ is nonzero precisely because the winding label does not extend
+across $\Sig$: the transition is real, and its charge is the unit jump. Conjecture~VI-3 is the
+assertion that this $\partial$ is the spectral boundary map of $\IPcond_{1,\mathit{AIII}}$;
+here it is the elementary winding jump, and the two agree.
+
+\section{Disorder and the profinite thread}
+\label{sec:disorder}
+
+The profinite disorder thread is where condensed mathematics does work that ordinary
+smooth-parameter topology cannot, and it runs through all five modules. We collect it.
+
+\subsection{The hull as a profinite probe}
+
+If $Q$ is a finite set of local configurations, the configuration space
+\begin{equation}
+\label{eq:hull}
+\dis=Q^{\ZZ^d}
+\end{equation}
+is compact, totally disconnected, hence profinite; this is the disorder (or tiling) hull of
+Bellissard's noncommutative geometry of aperiodic media \cite{bellissard-ncg-qhe,kellendonk-tilings}.
+(We follow Part~II in writing the
+alphabet $Q$ rather than the prospectus's $\Ffun$, to avoid collision with the
+Nachtergaele--Sims--Young $\Ffun$-function of Part~I; the two never denote the same
+object.) A disordered Hamiltonian family $\omega\mapsto H_\omega$ is literally an
+$\dis$-point of the moduli stack, $H\in\Ham_{d,G}(\dis)$, and finite quotients of $\dis$
+are finite-resolution disorder data. The sheaf condition of \eqref{eq:condensation} is
+the compatibility of families and invariants across finite approximations, so the
+profinite probes match the physical configuration space rather than repackage a smooth
+one.
+
+\subsection{The thread through the modules}
+
+\begin{itemize}
+\item \textbf{Part~I} (Conjecture~I-3): the Lieb--Robinson estimates over $\dis$ should be
+  the right Kan extension of their restrictions to finite quotients: quasi-local dynamics
+  determined by finite-resolution data. Its unconditional shadow is the uniform light cone
+  of \Cref{rec:Ic}.
+\item \textbf{Part~II} (\Cref{rec:crossed}, Conjecture~II-2): the observable algebra is the
+  crossed product $C(\dis)\rtimes_T\ZZ^d$, its condensation functorial in finite quotients,
+  and the solid invariant should agree with operator $K$-theory naturally in $\dis$.
+\item \textbf{Part~III} (Conjecture~III-2): uniform gappedness over $\dis$ should be a
+  closed condition on the inverse system: the uniformly gapped families the inverse limit
+  of the finite-resolution ones at a fixed $\gapbound$.
+\item \textbf{Part~IV}: parametrized invariants over $\dis$, the base level (L2) of the
+  lattice--EFT comparison Conjecture~IV-2.
+\item \textbf{Part~V} (Conjecture~V-3): realizability over $\dis$ is disorder-robust iff a
+  condensed-cohomological descent obstruction $o(c)\in H^1_{\mathrm{cond}}(\dis,\cg{\Aut}(c))$
+  vanishes, detected by finite quotients.
+\end{itemize}
+
+The common shape of all five is descent along the finite quotients of $\dis$. That the
+five descent statements are facets of one principle is Conjecture~VI-4.
+
+\section{The program-level conjectures}
+\label{sec:conjectures}
+
+We now state the open claims of the program. Each is built as the coherent join of
+module-level conjectures from Parts~I--V, and none is proved. We write them as named
+Conjectures~VI-1 through VI-4; the first is the Master Conjecture.
+
+\begin{progconj}[Master Conjecture: the modules glue into one condensed higher stack]
+\label{conj:VI1}
+The five module-level structural conjectures hold simultaneously and coherently:
+$\Ham_{d,G}$ is a condensed higher stack (Conjecture~I-1); positivity and the
+$C^\ast$-identity cut it out as a closed condensed substack of a formal-interaction stack
+(Conjecture~II-1); $\Gap_{d,G}$ is an open condensed substack on the physical stratum with
+the uniform-gap sheaf condition detected by finite quotients (Conjecture~III-1); the
+stabilized invertible sector is a connective condensed/solid spectrum $\IPcond_{d,G}$
+whose shape is a connective cover of Kubota's $\mathit{IP}^\ast$ (Conjecture~IV-1); and
+the realizability image is the short-range-entangled subspectrum (Conjecture~V-1).
+Consequently the boxed sequence \eqref{eq:boxseq} is a diagram of condensed higher stacks
+and spectra, $\Phases_{d,G}=\pi_0\Shape(\Phase_{d,G})$ is the operator-algebraic set of
+gapped phases, and $\IPcond_{d,G}$ is the invertible phase spectrum of the whole.
+\end{progconj}
+
+\begin{progconj}[microscopic $=$ field-theoretic]
+\label{conj:VI2}
+Under short-range-entanglement hypotheses the comparison map
+$c_{d,G}:\IPcond_{d,G}\to\IFH$ to the Freed--Hopkins invertible-TQFT spectrum is an
+equivalence after solidification/completion (Conjecture~IV-2), and its $\pi_0$ image
+coincides with the realized SRE subspectrum $\im\real=\SRE_{d,G}$ (Conjecture~V-1). Thus
+the microscopic classification of $\Phases_{d,G}^\times$ and the bordism classification of
+$\pi_0\IFH$ agree exactly on the realizable classes, with the chiral part realizable by
+non-commuting gapped models but never by commuting projectors (Conjecture~V-2,
+\Cref{rec:VC}). The statement holds at $\pi_0$ in $d=1$ for on-site finite symmetry
+(\Cref{rec:VB}) and for the free-fermion tenfold way, and is open in general.
+\end{progconj}
+
+\begin{progconj}[the relative charge is a spectral boundary map]
+\label{conj:VI3}
+For $E=\IPcond_{d,G}$-cohomology, the connecting map $\partial$ of \eqref{eq:les} is the
+boundary map of the cofiber sequence of the pair $(B,U_f)$ for the spectrum
+$\IPcond_{d,G}$ (Conjecture~IV-3). Hence the relative transition charge
+$\rc=\partial\nu\in E^{q+1}(B,B\setminus\Sig_f)$ of \Cref{def:relcharge} is computed by a
+single long exact sequence in every dimension and generalized theory, and its
+linking-sphere localization \eqref{eq:linking} is the systematic form of ``a band
+degeneracy is a source of topological charge.'' The SSH box (\Cref{ex:ssh}) is the
+codimension-one, winding-number instance.
+\end{progconj}
+
+\begin{progconj}[all program invariants descend along disorder hulls]
+\label{conj:VI4}
+For a profinite disorder hull $\dis=Q^{\ZZ^d}=\varprojlim_i\dis_i$, the disorder facets
+of the five modules---Lieb--Robinson descent (I-3), naturality of the solid invariant
+(II-2), uniform-gap descent (III-2), parametrized comparison over $\dis$ (IV-2 at level
+L2), and profinite-family realizability (V-3)---are facets of one descent principle: every
+program invariant over $\dis$ is the right Kan extension of its restrictions to the finite
+quotients $\dis_i$, and uniform gappedness, the solid invariant, and realizability are all
+detected by finite quotients with a common bound. This is the precise sense in which
+``profinite probes match the configuration space.''
+\end{progconj}
+
+\subsection{Consolidated open problems}
+\label{sec:opentable}
+
+\Cref{tab:conjectures} lists the nineteen module-level conjectures of Parts~I--V, with the
+module each depends on and the program-level conjecture it feeds. The dependency column
+records which \emph{earlier} module's output a conjecture presupposes; the ``feeds''
+column records which Conjecture~VI-$k$ consolidates it. The table is the program's
+to-do list.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{0.95}
+\caption{The nineteen module-level conjectures of Parts~I--V and their dependencies.
+``Feeds'' names the program-level Conjecture~VI-$k$ that consolidates each.}
+\label{tab:conjectures}
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{7.7cm} l l@{}}
+\toprule
+ID & Statement (abbreviated) & Depends on & Feeds \\
+\midrule
+I-1 & $\Ham_{d,G}$ is a condensed higher stack (descent of the automorphism groupoid) & --- & VI-1 \\
+I-2 & Quasi-local automorphisms form a condensed group; QAC is internal path-lifting & I-1 & VI-1 \\
+I-3 & Lieb--Robinson estimates descend along a disorder hull & I-1 & VI-4 \\
+\midrule
+II-1 & Positivity $+$ $C^\ast$-identity cut $\Ham_{d,G}$ out as a closed condensed substack & I-1 & VI-1 \\
+II-2 & Solid invariant $=$ operator $K$ of the crossed product, naturally in $\dis$ & II-1 & VI-4 \\
+II-3 & Real/$KKO$ refinement recovering the $KO$-graded periodic table & II-1 & VI-2 \\
+II-4 & Solid state space is a classifying object for condensed representations & II-1 & VI-1 \\
+II-5 & Condensed enhancement of the split property / DHR superselection & II-1 & VI-1 \\
+\midrule
+III-1 & $\Gap_{d,G}$ open on the physical stratum; sheaf condition detected by finite quotients & II-1 & VI-1 \\
+III-2 & Uniform-gap descent along profinite hulls (closed on the inverse system) & III-1 & VI-4 \\
+III-3 & QAC path components realize $\Weq$; $\pi_0\Shape(\Gap[\Weq^{-1}])=$ Ogata phases & III-1 & VI-1 \\
+\midrule
+IV-1 & $\IPcond_{d,G}$ is a connective condensed/solid spectrum covering Kubota's $\mathit{IP}^\ast$ & III-3 & VI-1 \\
+IV-2 & Lattice--EFT comparison $c_{d,G}:\IPcond_{d,G}\to\IFH$ is an equivalence after completion & IV-1 & VI-2 \\
+IV-3 & Relative charge $\rc$ is the spectral boundary map of $\IPcond_{d,G}$ & IV-1 & VI-3 \\
+IV-4 & Solidification commutes with group completion & IV-1 & VI-1 \\
+IV-5 & Renormalization is a filtered pro-endofunctor computing the EFT on the SRE stratum & IV-1 & VI-2 \\
+\midrule
+V-1 & Realizability image $=$ SRE subspectrum; $\Obs_{d,G}=\pi_0\IPcond_{d,G}/\im\real$ & IV-2 & VI-1 \\
+V-2 & Chiral classes realizable by non-commuting gapped, never commuting-projector & V-1 & VI-2 \\
+V-3 & Profinite-family realizability iff a condensed descent obstruction vanishes & V-1 & VI-4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two features of \Cref{tab:conjectures} are worth naming. First, the dependency graph is a
+tree rooted at I-1: every conjecture presupposes the stack structure of the ground floor,
+which is why Conjecture~I-1 is the true foundation and the Master Conjecture VI-1 leads
+with it. Second, the ``feeds'' column shows the program-level conjectures are not
+independent wishes but bundles: VI-1 gathers the ten structural conjectures, VI-2 the
+four comparison/refinement conjectures, VI-3 the single boundary-map conjecture, and VI-4
+the four descent conjectures ($10+4+1+4=19$). Proving any program-level conjecture means proving its whole
+bundle.
+
+\FloatBarrier
+\section{Contributions and limitations}
+\label{sec:contributions}
+
+\subsection{Contributions}
+
+The framework contributes three structural advantages, none of which is a new numerical
+invariant. First, one category holds ordinary continuous families, profinite disorder
+families, compact inverse limits, and topological symmetry groups at once; the passage
+\eqref{eq:condensation} is fully faithful, so nothing classical is lost. Second, condensed
+abelian groups and solid modules supply exact derived operations and descent where
+ordinary topological groups and modules are poorly behaved: the environment
+\Cref{rec:aoki} needs to make operator $K$-theory a condensed invariant. Third, the sheaf
+and stack viewpoint organizes local families, defects, interfaces, boundary conditions,
+symmetry actions, and gluing uniformly, which is what the transition calculus of
+\Cref{sec:transitions} and the disorder thread of \Cref{sec:disorder} exploit.
+
+On novelty we are precise, because the reviewer should be. Condensed and pyknotic
+mathematics \cite{clausen-scholze-condensed,barwick-haine-pyknotic} and the solidification
+bridge \cite{aoki-solidification} are established in pure mathematics; the
+moduli/space-of-states viewpoint on gapped systems is established in physics
+\cite{hsin-wang-moduli,beaudry-etal,kubota-omega-spectrum,denittis-states,denittis-rendel-weyl}.
+What is new is the \emph{synthesis}: no prior work applies condensed or pyknotic machinery
+to topological phases, and the individual analytic ingredients (Lieb--Robinson bounds,
+$C^\ast$-positivity, gap stability, stabilization, realizability) are not new in
+themselves. The value is unificatory and organizational, and the honest content is the
+Master Conjecture and its bundle.
+
+\subsection{What it does not do}
+
+By itself the paradigm does not solve the hard analysis of many-body theory: one still
+needs locality estimates (Part~I), positivity and $C^\ast$-norm conditions (Part~II), the
+existence and stability of a thermodynamic gap (Part~III), the lattice--EFT correspondence
+(Part~IV), and physical realizability (Part~V), and each is a genuine theorem or a genuine
+conjecture, not a corollary of the formalism. It does not decide the gap: the undecidability
+wall (\Cref{rec:cpw}) is permanent. It does not realize chiral phases by commuting
+projectors: the no-go wall (\Cref{rec:VC}) is permanent. It does not, by construction,
+classify non-invertible topological order, which needs a condensed higher stack of phases
+and defects rather than a spectrum. And it does not produce a different Chern number: the
+winding of \Cref{prop:sshgap} is the classical winding; only its provenance is condensed.
+The genuinely new thesis is the single environment, and the genuinely open mathematics is
+Conjectures~VI-1 through VI-4.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The six papers of this series are one program with five modules and a spectrum-level
+payoff. Part~I makes the interaction space condensed and the dynamics a base-uniform
+morphism; Part~II attaches observable algebras, a compact condensed state space, and the
+solid $K$-invariant with its Bott-inversion bookkeeping; Part~III cuts out the uniformly
+gapped substack and stabilizes it against the undecidability wall; Part~IV group-completes
+the invertible sector into $\IPcond_{d,G}$ and confronts the field-theoretic
+classification; Part~V asks which classes a lattice realizes, bounded by the
+commuting-projector no-gos of Kapustin--Fidkowski and Kapustin--Spodyneiko. Composed, the
+modules give the boxed sequence
+\eqref{eq:boxseq}, the homotopy dictionary \eqref{eq:dictionary}, and the transition
+calculus in which a transition is the crossing of the discriminant and its charge is the
+relative class $\rc$ localized by linking spheres.
+
+We have been careful to keep the ledger honest. The module results are theorems, cited to
+Parts~I--V\@. The program results (that the modules glue into one condensed higher stack
+with $\IPcond_{d,G}$ its invertible spectrum, that microscopic and field-theoretic
+classifications agree, that the relative charge is a spectral boundary map, that all
+invariants descend along disorder hulls) are Conjectures~VI-1 through VI-4, and
+\Cref{tab:conjectures} records exactly what each would need. The program is not a completed
+classification and does not claim to be. It is a single categorical and homological
+environment in which continuous families, profinite disorder, analytic completions,
+operator $K$-theory, symmetry, stacking, defects, and phase-transition loci can be treated
+at once, and a precise list of what remains to prove.
+
+\section*{Code availability}
+{\hbadness=10000
+\begin{sloppypar}
+The formal-verification suites accompanying the six-paper series are at
+\href{https://github.com/YonedaAI/topological-phases-of-matter}{github.com/\allowbreak YonedaAI/\allowbreak topological-phases-of-matter};
+each module's code lives in a per-topic subdirectory (for example
+\texttt{src/\allowbreak bordism-realizability/} and
+\texttt{src/\allowbreak lattice-eft-\allowbreak equivalence/}). This synthesis introduces no
+new code of its own; it composes the results verified in Parts~I--V.
+\end{sloppypar}}
+
+\section*{Acknowledgements}
+This is Part~VI of a six-part series by the author and The YonedaAI Collaboration; it
+depends entirely on the analytic and topological content of Parts~I--V and on the
+foundational work cited throughout.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

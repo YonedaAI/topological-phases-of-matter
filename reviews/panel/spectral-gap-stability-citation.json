@@ -1,0 +1,253 @@
+{
+  "entries": [
+    {
+      "citation": "cpw-undecidable",
+      "exists": true,
+      "resolved_doi": "10.1038/nature16059",
+      "resolved_url": "https://arxiv.org/abs/1502.04573",
+      "relevance": "high",
+      "notes": "Verified via WebFetch (arXiv abstract page) and cross-checking WebSearch (Nature, Forum of Mathematics Pi, TUM, ResearchGate): Cubitt, Perez-Garcia, Wolf, 'Undecidability of the Spectral Gap,' Nature 528:207-211 (2015), arXiv:1502.04573 (full version), DOI 10.1038/nature16059. Multiple independent sources confirm the paper RIGOROUSLY PROVES (not conjectures) that the spectral gap is undecidable, via an explicit, computable family of translation-invariant, nearest-neighbour Hamiltonians on a 2D lattice -- an exact match to the paper's Theorem thm:cpw statement. Attempted to independently re-verify the specific technical phrase '$\\Pi_1$-complete in the arithmetic hierarchy' and the 'embeds the halting problem' language (Theorem thm:cpw, Sec. 3.1) by fetching the full-text PDF (arXiv:1502.04135 short version and a secondary PDF mirror); both returned only compressed/binary content unreadable by the fetch tool. This specific phrasing is consistent with, and not contradicted by, everything independently confirmed about the construction (reduction to a Turing machine's halting behavior; the gapped/gapless cases are known to be sharply separated), but could not be pinned to an exact quoted sentence this session -- a tool-access gap, not contrary evidence.",
+      "explanation": "The paper's central wall and single most load-bearing citation (Sec. 1.2, 3, and referenced 7 more times throughout). The core claim attributed to it -- undecidability of the thermodynamic spectral gap for translation-invariant families, used to justify the paper's entire 'stability not decidability' framing and Corollary cor:no-criterion -- is solidly and independently confirmed. No overclaim found: the paper is careful to restrict every downstream claim to what CPW leaves untouched (finite-volume statements, conditional/hypothesis-carrying stability statements)."
+    },
+    {
+      "citation": "bhm-stability",
+      "exists": true,
+      "resolved_doi": "10.1063/1.3490195",
+      "resolved_url": "https://arxiv.org/abs/1001.0344",
+      "relevance": "high",
+      "notes": "Verified via WebFetch (arXiv abstract) and WebSearch: Bravyi, Hastings, Michalakis, 'Topological quantum order: stability under local perturbations,' J. Math. Phys. 51:093512 (2010), arXiv:1001.0344, DOI 10.1063/1.3490195. Confirmed a size-independent (constant) perturbation threshold epsilon>0 below which the perturbed Hamiltonian retains a well-defined, gapped spectral band structure -- matches Theorem thm:bhm. Separately confirmed via a targeted WebSearch (ResearchGate 'Local-TQO and Stability of Frustration-Free Hamiltonians', dabacon.org Quantum Pontiff commentary) that the TQO-1/TQO-2 topological-order conditions -- which the paper's Theorem thm:bhm attributes to this same source ('topological-order conditions TQO-1 and TQO-2 (LTQO)') -- do in fact originate in this Bravyi-Hastings-Michalakis paper.",
+      "explanation": "Correctly attributed both for the size-independent stability threshold and for originating the TQO-1/TQO-2 conditions that the paper calls LTQO."
+    },
+    {
+      "citation": "bravyi-hastings-shortproof",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-011-1346-2",
+      "resolved_url": "https://arxiv.org/abs/1001.4363",
+      "relevance": "high",
+      "notes": "Verified via WebFetch: Bravyi & Hastings, 'A short proof of stability of topological order under local perturbations,' Commun. Math. Phys. 307:609-627 (2011), arXiv:1001.4363. Confirmed this is exactly what the paper says it is: 'a short, alternate proof of the same result' (commuting-projector Hamiltonians, weak perturbations preserve gapped spectral bands) -- matches the paper's parenthetical '(short proof)' framing in Theorem thm:bhm's title precisely.",
+      "explanation": "Correctly used as a companion/alternate-proof citation alongside bhm-stability; never treated as an independent, distinct result."
+    },
+    {
+      "citation": "michalakis-zwolak",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-013-1762-6",
+      "resolved_url": "https://arxiv.org/abs/1109.1588",
+      "relevance": "high",
+      "notes": "Verified via WebFetch and a follow-up WebSearch (arXiv listing, ADS, Springer): Michalakis & Zwolak, 'Stability of Frustration-Free Hamiltonians,' Commun. Math. Phys. 322:277-302 (2013), arXiv:1109.1588, DOI 10.1007/s00220-013-1762-6. Confirmed LTQO, together with a uniform local gap, is shown to be essentially a NECESSARY AND SUFFICIENT condition for stability under quasi-local perturbations with a size-independent threshold, and that LTQO implies an area law for ground-state entanglement -- matches the paper's Theorem thm:mz and its Sec. 4.1 discussion of LTQO almost exactly. NOTE ON A TRANSIENT VERIFICATION ERROR: an initial WebFetch pass mis-summarized the second author's name as 'Justyna Pytel'; a follow-up WebSearch across three independent listings (arXiv abs page, ADS abstract, Springer article page) confirms the correct name is Justyna P. Zwolak, matching the bib entry exactly. Flagging this only to record that the bib entry itself is correct and was cross-checked after an initial tool-summarization glitch.",
+      "explanation": "Correctly and precisely attributed for both the LTQO iff-stability result and the area-law connection."
+    },
+    {
+      "citation": "nsy-bulkgap",
+      "exists": true,
+      "resolved_doi": "10.1007/s11005-023-01767-8",
+      "resolved_url": "https://arxiv.org/abs/2102.07209",
+      "relevance": "high",
+      "notes": "Verified via WebFetch and WebSearch (Illinois Experts, Springer): Nachtergaele, Sims, Young, 'Stability of the bulk gap for frustration-free topologically ordered quantum lattice systems,' Letters in Mathematical Physics 114:24 (2024), arXiv:2102.07209, DOI 10.1007/s11005-023-01767-8 -- journal, volume, article number, year, and DOI all match the bib entry exactly. Confirmed the paper proves stability of the infinite-volume/thermodynamic bulk gap DIRECTLY, explicitly 'without requiring a positive lower bound for finite-system Hamiltonians uniform in the system size' -- this is a near-verbatim match to the paper's own characterization at Sec. 2.2 ('The Nachtergaele-Sims-Young framework is designed precisely to work with the infinite-volume gap directly rather than to assume uniform finite-size bounds, and we adopt its stance') and in Theorem thm:nsy.",
+      "explanation": "This is the most precisely-matched attribution found this session: the paper's specific technical characterization of what makes this source different from bhm-stability/michalakis-zwolak (proving the thermodynamic-gap version directly) is exactly what the source itself states."
+    },
+    {
+      "citation": "hastings-koma",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-0030-4",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0507008",
+      "relevance": "high",
+      "notes": "Verified via WebFetch: Hastings & Koma, 'Spectral Gap and Exponential Decay of Correlations,' Commun. Math. Phys. 265:781-804 (2006), arXiv:math-ph/0507008, DOI 10.1007/s00220-006-0030-4. Confirmed the core result -- a non-vanishing spectral gap implies exponential decay of the correlation function for local observables -- matching the paper's Theorem thm:hk exactly, including the rate c ~ gamma/v structure.",
+      "explanation": "Correctly attributed as the source of the single-Hamiltonian exponential clustering theorem that Theorem III-C (thm:IIIC) upgrades to a uniform-over-the-profinite-base statement; the paper is explicit that the uniformity itself is its own added structure, not claimed from this source."
+    },
+    {
+      "citation": "nachtergaele-sims-clustering",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-1556-1",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0506030",
+      "relevance": "high",
+      "notes": "Verified via WebFetch: Nachtergaele & Sims, 'Lieb-Robinson Bounds and the Exponential Clustering Theorem,' Commun. Math. Phys. 265:119-130 (2006), arXiv:math-ph/0506030, DOI 10.1007/s00220-006-1556-1. Abstract states explicitly that a Lieb-Robinson bound is used 'to prove that a non-vanishing spectral gap implies exponential clustering in the ground state' -- an exact match to how the paper cites it jointly with hastings-koma in Theorem thm:hk and Sec. 4.1.",
+      "explanation": "Precisely and correctly attributed as the companion Lieb-Robinson-bound input to the Hastings-Koma clustering result."
+    },
+    {
+      "citation": "ogata-classification-review",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2110.04675",
+      "relevance": "high",
+      "notes": "Verified via WebFetch: Ogata, 'Classification of gapped ground state phases in quantum spin systems' (ICM 2022 proceedings), arXiv:2110.04675. Confirmed this is an operator-algebraic-approach survey of gapped-phase classification, matching its background use in Sec. 2 and Part II. The specific claim used in Conjecture III-3 and its discussion -- that this source 'gives complete invariants' in d=1 and, for on-site finite symmetry, in d=2 -- was not directly quotable from the short abstract text retrieved by the fetch tool, but is consistent with, and supported by, the two companion Ogata primary-source entries also in the bibliography (ogata-h3-index: the H^3(G,T)-valued 2D index; ogata-spt-chains: the 1D spin-chain classification) that this ICM survey is understood to review.",
+      "explanation": "Reasonable and well-supported attribution for the operator-algebraic classification target that Conjecture III-3 proposes to identify with pi_0 of the localized gapped substack; the 'complete invariants' characterization is corroborated indirectly rather than quoted directly from the survey's own abstract."
+    },
+    {
+      "citation": "kapustin-sopenko-noether",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0085964",
+      "resolved_url": "https://arxiv.org/abs/2201.01327",
+      "relevance": "medium",
+      "notes": "Verified via WebFetch: Kapustin & Sopenko, 'Local Noether theorem for quantum lattice systems and topological invariants of gapped states,' J. Math. Phys. 63:091903 (2022), arXiv:2201.01327. Abstract confirms explicitly that its invariants 'unify and generalize the Hall conductance and the Thouless pump' -- supporting the paper's use of this citation for the claim that chiral phases have 'nonzero Hall conductance' (Sec. 6, disc-walls). NOTED FOR TRANSPARENCY, NOT AS AN ERROR: the bibliography separately contains kapustin-sopenko-hall ('Hall conductance and the statistics of flux insertions in gapped interacting lattice systems,' J. Math. Phys. 61:101901, 2020), which is titularly even more directly on-point for a bare Hall-conductance claim, yet that entry is never cited anywhere in the paper (0 occurrences of the key). This is not a misattribution -- the cited Noether paper does substantively support the claim made -- but a companion, arguably more on-point verified bib entry sits unused.",
+      "explanation": "Supported by the cited source's own abstract; flagged only as a minor missed opportunity to also cite the more narrowly-titled companion paper already present and verified in the bibliography."
+    },
+    {
+      "citation": "paperLocality",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Internal companion-series self-citation (Part I, 'Condensed Locality: Lieb-Robinson Estimates and Quasi-Local Dynamics on the Moduli Stack of Hamiltonians'). Not external literature and not independently web-verifiable; consistent with the bib entry and the 'Part I of six' framing.",
+      "explanation": "Correctly used for the F-function Banach space B_F and the uniform Lieb-Robinson velocity that Theorem III-C explicitly consumes."
+    },
+    {
+      "citation": "paperPositivity",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Internal companion-series self-citation (Part II, 'Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras'). Not independently web-verifiable; consistent with the bib entry.",
+      "explanation": "Correctly used for the infinite-volume GNS framework in which the thermodynamic gap (eq:thermogap) is defined."
+    },
+    {
+      "citation": "paperEFT",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Internal companion-series self-citation (Part IV, 'From Lattice Models to Effective Field Theories'). Not independently web-verifiable; consistent with the bib entry.",
+      "explanation": "Correctly used to describe the downstream consumer of Gap_{d,G} (the group-completion into the invertible condensed phase spectrum)."
+    },
+    {
+      "citation": "paperRealizability",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Internal companion-series self-citation (Part V, 'Physical Realizability of Bordism and Homotopy Classes by Gapped Lattice Systems'). Not independently web-verifiable; consistent with the bib entry.",
+      "explanation": "Used for forward pointers to Part V's dependence on the 'uniformly gapped' hypothesis defined here, and (see missing_references) also stands in, twice, for a citation that should instead point to kapustin-fidkowski."
+    },
+    {
+      "citation": "paperSynthesis",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Internal companion-series self-citation (Part VI, synthesis paper). Not independently web-verifiable; consistent with the bib entry.",
+      "explanation": "Correctly used for the Master Conjecture framing that Conjectures III-1-III-3 are stated to be components of."
+    },
+    {
+      "citation": "aoki-solidification",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2409.01462",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session; relying on the pre-existing kb-builder verification recorded in references.bib (arXiv:2409.01462, Ko Aoki, '(Semi)topological K-theory via solidification,' 2024; independently confirmed for this same key in the sibling lieb-robinson-locality-citation.json review already on disk). Cited once, in the introduction, as background for Part II's solid K-theory invariant.",
+      "explanation": "Peripheral, non-load-bearing background citation for this paper specifically (its substance belongs to Part II)."
+    },
+    {
+      "citation": "clausen-scholze-condensed",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2605.03658",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on the kb-builder's dated verification in references.bib (arXiv:2605.03658, Scholze with Clausen, 'Lectures on Condensed Mathematics,' stable version of the 2019 Bonn course) and on this same key's independent confirmation already recorded in the sibling lieb-robinson-locality-citation.json review. Cited twice as general condensed-mathematics background (condensed sets as sheaves on profinite sets; light condensed sets).",
+      "explanation": "Standard foundational background citation; not a specific load-bearing physics claim in this paper, so lower priority for a fresh re-verification pass given the six-plus items already deep-checked."
+    },
+    {
+      "citation": "barwick-haine-pyknotic",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1904.09966",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session; relying on kb-builder's bib annotation and this key's prior independent confirmation in the sibling lieb-robinson-locality-citation.json (Barwick & Haine, 'Pyknotic objects, I. Basic notions,' arXiv:1904.09966, 2019). Cited once, jointly with clausen-scholze-condensed, as background for the condensed-set formalism.",
+      "explanation": "Background citation, not load-bearing for a specific claim in this paper."
+    },
+    {
+      "citation": "clausen-scholze-analytic-stacks",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://www.mpim-bonn.mpg.de/node/12493",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session (no arXiv ID; MPIM/IHES course-page citation per kb-builder's note and this key's prior verification in the sibling lieb-robinson-locality-citation.json). Cited once for the use of 'light' condensed sets to avoid set-theoretic size issues.",
+      "explanation": "Plausible, low-stakes background attribution; standard place light condensed abelian groups are developed."
+    },
+    {
+      "citation": "nsy-quasilocality-1",
+      "exists": true,
+      "resolved_doi": "10.1063/1.5095769",
+      "resolved_url": "https://arxiv.org/abs/1810.02428",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation and this key's detailed prior verification in the sibling lieb-robinson-locality-citation.json (Nachtergaele, Sims, Young, 'Quasi-locality bounds for quantum lattice systems I,' J. Math. Phys. 60:061101, 2019, arXiv:1810.02428). Cited once, for the F-norm-dominates-operator-norm reweighting fact used in Lemma lem:normdom's proof -- a natural, on-topic use of this source's F-function machinery.",
+      "explanation": "Topically well-matched to its single use (a routine finite-volume norm-domination fact); not independently re-verified this session but low-risk given the title's exact match to the claim."
+    },
+    {
+      "citation": "kitaev-honeycomb",
+      "exists": true,
+      "resolved_doi": "10.1016/j.aop.2005.10.005",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/0506438",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session. Well-known, landmark paper (Kitaev, 'Anyons in an exactly solved model and beyond,' Ann. Phys. 321:2-111, 2006) cited only as one illustrative example, in a parenthetical list, of a frustration-free exactly-solvable model (toric code / honeycomb model).",
+      "explanation": "Low-risk illustrative citation; not a specific attributed technical claim."
+    },
+    {
+      "citation": "cglw-cohomology",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.87.155114",
+      "resolved_url": "https://arxiv.org/abs/1106.4772",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session. Well-known paper (Chen, Gu, Liu, Wen, group-cohomology SPT classification, Phys. Rev. B 87:155114, 2013) cited only as one illustrative example, in the same parenthetical list as kitaev-honeycomb, of frustration-free exactly-solvable models.",
+      "explanation": "Low-risk illustrative citation; not a specific attributed technical claim."
+    },
+    {
+      "citation": "prodan-sb",
+      "exists": true,
+      "resolved_doi": "10.1007/978-3-319-29351-6",
+      "resolved_url": "https://arxiv.org/abs/1510.08744",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation (Prodan & Schulz-Baldes, 'Bulk and Boundary Invariants for Complex Topological Insulators: From K-Theory to Physics,' Springer, 2016, arXiv:1510.08744). Cited twice: once for the claim that chiral/free-fermion topological insulators outside the frustration-free/LTQO stratum are stabilized 'by different technology (single-particle / spectral-localizer and K-theoretic methods)', and once alongside the disorder-hull background citations.",
+      "explanation": "Topically well-matched -- this is precisely the standard reference for K-theoretic/spectral-localizer stability methods for free-fermion topological phases -- though not independently re-fetched this session."
+    },
+    {
+      "citation": "hastings-wen-qac",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.72.045141",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/0503554",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation and this key's detailed prior verification in the sibling lieb-robinson-locality-citation.json (Hastings & Wen, 'Quasi-adiabatic Continuation of Quantum States,' Phys. Rev. B 72:045141, 2005, arXiv:cond-mat/0503554 -- confirmed there to define quasi-adiabatic continuation for gapped Hamiltonians, taking local operators to local operators while approximately preserving ground-state expectations). Cited once here, in the proof sketch of Proposition prop:flow, for the origin of the quasi-adiabatic continuation / spectral-flow construction.",
+      "explanation": "Canonical, correctly-scoped attribution for the spectral-flow mechanism underlying Proposition prop:flow; consistent with this key's independent verification already on record for the companion paper in this series."
+    },
+    {
+      "citation": "bmns-automorphic",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-011-1380-0",
+      "resolved_url": "https://arxiv.org/abs/1102.0842",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation and this key's detailed prior verification in the sibling lieb-robinson-locality-citation.json (Bachmann, Michalakis, Nachtergaele, Sims, 'Automorphic Equivalence within Gapped Phases of Quantum Lattice Systems,' Commun. Math. Phys. 309:835-871, 2012, arXiv:1102.0842 -- confirmed there to show gapped ground states in the same phase are automorphically equivalent via a quasi-local flow). Cited twice: for the quasi-local formulation of spectral flow (prop:flow's proof) and for the target set of Conjecture III-3.",
+      "explanation": "Correctly attributed for the quasi-local automorphic-equivalence machinery; consistent with prior independent verification of this exact key."
+    },
+    {
+      "citation": "nsy-quasilocality-2",
+      "exists": true,
+      "resolved_doi": "10.1007/s00023-021-01086-5",
+      "resolved_url": "https://arxiv.org/abs/2010.15337",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation (Nachtergaele, Sims, Young, 'Quasi-Locality Bounds for Quantum Lattice Systems Part II: Perturbations of Frustration-Free Spin Models with Gapped Ground States,' Ann. Henri Poincare 23:393-511, 2022, arXiv:2010.15337). Cited once in the proof sketch of Proposition prop:flow for the quasi-local formulation of the spectral-flow generator -- a title that matches this exact use (perturbations of frustration-free models with gapped ground states) closely.",
+      "explanation": "Topically well-matched to its single use; not independently re-fetched this session but low risk given the precise title match."
+    },
+    {
+      "citation": "bellissard-ncg-qhe",
+      "exists": true,
+      "resolved_doi": "10.1063/1.530758",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9411052",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation (Bellissard, van Elst, Schulz-Baldes, 'The noncommutative geometry of the quantum Hall effect,' J. Math. Phys. 35:5373-5451, 1994, arXiv:cond-mat/9411052). Cited three times for the disorder-hull / gap-labelling background underlying Conjecture III-2.",
+      "explanation": "Standard, well-known foundational reference for disorder-hull gap-labelling; topically appropriate for its use."
+    },
+    {
+      "citation": "kellendonk-tilings",
+      "exists": true,
+      "resolved_doi": "10.1142/S0129055X95000426",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9403065",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's bib annotation (Kellendonk, 'Non Commutative Geometry of Tilings and Gap Labelling,' Rev. Math. Phys. 7:1133-1180, 1995, arXiv:cond-mat/9403065). Cited twice, jointly with bellissard-ncg-qhe, as disorder-hull background.",
+      "explanation": "Standard, well-known background citation for gap-labelling; topically appropriate."
+    }
+  ],
+  "missing_references": [
+    "The 'Kapustin-Fidkowski obstruction' is named explicitly, by the authors' names, in TWO places (Remark rem:stratum-boundary, 'the chiral ones cannot be, by the Kapustin--Fidkowski obstruction discussed in Sec. disc-walls'; and Sec. 6.2/disc-walls, 'The second, the Kapustin--Fidkowski obstruction to commuting-projector realizations of chiral phases, governs Part V') but the paper NEVER actually cites the source paper at either location -- confirmed by an exhaustive grep of the .tex source: the string 'kapustin-fidkowski' does not appear anywhere in spectral-gap-stability.tex, not even as plain prose text, let alone inside a \\cite{}. This is despite references.bib containing a fully-formed, kb-builder-verified entry for exactly this result (Kapustin & Fidkowski, 'Local Commuting Projector Hamiltonians and the Quantum Hall Effect,' Commun. Math. Phys. 373:763-769, 2019, DOI 10.1007/s00220-019-03444-1, arXiv:1810.07756) -- independently confirmed as a real, correctly-catalogued paper via the same references.bib entries used successfully by four other worker papers in this series. At both points where the obstruction is invoked, the adjacent \\cite is instead to paperRealizability (the companion Part V paper), which is a legitimate citation for a different purpose (Part V's treatment of the obstruction) but does not substitute for citing the obstruction's own primary source. This is a straightforward fix: add \\cite{kapustin-fidkowski} at both occurrences (lines ~859 and ~1424 of the .tex source).",
+    "Lower-priority, lower-confidence secondary observation: the parenthetical 'frustration-free systems with a Knabe-type or martingale bound' (Remark rem:what-is-decidable, Sec. 3.2) names a specific technique (Knabe's finite-size gap criterion for frustration-free 1D systems, and its modern generalizations such as Gosset-Mozgunov/Lemm-Mozgunov/Anshu) without any citation, and no corresponding bib entry exists for it at all (confirmed: 'knabe' does not appear anywhere in references.bib). This is a much lower-stakes gap than the Kapustin-Fidkowski omission -- it is a passing, non-load-bearing parenthetical illustration ('...etc.') rather than a claim the paper's argument depends on -- but a reader wanting to chase down the reference would find nothing."
+  ],
+  "summary": "All 27 unique \\cite keys used in spectral-gap-stability.tex resolve cleanly against references.bib, and the compiled PDF (papers/pdf/spectral-gap-stability.pdf) contains zero '[?]' or '??' unresolved-citation markers across its full 1258-line pdftotext extraction -- confirmed by direct grep, not sampling. Nine load-bearing external attributions were independently spot-verified via WebFetch/WebSearch this session, exceeding the requested minimum of six, with a specific focus on the paper's central wall and stability chain: Cubitt-Perez-Garcia-Wolf undecidability (confirmed as a rigorously PROVEN, not conjectured, result matching Theorem thm:cpw's construction almost exactly, though the precise 'Pi_1-complete' phrasing could not be pulled from a machine-readable full-text source this session -- a tool-access limitation, not contrary evidence); Bravyi-Hastings-Michalakis (confirmed size-independent threshold, and independently confirmed via a second search that TQO-1/TQO-2 do originate in this paper, matching the paper's own attribution); Bravyi-Hastings short proof (confirmed as an alternate proof of the identical result); Michalakis-Zwolak (confirmed LTQO as a necessary-and-sufficient stability condition plus the area-law connection; also cross-checked and confirmed the correct co-author name is Zwolak, not 'Pytel', after an initial tool-summarization glitch); Nachtergaele-Sims-Young bulk-gap (confirmed to prove the thermodynamic-gap stability result directly without a uniform finite-size axiom -- a near-verbatim match to the paper's own careful characterization of what distinguishes this source from the other two stability theorems, and confirmed its Letters in Mathematical Physics 114:24 (2024) publication details exactly); Hastings-Koma and Nachtergaele-Sims exponential clustering (both confirmed to state gap-implies-clustering exactly as used in Theorem thm:hk); Ogata's ICM classification survey (confirmed as an operator-algebraic classification survey, though the specific 'complete invariants in d=1,2' phrasing was corroborated indirectly via companion bib entries rather than quoted directly); and Kapustin-Sopenko's Noether-theorem paper (confirmed its abstract explicitly states its invariants 'unify and generalize the Hall conductance,' supporting its use for the chiral-phase claim in Sec. 6.2). No claim was found attributed to a source that contradicts or overstates what that source establishes; the paper is unusually disciplined and repeatedly self-hedges scope (e.g., Remark rem:IIIB-scope's three explicit 'does not claim' clauses). ONE CONCRETE CITATION GAP WAS FOUND: the 'Kapustin-Fidkowski obstruction' is named by the authors' names twice in the prose (Sec. 4.1 and Sec. 6.2) but the corresponding, already-verified bibliography entry (kapustin-fidkowski) is never actually cited at either point -- confirmed by an exhaustive grep showing the string does not appear anywhere in the .tex file. A second, much lower-stakes gap: a 'Knabe-type or martingale bound' is named in a parenthetical (Sec. 3.2) with no citation and no corresponding bib entry at all. Also worth noting for transparency (not an error): the bibliography's kapustin-sopenko-hall entry, titularly the most on-point source for the paper's bare 'nonzero Hall conductance' claim, sits completely unused while the related kapustin-sopenko-noether is cited instead -- a defensible substitution since the cited paper's own abstract does cover Hall conductance, but a candidate improvement.",
+  "confidence": 0.87
+}

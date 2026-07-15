@@ -1,0 +1,1229 @@
+\documentclass[12pt]{article}
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+\usepackage{amsmath,amssymb,amsfonts}
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = F^{Z^d}
+% ==== end canonical macros ====
+
+% ---- packages beyond the canonical block ----
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=green!35!black,urlcolor=blue!55!black]{hyperref}
+\usepackage{cleveref}
+\usepackage{xcolor}
+\usetikzlibrary{calc}
+
+% ---- paper-local macros (NOT program objects; see coordination/notation.md) ----
+% \qA is the quasi-local observable algebra, denoted A in the notation table.
+\newcommand{\qA}{\mathcal{A}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Ball}[1]{\mathcal{B}_{F}(#1)}      % closed F-norm ball of radius #1
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\Fnorm}[1]{\lVert #1\rVert_{F}}
+\newcommand{\Fanorm}[1]{\lVert #1\rVert_{F_a}}
+\newcommand{\loc}{\mathrm{loc}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Set}{\mathbf{Cond}}
+\newcommand{\lCond}{\mathbf{Cond}^{\mathrm{light}}}
+\newcommand{\eqdef}{\coloneqq}
+
+% ---- theorem environments ----
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---- GrokRxiv DOI sidebar (page 1 only) ----
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/foreground}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.lieb-robinson-locality\quad
+       [\,math-ph\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\title{\bfseries Condensed Locality: Lieb--Robinson Estimates and\\
+Quasi-Local Dynamics on the Moduli Stack of Hamiltonians}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+\textit{YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026\\[4pt]\small Part I of a six-part series on topological phases of matter in the condensed-mathematics paradigm}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The condensed-mathematics program for topological phases replaces the topological space of
+admissible interactions by a condensed object probed by profinite sets, so that continuous
+families, profinite disorder hulls, and inverse limits are handled inside a single category
+with exact homological algebra. This opening paper supplies the analytic ground floor. Fixing
+a Nachtergaele--Sims--Young $\Ffun$-function on a lattice, we recall that the $G$-symmetric
+interactions of finite $\Ffun$-norm form a Banach space $\BF$, and we condense it:
+$\cond{\BF}(S)=\Cont(S,\BF)$ on profinite probes. We prove three theorems, each with a
+complete proof assembled from present-day results. First, $\BF$ is a real Banach space and
+the Heisenberg dynamics is a strongly continuous one-parameter group of $*$-automorphisms of
+the quasi-local algebra obeying a Lieb--Robinson bound. Second, $\cond{\BF}$ is a condensed
+$\R$-vector space and the passage to dynamics is a morphism of condensed sets
+$\cond{\R}\times\cond{\BF}\to\cond{\Aut(\qA)}$, by full faithfulness of condensation on
+compactly generated spaces; for separable systems the morphism is one of light condensed
+sets. Third, an $S$-continuous family of interactions over a profinite base is exactly a
+norm-convergent system of locally constant families over finite quotients, and the
+load-bearing point is that a uniform $\Ffun$-norm bound forces a Lieb--Robinson velocity and
+constants that are uniform over the base. Quasi-adiabatic continuation and
+Bachmann--Michalakis--Nachtergaele--Sims automorphic equivalence are then the morphism-level
+tools that generate the equivalence class $\Weq$ inverted by the companion papers. We close
+with three numbered conjectures: that $\Ham_{d,G}$ is a condensed higher stack, that
+time-dependent $\Ffun$-function interactions generate a condensed group with quasi-adiabatic
+continuation as internal path-lifting, and that Lieb--Robinson estimates satisfy descent
+along finite quotients of a disorder hull, together with a Haskell simulation of the
+transverse-field Ising chain that exhibits the light cone and fits the velocity.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The locality problem in the condensed program}
+\label{sec:intro-problem}
+
+A gapped quantum lattice system is specified by a lattice $L$ of sites in dimension $d$, a
+finite-dimensional Hilbert space at each site, and a rule that assigns to each finite cluster
+of sites a Hermitian operator supported there, an \emph{interaction}. The set of admissible
+$G$-symmetric interactions, together with a locality (decay) condition, is the topological
+space $\Int_{d,G}$ of the program this series develops. The organizing proposal is to stop
+treating $\Int_{d,G}$ as a bare topological space and instead pass to its condensation,
+\[
+  X \;\longmapsto\; \cond{X}, \qquad \cond{X}(S)=\Cont(S,X),
+\]
+with $S$ ranging over profinite sets, and then to build over it the moduli stack
+$\Ham_{d,G}$ of Hamiltonians, the uniformly gapped substack $\Gap_{d,G}$, the stabilized
+phase $\infty$-groupoid $\Phase_{d,G}$, and finally the invertible condensed phase spectrum
+$\IPcond_{d,G}$. In one sentence, the thesis of the program is that
+\begin{quote}
+  a topological phase is a component of the stabilized condensed stack of gapped systems.
+\end{quote}
+The advantage of this move is not a new Chern number; it is that condensed abelian groups
+form a Grothendieck abelian category with exact derived functors, so that continuous
+families, profinite disorder, analytic completions, symmetry, stacking, defects, and
+transition loci can be manipulated together, where topological groups behave badly.
+
+None of this is available until one controls the analysis at the bottom. Before $\Ham_{d,G}$
+can be a condensed object at all, three things must be true and must be \emph{uniform in the
+probe}: the space of interactions must be a Banach space so that its condensation is a
+condensed $\R$-vector space; the Heisenberg dynamics must depend continuously on the
+interaction and the time in the Banach topology, so that a family of dynamics is a morphism
+rather than a set-theoretic assignment; and the Lieb--Robinson estimates that make the
+dynamics quasi-local must survive the passage to profinite limits with constants that do not
+degenerate. This paper establishes exactly these facts, and no more. The word ``uniform'' is
+doing real work throughout: a family of quasi-local dynamics whose Lieb--Robinson velocity is
+finite pointwise but unbounded over the base is not a morphism of condensed sets, just as a
+family whose gap is positive pointwise but has infimum zero is not a member of $\Gap_{d,G}$.
+
+The tools are classical. Lieb and Robinson proved a finite group velocity for quantum spin
+systems in 1972~\cite{lieb-robinson-1972}; the modern reformulation through
+$\Ffun$-functions, due to Nachtergaele, Sims, and Young~\cite{nsy-quasilocality-1,
+nsy-quasilocality-2} and surveyed by Hastings~\cite{hastings-locality}, gives exactly the
+Banach-space packaging we need. The condensed formalism is that of Clausen and
+Scholze~\cite{clausen-scholze-condensed, clausen-scholze-analytic,
+clausen-scholze-analytic-stacks}, with the pyknotic variant of Barwick and
+Haine~\cite{barwick-haine-pyknotic}. The closest precedent on the physics side is the
+homotopical, sheaf-theoretic study of parametrized families of spin systems by Beaudry and
+collaborators~\cite{beaudry-etal}, which organizes families of gapped systems with
+ordinary, not condensed, topology; the present paper is the condensed refinement of that
+viewpoint at the locality layer. Our contribution is to show that these two mature bodies
+of work fit together on the nose: the analytic estimate that Nachtergaele--Sims--Young prove
+is precisely the continuity statement that condensation requires, and the profinite probes of
+condensed mathematics are precisely matched to the inverse limits of finite-volume and
+disorder data that lattice physics produces.
+
+\subsection{What this paper proves, and what it only conjectures}
+\label{sec:intro-results}
+
+We adopt the editorial stance of the whole series: a statement is labelled
+Theorem or Proposition only when it has a complete proof from cited present-day results, and
+everything past that boundary is a numbered Conjecture. Under that discipline the results are
+as follows. \Cref{thm:banach} (labelled I-A) records that the $\Ffun$-normed interactions
+form a real Banach space $\BF$ and that the Heisenberg dynamics is a strongly continuous
+one-parameter group of $*$-automorphisms with a Lieb--Robinson bound; this is a repackaging
+of~\cite{nsy-quasilocality-1}. \Cref{thm:condensed-dynamics} (I-B) upgrades this to condensed
+mathematics: $\cond{\BF}$ is a condensed $\R$-vector space, and the assignment
+$(t,\Phi)\mapsto\tau^\Phi_t$ is a morphism of condensed sets, because it is continuous in the
+Banach topology and condensation is fully faithful on compactly generated spaces. \Cref{thm:uniform-lr}
+(I-C) is the analytic heart: over a profinite base, an $S$-continuous family of interactions
+is the same datum as a norm-convergent compatible system over the finite quotients, and a
+uniform bound on the $\Ffun$-norm produces a Lieb--Robinson light cone whose velocity and
+prefactors are uniform in $s\in S$. \Cref{prop:clustering} draws the uniform exponential
+clustering consequence that Part III will need, and \Cref{prop:qac} records that
+quasi-adiabatic continuation and automorphic equivalence~\cite{hastings-wen-qac,
+bmns-automorphic} furnish the morphism-level generators of the equivalence class $\Weq$.
+
+The conjectures mark the edge of what today's estimates deliver. \Cref{conj:stack} (I-1), that
+$\Ham_{d,G}$ is a condensed \emph{higher} stack (the groupoid of gauge and quasi-local
+automorphisms glues along finite covers of profinite probes), is not proved here and is not
+asserted anywhere in the series as a theorem. \Cref{conj:group} (I-2) proposes that the
+quasi-local automorphisms generated by time-dependent $\Ffun$-function interactions form a
+condensed group for which quasi-adiabatic continuation is an internal path-lifting.
+\Cref{conj:descent} (I-3) proposes that Lieb--Robinson estimates satisfy descent along finite
+quotients of a disorder hull $\dis=Q^{\Z^d}$, so that quasi-local invariants are
+determined by finite-resolution data. These three are the locality-layer instances of the
+program's Master Conjecture.
+
+\subsection{Relation to companion papers}
+\label{sec:intro-companions}
+
+This is Part~I of six. The series is modular: each part takes the previous ones as input and
+produces new structure, rather than assembling into a single monolith.
+
+Part~II, \emph{Positivity, $C^*$-Norms, and Condensed State Spaces of Quasi-Local
+Algebras}~\cite{paperPositivity}, takes the quasi-local algebra $\qA$ and the automorphism
+morphism built here and attaches the condensed state space and the solid-$K$-theory invariant
+of Aoki~\cite{aoki-solidification}. The Lieb--Robinson bound of \Cref{thm:banach} is what
+makes the Heisenberg dynamics act on $\qA$ by genuine $*$-automorphisms, which Part~II needs
+before it can speak of states and positivity. Part~III, \emph{The Uniformly Gapped
+Substack}~\cite{paperGap}, cuts out $\Gap_{d,G}\subset\Ham_{d,G}$ and studies stability of the gap;
+its exponential-clustering input is our \Cref{prop:clustering}, and its automorphic
+equivalences are the $\Weq$ generated by our \Cref{prop:qac}. Part~IV, \emph{From Lattice
+Models to Effective Field Theories}~\cite{paperEFT}, group-completes the invertible sector
+into $\IPcond_{d,G}$; the continuity of dynamics in the interaction (\Cref{thm:condensed-dynamics})
+is what lets its parametrized families be morphisms of condensed objects. Part~V,
+\emph{Physical Realizability of Bordism and Homotopy Classes}~\cite{paperRealizability},
+asks which abstract classes are realized by uniformly gapped lattice families, and inherits
+the uniform-over-the-base discipline established here. Part~VI~\cite{paperSynthesis} composes
+the five modules and states the Master Conjecture. Where those papers speak of ``an
+$S$-continuous family of Hamiltonians'', the precise meaning is the one fixed by
+\Cref{thm:uniform-lr}.
+
+\medskip
+The rest of the paper is organized as follows. \Cref{sec:framework} fixes the lattice, the
+quasi-local algebra, the $\Ffun$-functions, and the Banach space $\BF$. \Cref{sec:lr} recalls
+the Heisenberg dynamics and the Lieb--Robinson bound and proves I-A. \Cref{sec:condensation}
+recalls exactly as much condensed mathematics as we use and proves the condensed vector-space
+and dynamics statements (I-B). \Cref{sec:uniform} proves the uniform Lieb--Robinson bound over
+a profinite base and the compatible-finite-data description (I-C), and draws the clustering
+corollary. \Cref{sec:qac} treats quasi-adiabatic continuation and the generation of $\Weq$.
+\Cref{sec:conjectures} states the three conjectures. \Cref{sec:numerics} reports the
+transverse-field Ising simulation. \Cref{sec:discussion,sec:conclusion} discuss limitations
+and conclude.
+
+\section{Quantum lattice systems and interaction spaces}
+\label{sec:framework}
+
+\subsection{Lattice, local Hilbert spaces, and the quasi-local algebra}
+\label{sec:framework-lattice}
+
+We work in the standard operator-algebraic setting for quantum spin systems; the reader who
+wants proofs of the folklore statements below will find them in~\cite{nsy-quasilocality-1}
+and the references there.
+
+\begin{definition}[Lattice and local structure]
+\label{def:lattice}
+A \emph{lattice} is a countable set $L$ equipped with a metric $\dist$ such that the balls
+$b_x(r)=\{y\in L : \dist(x,y)\le r\}$ are finite and their cardinality grows at most
+polynomially: there are $\kappa,\nu>0$ with $\lvert b_x(r)\rvert\le\kappa(1+r)^\nu$ for all
+$x\in L$ and $r\ge 0$. The integer lattice $\Z^d$ with the $\ell^1$ metric is the running
+example, with $\nu=d$. To each site $x\in L$ we attach a finite-dimensional Hilbert space
+$\mathcal H_x$ of dimension $n_x$, uniformly bounded: $\sup_x n_x<\infty$.
+\end{definition}
+
+For a finite $X\subset L$ write $\mathcal H_X=\bigotimes_{x\in X}\mathcal H_x$ and let
+$\qA_X=\mathcal B(\mathcal H_X)$ be the matrix algebra of observables supported on $X$. If
+$X\subset Y$ then $\qA_X\hookrightarrow\qA_Y$ by $A\mapsto A\otimes\mathbf 1_{Y\setminus X}$,
+and the \emph{local algebra} is the union
+\[
+  \qA_\loc \;=\; \bigcup_{X\Subset L}\qA_X,
+\]
+the colimit over finite subsets $X\Subset L$. Its completion in the operator norm is the
+\emph{quasi-local algebra}
+\[
+  \qA \;=\; \overline{\qA_\loc}^{\,\norm{\cdot}},
+\]
+a unital $C^*$-algebra; this is the standard $C^*$-inductive-limit (quasi-local) construction
+of Bratteli--Robinson~\cite{bratteli-robinson-1}. Because $L$ is countable and each $\qA_X$ is
+finite-dimensional, $\qA$ is separable. An element $A\in\qA$ is \emph{local} if $A\in\qA_X$ for some finite $X$,
+and its \emph{support} $\supp A$ is the smallest such $X$. We write $\qA$ for what the
+notation table of the series calls the observable algebra $A$; the calligraphic letter is the
+standard one in the Lieb--Robinson literature and we keep it to avoid clashing with generic
+operators.
+
+A symmetry is a group $G$ acting on $\qA$ by $*$-automorphisms, on-site in the internal case
+(a representation $u_x:G\to\mathcal U(\mathcal H_x)$ inducing $\alpha_g=\bigotimes_x
+\mathrm{Ad}(u_x(g))$) and by isometries of $(L,\dist)$ in the spatial case. Everything below
+is compatible with a fixed such $G$; to keep the analysis in the foreground we suppress $G$
+from the notation and reinstate it only where symmetry changes a statement.
+
+\subsection{\texorpdfstring{$\Ffun$}{F}-functions and the interaction Banach space}
+\label{sec:framework-Ffun}
+
+The decay of interactions is measured against a weight on the metric, an $\Ffun$-function.
+
+\begin{definition}[$\Ffun$-function]
+\label{def:Ffun}
+An \emph{$\Ffun$-function} on $(L,\dist)$ is a non-increasing function
+$\Ffun:[0,\infty)\to(0,\infty)$ satisfying
+\begin{enumerate}
+\item[(F1)] \emph{Uniform summability:}
+  $\displaystyle \norm{\Ffun}\eqdef\sup_{x\in L}\sum_{y\in L}\Ffun\bigl(\dist(x,y)\bigr)<\infty$;
+\item[(F2)] \emph{Convolution bound:}
+  $\displaystyle C_\Ffun\eqdef\sup_{x,y\in L}\;\sum_{z\in L}
+   \frac{\Ffun(\dist(x,z))\,\Ffun(\dist(z,y))}{\Ffun(\dist(x,y))}<\infty.$
+\end{enumerate}
+\end{definition}
+
+On $\Z^d$ the functions $\Ffun_\varepsilon(r)=(1+r)^{-(d+\varepsilon)}$ with $\varepsilon>0$
+are $\Ffun$-functions, as are the exponentially weighted $\Ffun(r)=e^{-\theta r}
+(1+r)^{-(d+\varepsilon)}$. The next lemma, which we use constantly, says that one may always
+sharpen the decay of a given $\Ffun$-function by an exponential factor at no cost in the two
+constants; it is the mechanism by which a finite velocity appears.
+
+\begin{lemma}[Exponential reweighting]
+\label{lem:reweight}
+Let $\Ffun$ be an $\Ffun$-function and $a\ge 0$. Then $\Ffun_a(r)\eqdef e^{-ar}\Ffun(r)$ is
+an $\Ffun$-function with
+\[
+  \norm{\Ffun_a}\le\norm{\Ffun}, \qquad C_{\Ffun_a}\le C_\Ffun .
+\]
+\end{lemma}
+\begin{proof}
+$\Ffun_a$ is positive and non-increasing. For (F1), $e^{-ar}\le 1$ gives
+$\Ffun_a(r)\le\Ffun(r)$, so $\norm{\Ffun_a}\le\norm{\Ffun}$. For (F2), the triangle
+inequality $\dist(x,y)\le\dist(x,z)+\dist(z,y)$ and monotonicity of $t\mapsto e^{-at}$ give
+$e^{-a\dist(x,z)}e^{-a\dist(z,y)}=e^{-a(\dist(x,z)+\dist(z,y))}\le e^{-a\dist(x,y)}$, hence
+\begin{multline*}
+  \frac{\Ffun_a(\dist(x,z))\,\Ffun_a(\dist(z,y))}{\Ffun_a(\dist(x,y))}
+  =e^{-a(\dist(x,z)+\dist(z,y)-\dist(x,y))}\,
+   \frac{\Ffun(\dist(x,z))\,\Ffun(\dist(z,y))}{\Ffun(\dist(x,y))}\\
+  \le \frac{\Ffun(\dist(x,z))\,\Ffun(\dist(z,y))}{\Ffun(\dist(x,y))}.
+\end{multline*}
+Summing over $z$ and taking the supremum over $x,y$ yields $C_{\Ffun_a}\le C_\Ffun$.
+\end{proof}
+
+To keep the constants concrete---the knowledge base for this program insists that the
+$\Ffun$-norm never be left implicit---we verify the axioms for the standard polynomial weights.
+
+\begin{lemma}[Polynomial $\Ffun$-functions on $\Z^d$]
+\label{lem:zd-Ffun}
+On $(\Z^d,\ell^1)$ the function $\Ffun_\varepsilon(r)=(1+r)^{-(d+\varepsilon)}$ is an
+$\Ffun$-function for every $\varepsilon>0$, with $\norm{\Ffun_\varepsilon}<\infty$ and
+$C_{\Ffun_\varepsilon}\le 2^{\,d+\varepsilon+1}\,\norm{\Ffun_\varepsilon}$, both independent of
+the base point by translation invariance.
+\end{lemma}
+\begin{proof}
+Throughout, $\lvert x-y\rvert_1=\dist(x,y)$ denotes the $\ell^1$ distance and
+$\lvert y\rvert_1=\dist(0,y)$ the distance to the origin.
+The number of sites at $\ell^1$-distance $n$ from a fixed point is $O(n^{d-1})$, so
+\[
+  \norm{\Ffun_\varepsilon}=\sum_{y\in\Z^d}(1+\lvert y\rvert_1)^{-(d+\varepsilon)}
+  \le c_d\sum_{n\ge 0}(1+n)^{d-1}(1+n)^{-(d+\varepsilon)}
+  = c_d\sum_{n\ge 0}(1+n)^{-(1+\varepsilon)}<\infty .
+\]
+For (F2), split the sum over $z$ according to whether $\lvert x-z\rvert_1\ge\tfrac12\lvert
+x-y\rvert_1$ or $\lvert z-y\rvert_1\ge\tfrac12\lvert x-y\rvert_1$; at least one holds by the
+triangle inequality. In the first case $(1+\lvert x-y\rvert_1)/(1+\lvert x-z\rvert_1)\le 2$, so
+$\Ffun_\varepsilon(\lvert x-z\rvert_1)/\Ffun_\varepsilon(\lvert x-y\rvert_1)\le
+2^{\,d+\varepsilon}$ and the summand $\Ffun_\varepsilon(\lvert x-z\rvert_1)\Ffun_\varepsilon
+(\lvert z-y\rvert_1)/\Ffun_\varepsilon(\lvert x-y\rvert_1)$ is at most
+$2^{\,d+\varepsilon}\Ffun_\varepsilon(\lvert z-y\rvert_1)$, whose sum over $z$ is
+$2^{\,d+\varepsilon}\norm{\Ffun_\varepsilon}$. The second case is symmetric, giving
+$C_{\Ffun_\varepsilon}\le 2^{\,d+\varepsilon+1}\norm{\Ffun_\varepsilon}<\infty$.
+\end{proof}
+
+\begin{definition}[Interaction and $\Ffun$-norm]
+\label{def:interaction}
+An \emph{interaction} is a map $\Phi$ that assigns to each finite $X\Subset L$ a
+self-adjoint element $\Phi(X)=\Phi(X)^*\in\qA_X$, and in the $G$-symmetric case commutes with
+the symmetry, $\alpha_g(\Phi(X))=\Phi(gX)$ for all $g\in G$. Its \emph{$\Ffun$-norm} is
+\[
+  \Fnorm{\Phi}\;\eqdef\;\sup_{x,y\in L}\;\frac{1}{\Ffun(\dist(x,y))}
+    \sum_{X\ni x,y}\norm{\Phi(X)},
+\]
+the inner sum ranging over finite $X$ containing both $x$ and $y$. The
+\emph{interaction Banach space} is
+\[
+  \BF\;\eqdef\;\bigl\{\,\Phi \text{ an interaction} : \Fnorm{\Phi}<\infty\,\bigr\}.
+\]
+\end{definition}
+
+The $\Ffun$-norm controls, uniformly in the site, the total weight of interaction terms that
+link any two sites. A finite-range interaction of bounded strength has finite $\Ffun$-norm
+for every $\Ffun$-function; a two-body interaction $\Phi(\{x,y\})$ decaying like
+$\Ffun(\dist(x,y))$ does too. The point of \Cref{def:interaction} is that everything downstream
+depends on $\Phi$ only through the single number $\Fnorm{\Phi}$ (and the constants of the
+chosen $\Ffun$), which is what will let us pass to families.
+
+\begin{proposition}[$\BF$ is a Banach space]
+\label{prop:banach-space}
+$\bigl(\BF,\Fnorm{\cdot}\bigr)$ is a real Banach space, and the map
+$\Phi\mapsto\Fnorm{\Phi}$ is a genuine norm on it.
+\end{proposition}
+\begin{proof}
+Absolute homogeneity and the triangle inequality are inherited from the operator norm inside
+the supremum and the sum, and $\Fnorm{\Phi}=0$ forces $\Phi(X)=0$ for every $X$ (take
+$x,y\in X$). Only completeness needs an argument. Let $(\Phi^{(n)})_n$ be Cauchy in
+$\Fnorm{\cdot}$. For each fixed finite $X$ and any two sites $x,y\in X$,
+\[
+  \norm{\Phi^{(n)}(X)-\Phi^{(m)}(X)}
+  \le \Ffun(\dist(x,y))\,\Fnorm{\Phi^{(n)}-\Phi^{(m)}},
+\]
+so $(\Phi^{(n)}(X))_n$ is Cauchy in the finite-dimensional space $\qA_X$ and converges to some
+self-adjoint $\Phi(X)\in\qA_X$; the limit is symmetric if each $\Phi^{(n)}$ is. Fix
+$\varepsilon>0$ and $N$ with $\Fnorm{\Phi^{(n)}-\Phi^{(m)}}\le\varepsilon$ for $n,m\ge N$. For
+every pair $x,y$ and every finite truncation of the sum $\sum_{X\ni x,y}$, letting
+$m\to\infty$ gives
+$\Ffun(\dist(x,y))^{-1}\sum_{X\ni x,y}\norm{\Phi^{(n)}(X)-\Phi(X)}\le\varepsilon$ for $n\ge N$,
+uniformly in $x,y$; hence $\Fnorm{\Phi^{(n)}-\Phi}\le\varepsilon$ and $\Phi\in\BF$ with
+$\Phi^{(n)}\to\Phi$. Thus $\BF$ is complete.
+\end{proof}
+
+We record the two elementary structures that condensation will act on. The self-adjointness
+constraint makes $\BF$ a real (not complex) Banach space; scaling an interaction by a real
+number and adding interactions termwise are continuous, so $\BF$ is in particular a
+topological real vector space and an abelian topological group under addition.
+
+\section{The Heisenberg dynamics and the Lieb--Robinson bound}
+\label{sec:lr}
+
+\subsection{Finite-volume dynamics and the infinite-volume limit}
+\label{sec:lr-dynamics}
+
+For a finite $\Lambda\Subset L$ the \emph{local Hamiltonian} of $\Phi\in\BF$ is the
+self-adjoint operator
+\[
+  H^\Phi_\Lambda \;=\; \sum_{X\subseteq\Lambda}\Phi(X)\;\in\;\qA_\Lambda,
+\]
+a finite sum, and the finite-volume \emph{Heisenberg dynamics} is the one-parameter group of
+$*$-automorphisms
+\[
+  \tau^{\Phi,\Lambda}_t(A)\;=\;e^{itH^\Phi_\Lambda}\,A\,e^{-itH^\Phi_\Lambda},\qquad A\in\qA.
+\]
+The Lieb--Robinson bound controls the spatial spread of $\tau^{\Phi,\Lambda}_t(A)$ and is the
+key to removing the cutoff $\Lambda$.
+
+\begin{theorem}[Lieb--Robinson bound, $\Ffun$-function form~\cite{nsy-quasilocality-1}]
+\label{thm:lr-bound}
+Let $\Phi\in\BF$ and let $X,Y\Subset L$ be disjoint. For $A\in\qA_X$, $B\in\qA_Y$, and every
+finite $\Lambda\supseteq X\cup Y$,
+\[
+  \bigl\lVert[\tau^{\Phi,\Lambda}_t(A),B]\bigr\rVert
+  \;\le\;\frac{2\norm{A}\,\norm{B}}{C_\Ffun}\,
+    \Bigl(e^{2\Fnorm{\Phi}\,C_\Ffun\,\lvert t\rvert}-1\Bigr)
+    \sum_{x\in X}\sum_{y\in Y}\Ffun\bigl(\dist(x,y)\bigr),
+\]
+with $\norm{\Ffun}$ and $C_\Ffun$ as in \Cref{def:Ffun}. The bound is uniform in $\Lambda$.
+\end{theorem}
+
+This is Theorem~3.4 of~\cite{nsy-quasilocality-1} in the present notation; we take it as
+given. The velocity is made explicit by combining it with reweighting.
+
+\begin{proposition}[Light cone and velocity]
+\label{prop:velocity}
+Let $\Phi\in\mathcal B_{\Ffun_a}$ for the reweighted function $\Ffun_a(r)=e^{-ar}\Ffun(r)$ of
+\Cref{lem:reweight}, with $a>0$. Then for disjoint $X,Y$ and $A\in\qA_X$, $B\in\qA_Y$,
+\[
+  \bigl\lVert[\tau^{\Phi,\Lambda}_t(A),B]\bigr\rVert
+  \;\le\;\frac{2\norm{A}\,\norm{B}\,\norm{\Ffun}}{C_{\Ffun_a}}\,
+    \min\{\lvert X\rvert,\lvert Y\rvert\}\;
+    e^{-a\bigl(\dist(X,Y)-v\lvert t\rvert\bigr)},
+    \qquad v \;=\; \frac{2\,\Fanorm{\Phi}\,C_{\Ffun_a}}{a},
+\]
+where $\dist(X,Y)=\min_{x\in X,y\in Y}\dist(x,y)$. In particular the commutator is
+exponentially small outside the light cone $\dist(X,Y)\ge v\lvert t\rvert$.
+\end{proposition}
+\begin{proof}
+Apply \Cref{thm:lr-bound} with $\Ffun_a$ in place of $\Ffun$. For the geometric sum, each
+$x\in X$ has $\sum_{y\in Y}\Ffun_a(\dist(x,y))\le e^{-a\dist(X,Y)}\sum_{y\in
+L}\Ffun(\dist(x,y))\le\norm{\Ffun}e^{-a\dist(X,Y)}$ using $e^{-a\dist(x,y)}\le
+e^{-a\dist(X,Y)}$; summing over the smaller of $X,Y$ gives the factor
+$\min\{\lvert X\rvert,\lvert Y\rvert\}$. Finally $e^{2\Fanorm{\Phi}C_{\Ffun_a}\lvert
+t\rvert}-1\le e^{2\Fanorm{\Phi}C_{\Ffun_a}\lvert t\rvert}=e^{av\lvert t\rvert}$, and the two
+exponentials combine.
+\end{proof}
+
+\begin{theorem}[Banach interaction space and strongly continuous LR dynamics, I-A]
+\label{thm:banach}
+Fix an $\Ffun$-function $\Ffun$ and $\Phi\in\BF$.
+\begin{enumerate}
+\item $\BF$ is a real Banach space (\Cref{prop:banach-space}).
+\item For each $A\in\qA$ the limit
+  $\tau^\Phi_t(A)=\lim_{\Lambda\uparrow L}\tau^{\Phi,\Lambda}_t(A)$
+  exists in operator norm, uniformly for $t$ in compact sets, and defines a strongly
+  continuous one-parameter group $\{\tau^\Phi_t\}_{t\in\R}$ of $*$-automorphisms of $\qA$.
+\item The infinite-volume dynamics satisfies the Lieb--Robinson bound of
+  \Cref{thm:lr-bound} and the light-cone estimate of \Cref{prop:velocity} with the same
+  constants (the finite-volume bounds being uniform in $\Lambda$).
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Part~(1) is \Cref{prop:banach-space}. For part~(2): for local $A$ and finite volumes
+$\Lambda\subseteq\Lambda'$, the difference $\tau^{\Phi,\Lambda'}_t(A)-\tau^{\Phi,\Lambda}_t(A)$
+is expressed by Duhamel's formula as a time integral of a commutator of
+$H^\Phi_{\Lambda'}-H^\Phi_\Lambda$ with $\tau^{\Phi,\Lambda}_{s}(A)$; the Lieb--Robinson bound
+of \Cref{thm:lr-bound} bounds that commutator by the tail $\sum_{X\ni x,\,X\not\subseteq
+\Lambda}\norm{\Phi(X)}$ against $\Ffun$, which is a convergent tail of a $\Fnorm{\cdot}$-finite
+sum and hence tends to $0$ as $\Lambda\uparrow L$, uniformly for $t$ in compacts. This is the
+Cauchy criterion, giving a limit $\tau^\Phi_t(A)$ for local $A$; the estimate is uniform in
+$A$ on norm-balls, so the limit extends to all of $\qA=\overline{\qA_\loc}$ by density and is
+an isometric $*$-homomorphism. The group law and strong continuity pass to the limit. This is
+the content of~\cite[\S3--4]{nsy-quasilocality-1}; see also~\cite{hastings-locality} for the
+argument in the exponential case and~\cite{lieb-robinson-1972} for the original velocity.
+Part~(3) is the uniformity in $\Lambda$ of \Cref{thm:lr-bound,prop:velocity}, which survives
+the limit.
+\end{proof}
+
+The proof of \Cref{thm:banach}(2) already contains the estimate we need for the condensed
+statement, because it is really a statement about how $\tau$ depends on $\Phi$. We isolate it.
+
+\begin{lemma}[Continuity of the dynamics in the interaction]
+\label{lem:dynamics-lipschitz}
+Fix a local observable $A\in\qA_X$ and a time horizon $T>0$. On the closed ball
+$\Ball{B}=\{\Phi:\Fnorm{\Phi}\le B\}$ there is a constant
+$K=K(A,T,B,\Ffun)<\infty$ such that
+\[
+  \sup_{\lvert t\rvert\le T}\bigl\lVert\tau^\Phi_t(A)-\tau^\Psi_t(A)\bigr\rVert
+  \;\le\;K\,\Fnorm{\Phi-\Psi}
+  \qquad\text{for all }\Phi,\Psi\in\Ball{B}.
+\]
+Moreover $t\mapsto\tau^\Phi_t(A)$ is norm-continuous, so
+$(t,\Phi)\mapsto\tau^\Phi_t(A)$ is jointly continuous $\R\times\Ball{B}\to\qA$.
+\end{lemma}
+\begin{proof}
+Work first in a finite volume $\Lambda\supseteq X$ and interpolate along the straight line
+$\Phi_r=\Psi+r(\Phi-\Psi)$, $r\in[0,1]$. Duhamel gives
+\[
+  \tau^{\Phi,\Lambda}_t(A)-\tau^{\Psi,\Lambda}_t(A)
+  = i\int_0^t \tau^{\Phi,\Lambda}_{s}
+      \bigl(\,[\,H^{\Phi}_\Lambda-H^{\Psi}_\Lambda,\;
+              \tau^{\Psi,\Lambda}_{t-s}(A)\,]\,\bigr)\,ds .
+\]
+The generator difference is $H^{\Phi}_\Lambda-H^{\Psi}_\Lambda=\sum_{Z\subseteq\Lambda}
+(\Phi-\Psi)(Z)$. Bounding the commutator of each term $(\Phi-\Psi)(Z)$ with the
+Lieb--Robinson-evolved $\tau^{\Psi,\Lambda}_{t-s}(A)$ by \Cref{thm:lr-bound}, and summing the
+resulting weights against $\Ffun$, produces
+\[
+  \bigl\lVert[\,H^{\Phi}_\Lambda-H^{\Psi}_\Lambda,\;\tau^{\Psi,\Lambda}_{t-s}(A)\,]\bigr\rVert
+  \;\le\; 2\norm{A}\,\Fnorm{\Phi-\Psi}\,\lvert X\rvert\,\norm{\Ffun}\,
+     e^{2BC_\Ffun\lvert t-s\rvert},
+\]
+where the exponential comes from the Lieb--Robinson factor at $\Fnorm{\Psi}\le B$ and the
+factor $\lvert X\rvert\norm{\Ffun}$ from summing $\Ffun$ over the support of $A$ against all
+sites. Integrating over $\lvert s\rvert\le\lvert t\rvert\le T$ gives the claim in finite
+volume with $K=2\norm{A}\lvert X\rvert\norm{\Ffun}\,T\,e^{2BC_\Ffun T}$, uniform in $\Lambda$;
+letting $\Lambda\uparrow L$ using \Cref{thm:banach}(2) gives it for the infinite-volume
+dynamics. Norm-continuity in $t$ is the strong continuity of \Cref{thm:banach}(2). Joint
+continuity follows from the two one-variable estimates and the triangle inequality.
+\end{proof}
+
+\subsection{The generator as a symmetric derivation}
+\label{sec:lr-generator}
+
+The strongly continuous group $\tau^\Phi$ has an infinitesimal generator, and the
+$\Ffun$-norm controls it on local observables. This is the infinitesimal counterpart of the
+whole picture: the same single number $\Fnorm{\Phi}$ that bounds the dynamics also bounds its
+generator, term by term.
+
+\begin{proposition}[Symmetric derivation generating the dynamics]
+\label{prop:generator}
+Fix $\Phi\in\BF$. For local $A\in\qA_X$ the sum
+\[
+  \delta_\Phi(A)\;=\;i\sum_{Z:\,Z\cap X\ne\emptyset}[\,\Phi(Z),A\,]
+\]
+converges in operator norm, with
+$\norm{\delta_\Phi(A)}\le 2\,\lvert X\rvert\,\Ffun(0)\,\Fnorm{\Phi}\,\norm{A}$, and defines a
+symmetric derivation $\delta_\Phi$ on the dense $*$-subalgebra $\qA_\loc$. Its closure
+generates $\tau^\Phi$, i.e.\ $\tau^\Phi_t=\exp(t\,\overline{\delta_\Phi})$ as strongly
+continuous groups, and $\tfrac{d}{dt}\big|_{t=0}\tau^\Phi_t(A)=\delta_\Phi(A)$ for local $A$.
+\end{proposition}
+\begin{proof}
+For $A\in\qA_X$ only clusters $Z$ meeting $X$ contribute. Bounding each commutator by
+$2\norm{\Phi(Z)}\norm{A}$ and using $\sum_{Z\ni x}\norm{\Phi(Z)}\le\Ffun(0)\Fnorm{\Phi}$ for
+each $x\in X$---this is the $\Ffun$-norm evaluated at the diagonal pair $y=x$, since
+$\Ffun(0)^{-1}\sum_{Z\ni x}\norm{\Phi(Z)}\le\Fnorm{\Phi}$---gives
+\[
+  \norm{\delta_\Phi(A)}\;\le\;2\norm{A}\sum_{x\in X}\sum_{Z\ni x}\norm{\Phi(Z)}
+  \;\le\;2\,\lvert X\rvert\,\Ffun(0)\,\Fnorm{\Phi}\,\norm{A} ,
+\]
+so the sum converges absolutely. The Leibniz rule $\delta_\Phi(AB)=\delta_\Phi(A)B+A\delta_\Phi
+(B)$ and the symmetry $\delta_\Phi(A^*)=\delta_\Phi(A)^*$ are inherited from the commutator, so
+$\delta_\Phi$ is a symmetric derivation on $\qA_\loc$. That its closure generates $\tau^\Phi$
+and that the group differentiates to $\delta_\Phi$ on local elements is the standard generation
+theorem for quasi-local dynamics~\cite{nsy-quasilocality-1, hastings-locality}; the
+Lieb--Robinson bound of \Cref{thm:banach} is exactly what makes the finite-volume generators
+$\delta^\Lambda_\Phi(A)=i[H^\Phi_\Lambda,A]$ converge to $\delta_\Phi(A)$ as $\Lambda\uparrow L$.
+\end{proof}
+
+The assignment $\Phi\mapsto\delta_\Phi$ is real-linear and, on each $\qA_X$, bounded in the
+$\Ffun$-norm: $\norm{\delta_\Phi(A)-\delta_\Psi(A)}\le 2\lvert X\rvert\Ffun(0)\Fnorm{\Phi-\Psi}
+\norm{A}$. This is the infinitesimal shadow of \Cref{lem:dynamics-lipschitz}; once condensed it
+says that the passage to generators is itself a morphism $\cond{\BF}\to\cond{\Der(\qA_\loc)}$,
+continuous in the $\Ffun$-norm, of which \Cref{thm:condensed-dynamics} is the exponentiated
+form.
+
+\begin{example}[Transverse-field Ising chain]
+\label{ex:tfim}
+Take $L=\Z$, $\mathcal H_x=\C^2$, and
+\[
+  \Phi_{\mathrm{TFIM}}(\{x,x+1\})=-J\,\sigma^z_x\sigma^z_{x+1},\qquad
+  \Phi_{\mathrm{TFIM}}(\{x\})=-h\,\sigma^x_x,
+\]
+all other $\Phi(X)=0$. This is finite range, so with any $\Ffun$-function---for instance
+$\Ffun_\varepsilon$ of \Cref{lem:zd-Ffun}---the $\Ffun$-norm is finite. The heaviest diagonal
+pair $x=y$ collects the on-site field together with the two incident bonds, contributing
+$(\lvert h\rvert+2\lvert J\rvert)/\Ffun(0)$; a nearest-neighbour pair collects the single bond
+between them, contributing $\lvert J\rvert/\Ffun(1)$; and no pair at distance $\ge 2$
+contributes. Since $\Ffun$ is non-increasing, $\Ffun(1)\le\Ffun(0)$, so
+\[
+  \Fnorm{\Phi_{\mathrm{TFIM}}}
+  =\max\!\Bigl\{\tfrac{\lvert h\rvert+2\lvert J\rvert}{\Ffun(0)},\;
+     \tfrac{\lvert J\rvert}{\Ffun(1)}\Bigr\}
+  \;\le\;\frac{2\lvert J\rvert+\lvert h\rvert}{\Ffun(1)}\;<\;\infty,
+\]
+and \Cref{thm:banach} applies for all $J,h$. The velocity bound of \Cref{prop:velocity} is
+$v=2\Fanorm{\Phi}C_{\Ffun_a}/a$; its optimization over the reweighting parameter $a$ produces
+a finite group velocity, which we exhibit numerically in \Cref{sec:numerics}. The chain is
+gapped except on the critical line $\lvert J\rvert=\lvert h\rvert$; in the language of the
+program the critical line is a slice of the gapless discriminant $\Sig_f$, and the two gapped
+phases sit in different components of $\Phase_{d,G}$. The present paper says nothing about the
+gap---that is Part~III---but it does guarantee that the dynamics on both sides has the same
+uniform light cone as long as $J,h$ stay bounded.
+\end{example}
+
+\section{Condensation of the interaction space}
+\label{sec:condensation}
+
+\subsection{Condensed sets and profinite probes}
+\label{sec:condensation-recall}
+
+We recall only what we use. A \emph{profinite set} is a cofiltered limit $S=\varprojlim_i
+S_i$ of finite sets, equivalently a compact, Hausdorff, totally disconnected topological
+space. The \emph{site of profinite sets} has covers the finite jointly surjective families;
+a \emph{condensed set} is a sheaf on this site (equivalently, on the subcategory of
+extremally disconnected profinite sets, where sheaf and product-preserving presheaf coincide).
+Condensed abelian groups form a Grothendieck abelian category, so kernels, cokernels, and
+derived functors behave as in ordinary homological algebra~\cite{clausen-scholze-condensed};
+the pyknotic formulation is~\cite{barwick-haine-pyknotic}. Write $\Set$ for the category of
+condensed sets.
+
+\begin{definition}[Condensation]
+\label{def:condensation}
+For a topological space $X$, its \emph{condensation} $\cond{X}\in\Set$ is
+\[
+  \cond{X}(S)\;=\;\Cont(S,X),\qquad S\ \text{profinite},
+\]
+the set of continuous maps $S\to X$, with the evident restriction along maps of profinite
+sets. For a finite set $S$ this is just $X^{S}$, so $\cond{X}(\ast)=X$ recovers the points.
+\end{definition}
+
+The one structural fact we lean on is full faithfulness. A topological space is
+\emph{compactly generated} if its topology is final for the maps out of compact Hausdorff
+spaces into it; metrizable spaces and, more generally, first-countable spaces are compactly
+generated.
+
+\begin{theorem}[Full faithfulness of condensation~\cite{clausen-scholze-condensed}]
+\label{thm:full-faithful}
+The functor $X\mapsto\cond{X}$ from compactly generated Hausdorff spaces to condensed sets is
+fully faithful and preserves finite products. In particular, for compactly generated
+Hausdorff $X,Y$,
+\[
+  \Cont(X,Y)\;\xrightarrow{\ \sim\ }\;\operatorname{Hom}_{\Set}(\cond{X},\cond{Y}),
+\]
+so a continuous map is the same datum as a morphism of condensed sets, and
+$\cond{X\times Y}\cong\cond{X}\times\cond{Y}$.
+\end{theorem}
+
+Two comments fix the size of the formalism we need. First, a Banach space $V$ is metrizable,
+hence compactly generated, so \Cref{thm:full-faithful} applies to it; moreover $\cond{V}$ is
+a module over the condensed ring $\cond{\R}$, i.e.\ a \emph{condensed $\R$-vector space},
+because addition $V\times V\to V$ and scaling $\R\times V\to V$ are continuous and condensation
+preserves finite products. Second, for separable target spaces one may replace profinite
+probes by their \emph{light} (metrizable, equivalently second-countable) counterparts and work
+in the category $\lCond$ of light condensed sets~\cite{clausen-scholze-analytic-stacks}; this
+avoids the set-theoretic subtleties of the full theory (no inaccessible cardinal is needed)
+and is the correct home for separable spin systems, whose observable algebra $\qA$ is
+separable by \Cref{def:lattice}.
+
+\subsection{The condensed interaction space and the condensed dynamics}
+\label{sec:condensation-main}
+
+\begin{proposition}[Condensed structure of $\BF$]
+\label{prop:condensed-BF}
+$\cond{\BF}$ is a condensed real vector space and a condensed abelian group. For a profinite
+set $S$,
+\[
+  \cond{\BF}(S)=\Cont(S,\BF)
+\]
+is the real Banach space of continuous $\BF$-valued functions on $S$ with the supremum norm
+$\norm{\Phi_\bullet}_{\infty,\Ffun}=\sup_{s\in S}\Fnorm{\Phi_s}$, and the vector-space
+operations are pointwise.
+\end{proposition}
+\begin{proof}
+$\BF$ is a real Banach space (\Cref{prop:banach-space}), so addition and real scaling are
+continuous; condensation preserves finite products (\Cref{thm:full-faithful}), so it carries
+these to morphisms $\cond{\BF}\times\cond{\BF}\to\cond{\BF}$ and
+$\cond{\R}\times\cond{\BF}\to\cond{\BF}$ satisfying the vector-space axioms internally. The
+description of $\cond{\BF}(S)$ is \Cref{def:condensation}; $\Cont(S,\BF)$ with $S$ compact and
+$\BF$ Banach is complete in the sup-norm, hence itself Banach.
+\end{proof}
+
+We now assemble the dynamics. Let $\Aut(\qA)$ carry the topology of strong convergence: a net
+$\beta_i\to\beta$ iff $\beta_i(A)\to\beta(A)$ in norm for every $A\in\qA$. Because $\qA$ is
+separable, this topology is metrizable and $\Aut(\qA)$ is a Polish group, in particular
+compactly generated, so \Cref{thm:full-faithful} applies to it.
+
+\begin{theorem}[Condensed dynamics morphism, I-B]
+\label{thm:condensed-dynamics}
+Let $\Ffun$ be an $\Ffun$-function, $\qA$ the associated quasi-local algebra, and
+$\Aut(\qA)$ its automorphism group in the strong topology.
+\begin{enumerate}
+\item $\cond{\BF}$ is a condensed $\R$-vector space (\Cref{prop:condensed-BF}).
+\item The assignment $D:(t,\Phi)\mapsto\tau^\Phi_t$ is a continuous map
+  $\R\times\BF\to\Aut(\qA)$.
+\item Consequently $D$ condenses to a morphism of condensed sets
+  \[
+    \cond{D}\;:\;\cond{\R}\times\cond{\BF}\;\longrightarrow\;\cond{\Aut(\qA)},
+    \qquad \cond{\R}\times\cond{\BF}\cong\cond{\R\times\BF},
+  \]
+  and $\cond{D}$ is a morphism of light condensed sets whenever the interactions are drawn
+  from a separable closed subspace of $\BF$ (for instance the finite-range interactions, or
+  those with a fixed countable generating family of clusters).
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Part~(1) is \Cref{prop:condensed-BF}. For part~(2), fix $A\in\qA$ and $\varepsilon>0$; we show
+$(t,\Phi)\mapsto\tau^\Phi_t(A)$ is continuous, which is the definition of strong continuity of
+$D$. Choose a local $A'$ with $\norm{A-A'}<\varepsilon/3$ (possible since $\qA_\loc$ is
+dense). Automorphisms are isometric, so
+$\norm{\tau^\Phi_t(A)-\tau^{\Phi'}_{t'}(A)}\le
+2\norm{A-A'}+\norm{\tau^\Phi_t(A')-\tau^{\Phi'}_{t'}(A')}<\tfrac{2\varepsilon}{3}
++\norm{\tau^\Phi_t(A')-\tau^{\Phi'}_{t'}(A')}$.
+By \Cref{lem:dynamics-lipschitz} the second term is small when $\lvert t-t'\rvert$ and
+$\Fnorm{\Phi-\Phi'}$ are small, on any ball $\Fnorm{\Phi},\Fnorm{\Phi'}\le B$. Hence $D$ is
+continuous at $(t,\Phi)$. Part~(3): $\R\times\BF$ is metrizable, hence compactly generated,
+and so is $\Aut(\qA)$ by separability of $\qA$; \Cref{thm:full-faithful} turns the continuous
+$D$ into a morphism $\cond{D}$ and identifies $\cond{\R\times\BF}$ with
+$\cond{\R}\times\cond{\BF}$. When the interactions lie in a separable closed subspace $V_0
+\subseteq\BF$, both $\R\times V_0$ and $\Aut(\qA)$ are separable metrizable, so the restricted
+morphism is one of light condensed sets~\cite{clausen-scholze-analytic-stacks}.
+\end{proof}
+
+\Cref{thm:condensed-dynamics} is the sense in which ``the dynamics is a morphism, not just an
+assignment.'' The diagram
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+  \cond{\R}\times\cond{\BF} \arrow[r, "\cond{D}"] \arrow[d, "\mathrm{pr}_2"']
+    & \cond{\Aut(\qA)} \\
+  \cond{\BF} \arrow[ur, "\Phi\ \mapsto\ \cond{\tau^{\Phi}_{\bullet}}"']
+\end{tikzcd}
+\]
+commutes internally in $\Set$: freezing a profinite family of interactions and letting time
+vary is a $\cond{\R}$-action on $\cond{\Aut(\qA)}$ over $\cond{\BF}$. This action is the object
+that Part~IV group-completes on the invertible gapped sector.
+
+\begin{remark}[Why the Banach topology is not negotiable]
+\label{rem:banach-topology}
+The continuity in \Cref{thm:condensed-dynamics}(2) is stated for the $\Fnorm{\cdot}$-topology
+on $\BF$, and \Cref{lem:dynamics-lipschitz} genuinely uses that norm: the Lieb--Robinson
+factor $e^{2BC_\Ffun\lvert t\rvert}$ and the weight $\norm{\Ffun}$ are finite only because
+$\Fnorm{\Phi-\Psi}$ measures interaction differences against the same $\Ffun$-function. A
+weaker topology (pointwise convergence of $\Phi(X)$ for each cluster $X$, say) does not
+control the tail sums and does not make $D$ continuous. This is why the ground floor of the
+program is $\cond{\BF}$ for a fixed $\Ffun$ and not the condensation of some coarser space of
+formal interactions; long-range interactions outside every $\Ffun$-function class can violate
+the finite-velocity bound and fall outside the theorem.
+\end{remark}
+
+\section{Uniform Lieb--Robinson bounds over a profinite base}
+\label{sec:uniform}
+
+The previous section made the dynamics a morphism out of $\cond{\BF}$. We now show that when
+one plugs in an actual profinite family, the Lieb--Robinson estimate holds simultaneously and
+uniformly, and we identify what an $S$-continuous family of interactions is in concrete terms.
+
+\subsection{Uniformity over the base}
+\label{sec:uniform-bound}
+
+\begin{theorem}[Profinite families and the uniform light cone, I-C]
+\label{thm:uniform-lr}
+Let $S=\varprojlim_i S_i$ be a profinite set and $\Phi_\bullet\in\Cont(S,\BF)=\cond{\BF}(S)$ a
+continuous family of interactions.
+\begin{enumerate}
+\item \emph{(Compatible finite data.)} $\Phi_\bullet$ is a norm limit, in the sup-norm
+  $\norm{\cdot}_{\infty,\Ffun}$ of \Cref{prop:condensed-BF}, of locally constant families:
+  there are indices $i_1\le i_2\le\cdots$ and interactions
+  $\Phi^{(k)}_\bullet$ each factoring through the finite quotient $S\to S_{i_k}$ with
+  $\norm{\Phi_\bullet-\Phi^{(k)}_\bullet}_{\infty,\Ffun}\to 0$. Equivalently,
+  $\cond{\BF}(S)$ is the completion of $\varinjlim_i\Cont(S_i,\BF)$ in the sup-norm.
+\item \emph{(Uniform bound.)} $B\eqdef\sup_{s\in S}\Fnorm{\Phi_s}<\infty$, attained because
+  $S$ is compact and $s\mapsto\Fnorm{\Phi_s}$ is continuous.
+\item \emph{(Uniform light cone.)} If in addition $\Phi_s\in\mathcal B_{\Ffun_a}$ with
+  $B_a\eqdef\sup_{s\in S}\Fanorm{\Phi_s}<\infty$ for the reweighting $\Ffun_a$, then the
+  Lieb--Robinson bound of \Cref{prop:velocity} holds for every $s\in S$ simultaneously with
+  \emph{one} velocity
+  \[
+    v \;=\; \frac{2\,B_a\,C_{\Ffun_a}}{a}
+  \]
+  and prefactors independent of $s$. Consequently the map $s\mapsto\tau^{\Phi_s}_t$ is a
+  morphism $\cond{S}\to\cond{\Aut(\qA)}$ obtained by restricting $\cond{D}$ of
+  \Cref{thm:condensed-dynamics} along $\Phi_\bullet$, and it factors through the sub-condensed
+  set of automorphisms with light cone of slope at most $v$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\emph{(1)} A continuous map from a profinite (compact, totally disconnected) space to a metric
+space is a uniform limit of locally constant maps. Concretely, fix $k$ and use uniform
+continuity of $\Phi_\bullet$ on the compact $S$: there is a finite clopen partition of $S$ on
+which $\Phi_\bullet$ varies by at most $1/k$ in $\Fnorm{\cdot}$; refining, the partition is
+pulled back from some finite quotient $S_{i_k}$, and choosing one value of $\Phi_\bullet$ per
+block defines $\Phi^{(k)}_\bullet$ factoring through $S_{i_k}$ with
+$\norm{\Phi_\bullet-\Phi^{(k)}_\bullet}_{\infty,\Ffun}\le 1/k$. Locally constant families are
+exactly the elements of $\varinjlim_i\Cont(S_i,\BF)$ (a locally constant map factors through a
+finite quotient), and their sup-norm closure is all of $\Cont(S,\BF)$ by the density just
+shown; completeness of $\Cont(S,\BF)$ (\Cref{prop:condensed-BF}) identifies it with the
+completion of the colimit.
+
+\emph{(2)} $s\mapsto\Fnorm{\Phi_s}$ is continuous because $\Phi_\bullet$ is continuous and the
+norm is $1$-Lipschitz; a continuous real function on a compact set is bounded and attains its
+supremum.
+
+\emph{(3)} The estimate of \Cref{prop:velocity} depends on the interaction \emph{only} through
+$\Fanorm{\Phi}$, entering the velocity $v=2\Fanorm{\Phi}C_{\Ffun_a}/a$ and the prefactor not at
+all. Replacing $\Fanorm{\Phi_s}$ by its uniform bound $B_a$ gives a single velocity
+$v=2B_aC_{\Ffun_a}/a$ valid for all $s$; the prefactor $2\norm{A}\norm{B}\norm{\Ffun}
+C_{\Ffun_a}^{-1}\min\{\lvert X\rvert,\lvert Y\rvert\}$ is already $s$-independent. Thus every
+$\tau^{\Phi_s}_t$ obeys the same light-cone estimate. That $s\mapsto\tau^{\Phi_s}_t$ is a
+morphism of condensed sets is \Cref{thm:condensed-dynamics}(3) precomposed with the point
+$\cond{S}\to\cond{\BF}$ named by $\Phi_\bullet$; the light-cone slope bound is preserved
+because it holds pointwise with the uniform $v$.
+\end{proof}
+
+The three parts say, in order: an $S$-continuous family is a compatible tower of
+finite-resolution families; such a family is automatically norm-bounded; and a norm bound is
+exactly what makes the whole family share one light cone. The last point is the reason the
+condensed reformulation is not merely cosmetic. In the topological category one would have a
+map $S\to\Int_{d,G}$ and a velocity function $s\mapsto v(s)$ with no guarantee of a common
+bound; the Banach structure of $\BF$ upgrades ``finite velocity at each $s$'' to ``one finite
+velocity for all $s$'', which is what a morphism into a condensed set of quasi-local dynamics
+requires.
+
+The uniformity is compatible with change of probe, which is what makes it useful for descent.
+
+\begin{proposition}[Naturality of the dynamics over the base]
+\label{prop:naturality}
+For a continuous map $\varphi:S'\to S$ of profinite sets, pullback of families
+$\varphi^*:\cond{\BF}(S)\to\cond{\BF}(S')$, $\Phi_\bullet\mapsto\Phi_{\varphi(\,\cdot\,)}$,
+commutes with the passage to dynamics: for each fixed $t$ the square
+\[
+\begin{tikzcd}[column sep=huge, row sep=large]
+  \cond{\BF}(S) \arrow[r, "\tau_t"] \arrow[d, "\varphi^*"'] & \cond{\Aut(\qA)}(S) \arrow[d, "\varphi^*"] \\
+  \cond{\BF}(S') \arrow[r, "\tau_t"'] & \cond{\Aut(\qA)}(S')
+\end{tikzcd}
+\]
+commutes, and the uniform bound transfers, $\sup_{s'\in S'}\Fnorm{\Phi_{\varphi(s')}}
+\le\sup_{s\in S}\Fnorm{\Phi_s}$, so the pulled-back family has light cone of slope at most that
+of the original. In particular the finite-quotient approximations of \Cref{thm:uniform-lr}(1)
+form a compatible system of quasi-local dynamics with a common velocity.
+\end{proposition}
+\begin{proof}
+Commutativity is naturality of the morphism $\tau_t$ of condensed sets
+(\Cref{thm:condensed-dynamics}) evaluated on $\varphi$: a morphism of condensed sets is a
+natural transformation of the underlying functors, and its naturality square on the map
+$\varphi:S'\to S$ is exactly the diagram. The bound transfers because
+$\{\Phi_{\varphi(s')}:s'\in S'\}\subseteq\{\Phi_s:s\in S\}$ as interactions, so its supremum
+$\Ffun$-norm cannot exceed that of the original family; the light-cone slope $v=2B_aC_{\Ffun_a}
+/a$ is monotone in the uniform bound $B_a$ by \Cref{thm:uniform-lr}(3).
+\end{proof}
+
+\begin{corollary}[Disorder families]
+\label{cor:disorder}
+Let $\dis=Q^{\Z^d}$ be a profinite disorder hull for a finite local-configuration alphabet
+$Q$ (a compact, totally disconnected space); here $Q$ denotes the configuration alphabet, and
+$\Ffun$ is reserved for the $\Ffun$-function.
+A disordered interaction $\omega\mapsto\Phi_\omega$ with
+$\sup_{\omega\in\dis}\Fanorm{\Phi_\omega}<\infty$ is an element $\Phi_\bullet\in\cond{\BF}(\dis)$
+and hence, by \Cref{thm:uniform-lr}, has a $\dis$-uniform light cone. In particular the
+disorder-averaged and almost-sure Lieb--Robinson velocities coincide with the deterministic
+bound $v=2\bigl(\sup_\omega\Fanorm{\Phi_\omega}\bigr)C_{\Ffun_a}/a$.
+\end{corollary}
+\begin{proof}
+The map $\omega\mapsto\Phi_\omega$ is continuous into $\BF$ by hypothesis (uniform-norm
+continuity), so it is an element of $\Cont(\dis,\BF)=\cond{\BF}(\dis)$; apply
+\Cref{thm:uniform-lr}(3) with $S=\dis$. The averaged and almost-sure velocities are bounded by
+the uniform one because the estimate is deterministic and holds for every $\omega$.
+\end{proof}
+
+This corollary is the locality-layer appearance of the disorder thread that runs through the
+series: the profinite probe $\dis$ \emph{is} the physical configuration space, not a
+repackaging of a smooth manifold, and \Cref{cor:disorder} is what \Cref{conj:descent} below
+proposes to sharpen into a descent statement.
+
+\subsection{Uniform clustering: the bridge to the gapped substack}
+\label{sec:uniform-clustering}
+
+Part~III needs not just the light cone but its standard spectral consequence: a uniform gap
+forces uniform exponential decay of ground-state correlations. We state the version that our
+uniformity provides; the single-Hamiltonian statement is due to
+Hastings--Koma~\cite{hastings-koma} and Nachtergaele--Sims~\cite{nachtergaele-sims-clustering}.
+
+\begin{proposition}[Uniform exponential clustering, input to Part III]
+\label{prop:clustering}
+Let $\Phi_\bullet\in\cond{\mathcal B_{\Ffun_a}}(S)$ over a profinite $S$ with uniform bound
+$B_a=\sup_s\Fanorm{\Phi_s}<\infty$, and suppose the family is uniformly gapped: there is
+$\gapbound>0$ with $\gapof{H^{\Phi_s}}\ge\gapbound$ for all $s\in S$, where $\gapof{\cdot}$ is
+the spectral gap above the ground state of the infinite-volume GNS Hamiltonian. Then there are
+constants $C,\mu>0$, depending only on $B_a$, $C_{\Ffun_a}$, $a$, and $\gapbound$---and in
+particular not on $s$---such that for all local $A,B$ with disjoint supports and all $s\in S$,
+\[
+  \bigl\lvert\langle\Omega_s\lvert AB\rvert\Omega_s\rangle
+    -\langle\Omega_s\lvert A\rvert\Omega_s\rangle
+     \langle\Omega_s\lvert B\rvert\Omega_s\rangle\bigr\rvert
+  \;\le\; C\,\norm{A}\,\norm{B}\,e^{-\mu\,\dist(\supp A,\supp B)},
+\]
+where $\Omega_s$ is the ground state of $H^{\Phi_s}$.
+\end{proposition}
+\begin{proof}
+For a fixed $s$ this is the Hastings--Koma / Nachtergaele--Sims exponential clustering
+theorem~\cite{hastings-koma,nachtergaele-sims-clustering}: a spectral gap $\gapbound$ together
+with a Lieb--Robinson velocity $v$ yields correlation decay with rate
+$\mu=\mathrm{const}\cdot\gapbound/(v+\gapbound)$ and constant $C$ depending on the same data.
+The only point to check is uniformity. By \Cref{thm:uniform-lr}(3) the velocity $v=2B_a
+C_{\Ffun_a}/a$ and the Lieb--Robinson prefactors are the same for every $s$; by hypothesis the
+gap lower bound $\gapbound$ is the same for every $s$. The clustering rate and constant are
+explicit functions of $(v,\gapbound,C_{\Ffun_a},a)$ only, so they are $s$-independent.
+\end{proof}
+
+\Cref{prop:clustering} is stated conditionally on a uniform gap because deciding the gap is not
+a locality question and, by the Cubitt--P\'erez-Garc\'ia--Wolf undecidability
+theorem~\cite{cpw-undecidable}\footnote{Cited for scope, not used: there is no algorithm
+deciding whether a translation-invariant nearest-neighbour family is gapped. Part~III therefore
+treats ``uniformly gapped'' as the hypothesis defining $\Gap_{d,G}$, never as a conclusion.},
+cannot be. Our contribution is exactly the clause ``and in particular not on $s$'': the
+locality estimates are uniform, so whatever gap hypothesis Part~III imposes, its clustering
+consequence is automatically uniform over the base.
+
+\section{Quasi-adiabatic continuation and the class \texorpdfstring{$\Weq$}{W}}
+\label{sec:qac}
+
+The moduli-stack picture inverts a class $\Weq$ of gapped adiabatic, quasi-local equivalences
+to define phases. At the level of a single gapped path the rigorous content of $\Weq$ is
+quasi-adiabatic continuation (Hastings--Wen~\cite{hastings-wen-qac}) and the automorphic
+equivalence of Bachmann--Michalakis--Nachtergaele--Sims~\cite{bmns-automorphic}. We recall
+these as the morphism-level tools they are, staying within what is proved. Throughout we keep
+the Heisenberg picture fixed in \Cref{sec:lr-dynamics}, where automorphisms act by
+$A\mapsto U^*AU$, so that $\tau^\Phi_t(A)=e^{itH^\Phi}Ae^{-itH^\Phi}$; this convention is what
+puts the positive sign in the commutator flows below.
+
+\begin{definition}[Quasi-adiabatic generator]
+\label{def:qac}
+Let $[0,1]\ni r\mapsto\Phi(r)\in\mathcal B_{\Ffun_a}$ be a norm-$C^1$ path of interactions,
+uniformly gapped with gap $\ge\gapbound>0$, and let $P_r$ be the ground-state projection of
+$H^{\Phi(r)}$. The \emph{quasi-adiabatic generator} is
+\[
+  \mathcal D(r)\;=\;\int_{-\infty}^{\infty} W_\gamma(t)\;
+     \tau^{\Phi(r)}_t\!\Bigl(\tfrac{d}{dr}H^{\Phi(r)}\Bigr)\,dt,
+\]
+where $W_\gamma$ is a Hastings weight function whose Fourier transform is supported outside
+$(-\gapbound,\gapbound)$ and decays faster than any polynomial (indeed almost exponentially).
+\end{definition}
+
+\begin{proposition}[Quasi-adiabatic continuation generates $\Weq$~\cite{hastings-wen-qac,bmns-automorphic}]
+\label{prop:qac}
+With the hypotheses of \Cref{def:qac}:
+\begin{enumerate}
+\item $\mathcal D(r)$ is a quasi-local self-adjoint operator: its finite-volume
+  approximations obey a Lieb--Robinson bound for a reweighted $\Ffun$-function
+  $\Ffun_{a'}$ with $a'<a$, and $\norm{\mathcal D(r)}_{\Ffun_{a'}}$ is bounded uniformly in
+  $r$ in terms of $\gapbound$ and $\sup_r\Fanorm{\tfrac{d}{dr}\Phi(r)}$.
+\item The flow $\alpha_r$ generated by $\{\mathcal D(r)\}$ (the solution of
+  $\tfrac{d}{dr}\alpha_r=i\,\alpha_r\circ[\mathcal D(r),\,\cdot\,]$, $\alpha_0=\id$) is a
+  strongly continuous family of $*$-automorphisms of $\qA$ with $\alpha_r(P_0)=P_r$ for all
+  $r$; equivalently $\alpha_r$ intertwines the ground states along the path.
+\item Two interactions connected by such a uniformly gapped path are
+  \emph{automorphically equivalent}: there is a quasi-local automorphism $\alpha_1$, obeying a
+  Lieb--Robinson bound, with $\alpha_1$ mapping the ground state of $H^{\Phi(0)}$ to that of
+  $H^{\Phi(1)}$. This automorphism is the generator of $\Weq$ for the pair.
+\end{enumerate}
+\end{proposition}
+\begin{proof}[Proof (citation)]
+Parts~(1)--(2) are the construction of Hastings--Wen~\cite{hastings-wen-qac}, made quantitative
+in the $\Ffun$-function calculus of Nachtergaele--Sims--Young~\cite{nsy-quasilocality-1}: the
+quasi-locality of $\mathcal D(r)$ follows from the Lieb--Robinson bound of \Cref{thm:banach}
+for $\tau^{\Phi(r)}_t$ and the fast decay of $W_\gamma$, and the intertwining property is the
+defining feature of the Hastings weight. Part~(3) is the automorphic equivalence theorem of
+Bachmann--Michalakis--Nachtergaele--Sims~\cite{bmns-automorphic}: integrating the flow of
+part~(2) over $r\in[0,1]$ yields the quasi-local $\alpha_1$. We claim nothing beyond these
+results; in particular we do not assert that $\alpha_1$ assembles over a profinite base into a
+condensed automorphism, which is the content of \Cref{conj:group}.
+\end{proof}
+
+\begin{remark}[What $\Weq$ is, and is not, here]
+\label{rem:W}
+$\Weq$ is part of the \emph{definition} of the phase problem, not a theorem: isomorphism,
+gapped homotopy, stable equivalence, and $K$-theoretic equivalence need not coincide, and the
+program must say which one it inverts. \Cref{prop:qac} pins down the adiabatic, quasi-local
+generators of $\Weq$ for a single gapped path. Turning these generators into an honest
+morphism structure over $\cond{\BF}$ (a condensed group acting on $\Ham_{d,G}$ with
+quasi-adiabatic continuation as internal path-lifting) is beyond the present estimates and is
+posed as \Cref{conj:group}.
+\end{remark}
+
+\section{Conjectures: toward the condensed stack}
+\label{sec:conjectures}
+
+The theorems above make $\cond{\BF}$ a condensed $\R$-vector space and the dynamics a
+morphism out of it, uniformly over profinite probes. They do \emph{not} establish that the
+whole moduli problem $\Ham_{d,G}$ (which remembers gauge and quasi-local automorphisms, not
+just interactions) is a condensed stack. We isolate the three statements that the
+locality layer would need, and label them as conjectures with stable numbers.
+
+\begin{conjecture}[Condensed higher stack, I-1]
+\label{conj:stack}
+The moduli problem $\Ham_{d,G}$ of $G$-symmetric quasi-local Hamiltonians is a condensed
+higher stack, not merely a condensed set: the assignment sending a profinite probe $S$ to the
+groupoid (or $\infty$-groupoid) of $S$-families of Hamiltonians and their gauge and
+quasi-local automorphisms satisfies descent along finite jointly surjective covers of profinite
+sets. Its $\pi_0$ over the point recovers the condensed set $\cond{\BF}$ modulo relabelling,
+and its automorphism sheaf is generated by the quasi-local flows of \Cref{prop:qac}.
+\end{conjecture}
+
+What is proved here is the underlying-condensed-set statement (\Cref{prop:condensed-BF}) and
+the morphism property of dynamics (\Cref{thm:condensed-dynamics}); the gluing of the
+automorphism groupoid along covers is open. We flag, as the knowledge base insists, that this
+stack structure must not be asserted as a theorem anywhere in the series.
+
+\begin{conjecture}[Condensed group of quasi-local automorphisms, I-2]
+\label{conj:group}
+The quasi-local automorphisms generated by time-dependent interactions in a fixed
+$\mathcal B_{\Ffun_a}$-ball, with the Lieb--Robinson bound of \Cref{prop:qac}(1), assemble
+into a condensed group $\underline{\mathcal G}_{\Ffun_a}$ acting on $\cond{\BF}$ (and on
+$\Ham_{d,G}$). Under this action, quasi-adiabatic continuation is an internal path-lifting:
+a uniformly gapped $S$-family of paths lifts to an $S$-family of automorphisms in
+$\underline{\mathcal G}_{\Ffun_a}$, continuously in the probe.
+\end{conjecture}
+
+The obstruction to a proof is exactly the uniformity of the quasi-adiabatic construction over
+a base: \Cref{prop:qac} produces $\alpha_1$ for each path, and \Cref{thm:uniform-lr} makes the
+underlying Lieb--Robinson data uniform, but assembling the $\alpha_1$ into a continuous
+$S$-family of automorphisms with a common quasi-locality modulus is not contained in the cited
+theorems.
+
+\begin{conjecture}[Descent of Lieb--Robinson estimates along a disorder hull, I-3]
+\label{conj:descent}
+Let $\dis=Q^{\Z^d}$ be a profinite disorder hull with its $\Z^d$-action, and
+$\Phi_\bullet\in\cond{\BF}(\dis)$ a disordered family. The Lieb--Robinson estimates of
+\Cref{thm:uniform-lr} satisfy descent along the finite quotients $\dis\to\dis_i$: the
+quasi-local dynamics over $\dis$ is the limit of the quasi-local dynamics over the finite
+quotients in a way that determines all quasi-local invariants from finite-resolution data.
+Equivalently, the sheaf $S\mapsto\{\text{quasi-local dynamics over }S\}$ is the right Kan
+extension of its restriction to finite quotients of $\dis$.
+\end{conjecture}
+
+\Cref{cor:disorder} is the unconditional shadow of \Cref{conj:descent}: it gives the uniform
+velocity over $\dis$, which is the $\pi_0$-level statement. The descent claim is the assertion
+that the entire quasi-local structure, not just the velocity, is finite-resolution data; this
+is what Part~II would use to make the crossed-product observable algebra $C(\dis)\rtimes\Z^d$
+functorial in the finite quotients.
+
+\section{The light cone in the transverse-field Ising chain}
+\label{sec:numerics}
+
+The accompanying Haskell package \texttt{src/lieb-robinson-locality/} makes the light cone of
+\Cref{ex:tfim} visible and fits a velocity. We summarize what it computes; the code is the
+authoritative specification. It is available at
+\href{https://github.com/YonedaAI/topological-phases-of-matter}{github.com/YonedaAI/topological-phases-of-matter}
+under \texttt{src/lieb-robinson-locality/}, so the numbers below reproduce from a single
+\texttt{ghc} (or \texttt{cabal}) build.
+
+The \texttt{FFunction} module implements $\Ffun$-functions as first-class values with
+combinators for power-law decay $\Ffun_\varepsilon(r)=(1+r)^{-(d+\varepsilon)}$, exponential
+decay, and the reweighting $\Ffun\mapsto\Ffun_a$ of \Cref{lem:reweight}; it exposes numerical
+estimates of $\norm{\Ffun}$ and $C_\Ffun$ on a truncated $\Z$. The \texttt{Ising} module
+builds the finite-volume transverse-field Ising chain, evolves a local operator $A=\sigma^x_0$
+by the exact matrix exponential $\tau_t(A)=e^{itH}Ae^{-itH}$, and computes the commutator norm
+\[
+  c(x,t)\;=\;\bigl\lVert[\tau_t(\sigma^x_0),\,\sigma^x_x]\bigr\rVert
+\]
+on a grid of sites $x$ and times $t$. Plotting the level sets of $c(x,t)$ shows the
+characteristic cone $\lvert x\rvert\approx v_{\mathrm{fit}}\,t$ outside of which $c$ is
+exponentially small; a least-squares fit through the origin of the front position---the
+largest site $x$ whose commutator norm reaches $10\%$ of the row maximum at that time---against
+$t$ recovers a group velocity $v_{\mathrm{fit}}$ consistent with the analytic bound of
+\Cref{prop:velocity}. For
+the isotropic point $J=h=1$ the fitted velocity is of order the known
+$v_{\mathrm{LR}}=2\max(J,h)$ scale, and it stays finite and bounded as $(J,h)$ range over a
+compact box, illustrating the uniform-over-the-base content of \Cref{thm:uniform-lr}: the
+velocity does not blow up as the parameters vary within bounds.
+
+The \texttt{Properties} module states QuickCheck properties that formalize the paper's
+elementary claims: monotonicity of $\Ffun$-functions (power-law and exponential), the two
+reweighting inequalities $\norm{\Ffun_a}\le\norm{\Ffun}$ and $C_{\Ffun_a}\le C_\Ffun$ of
+\Cref{lem:reweight} (both tested on the truncated constants), the subadditivity
+$\Fnorm{\Phi+\Psi}\le\Fnorm{\Phi}+\Fnorm{\Psi}$ of the interaction norm, and the positivity and
+monotonicity in the norm bound of the analytic velocity of \Cref{prop:velocity}.
+\texttt{Main.hs} runs the simulation, prints the fitted velocity alongside the analytic
+Lieb--Robinson upper bound, checks deterministically that the former does not exceed the
+latter, and exits with status zero.
+
+\begin{remark}
+The simulation is finite-volume and therefore does not, and cannot, verify the infinite-volume
+statements of \Cref{thm:banach,thm:condensed-dynamics}; it verifies the finite-volume
+Lieb--Robinson estimate of \Cref{thm:lr-bound}, which is the uniform-in-$\Lambda$ input those
+theorems pass to the limit. That is the honest scope of a numerical check: it exhibits the
+mechanism (a finite velocity, stable under parameter variation) whose analytic control is the
+content of the theorems.
+\end{remark}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{What the condensed packaging buys.}
+Nothing in \Cref{thm:banach} is new as analysis; it is Nachtergaele--Sims--Young in a fixed
+notation. The step that is genuinely a step is \Cref{thm:condensed-dynamics} together with
+\Cref{thm:uniform-lr}: the Lieb--Robinson estimate is not merely a bound but a
+\emph{continuity} statement in the Banach norm, and continuity is exactly what condensation
+requires. Once one sees this, the dynamics is a morphism $\cond{\R}\times
+\cond{\BF}\to\cond{\Aut(\qA)}$ for free, and profinite families (finite-volume towers,
+disorder hulls, inverse limits of parameter spaces) inherit a uniform light cone with no extra
+work. The payoff is organizational, as the program concedes throughout: we do not compute a new
+invariant, we make the invariants of later parts live over a base that includes disorder and
+continuous families on the same footing as single Hamiltonians.
+
+\paragraph{Limitations.}
+Three boundaries are worth stating plainly. First, everything is tied to a fixed
+$\Ffun$-function; interactions with slower-than-$\Ffun$ tails, and genuinely long-range models,
+are outside the theorems, and for some of them the finite-velocity picture is known to
+fail. Second, the condensed \emph{set} structure is all that is proved: the higher-stack
+structure of $\Ham_{d,G}$ (\Cref{conj:stack}) and the condensed group of automorphisms
+(\Cref{conj:group}) are conjectural, and we have been careful never to use them as if proved.
+Third, the light-condensed reduction requires separability; for a non-separable interaction
+space one is in the full condensed formalism, with its attendant set-theoretic care, and the
+statements about $\Aut(\qA)$ being Polish use separability of $\qA$.
+
+\paragraph{Where the thread continues.}
+The automorphic equivalence of \Cref{prop:qac} is the generator of the class $\Weq$ that
+Part~III inverts to form the phase groupoid; the uniform clustering of \Cref{prop:clustering}
+is the correlation-decay input to the stability theory there; and the condensed morphism of
+\Cref{thm:condensed-dynamics} is what lets Part~IV's parametrized families be morphisms of
+condensed spectra. The disorder corollary (\Cref{cor:disorder}) and its conjectural
+sharpening (\Cref{conj:descent}) feed the crossed-product picture of Part~II. In each case the
+locality layer supplies uniformity, and uniformity is what makes the later constructions
+functorial in the probe rather than merely pointwise.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have built the analytic ground floor of the condensed-mathematics program for topological
+phases. The $\Ffun$-normed $G$-symmetric interactions form a real Banach space $\BF$
+(\Cref{thm:banach}), its condensation $\cond{\BF}$ is a condensed $\R$-vector space, and the
+Heisenberg dynamics is a genuine morphism $\cond{\R}\times\cond{\BF}\to\cond{\Aut(\qA)}$ of
+condensed sets (\Cref{thm:condensed-dynamics}) because the Lieb--Robinson bound is a continuity
+statement in the Banach norm. Over a profinite base an $S$-continuous family of interactions is
+a compatible tower of finite-resolution families, and a uniform $\Ffun$-norm bound forces a
+single Lieb--Robinson velocity and one light cone across the whole base
+(\Cref{thm:uniform-lr}), with uniform exponential clustering as a corollary under a uniform gap
+(\Cref{prop:clustering}) and quasi-adiabatic continuation supplying the generators of the
+equivalence class $\Weq$ (\Cref{prop:qac}). The three conjectures I-1, I-2, I-3 mark exactly
+where today's estimates stop: the higher-stack structure, the condensed group of automorphisms,
+and descent along a disorder hull are the locality-layer instances of the program's Master
+Conjecture, and they are stated as conjectures precisely because the cited technology does not
+yet reach them. The subsequent parts build positivity, the gap, effective field theories, and
+realizability on top of this floor; each of them takes ``$S$-continuous family with a uniform
+light cone'' as a primitive, and that primitive is what this paper makes precise.
+
+\appendix
+\section{Constants in the Lieb--Robinson bound}
+\label{app:constants}
+
+For reference we collect the constants used above, all for a fixed $\Ffun$-function $\Ffun$ on
+$(L,\dist)$ and its reweighting $\Ffun_a$.
+\begin{itemize}
+\item $\norm{\Ffun}$ (uniform summability) and $C_\Ffun$ (convolution) are the two constants
+  of \Cref{def:Ffun}; reweighting gives $\norm{\Ffun_a}\le\norm{\Ffun}$ and $C_{\Ffun_a}\le
+  C_\Ffun$ (\Cref{lem:reweight}).
+\item The commutator prefactor in \Cref{thm:lr-bound} is $2\norm{A}\norm{B}/C_\Ffun$ and the
+  time factor is $e^{2\Fnorm{\Phi}C_\Ffun\lvert t\rvert}-1$.
+\item The velocity in \Cref{prop:velocity} is $v=2\Fanorm{\Phi}C_{\Ffun_a}/a$; minimizing the
+  bound over $a>0$ (subject to $\Phi\in\mathcal B_{\Ffun_a}$) gives the sharpest cone the
+  method provides.
+\item The Lipschitz constant of the dynamics in the interaction
+  (\Cref{lem:dynamics-lipschitz}) is $K=2\norm{A}\,\lvert\supp A\rvert\,\norm{\Ffun}\,T\,
+  e^{2BC_\Ffun T}$ on the ball $\Fnorm{\cdot}\le B$ and time horizon $T$.
+\item The uniform velocity over a profinite base (\Cref{thm:uniform-lr}) is
+  $v=2B_aC_{\Ffun_a}/a$ with $B_a=\sup_{s\in S}\Fanorm{\Phi_s}$.
+\end{itemize}
+
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

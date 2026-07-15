@@ -1,0 +1,47 @@
+{
+  "novelty_score": 0.38,
+  "related_work": [
+    {
+      "citation_key": "aoki-solidification",
+      "title": "(Semi)topological K-theory via solidification",
+      "relation": "prior_art",
+      "delta": "Theorem II-B is Aoki's theorem imported without modification (K_op(A) is equivalent to Solid(K_alg(underline A)) for a real Banach algebra A); the paper states plainly that 'the proof is Aoki's and we claim no part of it,' and that its own contribution is 'the reading of the theorem inside the program.' A direct check of Aoki's paper (arXiv:2409.01462) found it to be pure K-theory foundations with no stated physical or condensed-matter application, so pointing the bridge at observable algebras of lattice systems is new, but it is an application of an existing theorem, not new mathematics or a modification of Aoki's result."
+    },
+    {
+      "citation_key": "denittis-states",
+      "title": "Topological phases of non-interacting systems: a general approach based on states",
+      "relation": "builds_on",
+      "delta": "De Nittis's 2025 paper (its 2026 companion with Rendel, cited in this paper's own bibliography as denittis-rendel-weyl, does the analogous construction for the Weyl C*-algebra) classifies topological phases via homotopy classes of sections of bundles of pure states of a C*-algebra, recovering the K-theoretic classification of symmetry classes A and AI. This is the closest existing precedent to the condensed state-space construction of Theorem II-A, and it uses ordinary point-set/manifold topology rather than condensed mathematics. The paper correctly identifies this relationship when discussing Conjecture II-4, but the claim that would actually exceed De Nittis -- that the bundle-of-states picture is the shadow of a single condensed classifying object -- is left as that unproved conjecture rather than delivered as a theorem."
+    },
+    {
+      "citation_key": "bellissard-ncg-qhe",
+      "title": "The noncommutative geometry of the quantum Hall effect",
+      "relation": "prior_art",
+      "delta": "Supplies the crossed-product disorder algebra C(Omega) rtimes Z^d and its gap-labelling theory wholesale; Theorem II-C repackages this construction and adds only that the condensation functor, applied to it, is functorial in T-equivariant finite quotients of the disorder hull. That addition follows formally from general condensation functoriality (Prop. 2.2, itself an instance of the Clausen-Scholze framework) composed with the universal property of the crossed product; it is not a new fact about disordered physical systems."
+    },
+    {
+      "citation_key": "clausen-scholze-condensed",
+      "title": "Lectures on Condensed Mathematics",
+      "relation": "prior_art",
+      "delta": "Supplies, at full generality and prior to this paper, every condensation fact the paper needs: full faithfulness of condensation on compactly generated and on compact Hausdorff spaces, the identification of Banach spaces with condensed R-vector spaces, and light condensed sets for second-countable/separable objects. Propositions 2.1 and 2.2 and Theorem II-A are close-to-immediate specializations of these general results to the case where the underlying space carries a C*-algebra structure or is a convex-compact state space; the specialization adds bookkeeping for the involution and the positivity cone but no condensed-mathematical content beyond what this source already provides."
+    },
+    {
+      "citation_key": "kitaev-periodic-table",
+      "title": "Periodic table for topological insulators and superconductors",
+      "relation": "prior_art",
+      "delta": "Together with the K-theoretic classification literature cited alongside it in this paper (Thiang; Prodan-Schulz-Baldes), this supplies the pre-existing tenfold-way operator-K invariants that Corollary condinvariant re-routes through solidification. The paper is candid that, for its own worked example, 'the number is the same integer computed in 1979' (the SSH winding number) -- no new invariant, numerical or otherwise, is produced anywhere in the paper."
+    },
+    {
+      "citation_key": "ogata-classification-review",
+      "title": "Classification of gapped ground state phases in quantum spin systems",
+      "relation": "prior_art",
+      "delta": "Supplies the operator-algebraic classification-of-gapped-phases framework, including the split property and the indices built from it, that Conjecture II-5 proposes to give a 'condensed enhancement' of. The relationship to this prior art is aspirational: the paper states what a condensed enhancement would need to show, but does not carry out any part of the extension itself."
+    }
+  ],
+  "missing_prior_art": [
+    "Targeted searches ('condensed C*-algebra', 'condensed operator algebra', plus checking Aoki's own paper and its citing literature) turned up no prior work applying Clausen-Scholze condensed/solid technology specifically to C*-algebras or operator K-theory of physical lattice systems, corroborating the knowledge base's independent novelty scan; no undisclosed close prior art was found that would undercut the paper's central claim for this module.",
+    "The paper does not mention topos-theoretic 'Bohrification' reformulations of C*-algebras (Heunen-Landsman-Spitters and the line of work following them), which also place a C*-algebra into a sheaf/topos-theoretic universe (sheaves over the poset of commutative subalgebras) rather than ordinary point-set topology. That program targets quantum foundations and Kochen-Specker-type results rather than K-theoretic phase classification, so the omission is not a real gap in the novelty claim, but a sentence distinguishing condensed-sets-over-profinite-sets from other sheaf-theoretic recastings of C*-algebras would preempt an obvious reviewer question."
+  ],
+  "verdict": "Novelty claims are well-calibrated to the honest framing already recorded in the knowledge base. Independent spot-checks (searches for 'condensed C*-algebra' / 'condensed operator algebra', for stated applications of Aoki's own paper, and for condensed-mathematics treatments of Bellissard-style disorder) found nothing that contradicts the paper's central premise: no prior work routes quasi-local C*-algebras, their state spaces, GNS representations, and disorder crossed products through condensed or solid technology. Within that honestly-disclosed frame, this module is the most mechanical of the six: its three headline results (state space, II-A; the Aoki corollary, II-B; crossed-product functoriality, II-C) are close-to-immediate specializations of already-general condensed-mathematics facts or of an externally authored theorem the paper explicitly disclaims credit for, and the one place where the paper could exceed its closest real precedent (De Nittis's ordinary-topology state-bundle classification) is left as an unproved conjecture (II-4) rather than delivered. No overclaiming was found: the paper never asserts priority in its own voice, repeatedly and explicitly disclaims producing a new physical invariant, and its 'What is genuinely new here' discussion is unusually candid that assembly, not any individual fact, is the contribution. There is a small, harmless underclaiming worth noting: the paper does not state outright that Propositions 2.1-2.2 individually are near-trivial specializations of Clausen-Scholze's own general results (it says this only in aggregate, for the section as a whole), and despite the search-confirmed absence of prior art, it never stakes the explicit 'first application of condensed technology to physical observable algebras' priority claim that the evidence would actually support. No changes are required to avoid overclaiming; optionally, the paper could state its priority and the De Nittis relationship slightly more assertively without any risk of overreach.",
+  "confidence": 0.82
+}

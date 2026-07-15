@@ -1,0 +1,159 @@
+{
+  "claims": [
+    {
+      "id": "TC1",
+      "claim": "Exponential reweighting: for an F-function F and a>=0, F_a(r)=e^{-ar}F(r) is again an F-function with ||F_a|| <= ||F|| and C_{F_a} <= C_F (Lemma lem:reweight).",
+      "location": "Lemma 2.2 (lem:reweight), Section 2.2, lines 346-366",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified directly. F_a is positive and non-increasing. (F1): e^{-ar}<=1 gives F_a<=F, so ||F_a||<=||F||. (F2): the triangle inequality dist(x,y)<=dist(x,z)+dist(z,y) gives e^{-a(dist(x,z)+dist(z,y))}<=e^{-a dist(x,y)}, hence the reweighted convolution ratio equals e^{-a(dist(x,z)+dist(z,y)-dist(x,y))} times the F-ratio with the exponential factor <=1; summing over z and taking sup gives C_{F_a}<=C_F. Correct and this is the mechanism producing a finite velocity.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC2",
+      "claim": "On (Z^d, ell^1), F_eps(r)=(1+r)^{-(d+eps)} is an F-function for every eps>0, with ||F_eps||<infty and C_{F_eps} <= 2^{d+eps+1} ||F_eps|| (Lemma lem:zd-Ffun).",
+      "location": "Lemma 2.3 (lem:zd-Ffun), Section 2.2, lines 371-396",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. (F1): the shell count |{y: |y|_1=n}|=O(n^{d-1}) reduces the sum to sum_n (1+n)^{d-1}(1+n)^{-(d+eps)} = sum_n (1+n)^{-(1+eps)} < infty. (F2): the split according to whether |x-z|_1 or |z-y|_1 exceeds (1/2)|x-y|_1 (at least one holds by triangle inequality); in each case (1+|x-y|_1)/(1+ the large leg) <= 2 gives F_eps(leg)/F_eps(|x-y|_1) <= 2^{d+eps}, and the remaining factor sums to ||F_eps||. The two cases yield the factor 2, i.e. C_{F_eps} <= 2^{d+eps+1}||F_eps||. Translation invariance gives base-point independence. Correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC3",
+      "claim": "(B_F, ||.||_F) is a real Banach space and ||.||_F is a genuine norm (Proposition prop:banach-space; Theorem I-A part 1).",
+      "location": "Proposition 2.5 (prop:banach-space) and Theorem 3.3(1) (thm:banach), Section 2.2 lines 421-443",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. Homogeneity/triangle inequality are inherited from the operator norm inside the sup and sum. Definiteness: ||Phi||_F=0 forces Phi(X)=0 for every finite X, taking x,y in X (for singletons x=y, which is a legitimate diagonal pair in the sup and is used consistently later in prop:generator). Completeness: for fixed X and x,y in X, ||Phi^{(n)}(X)-Phi^{(m)}(X)|| <= F(dist(x,y)) ||Phi^{(n)}-Phi^{(m)}||_F (a single term bounded by the full inner sum), so Phi^{(n)}(X) is Cauchy in finite-dimensional A_X; the truncated-sum/Fatou argument then gives ||Phi^{(n)}-Phi||_F -> 0 with Phi in B_F. This is the standard NSY interaction-norm completeness argument; correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC4",
+      "claim": "Lieb-Robinson bound (F-function form): ||[tau_t^{Phi,Lambda}(A),B]|| <= (2||A|| ||B||/C_F)(e^{2||Phi||_F C_F |t|}-1) sum_{x in X, y in Y} F(dist(x,y)), uniform in Lambda, attributed to NSY Theorem 3.4 (Theorem thm:lr-bound).",
+      "location": "Theorem 3.1 (thm:lr-bound), Section 3.1, lines 469-482",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "The stated inequality is exactly the standard Nachtergaele-Sims-Young F-function Lieb-Robinson bound; the bib entry nsy-quasilocality-1 ('Quasi-locality bounds for quantum lattice systems. I. Lieb-Robinson bounds, quasi-local maps, and spectral flow automorphisms', J. Math. Phys.) is the correct source and the constant 2||A|| ||B||/C_F, the time factor e^{2||Phi||_F C_F|t|}-1, and the geometric weight D(X,Y)=sum F(dist(x,y)) all match that reference. Taken as a cited result; correctly transcribed into the paper's notation. Uniformity in Lambda is a genuine feature of the finite-volume NSY estimate.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC5",
+      "claim": "Light cone/velocity: for Phi in B_{F_a} (a>0), ||[tau_t^{Phi,Lambda}(A),B]|| <= (2||A|| ||B|| ||F||/C_{F_a}) min{|X|,|Y|} e^{-a(dist(X,Y)-v|t|)} with v=2||Phi||_{F_a} C_{F_a}/a (Proposition prop:velocity).",
+      "location": "Proposition 3.2 (prop:velocity), Section 3.1, lines 485-507",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified by re-derivation. Applying thm:lr-bound with F_a: for each x in X, sum_{y in Y} F_a(dist(x,y)) <= e^{-a dist(X,Y)} sum_{y in L} F(dist(x,y)) <= ||F|| e^{-a dist(X,Y)} (using dist(x,y)>=dist(X,Y)); summing over the smaller of X,Y yields the factor min{|X|,|Y|}. Bounding e^{2||Phi||_{F_a} C_{F_a}|t|}-1 <= e^{2||Phi||_{F_a} C_{F_a}|t|} = e^{av|t|} with v=2||Phi||_{F_a} C_{F_a}/a and combining the two exponentials gives e^{-a(dist(X,Y)-v|t|)}. All steps are valid upper bounds; correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC6",
+      "claim": "Theorem I-A (parts 2-3): for each A in A the infinite-volume limit tau_t^Phi(A)=lim_{Lambda} tau_t^{Phi,Lambda}(A) exists in operator norm uniformly on compact t-sets and defines a strongly continuous one-parameter group of *-automorphisms of A satisfying the LR and light-cone bounds with the same constants (Theorem thm:banach).",
+      "location": "Theorem 3.3 (thm:banach) parts 2-3, Section 3.1, lines 509-538",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. The Duhamel identity tau_t^{Phi,Lambda'}(A)-tau_t^{Phi,Lambda}(A) = i int_0^t tau_s^{Phi,Lambda'}([H_{Lambda'}-H_Lambda, tau_{t-s}^{Phi,Lambda}(A)]) ds is bounded by the LR estimate against the tail sum_{Z not subset Lambda, Z meeting supp A} which is a convergent tail of sum_{Z ni x}||Phi(Z)|| <= F(0)||Phi||_F, hence -> 0 as Lambda increases, uniformly for t in compacts (Cauchy criterion). Density of A_loc extends the limit to A as an isometric *-homomorphism; group law and strong continuity pass to the limit. Parts 2-3 are the standard NSY thermodynamic-limit construction, correctly invoked (cite [S3-4] of nsy-quasilocality-1).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC7",
+      "claim": "Continuity of the dynamics in the interaction: on the ball ||Phi||_F<=B there is K=K(A,T,B,F) with sup_{|t|<=T} ||tau_t^Phi(A)-tau_t^Psi(A)|| <= K ||Phi-Psi||_F, and (t,Phi) |-> tau_t^Phi(A) is jointly continuous (Lemma lem:dynamics-lipschitz; appendix K=2||A|| |supp A| ||F|| T e^{2 B C_F T}).",
+      "location": "Lemma 3.4 (lem:dynamics-lipschitz), Section 3.1 lines 543-581; Appendix A lines 1197-1199",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. The interpolation Duhamel identity tau_t^Phi(A)-tau_t^Psi(A)=i int_0^t tau_s^Phi([H^Phi_Lambda-H^Psi_Lambda, tau_{t-s}^Psi(A)]) ds is correct (checked by differentiating f(s)=tau_s^Phi tau_{t-s}^Psi(A)). Bounding each commutator [(Phi-Psi)(Z), tau_{t-s}^Psi(A)] by thm:lr-bound and summing against F yields a finite constant. The paper's stated finite-volume constant 2||A|| |X| ||F|| e^{2 B C_F|t-s|} is a valid (loose) upper bound: the sharp bound from thm:lr-bound carries an extra F(0)/C_F <= 1 factor and (e-1) instead of e, so the paper's constant only over-estimates. Integrating over |s|<=T gives the appendix K; since int_0^T e^{cs} ds <= T e^{cT}, the appendix's factor-T form is also a valid upper bound. Joint continuity via density + the two one-variable estimates is correct. The exact constant is not load-bearing (only finiteness is used downstream).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC8",
+      "claim": "The generator delta_Phi(A)=i sum_{Z: Z cap X != empty} [Phi(Z),A] converges with ||delta_Phi(A)|| <= 2|X| F(0) ||Phi||_F ||A||, is a symmetric derivation on A_loc, and its closure generates tau^Phi (Proposition prop:generator).",
+      "location": "Proposition 3.5 (prop:generator), Section 3.2, lines 591-619",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. Only Z meeting X=supp A contribute (disjoint supports commute). Bounding each commutator by 2||Phi(Z)|| ||A|| and using sum_{Z ni x}||Phi(Z)|| <= F(0)||Phi||_F (the F-norm at the diagonal pair y=x) gives ||delta_Phi(A)|| <= 2||A|| sum_{x in X} F(0)||Phi||_F = 2|X| F(0) ||Phi||_F ||A|| (the pass to sum_{x in X} sum_{Z ni x} over-counts Z meeting X in several points, so it is a valid upper bound). Leibniz and *-symmetry are inherited from the commutator. Generation of tau^Phi by the closure is the standard quasi-local generation theorem, correctly cited. The stated real-linearity and ||delta_Phi-delta_Psi|| bound are the correct infinitesimal shadow of lem:dynamics-lipschitz.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC9",
+      "claim": "For the transverse-field Ising chain Phi_TFIM (Phi({x,x+1})=-J sigma^z_x sigma^z_{x+1}, Phi({x})=-h sigma^x_x), ||Phi_TFIM||_F = max{(|h|+2|J|)/F(0), |J|/F(1)} <= (2|J|+|h|)/F(1) < infty for any F-function, and Theorem I-A applies for all J,h (Example ex:tfim, corrected).",
+      "location": "Example 3.6 (ex:tfim), Section 3.2, lines 633-660",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MINOR/incorrect: the earlier bound ||Phi_TFIM||_F <= (|J|+|h|)/F(1) was false for general F-functions (counterexample F(0)=F(1)=1, h=0 gave true norm 2|J| > claimed |J|). The worker replaced it with the exact F-norm max{(|h|+2|J|)/F(0), |J|/F(1)} and the clean upper bound (2|J|+|h|)/F(1). (a) The exact value is correct: by translation invariance every diagonal pair x=y contributes (|h|+2|J|)/F(0) (on-site field plus the two incident bonds {x-1,x} and {x,x+1}), every distance-1 pair contributes |J|/F(1), distance>=2 pairs contribute 0, so the sup is the stated max; the original counterexample now gives true norm 2|J| and bound 2|J| -- satisfied with equality. (b) The chain max{...} <= (2|J|+|h|)/F(1) holds: the first term uses 1/F(0) <= 1/F(1) and the second uses |J| <= 2|J|+|h|. The required monotonicity F(0) >= F(1) IS guaranteed: def:Ffun defines an F-function as a NON-INCREASING map [0,infty)->(0,infty), and the paper states the step explicitly ('Since F is non-increasing, F(1)<=F(0)'). (c) Finiteness holds because F(1)>0 (F-functions are strictly positive-valued), so the bound is finite and Theorem I-A applies for all J,h. Fully resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC10",
+      "claim": "Full faithfulness of condensation on compactly generated Hausdorff spaces (thm:full-faithful) and consequently cond(B_F) is a condensed R-vector space with cond(B_F)(S)=Cont(S,B_F) a Banach space under the sup norm (Proposition prop:condensed-BF; Theorem I-B part 1).",
+      "location": "Theorem 4.2 (thm:full-faithful) lines 678-688; Proposition 4.4 (prop:condensed-BF) lines 704-722",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "thm:full-faithful is the correct Clausen-Scholze statement (the paper's 'compactly generated Hausdorff' is a correct special case of the usual 'compactly generated weak Hausdorff'; every space it is applied to -- Banach spaces, R x B_F, the Polish group Aut(A) -- is genuinely Hausdorff and metrizable, so the qualifier is immaterial to the applications). B_F is a Banach (metrizable, hence compactly generated) space, so addition and real scaling are continuous and condensation preserves finite products, making cond(B_F) a condensed R-vector space; Cont(S,B_F) with S compact and B_F Banach is complete in the sup norm ||Phi_.||_{inf,F}=sup_s ||Phi_s||_F, hence itself Banach. Correct. Note B_F need not be separable, and the paper correctly keeps the full (non-light) condensed setting here.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC11",
+      "claim": "Theorem I-B: D:(t,Phi) |-> tau_t^Phi is continuous R x B_F -> Aut(A) (strong topology) and condenses to a genuine morphism of condensed sets cond(D): cond(R) x cond(B_F) -> cond(Aut(A)), which is a morphism of light condensed sets when interactions lie in a separable closed subspace (Theorem thm:condensed-dynamics).",
+      "location": "Theorem 4.5 (thm:condensed-dynamics), Section 4.2, lines 729-763",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified, including the reviewer's specific concern of whether the condensed dynamics is a genuine sheaf-level morphism or only a pointwise assignment. Continuity of D into the strong topology (the initial topology for the evaluations beta|->beta(A)) is equivalent to continuity of (t,Phi)|->tau_t^Phi(A) for each A; this is proved correctly by an eps/3 argument (density of A_loc, isometry of automorphisms, and joint continuity for local observables from lem:dynamics-lipschitz). The passage to cond(D) is GENUINE and not merely level-wise: R x B_F is metrizable hence compactly generated, Aut(A) is Polish (metrizable, since A separable) hence compactly generated, so thm:full-faithful (full faithfulness of condensation) identifies the continuous D with a morphism of condensed sets cond(D) = post-composition with D, natural in the profinite probe S; cond(R x B_F)=cond(R) x cond(B_F) by product preservation. prop:naturality independently confirms naturality in S. The light-condensed refinement for a separable closed subspace V_0 (both R x V_0 and Aut(A) separable metrizable) is correct. This is a real upgrade of 'bound' to 'continuity/morphism', as the paper claims.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC12",
+      "claim": "Theorem I-C: an S-continuous family of interactions over a profinite S is a sup-norm limit of locally constant families factoring through finite quotients (equivalently cond(B_F)(S)=completion of colim_i Cont(S_i,B_F)); is automatically norm-bounded B=sup_s ||Phi_s||_F<infty; and, if Phi_s in B_{F_a} with B_a=sup_s ||Phi_s||_{F_a}<infty, obeys one uniform light cone with velocity v=2 B_a C_{F_a}/a and s-independent prefactors (Theorem thm:uniform-lr).",
+      "location": "Theorem 5.1 (thm:uniform-lr), Section 5.1, lines 801-853",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified. (1) A continuous map from a compact totally disconnected space to a metric space is a uniform limit of locally constant maps; every clopen partition of S=lim S_i is pulled back from some S_i (clopens of a profinite limit are the colimit of clopens of the S_i), so each locally constant approximant factors through a finite quotient, and the sup-norm closure of colim Cont(S_i,B_F) is Cont(S,B_F) by density plus completeness (prop:condensed-BF). Correct inverse-limit argument. (2) s|->||Phi_s||_F is continuous (norm 1-Lipschitz, Phi_. continuous) on compact S, hence bounded and attains its sup. (3) prop:velocity depends on the interaction only through ||Phi||_{F_a} (in v) with an s-independent prefactor; replacing ||Phi_s||_{F_a} by the larger B_a yields a single larger v, and since the estimate e^{-a(dist-v|t|)} is increasing in v it remains a valid upper bound for every s simultaneously. The morphism cond(S)->cond(Aut(A)) is cond(D) precomposed with the point cond(S)->cond(B_F) named by Phi_.. All correct; this is the load-bearing 'uniform over the base' result feeding Parts III-V.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC13",
+      "claim": "Naturality over the base: for phi:S'->S the pullback phi^* commutes with the passage to dynamics, and the uniform bound transfers (sup_{s'} ||Phi_{phi(s')}||_F <= sup_s ||Phi_s||_F), so pulled-back families have light-cone slope <= that of the original (Proposition prop:naturality).",
+      "location": "Proposition 5.2 (prop:naturality), Section 5.1, lines 866-890",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. Commutativity of the square is exactly the naturality of the condensed morphism tau_t (thm:condensed-dynamics) evaluated on the map phi:S'->S, since a morphism of condensed sets is a natural transformation of the underlying functors. The bound transfers because {Phi_{phi(s')}: s' in S'} is a subset of {Phi_s: s in S} as interactions, so its sup F-norm cannot exceed the original's; monotonicity of v=2 B_a C_{F_a}/a in B_a (thm:uniform-lr(3)) gives the slope statement.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC14",
+      "claim": "Disorder families: a disordered interaction omega|->Phi_omega on a profinite hull Omega=F_0^{Z^d} with sup_omega ||Phi_omega||_{F_a}<infty is an element of cond(B_F)(Omega) and has an Omega-uniform light cone; the disorder-averaged and almost-sure LR velocities coincide with the deterministic bound v=2(sup_omega ||Phi_omega||_{F_a}) C_{F_a}/a (Corollary cor:disorder).",
+      "location": "Corollary 5.3 (cor:disorder), Section 5.1, lines 892-907",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. Under the stated (uniform-norm) continuity hypothesis, omega|->Phi_omega is in Cont(Omega,B_F)=cond(B_F)(Omega), so thm:uniform-lr(3) applies with S=Omega and gives the uniform velocity. Since the LR estimate is deterministic and holds for every omega, both the average and the essential-sup (almost-sure) velocities are bounded by the same uniform v. The paper correctly disambiguates the finite local-configuration set F_0 (of the hull) from the F-function F (an unavoidable notation collision inherited from the series' notation table Omega=F^{Z^d}; handled cleanly here with the F_0 subscript and an explicit warning).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC15",
+      "claim": "Uniform exponential clustering (input to Part III): a uniformly gapped family (gap(H^{Phi_s})>=Delta for all s) with uniform LR data has ground-state correlation decay |<AB>-<A><B>| <= C ||A|| ||B|| e^{-mu dist(supp A, supp B)} with C,mu depending only on B_a, C_{F_a}, a, Delta -- in particular not on s (Proposition prop:clustering).",
+      "location": "Proposition 5.4 (prop:clustering), Section 5.2, lines 922-947",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "The single-Hamiltonian statement is the Hastings-Koma / Nachtergaele-Sims exponential clustering theorem (both bib entries present and correctly attributed). The paper's contribution -- uniformity of C,mu over s -- is sound: by thm:uniform-lr(3) the velocity v=2 B_a C_{F_a}/a and the LR prefactors are s-independent, and the gap lower bound Delta is uniform by hypothesis; the clustering constants are explicit functions of (v, Delta, C_{F_a}, a) alone, hence s-independent. The specific displayed rate mu = const . Delta/(v+Delta) is an illustrative/representative form rather than a re-derived constant, but it is hedged ('const') and cited, and the uniformity conclusion -- the only thing Part III consumes -- does not depend on the precise functional form. The conditional framing (gap is a hypothesis, justified by the CPW undecidability footnote, cited for scope not used) is correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC16",
+      "claim": "Quasi-adiabatic continuation generates W: for a norm-C^1 uniformly gapped path the QAC generator D(r) is quasi-local (LR bound for a reweighted F_{a'}, a'<a), the generated flow alpha_r is a strongly continuous family of *-automorphisms intertwining ground-state projections (alpha_r(P_0)=P_r), and endpoints of a uniformly gapped path are automorphically equivalent via a quasi-local alpha_1 (Proposition prop:qac).",
+      "location": "Definition 6.1 (def:qac) lines 970-981; Proposition 6.2 (prop:qac) lines 983-1011",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Parts (1)-(2) are the Hastings-Wen construction made quantitative in the NSY F-function calculus (quasi-locality of D(r) from the LR bound of thm:banach for tau_t^{Phi(r)} plus the almost-exponential decay of the Hastings weight W_gamma whose Fourier transform is supported outside (-Delta,Delta)); part (3) is the Bachmann-Michalakis-Nachtergaele-Sims automorphic-equivalence theorem. All bib entries (hastings-wen-qac, bmns-automorphic, nsy-quasilocality-1) exist and are correctly attributed. The Heisenberg-picture convention (A|->U^*AU) is stated explicitly, fixing the positive commutator sign in the flow ODE d/dr alpha_r = i alpha_r o [D(r),.]; the intertwining direction is convention-dependent but internally consistent. The paper correctly restricts to the proved content and defers profinite assembly to Conjecture I-2. Proof-by-citation is appropriate.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC17",
+      "claim": "The three open statements are labelled Conjectures I-1 (Ham_{d,G} a condensed higher stack), I-2 (condensed group of quasi-local automorphisms with QAC as internal path-lifting), I-3 (descent of LR estimates along a disorder hull), each kept distinct from the proved core and each naming the rigorous result it would extend (Section 7).",
+      "location": "Section 7 (Conjectures), conj:stack lines 1033-1041, conj:group lines 1048-1056, conj:descent lines 1064-1073",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Verified honest theorem-vs-conjecture discipline. conj:stack is genuinely open (only the underlying-condensed-set statement prop:condensed-BF and the morphism property thm:condensed-dynamics are proved; gluing of the automorphism groupoid along covers is not) and the paper explicitly flags it must never be asserted as a theorem in the series. conj:group correctly identifies its obstruction as the uniformity of the QAC construction over a base (prop:qac gives alpha_1 pointwise; assembling into a continuous S-family with a common quasi-locality modulus is not in the cited theorems). conj:descent is correctly presented as the sharpening of the unconditional cor:disorder (which gives only the pi_0/velocity-level statement). No conjecture is used as if proved anywhere in the paper. Consistent with the series' stated stance and the canonical notation warnings.",
+      "suggested_fix": null
+    }
+  ],
+  "overall_correctness": "sound",
+  "confidence": 0.9
+}

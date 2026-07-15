@@ -1,0 +1,114 @@
+{
+  "claims": [
+    {
+      "id": "thm-VA-cohomology-cp-realizable",
+      "claim": "Theorem V-A: every class omega in H^{d+1}(G,U(1)) is CP-realizable by an explicit G-symmetric commuting-projector model H_omega (CGLW fixed-point construction) with a unique SRE ground state (i), an additive map omega -> [H_omega] into SRE_{d,G} injective on the in-cohomology subgroup (ii), and an anomalous edge whose on-site obstruction equals omega (iii, Else-Nayak); in particular every group-cohomology class is CP-realizable.",
+      "location": "Theorem V-A (thm:VA) and Remark rem:VAscope, Section 4 (sec:cohomology)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct repackaging of Chen-Gu-Liu-Wen (fixed-point wavefunctions on triangulated d-manifolds built from an inhomogeneous (d+1)-cocycle; commuting-projector frustration-free parent Hamiltonian; unique SRE ground state) plus Else-Nayak (boundary G-action not extendable to an on-site action, obstruction in H^{d+1}(G,U(1)) equal to omega). Degree convention d+1 is right for spatial dimension d (d=1 -> H^2, d=2 -> H^3), consistent with the cluster-state instance H^2(Z2 x Z2)=Z2. Additivity and injectivity on the in-cohomology subgroup via the edge obstruction are correct. Remark rem:VAscope correctly EXCLUDES the beyond-group-cohomology (Kapustin cobordism) classes and does not extend to continuous or spatial symmetry. No overreach. (Unchanged across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-cluster-string-order",
+      "claim": "Proposition (cluster-state string order): <C|S_{a,b}|C>=+1 exactly, with S_{a,b}=Z_a X_{a+1}X_{a+3}...X_{b-1}Z_b equal to the product of alternate stabilizers K_{a+1}...K_{b-1}; the single-site <Z_j>=<X_j>=0; and the U(theta)-rotated string order = (cos theta)^m with m=(b-a)/2.",
+      "location": "Proposition prop:cluster and its proof, Section 4.2 (def:cluster)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Hand-verified in full. Telescoping K_{a+1}K_{a+3}...K_{b-1} = (Z_a X_{a+1}Z_{a+2})(Z_{a+2}X_{a+3}Z_{a+4})...(Z_{b-2}X_{b-1}Z_b): the shared even-offset Z's cancel (Z^2=1) and endpoints Z_a,Z_b plus the m odd-offset X's survive, giving exactly S_{a,b} in the abelian group <K_j>, so <S_{a,b}>=+1. Anticommutation bookkeeping is CORRECT (the previously-flagged bug): Z_j anticommutes with K_j=Z_{j-1}X_j Z_{j+1} through the central X_j, and X_j anticommutes with K_{j+1}=Z_j X_{j+1}Z_{j+2} and K_{j-1}=Z_{j-2}X_{j-1}Z_j through their Z_j factor, so <Z_j>=<X_j>=0. Rotation identity U^* X_j U=cos(theta)X_j-sin(theta)Y_j verified; expanding U^* S U into 2^m terms, the all-X term gives (cos theta)^m and every cross term is a phase times S_{a,b}·prod_{k in T}Z_k (T nonempty), X-free and non-identity hence not in +/-S (the only X-free stabilizer of <K_j> is the identity), so 0; total (cos theta)^m, monotone on [0,pi/2]. Matches Haskell Stabilizer.hs. (Unchanged across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-kitaev-z2-invariant",
+      "claim": "Proposition (Kitaev-chain Z2 invariant): for the stated H, d_z(k)=-2t cos k - mu, d_y(k)=2 Delta_p sin k, d_x=0; winding w=1 for |mu|<2|t| (topological) and 0 for |mu|>2|t| (trivial); Majorana number M=sgn(d_z(0))sgn(d_z(pi))=sgn(mu^2-4t^2); gap closes and invariant jumps exactly on |mu|=2|t|.",
+      "location": "Proposition prop:kitaev and its proof; Hamiltonian and BdG setup, Section 5.3",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Convention-consistent with the Hamiltonian AS WRITTEN. From H=sum_j[-t(c_j^dag c_{j+1}+h.c.) - mu(n_j-1/2) + Delta_p(c_j c_{j+1}+h.c.)]: normal part gives xi_k=-2t cos k - mu = d_z (correct), real p-wave gives purely imaginary Delta(k) ~ i sin k so only tau_y survives (d_y=2 Delta_p sin k, d_x=0; 'pairing is real' reason correct). Gap closes iff sin k=0 and 2t cos k=-mu, i.e. |mu|=2|t|. Ellipse centered (0,-mu), semi-axes 2|Delta_p|,2|t|; origin interior iff mu^2/(2t)^2<1 iff |mu|<2|t| -> w. M=sgn(-2t-mu)sgn(2t-mu)=sgn(mu^2-4t^2): -1 topological, +1 trivial; w=(1-M)/2. Non-defect caveat: winding SIGN is orientation-dependent (set by sgn(t Delta_p)); w=+1 holds for the natural t,Delta_p>0 and w mod 2 (the actual class-D invariant) is convention-free. (Unchanged across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-VB-2d-completeness-overstated",
+      "claim": "Theorem V-B and its d=2 treatment: d=1 on-site finite G has a COMPLETE H^2(G,U(1)) index (bijection, realized=invariant); d=2 has the H^3 index existing and every in-cohomology class realized, but completeness open.",
+      "location": "Theorem V-B (thm:VB, now 'Completeness in one dimension'), Remark rem:VB2d ('V-B''), Remark rem:VBscope, Section 5 (sec:complete); abstract; intro 1.3; Table 1 row 3; Conclusion",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MAJOR: the prior draft asserted a d=2 'complete invariant' / 'bijection' / 'realized=invariant', which Ogata's cited 2D paper (arXiv:2101.00426, titled '...INDEX...', abstract only 'they have H^3(G,T)-valued invariant') does NOT support (2D interacting-SPT completeness is open). The revision fully resolves this: Theorem V-B is retitled 'Completeness in one dimension' and now states ONLY the d=1 H^2 completeness/bijection (correctly, via Ogata's genuine 1D classification, ogata-spt-chains/ogata-classification-review). The d=2 case is moved to Remark rem:VB2d ('V-B''), which states Ogata proves the H^3 index is a 'well-defined invariant', gives SURJECTIVITY via V-A (every in-cohomology class realized), and explicitly records d=2 completeness as 'an open problem, not a theorem', not asserting realized=invariant. Checked every location for residual overclaim -- abstract (l.151-154), intro 'what is proved' (l.237-241), Section 5 opener (l.708-714), rem:VBscope, the 'relation to completeness' remark (l.851-859), Table 1 row 3 ('CP-realized; completeness open'), and Conclusion (l.1247-1249) -- ALL consistently downgraded; no residual completeness or bijection claim for d=2 anywhere. Matches the identical treatment in the Part IV sister paper. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-VC-hall-vs-central-charge-conflation",
+      "claim": "Theorem V-C: local commuting-projector no-go in two parts -- (i) electric Hall conductance sigma_H=0 under U(1) (Kapustin-Fidkowski); (ii) chiral central charge c_-=0 with no symmetry (Kapustin-Spodyneiko) -- with sigma_H and c_- treated as independent invariants and the E_8 obstruction routed through (ii).",
+      "location": "Theorem V-C (thm:VC) statement and proof, Section 6 (sec:nogo); E_8 subsection 5.2 (l.594-599); abstract; intro 1.3; Table 1 rows 5-6 and caption",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MAJOR: the prior draft wrote 'sigma_H != 0 (equivalently c_- != 0)' (a FALSE biconditional) and routed the bosonic E_8 obstruction (sigma_H=0, c_-=8, no U(1)) through the electric Kapustin-Fidkowski theorem, which does not cover it. The revision fully resolves this. Theorem V-C is now split into (i) electric/KF-under-U(1) and (ii) thermal/no-symmetry, and explicitly states 'The two obstructions are logically independent: sigma_H and c_- are distinct invariants -- the bosonic E_8 state has sigma_H=0 (no U(1) charge) yet c_-=8'; the false biconditional is gone. The E_8 subsection now reads 'this obstruction rests on the chiral central charge, not on the electric Kapustin-Fidkowski no-go ... part (i) of Theorem V-C does not apply to it and part (ii) is what does the work.' CRITICAL CHECK PASSED: the new part (ii) is attributed to Kapustin-Spodyneiko arXiv:1905.06488 ('Thermal Hall conductance and a relative topological invariant of gapped two-dimensional systems'), whose abstract states verbatim 'We also show that for any Local Commuting Projector Hamiltonian the relative chiral central charge vanishes' -- so it PROVES 'CP => c_- = 0' as a theorem (not merely constructs the invariant), correctly licensing claim (ii). The V-C proof paraphrase ('derive a Kubo-type formula ... and prove that for any local commuting-projector Hamiltonian the relative chiral central charge vanishes') is faithful to the source. Remark rem:wallscope's Hsin-Kobayashi (arXiv:2505.20384) caveat is accurate: that paper realizes nonzero GENERALIZED Hall conductivity in CP models using symmetries 'not... in terms of onsite charge operators', which does not contradict the on-site no-go. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "cor-proper-subgroup",
+      "claim": "Corollary (CP-image is a proper subgroup when chiral phases exist): im rho^CP strictly contained in im rho whenever C_{d,G} has a class with nonzero Hall conductance or chiral central charge (in particular d=2 without antiunitary protection).",
+      "location": "Corollary cor:proper and proof, Section 6",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct given V-C: a chiral class is gapped-realizable (Chern insulator / E_8) so in im rho, but excluded from im rho^CP by the no-go, so the inclusion is strict. Now cleanly supported by BOTH parts of the revised V-C -- the fermionic electric-Hall witness via (i) and the bosonic E_8 witness via (ii) -- with no attribution gap remaining.",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-esssurj-and-walker-wang",
+      "claim": "Proposition (realizability as essential surjectivity) and Proposition (Walker-Wang realizations): realizability = essential image of the comparison functor on pi_0; Walker-Wang gives 3+1d CP Hamiltonians realizing classes beyond V-A, with modular input forcing a chiral (non-CP) 2+1d boundary.",
+      "location": "Proposition prop:esssurj (Section 3.2); Proposition prop:ww and Remark rem:wwchiral (Section 5.1)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "prop:esssurj is a correct tautological unwinding (pi_0 of the comparison functor is rho; image = essential image into a discrete groupoid). prop:ww correctly cites Walker-Wang: premodular B -> 3+1d CP state sum with boundary order B; modular B -> invertible SRE bulk with chiral boundary; symmetric fusion B -> (beyond-)cohomology SPTs. rem:wwchiral correctly notes the bulk is CP while the modular-forced chiral 2+1d boundary is not CP (by V-C), no contradiction. (Unchanged across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-descent-conditional-labeling",
+      "claim": "Proposition (uniform-gap descent enables gluing): a compatible tower (H^{(i)}) with common gap bound Delta and Part III's stability hypotheses assembles into an Omega-point of Gap_{d,G} with locally constant fibrewise phase -- now explicitly conditional on Conjecture III-2.",
+      "location": "Proposition prop:descent and proof, Section 9 (sec:disorder)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MINOR: prop:descent depended on Part III's Conjecture III-2 but was set as a plain Proposition, disclosed only mid-proof. The revision makes the conditionality explicit in BOTH the title ('Uniform-gap descent enables gluing, assuming Conjecture III-2') and the statement's first line ('Assume Conjecture III-2 of Part III (uniform-gap descent on the stated stability stratum)'). The theorem-vs-conjecture boundary is now crisp. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "table-status-entries",
+      "claim": "Table 1 (realizability status by spatial dimension x symmetry class): per-row invariants, constructions, obstructions, and status labels, including the split obstruction column and the new 2+1d fermionic-SPT row.",
+      "location": "Table 1 (tab:status) and caption, Section 7 (sec:table)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MAJOR (inherited defects): row 3 said 'Settled: complete' and row 4 attributed the E_8 obstruction to Kapustin-Fidkowski. Both are now corrected. Row 3 (d=2 on-site finite) reads 'CP-realized (Thm V-A); completeness open (Rem V-B'')'. The obstruction column is split: the E_8 row now reads 'c_- != 0: Kapustin-Spodyneiko (Thm V-C(ii))' and the class-A Chern row 'sigma_H != 0, U(1): Kapustin-Fidkowski (Thm V-C(i))'; the caption states the split. A NEW row 'd=2 fermionic SPT (G_f=G x Z2^f)' cites Gu-Wen (supercohomology), Tarantino-Fidkowski, and Wang-Gu with status 'Constructive: CP for all 2+1d fermionic SPTs' -- all three attributions VERIFIED against sources: Tarantino-Fidkowski arXiv:1604.02145 abstract states 'exactly solved commuting projector Hamiltonian lattice models for all known 2+1d fermionic SPTs with on-site unitary symmetry group G_f = G x Z_2^f' and 'commuting projector models for all 8 members of the Z_8 classification of 2d fermionic SPTs with G = Z_2', exactly matching the table and the body text (l.676-683); Gu-Wen supercohomology and Wang-Gu are correctly described as (respectively) a large-class construction and the general construction/classification programme, consistent with T-F's note that supercohomology 'realize some, but not all' fermionic SPTs. Remaining rows unchanged and correct. Only nit: 'all 2+1d fermionic SPTs' slightly tightens the source's 'all KNOWN' -- negligible. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "conjectures-honestly-marked",
+      "claim": "Conjectures V-1 (image = SRE subspectrum), V-2 (chiral: gapped yes, CP no), V-3 (profinite descent obstruction) are each labeled Conjecture, kept separate from the proved core, with proved sub-parts (e.g. the 'never CP' half of V-2 = Theorem V-C) correctly identified.",
+      "location": "Conjectures conj:V1, conj:V2, conj:V3, Section 8 (sec:image); Limitations Section 11.2",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "All three remain genuine open problems in Conjecture environments, never upgraded to theorems. V-1 correctly needs Part IV's Conjecture IV-2 plus a general construction theorem. V-2 correctly decomposes into the PROVED half (never-CP = Theorem V-C, now covering both sigma_H and c_-) and the CONJECTURAL half. V-3's obstruction o(c) in H^1_cond is clearly conjectural. The theorem-vs-conjecture discipline is honored throughout. (Unchanged in substance across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "cp-vs-gapped-distinction",
+      "claim": "The central CP-vs-general-gapped distinction (im rho^CP subset im rho, strict where chiral phases exist) is maintained consistently, and Example ex:disorderchiral confirms disorder cannot manufacture chiral CP-realizability.",
+      "location": "Definition def:realizable, Remark rem:cp; throughout; Example ex:disorderchiral (Section 9)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "The nested-notions framing is correct and applied consistently: CP-realizable => gapped-realizable but not conversely, strictness from V-C. Remarks rem:cp, rem:nogo correctly stress the obstruction is about the METHOD (exact solvability). ex:disorderchiral is a correct consistency check (a chiral c cannot be realized by any Omega-family of CP models; fibrewise-zero cannot average to nonzero). This CP/gapped discipline is the paper's principal, correctly-executed contribution, now with the two obstruction mechanisms (electric sigma_H / thermal c_-) cleanly separated. (Unchanged in substance across the revision.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "residual-cosmetic-attribution-and-notation",
+      "claim": "Minor cosmetic residuals surviving the revision (non-correctness): the Limitations attribution list, the closing 'Kapustin-Fidkowski wall' shorthand, and one disorder-hull glyph.",
+      "location": "Limitations (Section 11.2, l.1209); Conclusion final sentence (l.1263); disorder-hull definition (Section 9, l.1073)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Three trivial, non-load-bearing polish items, none affecting any theorem. (1) The Limitations sentence still lists 'Chen-Gu-Liu-Wen, Else-Nayak, Ogata, and Kapustin-Fidkowski' as the sources of substance but omits Kapustin-Spodyneiko, now a co-source of Theorem V-C(ii). (2) The Conclusion's last sentence calls the combined obstruction 'the Kapustin-Fidkowski wall', a rhetorical shorthand now that the wall also rests on Kapustin-Spodyneiko (the body attributes both correctly). (3) The disorder-hull is written Omega = Q^{Z^d} at l.1073 but F^{Z^d} in the abstract, Conjecture V-3, and coordination/notation.md (F = finite local-configuration set) -- a single stray glyph inconsistent with the rest of Part V. All optional to fix.",
+      "suggested_fix": "Optional polish: add Kapustin-Spodyneiko to the Limitations attribution list; either rename the closing 'Kapustin-Fidkowski wall' to 'commuting-projector wall' or note it now includes the thermal (KS) half; and change Q^{Z^d} to F^{Z^d} at l.1073 for intra-paper notational consistency."
+    }
+  ],
+  "overall_correctness": "sound",
+  "confidence": 0.9
+}

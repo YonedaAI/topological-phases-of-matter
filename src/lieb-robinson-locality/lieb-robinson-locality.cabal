@@ -1,0 +1,56 @@
+cabal-version:      2.4
+name:               lieb-robinson-locality
+version:            0.1.0.0
+synopsis:           Companion code for Part I -- Lieb-Robinson locality and condensed dynamics
+description:        F-functions with power-law/exponential decay and the exponential
+                    reweighting of Lemma 2.3, a dependency-free complex linear-algebra
+                    kernel (matrix exponential, operator norm), and the transverse-field
+                    Ising commutator-norm light cone with a fitted Lieb-Robinson velocity,
+                    together with QuickCheck properties and equational-reasoning proof
+                    checks for the F-function calculus.
+license:            MIT
+author:             Matthew Long
+maintainer:         matthew@yonedaai.com
+build-type:         Simple
+
+-- A cabal internal `library` stanza sharing `hs-source-dirs: .` with the executable/
+-- test-suite was tried here to de-duplicate the module list below, but cabal's dependency
+-- scanner then tries to recompile the library's own modules as part of the executable build
+-- (a "-Wmissing-home-modules" error) unless the executable's sources live in a separate
+-- directory from the library's -- a larger file-layout change than this Low-severity
+-- duplication warrants. The module list is therefore still repeated per stanza below; what
+-- Test.hs does fix is the other half of the finding, a separate lightweight test-suite entry
+-- point that does not re-run the full simulation/demo `lr-demo` also prints.
+
+-- Main.hs runs the F-function demo, the TFIM light-cone simulation with the
+-- velocity sanity check, and the QuickCheck property suite, exiting non-zero on
+-- any failure; `cabal run lr-demo` is therefore both the demo and the test.
+executable lr-demo
+    main-is:          Main.hs
+    other-modules:    FFunction
+                      LinAlg
+                      Ising
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+-- A separate, lightweight test-suite entry point (Test.hs): runs only the QuickCheck
+-- properties and the equational-reasoning proof checks, without re-running the full
+-- simulation/demo that `lr-demo` also prints.
+test-suite properties
+    type:             exitcode-stdio-1.0
+    main-is:          Test.hs
+    other-modules:    FFunction
+                      LinAlg
+                      Ising
+                      Properties
+                      Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror

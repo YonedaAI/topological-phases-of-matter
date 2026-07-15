@@ -1,0 +1,180 @@
+{
+  "entries": [
+    {
+      "citation": "lieb-robinson-1972",
+      "exists": true,
+      "resolved_doi": "10.1007/BF01645779",
+      "resolved_url": "https://link.springer.com/article/10.1007/BF01645779",
+      "relevance": "high",
+      "notes": "Verified via WebSearch (Springer, INSPIRE, Princeton profile pages): Lieb & Robinson, 'The finite group velocity of quantum spin systems,' Commun. Math. Phys. 28(3):251-257 (1972), DOI 10.1007/BF01645779. Matches the bib entry exactly on author, title, journal, volume, pages, year, DOI.",
+      "explanation": "Cited in Sec. 1.1 for the original 1972 finite-group-velocity result and again in the proof of Theorem 3.3/thm:banach ('the original velocity'). The paraphrase 'Lieb and Robinson proved a finite group velocity for quantum spin systems in 1972' accurately reflects the source's actual result."
+    },
+    {
+      "citation": "nsy-quasilocality-1",
+      "exists": true,
+      "resolved_doi": "10.1063/1.5095769",
+      "resolved_url": "https://arxiv.org/abs/1810.02428",
+      "relevance": "high",
+      "notes": "Verified author list, journal, DOI, and arXiv ID via WebSearch/WebFetch (J. Math. Phys. 60, 061101, 2019). The F-function formalism restated in the paper's Def. 2.2/def:Ffun (uniform summability sup_x sum_y F(dist(x,y))<inf, plus a convolution/products bound sup_{x,y} sum_z F(x,z)F(z,y)/F(x,y)<inf) matches the standard Nachtergaele-Sims(-Young) F-function definition, independently confirmed via a separate search of the surrounding literature using near-identical language. Could NOT independently confirm the precise 'Theorem 3.4' numbering claimed at thm:lr-bound ('This is Theorem 3.4 of [nsy-quasilocality-1] in the present notation'): WebFetch could not extract readable text from the 106-page PDF (binary stream), and no HTML mirror exists for this pre-2019 arXiv submission, so the exact internal theorem number is unverified rather than confirmed or contradicted.",
+      "explanation": "The single most load-bearing citation in the paper (repackaged as Theorem 3.3/thm:banach, the generation theorem in prop:generator, and reused throughout). Content-level attribution (F-function Banach space, Lieb-Robinson bound, quasi-local generator) is well supported; only the pinpoint theorem-number citation is unverified due to source-access limitations, not contrary evidence."
+    },
+    {
+      "citation": "nsy-quasilocality-2",
+      "exists": true,
+      "resolved_doi": "10.1007/s00023-021-01086-5",
+      "resolved_url": "https://arxiv.org/abs/2010.15337",
+      "relevance": "medium",
+      "notes": "Not independently re-verified this session beyond the pre-existing kb-builder verification recorded in references.bib (arXiv:2010.15337, Ann. Henri Poincare 23:393-511, 2022). Cited only jointly with nsy-quasilocality-1 in a single sentence ('the modern reformulation through F-functions, due to Nachtergaele, Sims, and Young') without an independent claim specific to Part II of their series.",
+      "explanation": "Supporting co-citation; not independently load-bearing in this paper beyond the shared F-function attribution already verified for Part I of the NSY series."
+    },
+    {
+      "citation": "hastings-locality",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1008.5137",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relying on kb-builder's prior verification (arXiv:1008.5137, Les Houches Summer School Vol. 95, Oxford Univ. Press, 2010, pp. 171-212). Cited as a survey alongside the NSY papers, for 'the argument in the exponential case' in the proof of thm:banach, and again for the generation-theorem claim alongside nsy-quasilocality-1.",
+      "explanation": "Hastings' Les Houches lecture notes are a well-known standard review of Lieb-Robinson/locality methods; the attribution (survey + exponential-case argument) is consistent with the known scope of this widely-cited pedagogical reference, though not independently re-fetched this session."
+    },
+    {
+      "citation": "clausen-scholze-condensed",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2605.03658",
+      "relevance": "high",
+      "notes": "Independently confirmed via WebSearch + WebFetch: 'Lectures on Condensed Mathematics,' Peter Scholze (joint work with Dustin Clausen), submitted to arXiv 5 May 2026 as a 'stable citable version' of the 2019 Bonn course -- matches the bib entry exactly and confirms this is a genuine May-2026 posting. The specific claim the paper attributes to this source in Theorem 4.3/thm:full-faithful (condensation is fully faithful on compactly generated Hausdorff spaces and preserves finite products) was verified almost verbatim: Proposition 0.1.7 of the actual text states the functor 'is faithful, and fully faithful when restricted to the full subcategory of all T that are kappa-compactly generated.'",
+      "explanation": "The paper's key external mathematical input for the condensed-mathematics half of its argument, and the precise technical claim attributed to it is accurate, not merely the source's existence."
+    },
+    {
+      "citation": "clausen-scholze-analytic",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2605.03655",
+      "relevance": "low",
+      "notes": "Not independently re-verified this session; relying on kb-builder's prior verification (arXiv:2605.03655, 'Lectures on Analytic Geometry', joint Clausen-Scholze, stable version of the 2019/20 Bonn course). Cited only once, jointly with clausen-scholze-condensed and clausen-scholze-analytic-stacks, as general background for 'the condensed formalism.'",
+      "explanation": "Background/context citation, not independently load-bearing for a specific claim in this paper."
+    },
+    {
+      "citation": "clausen-scholze-analytic-stacks",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://www.mpim-bonn.mpg.de/node/12493",
+      "relevance": "medium",
+      "notes": "Not independently re-verified this session (no arXiv ID; course-page citation per kb-builder's note, MPIM/IHES 'Analytic Stacks' course, 2023-2024). Cited for the 'light condensed sets' category used for separable systems in Sec. 4.1 and again for the light-condensed-morphism clause of thm:condensed-dynamics(3).",
+      "explanation": "Plausible attribution -- the Clausen-Scholze Analytic Stacks course is the standard place light condensed abelian groups are developed -- but the specific claim (light condensed sets suffice for separable spaces) was not independently pulled from the cited course notes/recording this session."
+    },
+    {
+      "citation": "barwick-haine-pyknotic",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1904.09966",
+      "relevance": "medium",
+      "notes": "Verified via WebSearch: Barwick & Haine, 'Pyknotic objects, I. Basic notions' (2019), arXiv:1904.09966, described as '(hyper)sheaves on the site of compacta.' Matches the paper's brief characterization as 'the pyknotic variant' of the condensed formalism.",
+      "explanation": "Correctly used as a passing mention of the alternative pyknotic formulation; not load-bearing for a specific proved claim in this paper."
+    },
+    {
+      "citation": "hastings-wen-qac",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.72.045141",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/0503554",
+      "relevance": "high",
+      "notes": "Verified via WebSearch: Hastings & Wen, 'Quasi-adiabatic Continuation of Quantum States: The Stability of Topological Ground State Degeneracy and Emergent Gauge Invariance,' Phys. Rev. B 72, 045141 (2005), arXiv:cond-mat/0503554. Abstract confirms: defines quasi-adiabatic continuation valid when the Hamiltonian is gapped, taking local operators to local operators while approximately preserving ground-state expectation values -- matches Def. qac (quasi-adiabatic generator with Hastings weight function W_gamma) and Prop. qac parts (1)-(2) closely.",
+      "explanation": "Central, correctly attributed source for the quasi-adiabatic continuation machinery used to generate the equivalence class W throughout Sec. 6."
+    },
+    {
+      "citation": "bmns-automorphic",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-011-1380-0",
+      "resolved_url": "https://arxiv.org/abs/1102.0842",
+      "relevance": "high",
+      "notes": "Verified via WebSearch: Bachmann, Michalakis, Nachtergaele, Sims, 'Automorphic Equivalence within Gapped Phases of Quantum Lattice Systems,' Commun. Math. Phys. 309:835-871 (2012), arXiv:1102.0842. Abstract confirms gapped ground states in the same phase are automorphically equivalent via a flow generated by an s-dependent interaction decaying 'faster than any power law (in fact, almost exponentially),' built on Hastings' quasi-adiabatic technique -- matches Prop. qac(3) and the decay property assigned to W_gamma in Def. qac almost verbatim.",
+      "explanation": "Correctly and precisely attributed; the 'almost exponential' decay language in the paper traces directly to this source's own abstract."
+    },
+    {
+      "citation": "paperPositivity",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Internal companion-series self-citation (Part II, 'Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras'), not external literature and not subject to independent web verification. Consistent with the bib entry and the 'Part I of six' framing in the abstract and Sec. 1.3.",
+      "explanation": "Used correctly to describe a forward dependency: Part II needs the *-automorphism dynamics established here (thm:banach) before it can discuss states and positivity."
+    },
+    {
+      "citation": "aoki-solidification",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2409.01462",
+      "relevance": "low",
+      "notes": "Verified via WebSearch: Ko Aoki, '(Semi)topological K-theory via solidification,' arXiv:2409.01462 (2024). Confirms a solidification-based approach recovering (semi)topological/operator K-theory, matching the paper's one-clause reference to 'the solid-K-theory invariant of Aoki.'",
+      "explanation": "Minor forward-pointer to Part II's use of this invariant; not load-bearing for this paper's own theorems."
+    },
+    {
+      "citation": "paperGap",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Internal companion-series self-citation (Part III, 'The Uniformly Gapped Substack'). Not externally verifiable; consistent with the bib entry.",
+      "explanation": "Used correctly to describe forward dependency on the clustering result (prop:clustering) and automorphic-equivalence result (prop:qac) proved here."
+    },
+    {
+      "citation": "paperEFT",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Internal companion-series self-citation (Part IV, 'From Lattice Models to Effective Field Theories'). Not externally verifiable; consistent with the bib entry.",
+      "explanation": "Used correctly to describe forward dependency on the condensed-dynamics morphism of thm:condensed-dynamics."
+    },
+    {
+      "citation": "paperRealizability",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Internal companion-series self-citation (Part V, 'Physical Realizability of Bordism and Homotopy Classes'). Not externally verifiable; consistent with the bib entry.",
+      "explanation": "Used correctly for a one-sentence forward pointer to the uniform-over-the-base discipline established in this paper."
+    },
+    {
+      "citation": "paperSynthesis",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Internal companion-series self-citation (Part VI, synthesis paper). Not externally verifiable; consistent with the bib entry.",
+      "explanation": "Used correctly for a one-sentence forward pointer to the program's Master Conjecture."
+    },
+    {
+      "citation": "hastings-koma",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-0030-4",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0507008",
+      "relevance": "high",
+      "notes": "Verified via WebSearch: Hastings & Koma, 'Spectral Gap and Exponential Decay of Correlations,' Commun. Math. Phys. 265:781-804 (2006), arXiv:math-ph/0507008. Confirms the core result (a non-vanishing spectral gap implies exponential decay of correlations for anticommuting/commuting observables at large distance), matching the paper's use in prop:clustering exactly.",
+      "explanation": "Correctly attributed as (jointly with nachtergaele-sims-clustering) the source of the single-Hamiltonian exponential clustering theorem that prop:clustering upgrades to a uniform-over-the-base statement."
+    },
+    {
+      "citation": "nachtergaele-sims-clustering",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-1556-1",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0506030",
+      "relevance": "high",
+      "notes": "Verified via WebSearch: Nachtergaele & Sims, 'Lieb-Robinson Bounds and the Exponential Clustering Theorem,' Commun. Math. Phys. 265:119-130 (2006), arXiv:math-ph/0506030. Abstract states explicitly that the Lieb-Robinson bound is 'used to prove that a non-vanishing spectral gap implies exponential clustering in the ground state' -- an exact match to how prop:clustering cites it.",
+      "explanation": "Precisely and correctly attributed."
+    },
+    {
+      "citation": "cpw-undecidable",
+      "exists": true,
+      "resolved_doi": "10.1038/nature16059",
+      "resolved_url": "https://arxiv.org/abs/1502.04573",
+      "relevance": "medium",
+      "notes": "Verified via WebSearch: Cubitt, Perez-Garcia, Wolf, 'Undecidability of the Spectral Gap,' Nature 528:207-211 (2015), arXiv:1502.04573 (full version). Confirms the result: no algorithm exists to decide whether a translation-invariant nearest-neighbour family on a lattice is gapped. The paper's footnote ('Cited for scope, not used: there is no algorithm deciding whether a translation-invariant nearest-neighbour family is gapped') is an accurate paraphrase.",
+      "explanation": "Correctly and carefully attributed, with the paper explicitly flagging it as scope-setting context rather than a result it invokes -- good citation hygiene."
+    }
+  ],
+  "missing_references": [
+    "A classical operator-algebra reference (e.g. Bratteli & Robinson, 'Operator Algebras and Quantum Statistical Mechanics') for the C*-algebraic quasi-local-algebra construction (qA = closure of qA_loc) used in Sec. 2.1/def:lattice. The paper defers only to nsy-quasilocality-1 'and the references there' rather than citing the classical source directly; this is a minor precision point, not an error, since the deferral is explicit and the constructions given are self-contained and correct."
+  ],
+  "summary": "All 19 unique \\cite keys used in lieb-robinson-locality.tex (lieb-robinson-1972, nsy-quasilocality-1, nsy-quasilocality-2, hastings-locality, clausen-scholze-condensed, clausen-scholze-analytic, clausen-scholze-analytic-stacks, barwick-haine-pyknotic, hastings-wen-qac, bmns-automorphic, paperPositivity, aoki-solidification, paperGap, paperEFT, paperRealizability, paperSynthesis, hastings-koma, nachtergaele-sims-clustering, cpw-undecidable) resolve cleanly in references.bib and render correctly in the compiled PDF: the reference list is fully populated as [1]-[19] with correct bibliographic detail, and no '[?]' or undefined-citation markers appear anywhere in the compiled text (confirmed by pdftotext extraction and a full scan for unresolved-citation patterns). Ten load-bearing external sources were independently spot-verified via WebSearch/WebFetch this session, exceeding the requested minimum of six: Lieb-Robinson 1972 (content and DOI match); Nachtergaele-Sims-Young quasi-locality I (journal/DOI match, F-function/B_F formalism independently confirmed as the standard NSY framework); the Clausen-Scholze condensed mathematics notes (confirmed genuine 5-May-2026 posting, and the specific full-faithfulness-of-condensation claim verified almost verbatim against Proposition 0.1.7 of the actual text); Hastings-Wen quasi-adiabatic continuation; Bachmann-Michalakis-Nachtergaele-Sims automorphic equivalence (including the specific 'almost exponential decay' language); Cubitt-Perez-Garcia-Wolf undecidability (and the paper's careful 'cited for scope, not used' framing); Hastings-Koma and Nachtergaele-Sims exponential clustering (both matching prop:clustering's use exactly); Barwick-Haine pyknotic objects; and Aoki solidification. In every case the paper's specific attributed claim matches the verified source's actual content -- no misattributions were found. One granular detail could not be independently confirmed: the precise 'Theorem 3.4' numbering claimed for the Lieb-Robinson bound restatement from nsy-quasilocality-1, because the 106-page source PDF was not machine-readable via the available WebFetch tool and no HTML mirror exists for this pre-2019 arXiv submission; this is a tool-access gap rather than contrary evidence, since the surrounding F-function formalism attributed to the same source was independently corroborated. Five citations (paperPositivity, paperGap, paperEFT, paperRealizability, paperSynthesis) are internal companion-series self-citations to the paper's own forthcoming Parts II-VI and are not independently verifiable third-party literature by design; all are used consistently with the 'Part I of six' framing. No consequential missing references were identified; the paper is unusually disciplined about citing exactly what it uses.",
+  "confidence": 0.91
+}

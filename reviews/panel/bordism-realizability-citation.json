@@ -1,0 +1,362 @@
+{
+  "entries": [
+    {
+      "citation": "aasen-wang-hastings — Aasen, Wang, Hastings, \"Adiabatic paths of Hamiltonians, symmetries of topological order, and automorphism codes\", Phys. Rev. B 106, 085122 (2022), arXiv:2203.11137",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.106.085122",
+      "resolved_url": "https://arxiv.org/abs/2203.11137",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; title/venue/arXiv ID consistent with the known paper and the project bibliography's own verification note.",
+      "explanation": "Correctly cited for proposed generators of pi_1,pi_2,pi_3 of the space of Hamiltonians; the reviewed paper is careful to flag this source's results as 'conjectural... strong evidence but not a proof', an accurate characterization of what this paper actually claims."
+    },
+    {
+      "citation": "aoki-solidification — Aoki, \"(Semi)topological K-theory via solidification\", arXiv:2409.01462 (2024)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2409.01462",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; relies on the project bibliography's own verification note (kb-builder, 2026-07-14).",
+      "explanation": "Referenced only in passing, recapping Part II's solidification bridge; appropriate background citation, not load-bearing to this paper's own theorems."
+    },
+    {
+      "citation": "beaudry-etal — Beaudry, Hermele, Moreno, Pflaum, Qi, Spiegel, \"Homotopical Foundations of Parametrized Quantum Spin Systems\", Rev. Math. Phys. 36, 2460003 (2024), arXiv:2303.07431",
+      "exists": true,
+      "resolved_doi": "10.1142/S0129055X24600037",
+      "resolved_url": "https://arxiv.org/abs/2303.07431",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; six-author list and title are consistent with the real, known paper.",
+      "explanation": "Correctly cited for 'the homotopical foundations of such parametrized families' in the higher-homotopy discussion; appropriate, non-overclaimed use."
+    },
+    {
+      "citation": "bellissard-ncg-qhe — Bellissard, van Elst, Schulz-Baldes, \"The noncommutative geometry of the quantum Hall effect\", J. Math. Phys. 35, 5373 (1994), arXiv:cond-mat/9411052",
+      "exists": true,
+      "resolved_doi": "10.1063/1.530758",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9411052",
+      "relevance": "medium",
+      "notes": "Landmark NCG-of-QHE paper; not independently re-fetched this session (very high domain-knowledge confidence).",
+      "explanation": "Correctly cited (with kellendonk-tilings) for the crossed-product C(Omega) x Z^d construction invoked in the profinite-disorder remark; standard, accurate use."
+    },
+    {
+      "citation": "bmns-automorphic — Bachmann, Michalakis, Nachtergaele, Sims, \"Automorphic Equivalence within Gapped Phases of Quantum Lattice Systems\", CMP 309, 835 (2012), arXiv:1102.0842",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-011-1380-0",
+      "resolved_url": "https://arxiv.org/abs/1102.0842",
+      "relevance": "medium",
+      "notes": "Canonical automorphic-equivalence paper; not independently re-fetched this session (high domain-knowledge confidence).",
+      "explanation": "Correctly cited for inverting the class of gapped adiabatic/finite-depth equivalences that defines the phase groupoid; standard, appropriate."
+    },
+    {
+      "citation": "bourne-kellendonk-rennie — Bourne, Kellendonk, Rennie, \"The K-Theoretic Bulk-Edge Correspondence for Topological Insulators\", Ann. Henri Poincare 18, 1833 (2017), arXiv:1604.02337",
+      "exists": true,
+      "resolved_doi": "10.1007/s00023-016-0541-2",
+      "resolved_url": "https://arxiv.org/abs/1604.02337",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; title/venue/arXiv ID consistent with the known paper.",
+      "explanation": "Co-cited with kubota-controlled for 'its bulk-edge correspondence' in the Kitaev-chain discussion; appropriate contextual use."
+    },
+    {
+      "citation": "cglw-cohomology — Chen, Gu, Liu, Wen, \"Symmetry protected topological orders and the group cohomology of their symmetry group\", Phys. Rev. B 87, 155114 (2013), arXiv:1106.4772",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.87.155114",
+      "resolved_url": "https://arxiv.org/abs/1106.4772",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch): title/authors/venue/arXiv ID confirmed, cross-checked against ADS bibcode 2013PhRvB..87o5114C. Abstract content confirms distinct d-dimensional bosonic SPT phases with symmetry G are labeled by H^(1+d)(G,U_T(1)).",
+      "explanation": "One of the six sources specifically flagged for spot-verification. Correctly and precisely underpins Theorem V-A: the fixed-point-wavefunction/commuting-projector construction from a (d+1)-cocycle, classified by H^{d+1}(G,U(1)), matches this paper's actual content exactly. No issue found."
+    },
+    {
+      "citation": "clausen-scholze-condensed — Scholze (joint w/ Clausen), \"Lectures on Condensed Mathematics\", arXiv:2605.03658 (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2605.03658",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; relies on the project bibliography's own verification note (WebFetch of abs page, confirming 'stable citable version' of the 2019 Bonn course, joint with Clausen). Future-dated arXiv ID (May 2026) is internally consistent with this series' July 2026 date.",
+      "explanation": "Foundational citation for 'the condensed-mathematics paradigm of Clausen-Scholze' underlying the whole series; appropriate, standard use, consistent across all companion papers."
+    },
+    {
+      "citation": "denittis-rendel-weyl — De Nittis & Rendel, \"A scheme for topological phases of the Weyl C*-algebra\", arXiv:2607.01183 (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2607.01183",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; a July 2026 submission per the project bibliography's verification note, internally consistent with the paper's own date.",
+      "explanation": "Cited only as 'a complementary classification... appears in', an appropriately hedged, non-load-bearing background mention."
+    },
+    {
+      "citation": "denittis-states — De Nittis, \"Topological phases of non-interacting systems: a general approach based on states\", Lett. Math. Phys. 115 (2025), arXiv:2502.03590",
+      "exists": true,
+      "resolved_doi": "10.1007/s11005-025-01994-1",
+      "resolved_url": "https://arxiv.org/abs/2502.03590",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; consistent with the project bibliography's own verification note.",
+      "explanation": "Co-cited with denittis-rendel-weyl in the same hedged, non-load-bearing background sentence; appropriate use."
+    },
+    {
+      "citation": "else-nayak — Else & Nayak, \"Classifying symmetry-protected topological phases through the anomalous action of the symmetry on the edge\", Phys. Rev. B 90, 235137 (2014), arXiv:1409.5436",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.90.235137",
+      "resolved_url": "https://arxiv.org/abs/1409.5436",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch, alphaxiv + arXiv listing): confirms obstructions to an on-site edge action of G are classified by H^(d+1)(G,U(1)), agreeing with the bulk SPT classification.",
+      "explanation": "One of the six sources specifically flagged for spot-verification. Correctly underpins point (iii) of Theorem V-A (the boundary anomaly obstruction living in H^{d+1}(G,U(1))); matches the actual Else-Nayak result precisely. No issue found."
+    },
+    {
+      "citation": "freed-hopkins — Freed & Hopkins, \"Reflection positivity and invertible topological phases\", Geom. Topol. 25, 1165 (2021), arXiv:1604.06527",
+      "exists": true,
+      "resolved_doi": "10.2140/gt.2021.25.1165",
+      "resolved_url": "https://arxiv.org/abs/1604.06527",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known, canonical paper in the invertible-TQFT/bordism classification literature (high domain-knowledge confidence).",
+      "explanation": "Cited as an appropriately hedged ('conjecturally') alternative identification of the abstract classification target C_{d,G}; non-load-bearing to any proved theorem."
+    },
+    {
+      "citation": "freed-sre — Freed, \"Short-range entanglement and invertible field theories\", arXiv:1406.7278 (2014)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1406.7278",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known preprint establishing the SRE/invertible-field-theory dictionary (high domain-knowledge confidence).",
+      "explanation": "Correctly cited for the informal definition that invertible phases are exactly the short-range-entangled ones; standard, accurate attribution."
+    },
+    {
+      "citation": "gaiotto-jf — Gaiotto & Johnson-Freyd, \"Symmetry Protected Topological phases and Generalized Cohomology\", JHEP 05 (2019) 007, arXiv:1712.07950",
+      "exists": true,
+      "resolved_doi": "10.1007/JHEP05(2019)007",
+      "resolved_url": "https://arxiv.org/abs/1712.07950",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known paper in the generalized-cohomology SPT literature (high domain-knowledge confidence).",
+      "explanation": "Correctly co-cited (with xiong-minimalist) for 'the generalized-cohomology description of SPT phases' framing the abstract target of Theorem V-B; standard, appropriate."
+    },
+    {
+      "citation": "hsin-wang-moduli — Hsin & Wang, \"On topology of the moduli space of gapped Hamiltonians for topological phases\", J. Math. Phys. 64, 041901 (2023), arXiv:2211.16535",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0136906",
+      "resolved_url": "https://arxiv.org/abs/2211.16535",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; consistent with the project bibliography's own verification note.",
+      "explanation": "Correctly cited as 'the closest ordinary-topology precedent for the object Part IV condenses'; accurate, appropriately scoped comparative citation."
+    },
+    {
+      "citation": "kapustin-cobordism — Kapustin, \"Symmetry Protected Topological Phases, Anomalies, and Cobordisms: Beyond Group Cohomology\", arXiv:1403.1467 (2014)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1403.1467",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; canonical, widely-cited paper introducing cobordism-based SPT classification beyond group cohomology (high domain-knowledge confidence).",
+      "explanation": "Correctly cited (Remark VAscope; Sec.4 intro) as the source of beyond-group-cohomology classes 'detected by cobordism invariants'; accurate, standard attribution."
+    },
+    {
+      "citation": "kapustin-fidkowski — Kapustin & Fidkowski, \"Local Commuting Projector Hamiltonians and the Quantum Hall Effect\", Commun. Math. Phys. 373, 763 (2019/2020), arXiv:1810.07756",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-019-03444-1",
+      "resolved_url": "https://arxiv.org/abs/1810.07756",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch + WebFetch of arXiv abstract + ar5iv full text). Abstract: 'We prove that neither Integer nor Fractional Quantum Hall Effects with nonzero Hall conductivity are possible in gapped systems described by Local Commuting Projector Hamiltonians.' Full-text fetch shows the actual argument: on a finite torus, assuming an on-site U(1) symmetry, the flux-dependent ground-state projector defines an algebraic vector bundle over (C*)^2, necessarily trivial, forcing the Chern number to vanish; the authors flag the thermodynamic-limit Hall-conductance conclusion as conditional on that limit existing.",
+      "explanation": "One of the six sources specifically flagged for spot-verification, and the load-bearing citation for Theorem V-C, the paper's central no-go. The headline attribution (CP Hamiltonian => zero Hall conductance) is correct and precisely what this paper proves. HOWEVER: the proof narrative given in the reviewed paper ('the commuting structure makes the relevant two-form (the adiabatic curvature integrated against flux insertions) exact, so its period vanishes... Their argument shows...') does not match Kapustin-Fidkowski's actual technique (algebraic-geometric triviality of a vector bundle over (C*)^2, contingent on an on-site U(1) symmetry not mentioned in the reviewed paper's Theorem V-C statement). The adiabatic-curvature/exact-two-form framing is instead the approach of the separately (and correctly) cited Kapustin-Sopenko paper (kapustin-sopenko-hall), a later and more general treatment. See that entry for detail. Net: correct paper, correct headline result; imprecise/conflated mechanism description that could mislead a reader checking 'what does the cited paper actually show'."
+    },
+    {
+      "citation": "kapustin-sopenko-hall — Kapustin & Sopenko, \"Hall conductance and the statistics of flux insertions in gapped interacting lattice systems\", J. Math. Phys. 61, 101901 (2020), arXiv:2006.14151",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0022944",
+      "resolved_url": "https://arxiv.org/abs/2006.14151",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch). Confirms: Hall conductance for zero-temperature infinite-volume 2D gapped short-range-interacting lattice systems is locally computable and identical throughout a gapped phase; gives a rigorous flux-insertion (Laughlin-type) argument that it is an integer (even integer, for bosonic SRE systems) multiple of e^2/h.",
+      "explanation": "The citation itself is valid and its 'locally-computable current response' description in the reviewed text is an accurate summary of this paper's actual contribution. The concern (see kapustin-fidkowski entry) is that the reviewed paper's Theorem V-C proof paragraph attributes the exact-two-form/adiabatic-curvature mechanism grammatically to Kapustin-Fidkowski ('their argument'), when that mechanism is this (separate, later) Kapustin-Sopenko paper's contribution rather than the 2018 Kapustin-Fidkowski paper's own (distinct, earlier, algebro-geometric) technique. Recommend the proof paragraph be reworded to clearly separate 'the theorem is Kapustin-Fidkowski's' from 'one way to see why, in the more general adiabatic-curvature language, is Kapustin-Sopenko's account.'"
+    },
+    {
+      "citation": "kapustin-sopenko-noether — Kapustin & Sopenko, \"Local Noether theorem for quantum lattice systems and topological invariants of gapped states\", J. Math. Phys. 63, 091903 (2022), arXiv:2201.01327",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0085964",
+      "resolved_url": "https://arxiv.org/abs/2201.01327",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; title/venue/arXiv ID consistent with the well-known 'local Noether theorem' paper (high domain-knowledge confidence).",
+      "explanation": "Correctly cited as the rigorous lattice avatar of the higher Berry class / pi_1 pump invariant; standard, appropriate use."
+    },
+    {
+      "citation": "kellendonk-tilings — Kellendonk, \"Non Commutative Geometry of Tilings and Gap Labelling\", Rev. Math. Phys. 7, 1133 (1995), arXiv:cond-mat/9403065",
+      "exists": true,
+      "resolved_doi": "10.1142/S0129055X95000426",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9403065",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; consistent with the well-known gap-labelling-for-tilings paper.",
+      "explanation": "Co-cited with bellissard-ncg-qhe for the same crossed-product remark; appropriate if somewhat tangential (tilings vs. general disorder hulls) background use."
+    },
+    {
+      "citation": "kitaev-honeycomb — Kitaev, \"Anyons in an exactly solved model and beyond\", Ann. Phys. 321, 2 (2006), arXiv:cond-mat/0506438",
+      "exists": true,
+      "resolved_doi": "10.1016/j.aop.2005.10.005",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/0506438",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; canonical Kitaev honeycomb-model paper (very high domain-knowledge confidence).",
+      "explanation": "Correctly cited for the general point that chiral central charge governs chiral topological order broadly, of which the honeycomb model's non-abelian phase (c_-=1/2) is the paradigm example; accurate, appropriate."
+    },
+    {
+      "citation": "kitaev-majorana-wire — Kitaev, \"Unpaired Majorana fermions in quantum wires\", Physics-Uspekhi 44(10S), 131 (2001), arXiv:cond-mat/0010440",
+      "exists": true,
+      "resolved_doi": "10.1070/1063-7869/44/10S/S29",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/0010440",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch: arXiv listing, Internet Archive record, and independent summary all agree). Confirmed: one-dimensional Fermi systems with a bulk gap and unpaired boundary Majorana operators, two nearly-degenerate ground states differing in fermion parity, submitted 27 Oct 2000, published Physics-Uspekhi 44(10S):131-136 (2001).",
+      "explanation": "One of the six sources specifically flagged for spot-verification, newly added for this Part V. Confirmed to be exactly Kitaev's canonical 'Unpaired Majorana fermions in quantum wires' paper, matching both the bib entry's metadata and its use in the reviewed paper (1+1d class-D/BDI Kitaev chain, Z2 invariant, unpaired Majorana zero modes, topological for |mu|<2|t|). No issue found."
+    },
+    {
+      "citation": "kitaev-periodic-table — Kitaev, \"Periodic table for topological insulators and superconductors\", AIP Conf. Proc. 1134, 22 (2009), arXiv:0901.2686",
+      "exists": true,
+      "resolved_doi": "10.1063/1.3149495",
+      "resolved_url": "https://arxiv.org/abs/0901.2686",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; canonical periodic-table-of-topological-insulators paper (very high domain-knowledge confidence).",
+      "explanation": "Correctly cited: the Kitaev chain's Z2 invariant is identified as the class-D entry of this paper's periodic table; accurate, standard attribution."
+    },
+    {
+      "citation": "kubota-controlled — Kubota, \"Controlled Topological Phases and Bulk-edge Correspondence\", Commun. Math. Phys. 349, 493 (2017), arXiv:1511.05314",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-016-2699-3",
+      "resolved_url": "https://arxiv.org/abs/1511.05314",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; consistent with the known Roe-algebra/coarse-geometry K-theory paper by Kubota.",
+      "explanation": "Co-cited with bourne-kellendonk-rennie for bulk-edge correspondence; appropriate, standard use."
+    },
+    {
+      "citation": "kubota-omega-spectrum — Kubota, \"Stable homotopy theory of invertible gapped quantum spin systems I: Kitaev's Omega-spectrum\", arXiv:2503.12618 (2025)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2503.12618",
+      "relevance": "medium",
+      "notes": "Web-verified this session (WebSearch): confirmed to construct an Omega-spectrum IP* realizing a conjecture of Kitaev, with homotopy groups isomorphic to the smooth homotopy of invertible gapped quantum systems on Euclidean space, plus a localization-flow homology model and a crystallographic-symmetry variant IP*^Gamma.",
+      "explanation": "Used only as an appropriately hedged ('conjecturally') identification of a candidate abstract target spectrum; non-load-bearing, accurate."
+    },
+    {
+      "citation": "ogata-classification-review — Ogata, \"Classification of gapped ground state phases in quantum spin systems\", Proc. ICM 2022, arXiv:2110.04675 (2021)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2110.04675",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch + WebFetch + ar5iv full-text fetch). Confirmed to be an ICM 2022 proceedings SURVEY: its own Theorem 6.1 states only 'There is a H^2(G,U(1))-valued invariant for one-dimensional SPT-phases' (existence, not completeness); a completeness statement ('a complete invariant of pure beta-invariant split states...') appears elsewhere in the survey but is attributed there to a different internal reference tag ([O5]-type), not proved fresh in this survey.",
+      "explanation": "FLAGGED ISSUE. Theorem V-B's proof states the d=1 completeness result is 'proved in \\cite{ogata-classification-review}'. My verification shows this ICM survey itself points to a separate original paper for that specific completeness proof -- almost certainly Ogata's \"Classification of symmetry protected topological phases in quantum spin chains\" (Current Developments in Mathematics, 2021; arXiv:2110.04671), which is already present in this project's own references.bib under the key `ogata-spt-chains` (with a bib comment explicitly noting this exact same distinction) but is NOT cited anywhere in bordism-realizability.tex. The underlying physics claim (H^2(G,U(1)) is a complete 1D SPT invariant) is correct and is indeed a theorem of Ogata's; only the specific 'proved in' pointer is a secondary survey rather than the primary source, when the primary source is already verified and sitting unused in the shared bibliography. This same issue was independently identified by the citation reviewer of the companion Part IV paper (lattice-eft-equivalence-citation.json), which strengthens confidence that this is a real, reproducible finding rather than an artifact of one reviewer's search. Recommend citing \\cite{ogata-spt-chains} directly for the d=1 claim in Theorem V-B's proof."
+    },
+    {
+      "citation": "ogata-h3-index — Ogata, \"A H^3(G,T)-valued index of symmetry protected topological phases with on-site finite group symmetry for two-dimensional quantum spin systems\", Forum Math. Pi 9, e13 (2021), arXiv:2101.00426",
+      "exists": true,
+      "resolved_doi": "10.1017/fmp.2021.17",
+      "resolved_url": "https://arxiv.org/abs/2101.00426",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebFetch of the literal arXiv abstract, reproduced verbatim: 'We consider SPT-phases with on-site finite group G symmetry beta for two-dimensional quantum spin systems. We show that they have H^3(G,T)-valued invariant.'). Secondary sources (WebSearch) independently describe this as proving the nu=2 case of the physicists' H^(nu+1)(G,T) conjecture.",
+      "explanation": "One of the six sources specifically flagged for spot-verification. Correctly used as the primary source for the d=2 half of Theorem V-B (unlike the d=1 half, which relies on a survey -- see ogata-classification-review). The bare abstract text asserts existence of the invariant rather than spelling out 'complete invariant' verbatim, but this is very plausibly abstract terseness rather than an absent result: completeness is widely described in secondary literature as part of this paper's content, and a short two-sentence abstract for a technical operator-algebra paper would not necessarily restate every qualifier. Treated as adequately supported at moderate-high confidence; would benefit from a direct read of the paper body to close out with full certainty, which was not accessible via automated fetch this session."
+    },
+    {
+      "citation": "paperEFT — Long & The YonedaAI Collaboration, \"From Lattice Models to Effective Field Theories: Stabilization and the Invertible Condensed Phase Spectrum\", Part IV of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/lattice-eft-equivalence.tex exists in this repository and its \\title matches the bib entry's title exactly.",
+      "explanation": "Companion-paper self-citation for the Part IV interface -- the source of the target spectrum IPcond_{d,G} whose realizability this entire paper studies. Central and correctly used; not independently web-verifiable (internal series paper), but file-existence + title-match check passes."
+    },
+    {
+      "citation": "paperGap — Long & The YonedaAI Collaboration, \"The Uniformly Gapped Substack: Existence and Stability of the Thermodynamic Spectral Gap\", Part III of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/spectral-gap-stability.tex exists and its \\title matches ('The Uniformly Gapped Substack:...').",
+      "explanation": "Companion-paper self-citation for the Part III interface (Gap_{d,G} substack; used again for the uniform-gap descent hypothesis in Prop. descent). File-existence + title-match check passes."
+    },
+    {
+      "citation": "paperLocality — Long & The YonedaAI Collaboration, \"Condensed Locality: Lieb-Robinson Estimates and Quasi-Local Dynamics on the Moduli Stack of Hamiltonians\", Part I of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/lieb-robinson-locality.tex exists and its \\title matches the bib entry exactly.",
+      "explanation": "Companion-paper self-citation for the Part I interface (interaction space, Lieb-Robinson control, profinite family/sheaf description used in Prop. descent). File-existence + title-match check passes."
+    },
+    {
+      "citation": "paperPositivity — Long & The YonedaAI Collaboration, \"Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras\", Part II of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/positivity-cstar-norms.tex exists and its \\title matches the bib entry.",
+      "explanation": "Companion-paper self-citation for the Part II interface (quasi-local C*-algebra, solid-K-theory invariant, crossed-product functoriality invoked in the disorder discussion). File-existence + title-match check passes."
+    },
+    {
+      "citation": "paperSynthesis — Long & The YonedaAI Collaboration, \"Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program\", Part VI of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "No synthesis .tex file exists yet under papers/latex/ at review time (only bordism-realizability.tex, lattice-eft-equivalence.tex, lieb-robinson-locality.tex, positivity-cstar-norms.tex, spectral-gap-stability.tex are present). This is consistent with the pipeline's task list, which shows the synthesis paper as still pending, scheduled to run after all five part-papers are drafted.",
+      "explanation": "Forward reference to a not-yet-drafted companion paper (Part VI). This is an expected, non-defective artifact of a coordinated six-paper release plan -- every part must forward-reference the eventual synthesis -- rather than a fault specific to this paper's citation practice. Noting it so the review record is transparent that this particular bib entry currently has no backing manuscript; it should resolve once the synthesis paper is completed."
+    },
+    {
+      "citation": "prodan-sb — Prodan & Schulz-Baldes, \"Bulk and Boundary Invariants for Complex Topological Insulators: From K-Theory to Physics\", Springer (2016), arXiv:1510.08744",
+      "exists": true,
+      "resolved_doi": "10.1007/978-3-319-29351-6",
+      "resolved_url": "https://arxiv.org/abs/1510.08744",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known monograph in the mathematical physics of topological insulators (high domain-knowledge confidence).",
+      "explanation": "Used twice: once in the K-theory co-citation string, once to attribute the disorder-averaged crossed-product invariant (Example: disorder cannot create chiral realizability). Both uses are standard and appropriate."
+    },
+    {
+      "citation": "ssh-1979 — Su, Schrieffer, Heeger, \"Solitons in Polyacetylene\", Phys. Rev. Lett. 42, 1698 (1979)",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevLett.42.1698",
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "One of the most famous condensed-matter papers (the SSH model); pre-arXiv, DOI well-established. Not independently re-fetched this session (extremely high domain-knowledge confidence).",
+      "explanation": "Correctly cited as the Kitaev chain's 'chiral-symmetric cousin'; the SSH chain is indeed the paradigmatic class-BDI/AIII 1D topological model closely related to the Kitaev chain. Accurate, standard attribution."
+    },
+    {
+      "citation": "thiang-ktheory — Thiang, \"On the K-theoretic classification of topological phases of matter\", Ann. Henri Poincare 17, 757 (2016), arXiv:1406.7366",
+      "exists": true,
+      "resolved_doi": "10.1007/s00023-015-0418-9",
+      "resolved_url": "https://arxiv.org/abs/1406.7366",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; title/venue/arXiv ID consistent with the well-known paper by Guo Chuan Thiang.",
+      "explanation": "Cited (co-citation string with prodan-sb) as the systematic operator-K-theoretic classification underlying the periodic table; appropriate contextual/background use."
+    },
+    {
+      "citation": "thouless-pump — Thouless, \"Quantization of particle transport\", Phys. Rev. B 27, 6083 (1983)",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.27.6083",
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Canonical Thouless-pump paper; pre-arXiv, DOI well-established. Not independently re-fetched this session (very high domain-knowledge confidence).",
+      "explanation": "Correctly cited as the source of the adiabatic charge pump invoked for the pi_1 generator; standard, accurate."
+    },
+    {
+      "citation": "tknn-1982 — Thouless, Kohmoto, Nightingale, den Nijs, \"Quantized Hall Conductance in a Two-Dimensional Periodic Potential\", Phys. Rev. Lett. 49, 405 (1982)",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevLett.49.405",
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "One of the most famous papers in condensed matter physics (the TKNN invariant); pre-arXiv, DOI well-established. Not independently re-fetched this session (very high domain-knowledge confidence).",
+      "explanation": "Correctly used as the fermionic-analogue reference point for the E8 state's nonzero Hall response; standard, accurate."
+    },
+    {
+      "citation": "walker-wang — Walker & Wang, \"(3+1)-TQFTs and Topological Insulators\", Front. Phys. 7, 150 (2012), arXiv:1104.2632",
+      "exists": true,
+      "resolved_doi": "10.1007/s11467-011-0194-z",
+      "resolved_url": "https://arxiv.org/abs/1104.2632",
+      "relevance": "high",
+      "notes": "Web-verified this session (WebSearch + WebFetch of arXiv abstract + secondary literature). Abstract confirms a generalization of Levin-Wen models to (3+1)d based on unitary braided fusion (premodular) categories, with ground-state degeneracy on 3-manifolds and point/loop excitation statistics. Independent secondary sources (errorcorrectionzoo.org and others) describe the resulting Hamiltonian as a commuting-projector 3D topological code, trivial in the bulk (i.e. invertible) exactly when the input category is modular, with the chiral UMTC realized at the boundary.",
+      "explanation": "One of the six sources specifically flagged for spot-verification. Confirms Proposition (Walker-Wang realizations) accurately: commuting-projector Hamiltonian from a premodular/braided fusion category, closed-3-manifold fixed-point ground state, and -- when the category is modular -- an invertible bulk with chiral 2d boundary. Matches the reviewed paper's Prop. ww and the chiral-boundary-caveat Remark closely. No issue found."
+    },
+    {
+      "citation": "xiong-minimalist — Xiong, \"Minimalist approach to the classification of symmetry protected topological phases\", J. Phys. A 51, 445001 (2018), arXiv:1701.00004",
+      "exists": true,
+      "resolved_doi": "10.1088/1751-8121/aae0b1",
+      "resolved_url": "https://arxiv.org/abs/1701.00004",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; consistent with the known paper.",
+      "explanation": "Co-cited with gaiotto-jf for the generalized-cohomology framing; same appropriate contextual use."
+    }
+  ],
+  "missing_references": [
+    "No citation is attached anywhere to the claim (Sec. 3.2, and again in the Discussion's 'Open directions') that the E8 state and other chiral phases are gapped-realizable via 'coupled-layer and network constructions' / 'coupled-wire and network constructions'. This specific constructive claim is stated twice without any supporting reference (e.g. Teo-Kane-style coupled-wire constructions of chiral phases, or a review of network models), unlike essentially every other constructive claim in the paper, which is backed by an explicit \\cite.",
+    "Kitaev's toric code ('Fault-tolerant quantum computation by anyons', quant-ph/9707021) and the Levin-Wen string-net models (cond-mat/0404617) are each named explicitly, twice, as examples of commuting-projector-realized topological order ('toric code, string-net / Levin-Wen, Walker-Wang' in the Discussion; 'topologically ordered models such as the toric code' in Sec. 2.4) but neither is ever cited anywhere in the paper or in references.bib, even though the co-mentioned Walker-Wang construction in those same sentences IS properly cited elsewhere in the paper. Low priority -- both mentions are brief illustrative asides, not load-bearing claims -- but inconsistent with the paper's otherwise careful citation discipline.",
+    "Ogata, 'Classification of symmetry protected topological phases in quantum spin chains', arXiv:2110.04671 (Current Developments in Mathematics, 2021) -- the precise primary-source proof of the d=1 H^2(G,U(1)) completeness theorem currently attributed to the terser ICM survey ogata-classification-review (arXiv:2110.04675). This exact paper is already present in the shared references.bib under the key `ogata-spt-chains` (with a bib comment flagging this very distinction) but is not cited by bordism-realizability.tex. See the ogata-classification-review entry above for full detail; this was independently also flagged by the companion Part IV paper's citation review."
+  ],
+  "summary": "All 39 unique \\cite keys used in bordism-realizability.tex resolve to entries in references.bib (verified programmatically via grep cross-check), and the compiled PDF (papers/pdf/bordism-realizability.pdf) contains no unresolved '[?]' citation markers when converted to text. Deep web verification (WebSearch/WebFetch) was performed on 8 load-bearing sources, exceeding the requested minimum of 6 and covering all 6 specifically named for spot-check: Kapustin-Fidkowski, Chen-Gu-Liu-Wen, Else-Nayak, Ogata's d=1 and d=2 completeness sources, Walker-Wang, and the newly-added Kitaev Majorana-wire paper (cond-mat/0010440), plus Kapustin-Sopenko's Hall-conductance paper and Kubota's Omega-spectrum paper. Every one of these is a real, correctly-attributed paper whose title, authors, venue, and arXiv ID match the bib entry. Four of the five companion-paper citations (Parts I-IV) were structurally confirmed against sibling .tex files in this repository with matching titles; the fifth (paperSynthesis, Part VI) is a forward reference to a not-yet-drafted synthesis paper, an expected artifact of the pipeline's current stage rather than a defect. Two moderate-severity precision issues were found, both concerning proof narratives rather than headline attributions. First, Theorem V-B's d=1 completeness claim is cited to Ogata's ICM 2022 survey (ogata-classification-review), which is itself a review that points to a different underlying paper for that specific completeness result; the primary source (arXiv:2110.04671) is already verified and sitting unused in this project's own references.bib under the key ogata-spt-chains, and the same gap was independently found by the companion Part IV citation review, corroborating it as a real, reproducible issue rather than a one-off search artifact. Second, Theorem V-C's proof narrative describes the Kapustin-Fidkowski no-go as following from an 'adiabatic curvature two-form is exact' argument, but a full-text fetch of the actual Kapustin-Fidkowski paper shows their technique is instead algebraic-geometric (triviality of a vector bundle over (C*)^2, contingent on an on-site U(1) symmetry and a thermodynamic-limit assumption not mentioned in the reviewed paper's theorem statement); the exact-two-form/adiabatic-curvature framing belongs to the separately and correctly cited Kapustin-Sopenko paper. In both cases, the headline attribution -- which paper proved which theorem -- is correct; only the finer-grained mechanism narrative blurs which cited source contributes which piece, which matters if a reader follows the citation expecting to find that exact argument. Two minor citation-completeness gaps were also found and are listed under missing_references: the repeated, uncited claim that chiral phases are constructible via 'coupled-layer/coupled-wire and network constructions', and the uncited (though only illustrative) mentions of the toric code and Levin-Wen string-net models. No fabricated, nonexistent, or clearly false citation was found anywhere in the paper.",
+  "confidence": 0.85
+}

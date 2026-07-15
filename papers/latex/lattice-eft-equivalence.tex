@@ -1,0 +1,1375 @@
+\documentclass[12pt]{article}
+
+% ==== core math ====
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+% ==== fonts (bold typewriter for \paragraph headings with \texttt) ====
+\usepackage{bold-extra}
+% ==== diagrams ====
+\usepackage{tikz}
+\usepackage{tikz-cd}
+% ==== graphics ====
+\usepackage{graphicx}
+% ==== tables ====
+\usepackage{booktabs}
+% keep floats after their point of definition (Table 1 after its Definition)
+\usepackage{flafter}
+% ==== page layout ====
+\usepackage[margin=1in]{geometry}
+% ==== references (hyperref before cleveref; aliascnt before cleveref) ====
+\usepackage{hyperref}
+\usepackage{aliascnt}
+\usepackage{cleveref}
+% ==== GrokRxiv sidebar ====
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!45!black,
+  citecolor=green!35!black,
+  urlcolor=blue!55!black
+}
+
+% Absorb the occasional stubborn line rather than overflow the margin.
+\emergencystretch=2em
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = Q^{Z^d} (Q = local-configuration alphabet; NOT the F-function)
+% ==== end canonical macros ====
+
+% --- paper-local shorthands (do not conflict with canonical block) ---
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\Groth}{K}                       % Grothendieck group completion of a monoid
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\IZ}{I_{\mathbb{Z}}}             % Anderson dual of the sphere
+\newcommand{\IFH}{\mathbf{I}_{\mathrm{FH}}}  % Freed--Hopkins invertible-TQFT spectrum
+\newcommand{\Zp}{\mathbb{Z}}
+\newcommand{\Rp}{\mathbb{R}}
+\newcommand{\Tt}{\mathbb{T}}
+\newcommand{\MTH}{\mathit{MTH}}
+\newcommand{\triv}{\mathbf{1}}               % trivial (product-state) phase
+\newcommand{\inv}[1]{\Phase_{#1}^{\times}}   % invertible sector
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Map}{Map}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\KO}{KO}
+
+% ==== theorem environments ====
+% aliascnt lets Propositions/Lemmas/etc. share the Theorem counter while keeping
+% their own names, so cleveref refers to each by its true kind (not "Theorem").
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+% Numbered Conjectures carry STABLE series IDs (IV-1..IV-5); unnumbered env, ID in title.
+\theoremstyle{plain}
+\newtheorem*{conjecture}{Conjecture}
+
+% cleveref names for the aliascnt-backed environments
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{example}{Example}{Examples}
+\Crefname{example}{Example}{Examples}
+
+% ==== GrokRxiv DOI sidebar ====
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/background}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.lattice-eft-equivalence\quad
+       [\,math.AT\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\title{From Lattice Models to Effective Field Theories:\\
+Stabilization and the Invertible Condensed Phase Spectrum}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+\textit{YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the fourth analytic input to the condensed-mathematics program for
+topological phases of matter: the relationship between microscopic lattice
+systems and their effective field theories. Over the stabilized phase
+$\infty$-groupoid $\Phase_{d,G}$ built in Part~III we make the stacking
+operation $\boxtimes$ explicit as a symmetric-monoidal structure and record what
+follows formally. On components, stacking makes the set of phases a commutative
+monoid whose unit is the trivial product state and whose invertible elements are
+exactly the short-range-entangled (SRE) phases. Group completion of this monoid
+is governed by a universal property that we prove, and its explicit presentation
+isolates a \emph{stabilization element} whose physical content is the addition of
+trivial ancillas. Restricting to the invertible sector and invoking the
+recognition principle for grouplike $E_\infty$-spaces yields a connective
+spectrum, the invertible condensed phase spectrum $\IPcond_{d,G}$; Kubota's
+operator-algebraic $\Omega$-spectrum is a rigorous carrier for its homotopy
+groups, and Aoki's solidification bridge supplies the analytic completion that a
+condensed refinement requires. Against this we set the effective-field-theory
+(bordism / Anderson-dual) classification of Freed--Hopkins. The organizing claim
+of the program, that the microscopic and field-theoretic classifications
+agree, is stated as a comparison conjecture at three increasingly strong levels:
+on $\pi_0$ of phase sets, on spectra, and on families over condensed probes. We
+do not prove it. We assemble the evidence that constrains it: in $d=1$ Ogata's
+operator-algebraic index is a complete invariant and the $\pi_0$ comparison is a
+theorem, and for free fermions the tenfold-way $K$-theory of Kitaev realizes it,
+with the $8$-fold real and $2$-fold complex Bott periodicities verified by
+machine. Renormalization is framed as a filtered / pro-completion, and we
+conjecture that the lattice-to-EFT passage is computed by solidification, that
+solidification is compatible with group completion, and that the relative
+transition charge is the boundary map of the cofiber sequence for $\IPcond$. Two
+honest limitations bound the discussion: the equivalence is expected only under
+short-range-entanglement hypotheses, and noninvertible topological order lies
+outside the invertible spectrum entirely. Accompanying Haskell code implements
+finitely presented commutative monoids, their group completion, and the
+tenfold-way table, with QuickCheck tests of the monoid laws, the universal
+property, and Bott periodicity.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+This is the fourth paper of a six-part series that reorganizes the theory of
+topological phases of matter inside condensed mathematics. The program builds a
+single tower,
+\begin{equation}
+\label{eq:tower}
+\text{local interactions}
+\ \leadsto\ \Ham_{d,G}
+\ \leadsto\ \Gap_{d,G}
+\ \leadsto\ \Phase_{d,G}
+\ \leadsto\ \IPcond_{d,G},
+\end{equation}
+whose floors are, respectively: the condensed moduli stack of $G$-symmetric
+quasi-local Hamiltonians (Part~I,~\cite{paperLocality}); its uniformly gapped
+substack, with the observable side and its solid $K$-theory installed in
+Part~II,~\cite{paperPositivity}; the stabilized phase $\infty$-groupoid whose
+existence and robustness rest on the gap-stability results of Part~III,
+\cite{paperGap}; and, at the top, a connective spectrum assembled from the
+invertible sector. The present paper is about the top two floors of
+\eqref{eq:tower} and, in particular, about the bridge from a lattice system to
+its effective field theory (EFT).
+
+\subsection{The lattice--EFT problem}
+
+A gapped lattice Hamiltonian is a microscopic object: finite-dimensional Hilbert
+spaces on sites, a local interaction, an energy gap above the ground state. Its
+low-energy physics is described, when the system is short-range entangled, by an
+\emph{invertible} topological quantum field theory: an EFT with a
+one-dimensional state space on every closed spatial slice
+\cite{freed-sre,freed-hopkins}. Two classification schemes then coexist:
+\begin{itemize}
+\item the \emph{microscopic} one, which sorts lattice systems into phases by
+  adiabatic / finite-depth equivalence and stabilization, producing the set
+  $\Phases_{d,G}=\pi_0\,\Shape(\Phase_{d,G})$; and
+\item the \emph{field-theoretic} one, which sorts invertible TQFTs into
+  deformation classes, producing (under reflection positivity) a bordism /
+  Anderson-dual invariant computed by a spectrum $\IFH$~%
+  \cite{freed-hopkins,kapustin-cobordism,gaiotto-jf,xiong-minimalist}.
+\end{itemize}
+The fourth item on the program's list of analytic obligations
+(\cite{paperLocality}, \S1.8) is to control the relationship between these two.
+We take ``equivalence between microscopic lattice systems and effective field
+theories'' to mean the assertion that the two classifications agree, and we take
+seriously the fact that this is, at present, \emph{open}. It is the organizing
+conjecture of the paper, not a theorem we are going to prove.
+
+\subsection{What is proved, and what is conjectured}
+
+The paper keeps a strict line between the two. Provable today, from cited
+present-day results, are the algebraic and homotopical facts that make the top of
+the tower well-posed:
+\begin{itemize}
+\item stacking $\boxtimes$ endows $\Phases_{d,G}$ with the structure of a
+  commutative monoid (\Cref{prop:monoid}); the trivial phase is the unit and the
+  SRE phases are the invertible elements;
+\item the Grothendieck group completion of a commutative monoid exists and is
+  characterized by a universal property (Theorem~IV-A, \Cref{thm:groth}), whose
+  explicit form exposes the ``stabilization element'' behind physical
+  stabilization by~%
+  ancillas (\Cref{prop:stable});
+\item the invertible sector is grouplike, hence---by the recognition principle
+  for grouplike $E_\infty$-spaces used in this setting by~%
+  \cite{beaudry-etal,kubota-omega-spectrum}---the infinite-loop space of a
+  connective spectrum, for whose homotopy groups Kubota constructs a rigorous
+  $\Omega$-spectrum carrier (Theorem~IV-B, \Cref{thm:kubota});
+\item the free-fermion tenfold way is $8$-fold ($2$-fold) Bott periodic in the
+  real (complex) classes (\Cref{prop:bott}); and
+\item the $2$D Hall conductance of an SRE state is an integer-valued phase
+  invariant, locally computable, with a higher Berry generalization for families
+  (Theorem~IV-C, \Cref{thm:hall}).
+\end{itemize}
+Everything past this is stated as a numbered \emph{Conjecture} with a stable
+identifier of the form IV-$n$. Five appear: the condensed / solid refinement of
+the spectrum (IV-1), the lattice--EFT comparison equivalence (IV-2, the
+organizing conjecture), the identification of the relative transition charge with
+a spectral boundary map (IV-3), the compatibility of solidification with group
+completion (IV-4), and the existence of a renormalization functor computing the
+EFT limit (IV-5).
+
+\subsection{Three levels of equivalence}
+\label{subsec:levels}
+
+The word ``equivalence'' hides a hierarchy that we insist on making visible.
+There are (at least) three honestly different statements one might mean:
+\begin{enumerate}
+\item[(L0)] \textbf{Sets of phases.} A bijection $\Phases_{d,G}\cong
+  \pi_0\IFH$ of abelian groups: the microscopic and field-theoretic invariants
+  classify the same phases.
+\item[(L1)] \textbf{Spectra.} An equivalence $\IPcond_{d,G}\simeq\IFH$ (after a
+  specified completion) of connective spectra: not only $\pi_0$ but the entire
+  homotopy type---higher pumps and families---match.
+\item[(L2)] \textbf{Families.} A natural equivalence over condensed probes $S$,
+  so that the comparison respects continuous families, profinite disorder hulls
+  $\dis=Q^{\mathbb{Z}^d}$, and symmetry data simultaneously.
+\end{enumerate}
+These are strictly increasing in strength: (L2)$\Rightarrow$(L1)$\Rightarrow$(L0).
+Existing anchors settle (L0) in favourable cases (Ogata in $d=1$; free fermions
+in every $d$) and give rigorous \emph{targets} for (L1) (Kubota's
+$\Omega$-spectrum). Nothing in the literature establishes (L2), and the
+condensed refinement it would require is exactly Conjecture IV-1. Keeping the
+levels apart is not pedantry: a proof at (L0) leaves (L1) and (L2) untouched, and
+most of what one wants the tower \eqref{eq:tower} for (parametrized invariants,
+descent along disorder hulls, the transition calculus) lives at (L1) and (L2).
+
+\subsection{Relation to companion papers}
+\label{subsec:companions}
+
+This paper consumes the outputs of Parts~I--III and feeds Parts~V--VI.
+
+\emph{Part~I (Condensed Locality}~\cite{paperLocality}\emph{)} makes the
+interaction space a Banach space $\BF$ and the Heisenberg dynamics a morphism of
+condensed objects; it is the reason a ``family of systems'' over a probe $S$ is a
+well-defined thing to stack. \emph{Part~II (Positivity and $C^*$-Norms}
+\cite{paperPositivity}\emph{)} attaches the condensed observable algebra
+$\cond{A}$ and, through Aoki's theorem $\Kop(A)\simeq\Solid(\Kalg(\cond{A}))$,
+the solid $K$-theory that we use here as the analytic completion step in the EFT
+passage (\Cref{sec:rg}). \emph{Part~III (The Uniformly Gapped Substack}
+\cite{paperGap}\emph{)} is what makes $\pi_0$ of the stabilized stack a robust
+invariant in the first place; without the stability of the gap under quasi-local
+perturbations, the monoid $\Phases_{d,G}$ would not be well-defined, and the
+undecidability wall of Cubitt--P\'erez-Garc\'ia--Wolf~\cite{cpw-undecidable}
+forbids us from pretending otherwise. \emph{Part~V (Physical Realizability}
+\cite{paperRealizability}\emph{)} takes over exactly where our comparison
+conjecture ends: it asks which classes in $\IPcond_{d,G}$ are realized by honest
+lattice families, a question sharpened by the Kapustin--Fidkowski no-go
+\cite{kapustin-fidkowski}. \emph{Part~VI (Synthesis}~\cite{paperSynthesis}\emph{)}
+assembles all five modules and states the global Master Conjecture; our
+Conjecture IV-2 is its top floor. We import notation verbatim from the series'
+canonical conventions and do not restate it.
+
+\subsection{Outline}
+\Cref{sec:recollections} recalls the stabilized stack and fixes the stacking
+product. \Cref{sec:monoidal,sec:groupcompletion} carry the provable algebra:
+the symmetric-monoidal structure and its group completion.
+\Cref{sec:spectrum} assembles the invertible condensed phase spectrum.
+\Cref{sec:rg} formulates renormalization as a pro-completion and states the
+solidification conjectures. \Cref{sec:comparison} states the comparison
+conjecture at all three levels, and \Cref{sec:evidence} marshals the evidence:
+$d=1$ completeness and free-fermion Bott periodicity. \Cref{sec:invariants}
+treats concrete lattice invariants, the SSH example, and transitions.
+\Cref{sec:haskell} describes the accompanying machine verification, and
+\Cref{sec:discussion,sec:conclusion} discuss limitations and conclude.
+
+\section{The stabilized phase stack and its stacking product}
+\label{sec:recollections}
+
+We recall only what is needed and refer to~\cite{paperGap} for the analytic
+construction. Fix a spatial dimension $d$, a lattice $L$, on-site Hilbert spaces,
+an $F$-function locality class, and a symmetry group $G$ with condensation
+$\cg{G}$.
+
+\begin{definition}[the tower,~\cite{paperLocality,paperGap}]
+\label{def:tower}
+Write $\Ham_{d,G}$ for the condensed moduli stack of $G$-symmetric quasi-local
+Hamiltonians; on a profinite probe $S$ its points are $S$-continuous families of
+admissible interactions. Its \emph{uniformly gapped} substack is
+\[
+  \Gap_{d,G}(S)=\bigcup_{\gapbound>0}\Bigl\{\,H\in\Ham_{d,G}(S):
+  \inf_{s\in S}\gapof{H_s}\ge\gapbound\,\Bigr\}.
+\]
+Let $\Weq$ be the class of gapped adiabatic / finite-depth quasi-local
+equivalences to be inverted, and $(-)^{\st}$ stabilization by trivial
+product-state ancillas. The \emph{stabilized phase $\infty$-groupoid} is
+\[
+  \Phase_{d,G}:=\bigl(\Gap_{d,G}[\Weq^{-1}]\bigr)^{\st},
+\qquad
+  \Phases_{d,G}:=\pi_0\,\Shape(\Phase_{d,G}).
+\]
+\end{definition}
+
+The word \emph{uniformly} is essential: a family in which each $H_s$ is gapped,
+but with $\inf_s\gapof{H_s}=0$, is excluded, and this uniformity is what
+Part~III's stability theorems protect under perturbation. We take
+from~\cite{paperGap} that $\Phases_{d,G}$ is well defined on the stratum where
+the stability hypotheses hold with uniform constants; every statement below is
+made there.
+
+\begin{remark}[slogan]
+We use the program's boxed slogan without alteration:
+\begin{center}
+\fbox{\parbox{0.86\linewidth}{\centering\emph{A topological phase is a component
+of the stabilized condensed stack of gapped systems.}}}
+\end{center}
+The $\pi$-dictionary is likewise fixed: $\pi_0=$ phases; $\pi_1=$ adiabatic pumps
+and phase automorphisms; $\pi_n=$ higher families and higher defects.
+\end{remark}
+
+We now fix the operation the rest of the paper is about.
+
+\begin{definition}[stacking]
+\label{def:stacking}
+Let $H^{(1)},H^{(2)}$ be admissible systems on $L$ with on-site spaces
+$\{h_x^{(1)}\},\{h_x^{(2)}\}$ and interactions $\Phi^{(1)},\Phi^{(2)}$. Their
+\emph{stack} $H^{(1)}\boxtimes H^{(2)}$ is the system on $L$ with on-site spaces
+$\{h_x^{(1)}\otimes h_x^{(2)}\}$ and interaction
+\[
+  (\Phi^{(1)}\boxtimes\Phi^{(2)})(X)
+  =\Phi^{(1)}(X)\otimes \mathbf 1 + \mathbf 1\otimes\Phi^{(2)}(X).
+\]
+The \emph{trivial} system $\triv$ has one-dimensional on-site spaces and zero
+interaction. Having no excited states at all, it is assigned gap $+\infty$ by
+convention, so that stabilization by $\triv$ never lowers a gap
+(\Cref{lem:gapstack}). Stacking of $G$-symmetric systems is $G$-symmetric under
+the diagonal action.
+\end{definition}
+
+\begin{lemma}[stacking preserves the gapped substack]
+\label{lem:gapstack}
+If $H^{(1)},H^{(2)}$ have unique gapped ground states with gaps
+$\gapbound_1,\gapbound_2>0$, then $H^{(1)}\boxtimes H^{(2)}$ has a unique gapped
+ground state with
+$\gapof{H^{(1)}\boxtimes H^{(2)}}=\min(\gapbound_1,\gapbound_2)$. Consequently
+$\boxtimes$ restricts to a map $\Gap_{d,G}\times\Gap_{d,G}\to\Gap_{d,G}$, and if
+both factors are uniformly gapped over a probe $S$ with bounds
+$\gapbound_1,\gapbound_2$, the stack is uniformly gapped with bound
+$\min(\gapbound_1,\gapbound_2)$.
+\end{lemma}
+
+\begin{proof}
+On a finite volume $V$ the tensor-sum Hamiltonian
+$H^{(1)}_V\otimes\mathbf 1+\mathbf 1\otimes H^{(2)}_V$ has spectrum
+$\{\lambda+\mu\}$ with $\lambda\in\mathrm{spec}(H^{(1)}_V)$,
+$\mu\in\mathrm{spec}(H^{(2)}_V)$. Its ground energy is $E^{(1)}_0+E^{(2)}_0$ with
+the product ground state, unique because each factor's is; the first excited
+energy is $\min\bigl(E^{(1)}_1+E^{(2)}_0,\,E^{(1)}_0+E^{(2)}_1\bigr)$, so the gap
+is $\min(\gapbound_1,\gapbound_2)$. (If a factor has no excited state at all---the
+trivial system $\triv$, with gap $+\infty$---the corresponding term is absent and
+the minimum returns the other gap, so stacking with $\triv$ leaves the gap
+unchanged.) These estimates are uniform in $V$ and,
+taking infima over $s\in S$, uniform over the probe. The thermodynamic statement
+follows from the infinite-volume GNS construction of~\cite{paperGap}; the minimum
+of two positive uniform bounds is a positive uniform bound.
+\end{proof}
+
+That $\boxtimes$ also descends through $[\Weq^{-1}]$ and $(-)^{\st}$ is where the
+symmetric-monoidal bookkeeping begins, and is the subject of the next section.
+
+\section{Stacking as a symmetric monoidal structure}
+\label{sec:monoidal}
+
+The physics of stacking is old: put two systems side by side without coupling
+them. The mathematics we need is the statement that this operation is
+symmetric monoidal on the phase stack and, in particular, makes $\pi_0$ a
+commutative monoid. At the level of the full $\infty$-stack the symmetric
+monoidal structure is part of the program (it uses the higher stack structure of
+$\Ham_{d,G}$, itself a conjecture of Part~I); the rigorous instances for
+parametrized spin systems are~\cite{beaudry-etal}. At the level of $\pi_0$,
+however, the monoid laws are elementary and we verify them outright.
+
+\begin{proposition}[commutative monoid of phases]
+\label{prop:monoid}
+The operation induced by $\boxtimes$ makes $(\Phases_{d,G},\boxtimes,[\triv])$ a
+commutative monoid: it is associative and commutative up to the equivalences in
+$\Weq$, with two-sided unit the class $[\triv]$ of the trivial product state.
+\end{proposition}
+
+\begin{proof}
+By \Cref{lem:gapstack}, $\boxtimes$ sends pairs of uniformly gapped families to
+uniformly gapped families, so it descends to a binary operation on
+$\Gap_{d,G}$. We must check it respects $\Weq$ and $(-)^{\st}$ and satisfies the
+laws on classes.
+
+\emph{Respect for $\Weq$.} If $\gamma_i:H^{(i)}\rightsquigarrow K^{(i)}$ are
+gapped adiabatic / finite-depth equivalences, then
+$\gamma_1\otimes\gamma_2$ is a finite-depth quasi-local equivalence
+$H^{(1)}\boxtimes H^{(2)}\rightsquigarrow K^{(1)}\boxtimes K^{(2)}$: a
+finite-depth circuit tensor a finite-depth circuit is finite-depth, and the
+quasi-adiabatic continuation of a tensor-sum path is the tensor of the
+continuations (\cite{hastings-wen-qac,bmns-automorphic}). Hence $\boxtimes$
+descends to $\Gap_{d,G}[\Weq^{-1}]$ and, since stacking with $\triv$ adds trivial
+ancillas, commutes with $(-)^{\st}$.
+
+\emph{Associativity and commutativity.} On on-site spaces, $\boxtimes$ is the
+tensor product of Hilbert spaces, which is associative and commutative up to the
+canonical associator and the swap $\sigma_{h,h'}:h\otimes h'\to h'\otimes h$. The
+tensor-sum interaction of \Cref{def:stacking} is symmetric in its two arguments
+under $\sigma$, and the associator / swap are finite-depth (indeed depth-zero,
+on-site) quasi-local isomorphisms, hence lie in $\Weq$. (For fermionic systems
+the on-site spaces are super-vector spaces and $\sigma$ carries the Koszul sign;
+this changes none of the above, as $\sigma$ is still a depth-zero on-site
+isomorphism, and the symmetric-monoidal structure becomes the graded one.)
+Therefore
+$[H^{(1)}\boxtimes(H^{(2)}\boxtimes H^{(3)})]
+ =[(H^{(1)}\boxtimes H^{(2)})\boxtimes H^{(3)}]$ and
+$[H^{(1)}\boxtimes H^{(2)}]=[H^{(2)}\boxtimes H^{(1)}]$ in $\Phases_{d,G}$.
+
+\emph{Unit.} Stacking with $\triv$ replaces each $h_x$ by $h_x\otimes\Rp\cong
+h_x$ and adds nothing to the interaction, giving a depth-zero equivalence
+$H\boxtimes\triv\rightsquigarrow H$ in $\Weq$. Thus $[\triv]$ is a two-sided
+unit. The three laws are precisely the axioms of a commutative monoid.
+\end{proof}
+
+\begin{proposition}[invertible elements are the SRE phases]
+\label{prop:sre}
+An element $[H]\in\Phases_{d,G}$ is invertible for $\boxtimes$ if and only if
+there is a system $\bar H$ with $[H]\boxtimes[\bar H]=[\triv]$, i.e.\ $H$ is
+\emph{short-range entangled}: stacked with a partner it becomes trivial after
+stabilization. Write $\inv{d,G}\subseteq\Phase_{d,G}$ for the full sub-$\infty$-groupoid
+on the invertible objects and $\Phases_{d,G}^{\times}$ for its $\pi_0$.
+\end{proposition}
+
+\begin{proof}
+This is the definition of an invertible element in a monoid, transported through
+$\pi_0$. That the invertible objects form a full symmetric-monoidal
+sub-$\infty$-groupoid is formal: invertibility is preserved by $\boxtimes$
+(a tensor of invertibles is invertible with inverse the tensor of inverses) and
+detected on $\pi_0$; the equivalences in $\Weq$ preserve it.
+\end{proof}
+
+The candidate partner $\bar H$ is, physically, the orientation-reversed or
+complex-conjugate system; that every SRE phase actually admits such an inverse is
+the content of the invertibility of the low-energy TQFT
+\cite{freed-sre,freed-hopkins} and is used, not proved, here. The distinction
+between the full monoid $\Phases_{d,G}$ and its invertible submonoid
+$\Phases_{d,G}^{\times}$ is the distinction between ``all gapped phases''
+(including intrinsic topological order, which has no inverse) and the SRE phases
+that an invertible EFT can see. The spectrum of \Cref{sec:spectrum} is built from
+the latter; the group completion of \Cref{sec:groupcompletion} is what the former
+needs.
+
+\section{Group completion and the stabilization element}
+\label{sec:groupcompletion}
+
+A commutative monoid is not a group: some phases have no inverse, and even among
+those that ``cancel'' the cancellation may require adding a common summand. The
+universal way to force inverses is group completion, and its explicit form is
+exactly where the physics of stabilization by ancillas becomes visible. Nothing
+in this section is new mathematics: it is the Grothendieck construction, but
+the reading of the stabilization element is the point.
+
+\begin{definition}[group completion]
+\label{def:groth}
+Let $(M,+,0)$ be a commutative monoid. Its \emph{group completion} (Grothendieck
+group) is $\Groth(M):=(M\times M)/{\sim}$, where $(a,b)\sim(a',b')$ iff there is
+$e\in M$ with
+\[
+  a+b'+e \;=\; a'+b+e .
+\]
+Addition is $[(a,b)]+[(c,d)]=[(a+c,b+d)]$, and
+$\gamma_M:M\to\Groth(M)$, $\gamma_M(m)=[(m,0)]$.
+\end{definition}
+
+\begin{theorem}[\textbf{IV-A}: universal property of group completion]
+\label{thm:groth}
+For any commutative monoid $M$:
+\begin{enumerate}
+\item[(i)] $\sim$ is a congruence and $\Groth(M)$ is an abelian group, with
+  identity $[(0,0)]$ and $-[(a,b)]=[(b,a)]$;
+\item[(ii)] $\gamma_M$ is a monoid homomorphism;
+\item[(iii)] for every abelian group $A$ and monoid homomorphism $f:M\to A$
+  there is a unique group homomorphism $\bar f:\Groth(M)\to A$ with
+  $\bar f\circ\gamma_M=f$.
+\end{enumerate}
+The pair $(\Groth(M),\gamma_M)$ is thereby determined up to unique isomorphism.
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} Reflexivity and symmetry are immediate. For transitivity, suppose
+$(a,b)\sim(c,d)$ via $e$ and $(c,d)\sim(g,h)$ via $e'$, so
+$a+d+e=c+b+e$ and $c+h+e'=g+d+e'$. Put $e''=d+e+e'$. Then
+\begin{align*}
+a+h+e'' &= (a+d+e)+h+e' = (c+b+e)+h+e' = b+e+(c+h+e')\\
+        &= b+e+(g+d+e') = g+b+e'',
+\end{align*}
+so $(a,b)\sim(g,h)$. If $(a,b)\sim(a',b')$ via $e$ then adding $c+d$ shows
+$(a+c,b+d)\sim(a'+c,b'+d)$ via the same $e$, so addition is well defined; it
+inherits associativity, commutativity, and the identity $[(0,0)]$ from $M$.
+Finally $[(a,b)]+[(b,a)]=[(a+b,a+b)]=[(0,0)]$ because $(a+b,a+b)\sim(0,0)$ via
+$e=0$. Hence $\Groth(M)$ is an abelian group.
+
+\emph{(ii)} $\gamma_M(m)+\gamma_M(n)=[(m+n,0)]=\gamma_M(m+n)$ and
+$\gamma_M(0)=[(0,0)]$.
+
+\emph{(iii)} Set $\bar f([(a,b)]):=f(a)-f(b)\in A$. This is well defined: if
+$(a,b)\sim(a',b')$ via $e$ then $f(a)+f(b')+f(e)=f(a')+f(b)+f(e)$ in $A$, and $A$
+is a group, so $f(a)-f(b)=f(a')-f(b')$. It is a homomorphism by construction and
+$\bar f(\gamma_M(m))=f(m)-f(0)=f(m)$. For uniqueness, note
+$[(a,b)]=\gamma_M(a)-\gamma_M(b)$ in $\Groth(M)$; any $g$ with
+$g\circ\gamma_M=f$ therefore satisfies
+$g([(a,b)])=f(a)-f(b)=\bar f([(a,b)])$.
+\end{proof}
+
+The construction is functorial: a monoid homomorphism $\varphi:M\to N$ induces
+$\Groth(\varphi):\Groth(M)\to\Groth(N)$, and $\Groth$ is left adjoint to the
+forgetful functor from abelian groups to commutative monoids. We will use this
+adjunction when discussing whether solidification commutes with group completion
+(Conjecture IV-4).
+
+Now the element $e$. Its presence is the whole difference between a group and a
+monoid, and it is the algebraic shadow of ancilla stabilization.
+
+\begin{proposition}[the stabilization element]
+\label{prop:stable}
+For $a,b\in M$, $\gamma_M(a)=\gamma_M(b)$ in $\Groth(M)$ if and only if there is
+$e\in M$ with $a+e=b+e$. Consequently $\gamma_M$ is injective iff $M$ is
+cancellative, and in general the largest quotient of $M$ on which $\gamma_M$ is
+injective is $M^{\st}:=M/{\approx}$, where $a\approx b$ iff $a+e=b+e$ for some
+$e$. The monoid $M^{\st}$ is cancellative and
+$\Groth(M)\cong\Groth(M^{\st})$.
+\end{proposition}
+
+\begin{proof}
+$\gamma_M(a)=\gamma_M(b)$ means $(a,0)\sim(b,0)$, i.e.\ $a+0+e=b+0+e$ for some
+$e$; that is $a+e=b+e$. Injectivity of $\gamma_M$ is then the implication
+$a+e=b+e\Rightarrow a=b$, i.e.\ cancellativity. The relation $\approx$ is a
+congruence (if $a+e=b+e$ then $a+c+e=b+c+e$ for every $c$), and $M^{\st}$ is
+cancellative because, for an \emph{arbitrary} $[c]\in M^{\st}$,
+$[a]+[c]=[b]+[c]$ in $M^{\st}$ means $a+c+e'=b+c+e'$ for some $e'$, hence
+$a+e''=b+e''$ with $e''=c+e'$, i.e.\ $a\approx b$. Since $\approx$ is exactly the
+kernel pair of $\gamma_M$, the map
+$M^{\st}\to\Groth(M)$ is injective and induces
+$\Groth(M^{\st})\xrightarrow{\ \cong\ }\Groth(M)$ by the universal property.
+\end{proof}
+
+\begin{remark}[why $(-)^{\st}$ is in \Cref{def:tower}, and what it is not]
+\label{rem:stmeaning}
+\Cref{prop:stable} is the reason the stabilization $(-)^{\st}$ appears in the
+definition of $\Phase_{d,G}$: two gapped systems are declared the same phase when
+they agree \emph{after adding trivial product-state ancillas}. This is a genuine
+operation, not stacking with the unit $\triv$. A product state on
+higher-dimensional on-site spaces is not $\Weq$-equivalent to $\triv$ (finite-depth
+quasi-local circuits preserve on-site Hilbert-space dimension, so they cannot
+shrink an ancilla back to a point), and inverting ``$\boxtimes$ a trivial product
+state'' therefore enlarges the equivalence in a way stacking with $\triv$ never
+could. Write $\approx_{\mathrm{prod}}$ for the resulting relation
+($a\approx_{\mathrm{prod}}b$ iff $a+e=b+e$ for some \emph{product state} $e$); the
+physically stabilized phase monoid is $M/{\approx_{\mathrm{prod}}}$.
+
+Two cautions keep this honest. First, $\approx_{\mathrm{prod}}$ is in general
+\emph{finer} than the full stable equality $\approx$ of \Cref{prop:stable}, which
+allows an \emph{arbitrary} $e\in M$: when intrinsic topological order is present,
+$a+m=b+m$ for a non-invertible $m$ need not entail $a+e=b+e$ for any product
+state $e$. So $M/{\approx_{\mathrm{prod}}}$ need not be cancellative, and the
+group completion $\Groth$ can collapse it \emph{further}; the natural map
+$M/{\approx_{\mathrm{prod}}}\to\Groth(\Phases_{d,G})$ is then not injective. This
+is the ``collapse'' discussed in \Cref{sec:discussion}, and it is why we do
+\emph{not} claim the full phase monoid embeds in its group completion. Second, on
+the \emph{invertible} submonoid the two relations coincide: if $a$ is invertible
+with partner $\bar a$, then $a\boxtimes\bar a$ is stably a product state, so any
+witness $e$ of $a+e=b+e$ can be traded for a product state after stacking with
+enough copies of $\bar a$. A grouplike monoid is already cancellative and equals
+its own group completion, so
+$\Phases_{d,G}^{\times}\cong\Groth(\Phases_{d,G}^{\times})$ is an abelian group
+with no further completion needed, which is exactly why the spectrum of
+\Cref{sec:spectrum} is built from the invertible sector, the one place where
+stabilization and group completion agree.
+\end{remark}
+
+\begin{example}[a non-cancellative toy]
+\label{ex:noncanc}
+Let $M=\langle a,t\mid t+a=t\rangle$ be the commutative monoid on generators
+$a,t$ with the single relation $t+a=t$ (a generator $t$ that absorbs $a$). Here
+$a\ne 0$ in $M$, yet $\gamma_M(a)=\gamma_M(0)$ because $a+t=0+t$: the
+stabilization element is $e=t$. So $a$ becomes invisible in $\Groth(M)$---the
+algebra behind ``a phase nontrivial on the nose but trivial once enough ancillas
+are added.'' This does \emph{not} make the completion vanish: no relation forces
+$t$ to be absorbed---the only relation is $t+a=t$, and $nt+e=e$ has no solution
+in $M$ for $n\ge1$---so the multiples of $t$ are cancellative among themselves,
+and
+\[
+  \Groth(M)\;\cong\;\Zp,\qquad\text{generated by }[t],\quad\text{with }[a]=0 .
+\]
+The example is non-cancellativity in its purest form---one generator collapses
+under stabilization while another survives. The accompanying code
+(\Cref{sec:haskell}) computes $\Groth(M)$ for this $M$ and confirms both facts:
+$[a]=0$, while the multiples $[nt]$ ($n\ge1$) are pairwise distinct.
+\end{example}
+
+\section{The invertible condensed phase spectrum}
+\label{sec:spectrum}
+
+We now assemble the top floor of \eqref{eq:tower}. The mechanism is the standard
+one that turns a grouplike commutative monoid object in spaces into a connective
+spectrum; what is specific to our setting is the identification of the input with
+the invertible phase groupoid and the (conjectural) condensed refinement.
+
+\subsection{From the invertible sector to a connective spectrum}
+
+By \Cref{prop:sre} the invertible sector $\inv{d,G}$ is a symmetric-monoidal
+sub-$\infty$-groupoid of $\Phase_{d,G}$ in which every object is
+$\boxtimes$-invertible; that is, a \emph{Picard $\infty$-groupoid}, equivalently
+a grouplike $E_\infty$-space.
+
+\begin{theorem}[recognition, conditional]
+\label{thm:recognition}
+Suppose $\inv{d,G}$ is a Picard $\infty$-groupoid (a grouplike $E_\infty$-space).
+Then there is a connective spectrum $\IPcond_{d,G}$, unique up to equivalence,
+with $\Omega^\infty\IPcond_{d,G}\simeq\inv{d,G}$, and
+\[
+  \pi_0\IPcond_{d,G}\cong\Phases_{d,G}^{\times},\qquad
+  \pi_n\IPcond_{d,G}\cong\pi_n\bigl(\inv{d,G}\bigr)\ (n\ge 1).
+\]
+In particular $\pi_1$ records adiabatic pumps / phase automorphisms and $\pi_n$
+higher families, per the $\pi$-dictionary.
+\end{theorem}
+
+\begin{proof}
+This is the recognition principle for grouplike $E_\infty$-spaces: the
+$\infty$-category of connective spectra is equivalent to that of grouplike
+$E_\infty$-spaces via $\Omega^\infty$, with inverse the connective-spectrum
+functor. The hypothesis is that $\inv{d,G}$ is such an object. We do not reprove
+the recognition principle; in the precise setting of quantum lattice systems the
+passage from the invertible / grouplike space of gapped systems to a spectrum is
+carried out rigorously in~\cite{beaudry-etal} (parametrized foundations) and
+\cite{kubota-omega-spectrum} (an explicit $\Omega$-spectrum). We record the
+statement conditionally because the hypothesis---that $\Phase_{d,G}$ is a
+symmetric-monoidal $\infty$-groupoid with the invertible sector grouplike---rests
+on the higher-stack structure of $\Ham_{d,G}$, which is Conjecture~I-1 of
+\cite{paperLocality}.
+\end{proof}
+
+\begin{definition}[invertible condensed phase spectrum]
+\label{def:ipcond}
+$\IPcond_{d,G}$ is the connective spectrum of \Cref{thm:recognition}, the
+\emph{invertible condensed phase spectrum}. Its defining property is
+$\Omega^\infty\IPcond_{d,G}\simeq\inv{d,G}$.
+\end{definition}
+
+The name contains a promissory note: as constructed, $\IPcond_{d,G}$ is a
+spectrum of \emph{spaces} (the shape of the invertible condensed groupoid), and
+whether it genuinely lifts to a spectrum object internal to condensed / solid
+mathematics is Conjecture IV-1 below. We keep the notation $\IPcond$ throughout
+and flag the conjectural status wherever it matters.
+
+\subsection{A rigorous carrier for the homotopy groups}
+
+The value of \Cref{thm:recognition} is limited by its hypothesis. What rescues it
+from vacuity is that its output has an independently constructed, fully rigorous
+model.
+
+\begin{theorem}[\textbf{IV-B}: Kubota's $\Omega$-spectrum,~\cite{kubota-omega-spectrum}]
+\label{thm:kubota}
+There is an $\Omega$-spectrum $\mathit{IP}^\ast$, built from the operator-algebraic
+formulation of invertible gapped quantum spin systems, whose homotopy groups are
+the groups of invertible gapped spin systems in each dimension (with variants for
+crystallographic symmetry). It realizes Kitaev's proposal
+\cite{kitaev-periodic-table} that invertible phases are the homotopy groups of a
+spectrum.
+\end{theorem}
+
+This is a cited theorem, not ours. Its relationship to \Cref{def:ipcond} is the
+subject of the next two conjectures: $\mathit{IP}^\ast$ is the smooth / operator-algebraic
+avatar of the spaces underlying $\IPcond_{d,G}$, and the content of Conjecture
+IV-1 is that $\IPcond$ is its condensed refinement.
+
+\begin{conjecture}[\textbf{IV-1}: condensed / solid refinement]
+\label{conj:iv1}
+$\IPcond_{d,G}$ is a connective spectrum object internal to solid modules
+(equivalently, a condensed connective spectrum) whose underlying spectrum of
+spaces---its shape, obtained by forgetting the solid structure---is a connective
+cover of Kubota's $\mathit{IP}^\ast$~\cite{kubota-omega-spectrum}, and whose
+homotopy solid modules refine the homotopy groups of $\mathit{IP}^\ast$. The
+refinement is the one carried
+by the solid $K$-theory of the condensed observable algebra of Part~II
+\cite{paperPositivity}, via Aoki's identification
+$\Kop(A)\simeq\Solid(\Kalg(\cond{A}))$~\cite{aoki-solidification}.
+\end{conjecture}
+
+The reason to want IV-1, rather than to be content with Kubota's smooth spectrum,
+is uniformity across the program: the profinite-disorder hulls $\dis=Q^{\Zp^d}$,
+the continuous families over condensed probes, and the analytic completions all
+live naturally in condensed / solid mathematics
+\cite{clausen-scholze-condensed,clausen-scholze-analytic,clausen-scholze-analytic-stacks},
+and a spectrum internal to that world is what makes level (L2) of
+\Cref{subsec:levels} even statable. It is, however, a genuine conjecture: no
+condensed enhancement of $\mathit{IP}^\ast$ exists in the literature.
+
+\section[Renormalization and the effective-field-theory passage]{Renormalization and the\\effective-field-theory passage}
+\label{sec:rg}
+
+Between a lattice system and its EFT sits renormalization: coarse-grain, discard
+short-distance data, iterate, take a limit. We formulate this as a filtered /
+pro-system and identify its analytic limit with solidification. Both statements
+are conjectural; the point is to say precisely \emph{what} would have to be true.
+The two conjectures of this section carry the stable series identifiers IV-5 and
+IV-4: like every IV-$n$ label in this paper they are fixed across the six-part
+series and referenced by the same name elsewhere, so they are not ordered by
+first appearance here (IV-2, the central comparison conjecture, follows in
+\Cref{sec:comparison}).
+
+\subsection{Coarse-graining as a filtered system}
+
+\begin{definition}[block-spin coarse-graining]
+\label{def:coarse}
+A \emph{coarse-graining} of scale $\ell$ is a map
+$R_\ell:\Ham_{d,G}\to\Ham_{d,G}$ that partitions $L$ into blocks of diameter
+$\ell$, replaces the on-site space of a block by a chosen subspace (a truncation
+or isometry $V_\ell$), and pushes the interaction forward, $\Phi\mapsto
+V_\ell^\ast\Phi V_\ell$, retaining the induced quasi-local structure. Composition
+of scales gives a filtered system
+$\cdots\to R_{\ell_2}\to R_{\ell_1}\to\mathrm{id}$ indexed by the poset of
+scales.
+\end{definition}
+
+The finite-resolution truncations of a profinite disorder hull
+$\dis=\varprojlim\dis_i$ (\cite{paperPositivity}, \S1.7) are the disorder-theoretic
+instance of exactly this poset: coarse-graining in space and coarsening the
+configuration data are the same kind of pro-operation. This is why the EFT limit
+and the descent along $\dis$ share a formalism.
+
+\begin{conjecture}[\textbf{IV-5}: renormalization functor]
+\label{conj:iv5}
+The coarse-grainings $\{R_\ell\}$ assemble into a filtered system of endofunctors
+of $\Gap_{d,G}$ compatible with $\boxtimes$ (a lax symmetric-monoidal
+pro-endofunctor), whose limit / colimit
+\[
+  R_\infty:=\colim_\ell R_\ell
+\]
+exists on the SRE stratum and computes the effective field theory: for an SRE
+family $H$, $R_\infty H$ is (the lattice model of) the fixed-point theory whose
+deformation class is the EFT invariant. The induced map on phases
+$\Phases_{d,G}\to\Phases_{d,G}$ is idempotent with image the SRE sub-monoid.
+\end{conjecture}
+
+Coarse-graining is delicate for the same reason the gap is: the undecidability of
+the spectral gap~\cite{cpw-undecidable} forbids any general algorithm certifying
+that a coarse-graining flows to a gapped fixed point, so IV-5 is asserted on the
+SRE stratum only, and even there its content is the existence of the limit, not a
+procedure to compute it. This mirrors the conditional stance Part~III is forced
+into.
+
+\subsection{Solidification as the analytic completion}
+
+At the level of invariants there is a candidate for $R_\infty$ that is already
+rigorous as a functor, if not yet known to model coarse-graining: Aoki's
+solidification. Part~II installs the identification
+$\Kop(A)\simeq\Solid(\Kalg(\cond{A}))$~\cite{aoki-solidification}: the operator
+$K$-theory that carries topological-insulator invariants is the
+\emph{solidification} of the algebraic $K$-theory of the condensed observable
+algebra. Solidification is a completion: it inverts the analytic / topological
+data that algebraic $K$-theory does not see, and this is exactly the role
+``passing to the EFT'' plays for invariants: discard the lattice-scale algebraic
+information, keep the topological class.
+
+\begin{conjecture}[\textbf{IV-4}: solidification commutes with group completion]
+\label{conj:iv4}
+Let $M_{d,G}$ be the condensed commutative monoid of stacking classes and
+$\Groth$ its group completion (\Cref{thm:groth}) computed internally to condensed
+abelian groups. Then solidification commutes with group completion,
+\[
+  \Solid\bigl(\Groth(M_{d,G})\bigr)\;\simeq\;\Groth\bigl(\Solid(M_{d,G})\bigr),
+\]
+naturally in $(d,G)$. Equivalently, the analytic completion (solidification) and
+the algebraic completion (group completion / adding formal inverses) are
+compatible, so that the invertible solid spectrum may be built in either order.
+\end{conjecture}
+
+Conjecture IV-4 is the compatibility that makes ``$\IPcond$ built from lattice
+data'' and ``$\IPcond$ built from solid $K$-theory'' agree. It is plausible on
+formal grounds---$\Groth$ is a left adjoint (\Cref{thm:groth}) and solidification
+is a localization / left adjoint~\cite{clausen-scholze-analytic}, and left
+adjoints compose---but the two adjunctions live in different categories (condensed
+monoids versus solid modules) and the interchange is not automatic. We state it as
+a conjecture rather than dress a non-theorem as a corollary.
+
+\subsection{What ``equivalence'' can honestly mean here}
+
+We can now say precisely what the EFT passage delivers at each of the three
+levels of \Cref{subsec:levels}.
+\begin{itemize}
+\item At \textbf{(L0)}, the EFT passage is the idempotent
+  $\Phases_{d,G}\to\Phases_{d,G}^{\times}$ of Conjecture IV-5 followed by the
+  microscopic-to-field-theoretic identification of Conjecture IV-2; ``lattice
+  $=$ EFT'' is a statement about which \emph{set} of phases one gets.
+\item At \textbf{(L1)}, it is the equivalence of spectra $\IPcond_{d,G}\simeq
+  \IFH$ after solidification, requiring Conjectures IV-1 and IV-4 to even phrase
+  the completion.
+\item At \textbf{(L2)}, it is naturality over condensed probes, requiring the
+  condensed refinement of IV-1 in an essential way.
+\end{itemize}
+None of these is proved. The honest content of this section is the
+identification of the missing pieces and the fact that the analytic completion
+step is not mysterious: it is solidification, a functor we already have.
+
+\section{The comparison conjecture}
+\label{sec:comparison}
+
+We reach the organizing statement. On one side is $\IPcond_{d,G}$, built from
+lattice systems; on the other is the Freed--Hopkins classification of invertible
+field theories, built from bordism and Anderson duality. The comparison
+conjecture is that they agree.
+
+\subsection{The field-theory target}
+
+\begin{definition}[Freed--Hopkins target,~\cite{freed-hopkins}]
+\label{def:fh}
+Fix a symmetry type $H_d$ (a stable tangential structure, e.g.\ $\mathrm{Spin}$,
+$\mathrm{Spin}\times G$, $\mathrm{Pin}^\pm$) with Madsen--Tillmann spectrum
+$\MTH$. Reflection-positive invertible $d$-dimensional field theories with
+symmetry type $H_d$ are classified by the abelian group
+\[
+  \bigl[\MTH,\ \Sigma^{d+1}\IZ\bigr],
+\]
+homotopy classes of spectrum maps into a shift of the Anderson dual $\IZ$ of the
+sphere. Assembling over $d$ gives a spectrum $\IFH$ whose homotopy groups are
+these deformation-class groups; its torsion part is the ``beyond group
+cohomology'' content~\cite{kapustin-cobordism} and its free part records the
+integer invariants (Hall conductances, chiral central charges).
+\end{definition}
+
+The passage from a short-range-entangled state to such a theory is Freed's
+theorem that an SRE system defines an invertible field theory
+\cite{freed-sre}, and the generalized-cohomology / $\Omega$-spectrum viewpoint of
+\cite{gaiotto-jf,xiong-minimalist} is the statement that these deformation
+classes are themselves the homotopy of a spectrum---the field-theoretic sibling
+of \Cref{thm:recognition}.
+
+\subsection{The comparison map and the conjecture}
+
+A lattice invertible phase has a low-energy theory; taking its deformation class
+defines a comparison map. We isolate it as a hypothesis and then conjecture it is
+an equivalence.
+
+\begin{definition}[comparison map, conditional]
+\label{def:comp}
+Assume the recognition hypothesis of \Cref{thm:recognition}---that
+$\Phase_{d,G}$ is a symmetric-monoidal $\infty$-groupoid, equivalently
+Conjecture~I-1 of~\cite{paperLocality}---so that the invertible sector assembles
+into the spectrum $\IPcond_{d,G}$; and assume Freed's short-range-entanglement
+assignment extends naturally in $d$ and in the symmetry data, a naturality we do
+not construct here. Under these hypotheses one obtains a \emph{comparison map} of
+spectra
+\[
+  c_{d,G}:\ \IPcond_{d,G}\ \longrightarrow\ \IFH,
+\]
+induced on invertible sectors by sending an SRE lattice family to the
+deformation class of its low-energy invertible field theory (Freed's assignment
+\cite{freed-sre}). Absent the spectrum-level hypotheses, only the induced map on
+components $\pi_0(c_{d,G}):\Phases_{d,G}^{\times}\to\pi_0\IFH$ is unconditional;
+it is this $\pi_0$ map that the (L0) evidence of \Cref{sec:evidence} constrains.
+\end{definition}
+
+\begin{conjecture}[\textbf{IV-2}: lattice--EFT comparison equivalence]
+\label{conj:iv2}
+Under short-range-entanglement (EFT) hypotheses, the comparison map $c_{d,G}$ is
+an equivalence after an appropriate completion. Explicitly, at the three levels
+of \Cref{subsec:levels}:
+\begin{enumerate}
+\item[\textbf{(L0)}] $\pi_0(c_{d,G}):\Phases_{d,G}^{\times}\xrightarrow{\ \cong\ }
+  \pi_0\IFH$ is an isomorphism of abelian groups: the microscopic invariant
+  equals the deformation class of the associated invertible TQFT;
+\item[\textbf{(L1)}] $c_{d,G}$ is an equivalence of connective spectra after
+  solidification / on the relevant completion;
+\item[\textbf{(L2)}] $c_{d,G}$ upgrades to a natural equivalence of condensed
+  spectra over profinite probes, compatible with disorder hulls $\dis$.
+\end{enumerate}
+In particular the SSH chain matches its Dirac EFT (\Cref{ex:ssh}).
+\end{conjecture}
+
+This is the paper's central claim and it is \emph{open}. The remainder of the
+paper is evidence and worked cases, never a proof. It is worth being explicit
+about the two ways IV-2 could fail even for SRE systems: the comparison could be
+injective but not surjective (some field theory not realized by any lattice
+model---this is precisely the realizability question handed to Part~V
+\cite{paperRealizability}, where the Kapustin--Fidkowski obstruction
+\cite{kapustin-fidkowski} shows commuting-projector models cannot realize chiral
+classes), or surjective but not injective (distinct lattice phases with the same
+EFT---expected to be prevented by stabilization but not proven in general).
+
+\subsection{Structure of the comparison}
+
+The comparison sits in a square that summarizes the paper:
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+\{\text{SRE lattice families}\}/\Weq \arrow[r, "\text{stabilize}"] \arrow[d, "\text{low-energy}"']
+  & \Phases_{d,G}^{\times}\arrow[d, "\pi_0(c_{d,G})"] \\
+\{\text{invertible TQFTs}\}/{\simeq} \arrow[r, "\text{deform.\ class}"']
+  & \pi_0\IFH
+\end{tikzcd}
+\]
+The left vertical is Freed's SRE-to-TQFT assignment; the right vertical is the
+map IV-2 conjectures to be an isomorphism; the horizontals are the two
+classifications. Commutativity of the square is definitional; the conjecture is
+that the right vertical is an isomorphism, whence---given the outer maps---the
+two notions of ``phase'' coincide.
+
+\section{Evidence}
+\label{sec:evidence}
+
+Three bodies of rigorous work constrain Conjecture IV-2. In one regime it is a
+theorem; in another it is realized by classical $K$-theory; in a third it has a
+rigorous homotopical target. We present each honestly, marking exactly how far it
+reaches.
+
+\subsection{\texorpdfstring{$d=1$}{d=1}: completeness makes (L0) a theorem}
+
+\begin{theorem}[$d=1$ comparison, from~\cite{ogata-spt-chains,ogata-classification-review}]
+\label{thm:d1}
+For one-dimensional quantum spin chains with on-site finite symmetry $G$, the
+operator-algebraic index built from the split property is a \emph{complete}
+invariant of SPT phases, valued in $H^2(G,\Tt)$. Since $H^2(G,\Tt)$ is exactly
+the field-theoretic (group-cohomology) classification of $1{+}1$-dimensional
+$G$-SPTs, the level-(L0) comparison $\pi_0(c_{1,G})$ is a bijection. In this
+sense Conjecture IV-2 holds at (L0) in $d=1$.
+\end{theorem}
+
+\begin{proof}[Discussion of proof]
+The completeness of the operator-algebraic index for $d=1$ on-site finite
+symmetry is Ogata's theorem~\cite{ogata-spt-chains} (surveyed
+in~\cite{ogata-classification-review}); its value group
+$H^2(G,\Tt)$ coincides with the group-cohomology classification of
+$(1{+}1)$D bosonic SPTs~\cite{cglw-cohomology}, which is the deformation-class
+group $\pi_0\IFH$ in this case. The identification of the two---that the index of
+a chain equals the class of its EFT---is the matching used in the
+operator-algebraic literature; we cite rather than reprove it. Note the
+hypotheses are exactly the EFT hypotheses of IV-2 specialized to $d=1$: on-site
+finite symmetry, unique gapped ground state.
+\end{proof}
+
+This is the strongest existing anchor: a regime where ``lattice $=$ EFT'' is a
+theorem at the level of phase sets. It does not touch (L1) or (L2)---the split-property
+index is a $\pi_0$ statement---which is exactly why we separated the levels. In
+$d=2$ Ogata's $H^3(G,\Tt)$-valued index~\cite{ogata-h3-index,ogata-spt-chains}
+provides a well-defined bulk invariant that matches the expected group-cohomology
+label; but its \emph{completeness}---that it separates all $2$D SPT phases with
+on-site finite symmetry, as the split-property index does in $d=1$---is not
+established. So the (L0) comparison in $d=2$ is at present partial: a realized
+invariant, not a settled bijection.
+
+\subsection{Free fermions: the tenfold way realizes the comparison}
+
+For free-fermion systems the comparison is classical and complete at (L0) in
+every dimension, because both sides are computed by the same $K$-theory. This is
+the Kitaev periodic table~\cite{kitaev-periodic-table}, whose mathematical
+content is $K$-theoretic~\cite{thiang-ktheory,prodan-sb}.
+
+\begin{definition}[the tenfold way]
+\label{def:tenfold}
+The ten Altland--Zirnbauer symmetry classes~\cite{altland-zirnbauer} split into
+two complex classes ($A,\mathit{AIII}$) and eight real classes
+($\mathit{AI},\mathit{BDI},D,\mathit{DIII},\mathit{AII},\mathit{CII},C,\mathit{CI}$),
+indexed by a symmetry label $s\in\Zp/2$ (complex) or $s\in\Zp/8$ (real). In
+spatial dimension $d$, the group of strong topological invariants of gapped
+free-fermion Hamiltonians in the class is
+\[
+  \mathcal G_{\mathbb C}(s,d)=d_{\mathbb C}\bigl((s-d)\bmod 2\bigr),
+  \qquad
+  \mathcal G_{\mathbb R}(s,d)=d_{\mathbb R}\bigl((s-d)\bmod 8\bigr),
+\]
+where the complex and real Bott sequences are
+\[
+  d_{\mathbb C}:\ (\Zp,\,0),\qquad
+  d_{\mathbb R}:\ (\Zp,\,\Zp/2,\,\Zp/2,\,0,\,2\Zp,\,0,\,0,\,0),
+\]
+read cyclically at indices $0,1,\dots$. These are the homotopy groups of the
+$K$-theory spectra $KU$ and $KO$ up to the standard $2\Zp$ labelling of the
+degree-$4$ real generator.
+\end{definition}
+
+\begin{proposition}[Bott periodicity and the dimension shift]
+\label{prop:bott}
+The tenfold-way invariant groups of \Cref{def:tenfold} are Bott periodic:
+$\mathcal G_{\mathbb C}(s,d)=\mathcal G_{\mathbb C}(s,d+2)$ and
+$\mathcal G_{\mathbb R}(s,d)=\mathcal G_{\mathbb R}(s,d+8)$. They are moreover
+invariant under the simultaneous shift $(s,d)\mapsto(s+1,d+1)$, so the whole table
+is determined by the single antidiagonal $s-d$; equivalently, raising the
+symmetry label and the dimension together leaves the phase group unchanged. These
+periodicities are the free-fermion incarnation of the spectrum structure of
+\Cref{thm:recognition}, with the dimension shift $d\mapsto d+1$ acting as the
+degree shift (multiplication by the Bott generator).
+\end{proposition}
+
+\begin{proof}
+Both groups are defined by reduction of $s-d$ modulo the period ($2$ or $8$), so
+periodicity in $d$ and the antidiagonal invariance $(s,d)\mapsto(s+1,d+1)$ are
+immediate from
+$\mathcal G(s,d)=d_\bullet\bigl((s-d)\bmod p\bigr)$. That the resulting groups
+are the correct classifying groups of the ten classes---and that the
+$d\mapsto d+1$ shift is Bott periodicity of $KO$/$KU$---is the content of
+\cite{kitaev-periodic-table,thiang-ktheory}; we use their identification. The
+periodicities are verified independently by machine in \Cref{sec:haskell}.
+\end{proof}
+
+\begin{table}[t]
+\centering
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lcccccccc}
+\toprule
+class ($s$) & $d{=}0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$\\
+\midrule
+$\mathit{AI}$ (0)   & $\Zp$   & $0$    & $0$    & $0$    & $2\Zp$ & $0$    & $\Zp/2$& $\Zp/2$\\
+$\mathit{BDI}$ (1)  & $\Zp/2$ & $\Zp$  & $0$    & $0$    & $0$    & $2\Zp$ & $0$    & $\Zp/2$\\
+$D$ (2)             & $\Zp/2$ & $\Zp/2$& $\Zp$  & $0$    & $0$    & $0$    & $2\Zp$ & $0$\\
+$\mathit{DIII}$ (3) & $0$     & $\Zp/2$& $\Zp/2$& $\Zp$  & $0$    & $0$    & $0$    & $2\Zp$\\
+$\mathit{AII}$ (4)  & $2\Zp$  & $0$    & $\Zp/2$& $\Zp/2$& $\Zp$  & $0$    & $0$    & $0$\\
+$\mathit{CII}$ (5)  & $0$     & $2\Zp$ & $0$    & $\Zp/2$& $\Zp/2$& $\Zp$  & $0$    & $0$\\
+$C$ (6)             & $0$     & $0$    & $2\Zp$ & $0$    & $\Zp/2$& $\Zp/2$& $\Zp$  & $0$\\
+$\mathit{CI}$ (7)   & $0$     & $0$    & $0$    & $2\Zp$ & $0$    & $\Zp/2$& $\Zp/2$& $\Zp$\\
+\midrule
+$A$ (0)             & $\Zp$   & $0$    & $\Zp$  & $0$    & $\Zp$  & $0$    & $\Zp$  & $0$\\
+$\mathit{AIII}$ (1) & $0$     & $\Zp$  & $0$    & $\Zp$  & $0$    & $\Zp$  & $0$    & $\Zp$\\
+\bottomrule
+\end{tabular}
+\caption{The tenfold-way table of \Cref{def:tenfold}, entry
+$\mathcal G(s,d)$. Real classes (top eight) are $8$-periodic along each row and
+constant along antidiagonals $s-d=\text{const}$; complex classes (bottom two) are
+$2$-periodic. Landmark entries: $D$ at $d{=}1$ (Kitaev chain, $\Zp/2$); $D$ at
+$d{=}2$ ($p{+}ip$, $\Zp$); $\mathit{AII}$ at $d{=}2,3$ (quantum spin Hall / 3D
+TI, $\Zp/2$); $A$ at $d{=}2$ (integer quantum Hall, $\Zp$); $\mathit{AIII}$ at
+$d{=}1$ (SSH, $\Zp$).}
+\label{tab:tenfold}
+\end{table}
+
+\Cref{tab:tenfold} lists the invariants. Every landmark free-fermion phase sits
+at its expected entry, and the table is the concrete low-dimensional
+consistency check the program asks for: in each of these boxes the microscopic
+$K$-theory invariant equals the invariant of the massive-Dirac EFT, so
+Conjecture IV-2 holds at (L0) for free fermions throughout. The free-fermion case
+also gives the cleanest picture of the dimension-reduction functoriality: the
+antidiagonal invariance of \Cref{prop:bott} is the statement that adding a
+symmetry and adding a dimension cancel, which is dimensional reduction in the
+sense of~\cite{prodan-sb}.
+
+\subsection{\texorpdfstring{$\Omega$}{Omega}-spectra: a rigorous target for (L1)}
+
+Finally, the homotopical anchors. Kubota's $\Omega$-spectrum
+(\Cref{thm:kubota}) and the parametrized foundations of~\cite{beaudry-etal}
+provide, for the first time, a rigorous \emph{target} at level (L1): a spectrum
+whose homotopy groups are the invertible gapped systems, against which
+$c_{d,G}$ can be compared as a map of spectra. They do not prove IV-2 at (L1)
+(that would require identifying Kubota's spectrum with the Freed--Hopkins
+target, which is itself open), but they turn (L1) from a slogan into a comparison
+of two specified spectra. This is the sense in which the program is ``rigorous at
+the module level, conjectural at the global level'': the objects are real, the
+identification is conjectural.
+
+\section{Lattice invariants, the SSH example, and transitions}
+\label{sec:invariants}
+
+The comparison map $c_{d,G}$ is abstract; the invariants that instantiate it are
+concrete. We record a rigorous lattice invariant, run the SSH example through the
+whole apparatus, and connect transitions to the spectrum's boundary map.
+
+\subsection{A rigorous lattice invariant}
+
+\begin{theorem}[\textbf{IV-C}: Hall conductance as a phase invariant,~\cite{kapustin-sopenko-hall,kapustin-sopenko-noether}]
+\label{thm:hall}
+For a two-dimensional short-range-entangled lattice state, the Hall conductance
+is locally computable from the state, is an integer multiple of $e^2/h$, and is
+constant on gapped phases; it is therefore a well-defined homomorphism
+$\Phases_{2,G}^{\times}\to\Zp$. For families over a base, the higher Berry class
+of~\cite{kapustin-sopenko-noether} generalizes it and unifies Hall conductance
+with the Thouless charge pump~\cite{thouless-pump}.
+\end{theorem}
+
+This is exactly a component of the comparison map: $\Phases_{2,G}^{\times}\to\Zp
+=\pi_0\IFH$ in class $A$ (integer quantum Hall), the free part of
+\Cref{def:fh}, computed microscopically from the lattice state. That it is
+locally computable and integer-quantized is the rigorous content behind ``the
+lattice invariant equals the EFT invariant'' in this box, and it is the
+generalized-cohomology invariant $\nu\in E^q(U_f)$ of the program's transition
+calculus. The Kapustin--Sopenko construction is on the honest side of the
+Kapustin--Fidkowski wall~\cite{kapustin-fidkowski}: it computes the Hall
+conductance of genuinely chiral states, which no commuting-projector model
+realizes---a distinction that becomes Part~V's subject.
+
+\subsection{The SSH chain and its EFT}
+
+\begin{example}[SSH]
+\label{ex:ssh}
+The Su--Schrieffer--Heeger chain~\cite{ssh-1979} has Bloch Hamiltonian
+\[
+  H(k;t_1,t_2)=(t_1+t_2\cos k)\,\sigma_x+(t_2\sin k)\,\sigma_y,
+  \qquad q(k)=t_1+t_2 e^{ik},
+\]
+with spectrum $E_\pm(k)=\pm|q(k)|$, gapped iff $|t_1|\ne|t_2|$. It is a class
+$\mathit{AIII}$ system in $d=1$, whose table entry (\Cref{tab:tenfold}) is $\Zp$,
+the winding number of $q:S^1\to\mathbb C^\times$: $\nu=1$ for $|t_1|<|t_2|$ and
+$\nu=0$ for $|t_1|>|t_2|$. The low-energy theory near the gap-closing at
+$|t_1|=|t_2|$, $k=\pi$ is a massive $1{+}1$D Dirac fermion, and the winding number
+is the sign of the Dirac mass, i.e.\ the deformation class of the Dirac EFT.
+Thus $c_{1,\mathit{AIII}}$ sends the SSH phase to its EFT class and the two agree:
+Conjecture IV-2 at (L0) is verified in this box. In the condensed formulation the
+parameter torus and the momentum circle are replaced by their condensations
+$\cond B,\cond{S^1}$ and the winding becomes a value of the family invariant, but
+the number is unchanged.
+\end{example}
+
+\subsection{Transitions and the spectral boundary map}
+
+A path in the parameter space $B$ that changes the phase label must cross the
+gapless discriminant $\Sig_f$. The program organizes this by a relative class:
+for a family $f:\cond B\to\Ham_{d,G}$ with gapped locus
+$U_f=\cond B\times_{\Ham_{d,G}}\Gap_{d,G}$ and label $\nu_f:U_f\to\pi_0\Phase_{d,G}$,
+the obstruction to extending $\nu$ across $\Sig_f=\cond B\setminus U_f$ is the
+relative transition charge $\rc\in E^{q+1}(B,U_f)$. We use the boxed slogan
+verbatim:
+\begin{center}
+\fbox{\parbox{0.86\linewidth}{\centering\emph{A topological transition is
+crossing the gapless discriminant in the Hamiltonian moduli stack.}}}
+\end{center}
+
+\begin{conjecture}[\textbf{IV-3}: relative charge $=$ spectral boundary map]
+\label{conj:iv3}
+When the invariant $\nu$ is valued in the (condensed) generalized cohomology
+represented by $\IPcond_{d,G}$, the relative transition charge $\rc\in
+E^{q+1}(B,U_f)$ is the image of $\nu_f$ under the connecting homomorphism of
+the cofiber sequence
+\[
+  \IPcond_{d,G}\text{-cohomology of }U_f
+  \ \longrightarrow\
+  E^{q+1}(B,U_f)
+\]
+associated to the pair $(B,U_f)$; that is, the jump of the phase label across
+$\Sig_f$ is computed by the boundary map of $\IPcond_{d,G}$. For the SSH chain
+(\Cref{ex:ssh}) this recovers the statement that the winding number jumps by
+$\pm1$ across $|t_1|=|t_2|$, the linking charge of the gapless point.
+\end{conjecture}
+
+Conjecture IV-3 is what makes the spectrum $\IPcond$ do work beyond
+classification: it turns the transition calculus into a long-exact-sequence
+computation. Its low-dimensional shadow---the SSH winding jump, the Dirac node as
+a source of charge---is classical; the conjecture is that this is systematically
+the boundary map of $\IPcond$ in every dimension and generalized theory.
+
+\section{Formal verification}
+\label{sec:haskell}
+
+The algebraic backbone of the paper (the commutative-monoid structure, its group
+completion, and the Bott periodicity of the tenfold-way table) is elementary
+enough to be checked by machine, and we do so. The accompanying Haskell package
+\texttt{src/\allowbreak lattice-eft-\allowbreak equivalence/} contains four
+modules.
+
+\paragraph{\texttt{Monoid.hs}: finitely presented commutative monoids and group
+completion.} A finitely presented commutative monoid is represented by generators
+and relations; elements are normal forms (multisets of generators modulo the
+relations, reduced by a confluent rewriting of the given relations). The
+Grothendieck group completion of \Cref{def:groth} is implemented directly:
+$\Groth(M)$ is presented as formal differences $[(a,b)]$ with equality decided by
+the stable-equality test of \Cref{prop:stable}---search for a witness $e$ with
+$a+b'+e=a'+b+e$ over the (finite, for our examples) reachable set. The universal
+property (\Cref{thm:groth}(iii)) is exercised by constructing the induced
+homomorphism $\bar f$ from a sample $f:M\to A$ and checking
+$\bar f\circ\gamma=f$.
+
+\paragraph{\texttt{TenfoldWay.hs}: the periodic table.} The invariant groups
+$\mathcal G_{\mathbb C}$ and $\mathcal G_{\mathbb R}$ of \Cref{def:tenfold} are
+encoded from the Bott sequences $d_{\mathbb C},d_{\mathbb R}$ via the
+antidiagonal formula, and \Cref{tab:tenfold} is regenerated from the code.
+
+\paragraph{\texttt{Main.hs}: demonstrations.} Runs group completion on several
+monoids---the free monoid $\Zp_{\ge0}$ (completing to $\Zp$), a product
+$\Zp_{\ge0}^2$ (completing to $\Zp^2$), and the non-cancellative toy
+$M=\langle a,t\mid t+a=t\rangle$ of \Cref{ex:noncanc}, where it exhibits $[a]=0$
+while the multiples $[nt]$ stay distinct, so $\Groth(M)\cong\Zp$---then prints
+\Cref{tab:tenfold} and exits with status $0$.
+
+\paragraph{\texttt{Properties.hs}: QuickCheck.} The properties tested correspond
+one-to-one to the paper's claims:
+\begin{itemize}
+\item commutativity, associativity, and unit laws of $\boxtimes$ on monoid
+  elements (\Cref{prop:monoid});
+\item that $\Groth(M)$ is an abelian group (inverses and associativity) and that
+  $\gamma_M$ is injective exactly on the cancellative quotient
+  (\Cref{prop:stable});
+\item the universal property: for random $f:M\to A$, the induced $\bar f$ is a
+  homomorphism and factors $f$ (\Cref{thm:groth});
+\item Bott periodicity: $\mathcal G_{\mathbb C}(s,d)=\mathcal G_{\mathbb C}(s,d+2)$,
+  $\mathcal G_{\mathbb R}(s,d)=\mathcal G_{\mathbb R}(s,d+8)$, and the antidiagonal
+  invariance $\mathcal G(s,d)=\mathcal G(s+1,d+1)$ (\Cref{prop:bott}), together
+  with spot checks of the landmark entries of \Cref{tab:tenfold}.
+\end{itemize}
+The code is verification, not proof: it checks the finite and periodic content of
+the elementary claims and guards against off-by-one errors in the table. The
+conjectures IV-1 through IV-5 are, by their nature, outside its reach.
+
+\paragraph{Code availability.} The Haskell package is available at
+\href{https://github.com/YonedaAI/topological-phases-of-matter}{github.com/YonedaAI/topological-phases-of-matter},
+under \texttt{src/\allowbreak lattice-eft-\allowbreak equivalence/}. It builds
+with GHC and its QuickCheck suite runs the properties listed above.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{What is honestly established.} The symmetric-monoidal structure on
+$\pi_0$ and its group completion (\Cref{prop:monoid,thm:groth,prop:stable}) are
+theorems; the reading of ancilla stabilization as the group-completion
+stabilization element (\Cref{rem:stmeaning}) is, we think, the clarifying point
+of the paper, and it is elementary. The recognition of the invertible sector as a
+connective spectrum (\Cref{thm:recognition}) is a theorem \emph{conditional} on
+$\Phase_{d,G}$ being a symmetric-monoidal $\infty$-groupoid, and its output has a
+rigorous carrier in Kubota's $\Omega$-spectrum (\Cref{thm:kubota}). The
+free-fermion table and its periodicities (\Cref{prop:bott}) are classical and
+machine-checked. The $d=1$ comparison (\Cref{thm:d1}) is a genuine theorem at
+level (L0).
+
+\paragraph{What is conjectural, and why we did not hide it.} The five conjectures
+IV-1 through IV-5 are the substance of the program at this floor, and none is a
+theorem. The temptation in a paper like this is to state IV-2 as a ``theorem
+under assumptions'' and bury the assumptions; we have instead separated the three
+levels of equivalence (\Cref{subsec:levels}) precisely so that the true logical
+status is visible: (L0) is a theorem in two regimes, (L1) has a target but no
+identification, (L2) is not even statable without the condensed refinement IV-1.
+
+\paragraph{The EFT hypotheses are real.} Every positive statement is under
+short-range entanglement. A lattice system is not automatically an invertible
+field theory; the assertion that it flows to one is the SRE hypothesis, and it
+fails for intrinsic topological order. The Freed--Hopkins classification is proved
+\emph{under} reflection positivity and the EFT axioms~\cite{freed-hopkins}; we
+inherit those hypotheses and do not claim more.
+
+\paragraph{Stabilization collapses distinctions, on purpose.}
+\Cref{prop:stable} and \Cref{ex:noncanc} show that group completion (and the
+$(-)^{\st}$ built into $\Phase_{d,G}$) can send a nonzero phase to zero once
+enough ancillas are added. This is intended: it is what makes ``phase'' a stable
+notion, but it means $\IPcond$ sees only stable, invertible data. Unstable or
+fragile distinctions are invisible to it by construction.
+
+\paragraph{Noninvertible order is out of scope.} The whole paper lives in the
+invertible sector. Intrinsic topological order (anyons, modular tensor categories
+in $2{+}1$D) has no inverse under $\boxtimes$ and no place in a spectrum; a
+condensed treatment of it would need a condensed \emph{higher} stack of phases and
+defects, not a $K$-theory spectrum, and is deferred entirely
+(\cite{paperSynthesis}, global pitfalls). The De\,Nittis(--Rendel) state-space
+programme~\cite{denittis-states,denittis-rendel-weyl} and the moduli-space work of
+Hsin--Wang~\cite{hsin-wang-moduli} are the nearest ordinary-topology precedents;
+our contribution over them is organizational: placing the same invariants inside
+a condensed environment where families, disorder, and completions cohabit, not a
+new invariant, as the program concedes throughout.
+
+\paragraph{Undecidability bounds the renormalization story.} Conjecture IV-5 is
+asserted only on the SRE stratum and only as an existence statement, because the
+undecidability of the spectral gap~\cite{cpw-undecidable} forbids any general
+procedure certifying that a coarse-graining flows to a gapped fixed point. The
+same wall constrains Part~III; the program does not pretend to see past it.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have built the top floor of the condensed tower for topological phases and
+stated precisely what it would take for the microscopic and field-theoretic
+classifications to coincide. The provable content is the algebra of stacking:
+$\pi_0$ is a commutative monoid, its group completion is governed by a universal
+property, and the stabilization element of that completion is exactly ancilla
+stabilization. The invertible sector is a connective spectrum $\IPcond_{d,G}$ with
+a rigorous carrier in Kubota's $\Omega$-spectrum. Against the Freed--Hopkins
+bordism target we posed the comparison conjecture IV-2 at three levels of
+strength and marshalled the evidence that pins it down where it can be pinned:
+Ogata's completeness makes the $\pi_0$ comparison a theorem in $d=1$, and the
+tenfold-way $K$-theory, with its Bott periodicities, which we verified by
+machine, realizes it for free fermions in every dimension. The remaining
+conjectures locate the missing analysis: solidification as the EFT completion
+(IV-4, IV-5), the condensed refinement of the spectrum (IV-1), and the transition
+charge as a spectral boundary map (IV-3).
+
+The honest summary is that the equivalence between lattice models and effective
+field theories is, at $\pi_0$ and under EFT hypotheses, either a theorem
+(Ogata, free fermions) or a well-posed and evidence-constrained conjecture, and
+that its spectrum- and family-level forms are exactly what the condensed
+refinement is for. Part~V takes the baton with the realizability question (which
+of these classes are built by actual lattices), and Part~VI assembles the tower
+into the program's Master Conjecture, of which our IV-2 is the top.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

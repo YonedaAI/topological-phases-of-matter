@@ -1,0 +1,333 @@
+{
+  "entries": [
+    {
+      "citation": "aasen-wang-hastings — Aasen, Wang, Hastings, \"Adiabatic paths of Hamiltonians, symmetries of topological order, and automorphism codes\", Phys. Rev. B 106, 085122 (2022), arXiv:2203.11137",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.106.085122",
+      "resolved_url": "https://arxiv.org/abs/2203.11137",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in this project's bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Used twice (Sec. 4, homotopy dictionary Sec. 5) for the pi_1/pi_2/pi_3 automorphism-of-topological-order content, both times explicitly flagged as conjectural ('whose pi_1,pi_2,pi_3 computations are themselves conjectural'), matching how the source itself is hedged. Accurate, non-overclaimed use."
+    },
+    {
+      "citation": "altland-zirnbauer — Altland & Zirnbauer, \"Nonstandard symmetry classes in mesoscopic normal-superconducting hybrid structures\", Phys. Rev. B 55, 1142 (1997), arXiv:cond-mat/9602137",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9602137",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; canonical tenfold-way symmetry-class paper (high domain-knowledge confidence). Not resolved in any sibling module citation JSON checked this session, but the key itself is confirmed present in lattice-eft-equivalence.tex.",
+      "explanation": "Co-cited with kitaev-periodic-table for 'the free-fermion tenfold way' in the composition-diagram and SSH sections; standard, accurate contextual use, consistent with Part IV's own citation of it."
+    },
+    {
+      "citation": "aoki-solidification — Aoki, \"(Semi)topological K-theory via solidification\", arXiv:2409.01462 (2024)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2409.01462",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; relies on the project bibliography's own prior verification (kb-builder) and the Part II citation audit.",
+      "explanation": "SPOT-VERIFIED load-bearing restatement (Recollection, Sec. 3.2, 'after Aoki'). Compared synthesis's statement of the solidification theorem word-for-word against Part II's own Theorem (positivity-cstar-norms.tex, thm:aoki, lines 845-860): the connective-K-theory identity, the Friedlander-Walker/Blanc attribution, and the Bott-inversion caveat Kop(A)=Solid(Kalg(condA))[beta^-1] are all reproduced faithfully, including the qualifier that the unconditional (non-periodic) statement holds only in nonnegative degrees. Synthesis adds one harmless elaboration not in Part II's bare theorem statement (beta in K_2^top(C)=Z complex; period-eight real Bott class in the KO case), which is standard textbook fact about Bott periodicity, not a new or unsupported claim. No drift found; this restatement is clean."
+    },
+    {
+      "citation": "barwick-haine-pyknotic — Barwick & Haine, \"Pyknotic objects, I: Basic notions\", arXiv:1904.09966 (2019)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1904.09966",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in the Part I/II/III sibling citation JSONs (same key).",
+      "explanation": "Correctly co-cited with clausen-scholze-condensed for the pyknotic/condensed variant distinction ('differs only in set-theoretic bookkeeping'), matching how it is used across all companion papers; standard, accurate."
+    },
+    {
+      "citation": "beaudry-etal — Beaudry, Hermele, Moreno, Pflaum, Qi, Spiegel, \"Homotopical Foundations of Parametrized Quantum Spin Systems\", Rev. Math. Phys. 36, 2460003 (2024), arXiv:2303.07431",
+      "exists": true,
+      "resolved_doi": "10.1142/S0129055X24600037",
+      "resolved_url": "https://arxiv.org/abs/2303.07431",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Correctly cited alongside kubota-omega-spectrum for the recognition-principle passage to a connective spectrum (Sec. 3.4); appropriate, non-overclaimed use consistent with Part IV's own citation of it."
+    },
+    {
+      "citation": "bellissard-ncg-qhe — Bellissard, van Elst, Schulz-Baldes, \"The noncommutative geometry of the quantum Hall effect\", J. Math. Phys. 35, 5373 (1994), arXiv:cond-mat/9411052",
+      "exists": true,
+      "resolved_doi": "10.1063/1.530758",
+      "resolved_url": "https://arxiv.org/abs/cond-mat/9411052",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Correctly cited for the crossed-product observable algebra C(Omega) x_T Z^d in Recollection II-C (Sec. 3.2), matching Part II's own attribution; standard, accurate."
+    },
+    {
+      "citation": "bhm-stability — Bravyi, Hastings, Michalakis, \"Topological quantum order: stability under local perturbations\", J. Math. Phys. 51, 093512 (2010), arXiv:1001.0344",
+      "exists": true,
+      "resolved_doi": "10.1063/1.3490195",
+      "resolved_url": "https://arxiv.org/abs/1001.0344",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in spectral-gap-stability-citation.json (same key, same paper).",
+      "explanation": "Correctly co-cited with michalakis-zwolak and nsy-bulkgap in Recollection III (Sec. 3.3) as 'the Bravyi-Hastings-Michalakis and Michalakis-Zwolak stability theorems with the Nachtergaele-Sims-Young bulk-gap result' -- author-to-key mapping verified correct for all three keys. Faithful compression of Part III's own three-source attribution."
+    },
+    {
+      "citation": "bmns-automorphic — Bachmann, Michalakis, Nachtergaele, Sims, \"Automorphic Equivalence within Gapped Phases of Quantum Lattice Systems\", CMP 309, 835 (2012), arXiv:1102.0842",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-011-1380-0",
+      "resolved_url": "https://arxiv.org/abs/1102.0842",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Correctly cited in Recollection II-A (Sec. 3.2) for the weak-* continuity of the ground-state section via the spectral-flow cocycle; standard, accurate attribution matching Part II."
+    },
+    {
+      "citation": "cglw-cohomology — Chen, Gu, Liu, Wen, \"Symmetry protected topological orders and the group cohomology of their symmetry group\", Phys. Rev. B 87, 155114 (2013), arXiv:1106.4772",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.87.155114",
+      "resolved_url": "https://arxiv.org/abs/1106.4772",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json); not independently re-fetched this session.",
+      "explanation": "Correctly co-cited with else-nayak in Recollection V-A (Sec. 3.5) for the fixed-point commuting-projector construction realizing every class in H^(d+1)(G,U(1)); matches Part V's Theorem V-A attribution exactly. No issue found."
+    },
+    {
+      "citation": "clausen-scholze-condensed — Scholze (joint w/ Clausen), \"Lectures on Condensed Mathematics\", arXiv:2605.03658 (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2605.03658",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; relies on the project bibliography's own verification note, reused consistently across all six companion papers.",
+      "explanation": "Foundational citation for the condensed-mathematics paradigm underlying the whole series and this synthesis in particular; appropriate, standard, and consistently used."
+    },
+    {
+      "citation": "cpw-undecidable — Cubitt, Perez-Garcia, Wolf, \"Undecidability of the spectral gap\", Nature 528, 207 (2015), arXiv:1502.04573",
+      "exists": true,
+      "resolved_doi": "10.1038/nature16059",
+      "resolved_url": "https://arxiv.org/abs/1502.04573",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part III citation audit (spectral-gap-stability-citation.json); not independently re-fetched this session.",
+      "explanation": "Correctly and precisely restated in Recollection (Sec. 3.3, 'Undecidability of the gap'): the Pi_1-completeness characterization and 'no algorithm decides gapped vs. gapless' framing both match the actual CPW result. This is one of the two 'walls' quoted repeatedly (Secs. 1.3, 4.3, 7.2) and every restatement is scoped correctly (a statement about the neighborhood/stratum, not a claim that CPW is evaded). No issue found."
+    },
+    {
+      "citation": "denittis-rendel-weyl — De Nittis & Rendel, \"A scheme for topological phases of the Weyl C*-algebra\", arXiv:2607.01183 (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2607.01183",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; a 2026 submission per the project bibliography's own verification note, internally consistent with the paper's July 2026 date.",
+      "explanation": "Cited only once (Sec. 6.1, novelty discussion) as an established background example of the moduli/space-of-states viewpoint in physics; appropriately hedged, non-load-bearing."
+    },
+    {
+      "citation": "denittis-states — De Nittis, \"Topological phases of non-interacting systems: a general approach based on states\", Lett. Math. Phys. 115 (2025), arXiv:2502.03590",
+      "exists": true,
+      "resolved_doi": "10.1007/s11005-025-01994-1",
+      "resolved_url": "https://arxiv.org/abs/2502.03590",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; consistent with the project bibliography's own verification note.",
+      "explanation": "Co-cited with denittis-rendel-weyl in the same hedged background sentence (Sec. 6.1); appropriate, non-load-bearing."
+    },
+    {
+      "citation": "else-nayak — Else & Nayak, \"Classifying symmetry-protected topological phases through the anomalous action of the symmetry on the edge\", Phys. Rev. B 90, 235137 (2014), arXiv:1409.5436",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.90.235137",
+      "resolved_url": "https://arxiv.org/abs/1409.5436",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json); not independently re-fetched this session.",
+      "explanation": "Correctly co-cited with cglw-cohomology in Recollection V-A for the boundary-anomaly obstruction; matches Part V's Theorem V-A attribution exactly. No issue found."
+    },
+    {
+      "citation": "freed-hopkins — Freed & Hopkins, \"Reflection positivity and invertible topological phases\", Geom. Topol. 25, 1165 (2021), arXiv:1604.06527",
+      "exists": true,
+      "resolved_doi": "10.2140/gt.2021.25.1165",
+      "resolved_url": "https://arxiv.org/abs/1604.06527",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known, canonical paper (high domain-knowledge confidence); reuses resolution from bordism-realizability-citation.json.",
+      "explanation": "Correctly cited for the Anderson-dual bordism target I_FH set against IPcond_{d,G} (Sec. 3.4); consistent with Part IV's own appropriately-hedged use as a comparison target, not a proved equivalence."
+    },
+    {
+      "citation": "freed-sre — Freed, \"Short-range entanglement and invertible field theories\", arXiv:1406.7278 (2014)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/1406.7278",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; well-known preprint (high domain-knowledge confidence).",
+      "explanation": "Correctly co-cited with freed-hopkins for the SRE/invertible dictionary; standard, accurate."
+    },
+    {
+      "citation": "hastings-koma — Hastings & Koma, \"Spectral Gap and Exponential Decay of Correlations\", CMP 265, 781 (2006), arXiv:math-ph/0507008",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-0030-4",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0507008",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in spectral-gap-stability-citation.json (same key, same paper).",
+      "explanation": "Correctly co-cited with nachtergaele-sims-clustering in Recollection III-C (uniform clustering, Sec. 3.3) for the exponential-clustering-from-gap result; matches Part III's own attribution."
+    },
+    {
+      "citation": "hsin-wang-moduli — Hsin & Wang, \"On topology of the moduli space of gapped Hamiltonians for topological phases\", J. Math. Phys. 64, 041901 (2023), arXiv:2211.16535",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0136906",
+      "resolved_url": "https://arxiv.org/abs/2211.16535",
+      "relevance": "low",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Correctly cited (Sec. 6.1) as background establishing that the moduli-space viewpoint on gapped systems predates this program; appropriately scoped, non-load-bearing."
+    },
+    {
+      "citation": "kapustin-fidkowski — Kapustin & Fidkowski, \"Local Commuting Projector Hamiltonians and the Quantum Hall Effect\", Commun. Math. Phys. 373, 763 (2019/2020), arXiv:1810.07756",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-019-03444-1",
+      "resolved_url": "https://arxiv.org/abs/1810.07756",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json). Cross-checked directly this session against Part V's own formal Theorem V-C (bordism-realizability.tex, lines 777-799), which states the no-go as an explicit TWO-PART result: (i) electric, U(1)-symmetric, sigma_H=0 [Kapustin-Fidkowski]; (ii) thermal, no symmetry hypothesis, c_-=0 [Kapustin-Spodyneiko, kapustin-spodyneiko-thermal], with Part V stating in its own words that 'the two obstructions are logically independent' and that 'the bosonic E_8 state has sigma_H=0 (no U(1) charge) yet c_-=8.'",
+      "explanation": "SPOT-VERIFIED load-bearing attribution, FLAGGED ISSUE. Synthesis's Recollection (Sec. 3.5, label rec:VC, lines 737-743) is titled 'Kapustin-Fidkowski no-go' and cites only {kapustin-fidkowski, paperRealizability} -- it never cites kapustin-spodyneiko-thermal anywhere in the paper (confirmed: the key does not appear once in synthesis.tex's full \\cite list, despite being used 4 times in the Part V source it is restating). Yet the recollection's own text asserts both halves of the joint theorem ('zero ground-state Hall conductance AND zero chiral central charge') and then states 'every invertible phase with sigma_H != 0 ... the bosonic E_8 state ... is not commuting-projector realizable.' This is factually backwards relative to Part V's own explicit statement: the E_8 state has sigma_H=0 (it carries no U(1) charge) and is excluded solely by the chiral-central-charge clause (ii), which is Kapustin-Spodyneiko's result, not Kapustin-Fidkowski's -- a distinction Part V goes out of its way to state ('The two obstructions are logically independent'). The identical conflation recurs in the Introduction/stance section (Sec. 1.3, lines 362-365: 'Kapustin-Fidkowski ... proved that no local commuting-projector Hamiltonian carries a nonzero Hall conductance, so every chiral invertible class lies outside the commuting-projector image'), which attributes the whole two-author, two-mechanism 'no-go wall' to Kapustin-Fidkowski alone. Net effect: a real, correctly-existing citation is used to over-broadly cover content that is actually a distinct, separately-authored and separately-cited theorem in the very module paper being restated, and the paper's own worked example (E_8) is misclassified under the wrong mechanism as a result. This is drift introduced during synthesis compression, not a fabricated source."
+    },
+    {
+      "citation": "kapustin-sopenko-hall — Kapustin & Sopenko, \"Hall conductance and the statistics of flux insertions in gapped interacting lattice systems\", J. Math. Phys. 61, 101901 (2020), arXiv:2006.14151",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0022944",
+      "resolved_url": "https://arxiv.org/abs/2006.14151",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json); not independently re-fetched this session.",
+      "explanation": "Correctly co-cited with kapustin-sopenko-noether in Recollection IV (Sec. 3.4, 'Hall conductance as a phase invariant'), matching Part IV's own Theorem IV-C attribution; distinct from, and not confused with, the kapustin-fidkowski / kapustin-spodyneiko-thermal pairing used in Recollection V-C. No issue found with this entry itself."
+    },
+    {
+      "citation": "kapustin-sopenko-noether — Kapustin & Sopenko, \"Local Noether theorem for quantum lattice systems and topological invariants of gapped states\", J. Math. Phys. 63, 091903 (2022), arXiv:2201.01327",
+      "exists": true,
+      "resolved_doi": "10.1063/5.0085964",
+      "resolved_url": "https://arxiv.org/abs/2201.01327",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in bordism-realizability-citation.json (same key, same paper).",
+      "explanation": "Correctly co-cited for the higher Berry class / pi_1 pump invariant generalization; standard, appropriate use matching Part IV."
+    },
+    {
+      "citation": "kitaev-periodic-table — Kitaev, \"Periodic table for topological insulators and superconductors\", AIP Conf. Proc. 1134, 22 (2009), arXiv:0901.2686",
+      "exists": true,
+      "resolved_doi": "10.1063/1.3149495",
+      "resolved_url": "https://arxiv.org/abs/0901.2686",
+      "relevance": "medium",
+      "notes": "Not independently re-fetched this session; canonical paper (very high domain-knowledge confidence).",
+      "explanation": "Correctly cited both for the free-fermion tenfold way (with altland-zirnbauer) and for Kubota's realization of 'Kitaev's proposal that invertible phases are the homotopy groups of a spectrum' (Recollection IV, Sec. 3.4); accurate on both uses."
+    },
+    {
+      "citation": "kubota-omega-spectrum — Kubota, \"Stable homotopy theory of invertible gapped quantum spin systems I: Kitaev's Omega-spectrum\", arXiv:2503.12618 (2025)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2503.12618",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json); not independently re-fetched this session.",
+      "explanation": "SPOT-VERIFIED load-bearing restatement (Recollection, Sec. 3.4, 'after Kubota'). Compared synthesis's statement against Part IV's own Theorem IV-B (lattice-eft-equivalence.tex, thm:kubota, lines 748-756): the Omega-spectrum IP*, its construction from the operator-algebraic formulation of invertible gapped quantum spin systems, its homotopy-groups-equal-phase-groups property, and the 'realizes Kitaev's proposal' framing are all reproduced faithfully. Synthesis's added clause ('is the rigorous carrier for the homotopy of IPcond_{d,G}') matches Part IV's own framing of this theorem one section earlier ('A rigorous carrier for the homotopy groups'). Synthesis drops the parenthetical '(with variants for crystallographic symmetry)' -- a compression, not a factual alteration, since it does not change what is claimed. No drift found; this restatement is clean."
+    },
+    {
+      "citation": "michalakis-zwolak — Michalakis & Zwolak, \"Stability of Frustration-Free Hamiltonians\", CMP 322, 277 (2013), arXiv:1109.1588",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-013-1762-6",
+      "resolved_url": "https://arxiv.org/abs/1109.1588",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in spectral-gap-stability-citation.json (same key, same paper).",
+      "explanation": "Correctly co-cited in Recollection III's stability trio; author-to-key mapping verified correct. Matches Part III's own attribution."
+    },
+    {
+      "citation": "nachtergaele-sims-clustering — Nachtergaele & Sims, \"Lieb-Robinson Bounds and the Exponential Clustering Theorem\", CMP 265, 119 (2006), arXiv:math-ph/0506030",
+      "exists": true,
+      "resolved_doi": "10.1007/s00220-006-1556-1",
+      "resolved_url": "https://arxiv.org/abs/math-ph/0506030",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in spectral-gap-stability-citation.json (same key, same paper).",
+      "explanation": "Correctly co-cited with hastings-koma in Recollection III-C for uniform clustering; matches Part III's own attribution."
+    },
+    {
+      "citation": "nsy-bulkgap — Nachtergaele, Sims, Young, \"Stability of the bulk gap for frustration-free topologically ordered quantum lattice systems\", Lett. Math. Phys. (2024), arXiv:2102.07209",
+      "exists": true,
+      "resolved_doi": "10.1007/s11005-023-01767-8",
+      "resolved_url": "https://arxiv.org/abs/2102.07209",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; reuses the resolution already established in spectral-gap-stability-citation.json (same key, same paper).",
+      "explanation": "Correctly identified by name ('the Nachtergaele-Sims-Young bulk-gap result') in Recollection III's stability trio; author-to-key mapping verified correct, matches Part III."
+    },
+    {
+      "citation": "ogata-classification-review — Ogata, \"Classification of gapped ground state phases in quantum spin systems\", Proc. ICM 2022, arXiv:2110.04675 (2021)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2110.04675",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json), which already noted this ICM survey points to a separate primary paper (ogata-spt-chains) for the specific d=1 completeness proof.",
+      "explanation": "FLAGGED ISSUE, part of the Ogata spot-check (see ogata-h3-index entry for full detail). Used three times: (1) Recollection III (Sec. 3.3, Conjecture III-3, correctly hedged as identifying Weq-components with 'Ogata's operator-algebraic phases' -- fine); (2) homotopy dictionary (Sec. 5, same hedged use -- fine); (3) Recollection V-B (Sec. 3.5, rec:VB) co-cited with ogata-h3-index and ogata-spt-chains for a claim that overstates what Part V itself proves. See ogata-h3-index for the substantive finding."
+    },
+    {
+      "citation": "ogata-h3-index — Ogata, \"A H^3(G,T)-valued index of symmetry protected topological phases with on-site finite group symmetry for two-dimensional quantum spin systems\", Forum Math. Pi 9, e13 (2021), arXiv:2101.00426",
+      "exists": true,
+      "resolved_doi": "10.1017/fmp.2021.17",
+      "resolved_url": "https://arxiv.org/abs/2101.00426",
+      "relevance": "high",
+      "notes": "Web-verified in this project's prior Part V citation audit (bordism-realizability-citation.json), which confirmed the abstract establishes existence of an H^3(G,T)-valued index but does not itself assert completeness.",
+      "explanation": "SPOT-VERIFIED load-bearing attribution, FLAGGED ISSUE. Synthesis's Recollection (Sec. 3.5, label rec:VB, lines 728-735, 'Low-dimensional completeness') states: 'the H^2(G,U(1))-valued index in d=1 and the H^3(G,U(1))-valued index of Ogata in d=2 are complete invariants of the symmetric phase [cites ogata-h3-index, ogata-spt-chains, ogata-classification-review]; there real is a bijection onto the group-cohomology classification, so realized = invariant.' This directly contradicts Part V's own Theorem V-B and its two dedicated companion remarks (bordism-realizability.tex: Theorem V-B at thm:VB states d=1 completeness only; Remark 'Two dimensions: the index exists, completeness is open' at rem:VB2d states verbatim 'Ogata's theorem gives existence and invariance of the index, not completeness. We therefore record d=2 completeness as an open problem, not a theorem, and do not assert realized = invariant in d=2'; and a further Remark 'Scope -- do not extrapolate' at rem:VBscope). Synthesis's rec:VB erases exactly the distinction these two remarks were written to enforce, upgrading an explicitly open d=2 problem to an established bijection/completeness result. This is corroborated by an internal inconsistency within synthesis.tex itself: three other passages that reference \\Cref{rec:VB} (Sec. 4.1's composition-diagram discussion, and Conjecture VI-2's body in Sec. 8) both correctly restrict the claim to 'in d=1 for on-site finite symmetry,' showing the paper's own later usage understands the correct scope even though the boxed Recollection VB itself does not state it. This is drift introduced during synthesis compression of Part V's Theorem V-B / Remark V-B', not a fabricated or nonexistent source -- the citations themselves are genuine and their d=1 use is correct; only the d=2 half of the claim is unsupported by the very sources cited for it."
+    },
+    {
+      "citation": "ogata-spt-chains — Ogata, \"Classification of symmetry protected topological phases in quantum spin chains\", Current Developments in Mathematics (2021), arXiv:2110.04671",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": "https://arxiv.org/abs/2110.04671",
+      "relevance": "high",
+      "notes": "Not independently re-fetched this session; the project's Part V citation audit confirms this is the correct primary source for the d=1 completeness result (as opposed to ogata-classification-review, a survey).",
+      "explanation": "Its d=1 use is correct and matches Part V's own Theorem V-B proof (which cites it as the primary source for d=1 completeness). It is bundled, however, into the same over-general \\cite list backing rec:VB's unqualified 'are complete invariants' claim spanning both d=1 and d=2 -- see the ogata-h3-index entry for the substantive d=2 overclaim finding. The d=1 attribution itself is not in question."
+    },
+    {
+      "citation": "paperEFT — Long & The YonedaAI Collaboration, \"From Lattice Models to Effective Field Theories: Stabilization and the Invertible Condensed Phase Spectrum\", Part IV of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/lattice-eft-equivalence.tex exists and its title matches the bib entry.",
+      "explanation": "Companion-paper citation, checked against every one of its 5 appearances in synthesis.tex (Secs. 1.2, 1.4, 3.4 x3): every instance is paired with 'Part~IV', with no cross-wiring to any other Part. Recollections attributed to it (group completion, Kubota's spectrum, Hall conductance) were spot-checked above and found faithful except where separately flagged."
+    },
+    {
+      "citation": "paperGap — Long & The YonedaAI Collaboration, \"The Uniformly Gapped Substack: Existence and Stability of the Thermodynamic Spectral Gap\", Part III of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/spectral-gap-stability.tex exists and its title matches the bib entry.",
+      "explanation": "Companion-paper citation, checked against every one of its 4 appearances in synthesis.tex (Secs. 1.2, 1.4, 3.3 x2): every instance is paired with 'Part~III', with no cross-wiring. Recollections attributed to it (gap continuity/stability, uniform clustering) were read and found consistent with Part III's own theorem statements."
+    },
+    {
+      "citation": "paperLocality — Long & The YonedaAI Collaboration, \"Condensed Locality: Lieb-Robinson Estimates and Quasi-Local Dynamics on the Moduli Stack of Hamiltonians\", Part I of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/lieb-robinson-locality.tex exists and its title matches the bib entry.",
+      "explanation": "Companion-paper citation, checked against every one of its 4 appearances in synthesis.tex (Secs. 1.2, 1.4, 3.1 x2): every instance is paired with 'Part~I', with no cross-wiring. Recollections attributed to it (Banach interaction space/condensed dynamics, base-uniform light cone) match Part I's own theorem labels (Theorems I-A/I-B/I-C)."
+    },
+    {
+      "citation": "paperPositivity — Long & The YonedaAI Collaboration, \"Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras\", Part II of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/positivity-cstar-norms.tex exists and its title matches the bib entry.",
+      "explanation": "Companion-paper citation, checked against every one of its 5 appearances in synthesis.tex (Secs. 1.2, 1.4, 3.2 x3): every instance is paired with 'Part~II', with no cross-wiring. The load-bearing Aoki restatement (rec:aoki) attributed to it was spot-verified faithful (see aoki-solidification entry)."
+    },
+    {
+      "citation": "paperRealizability — Long & The YonedaAI Collaboration, \"Physical Realizability of Bordism and Homotopy Classes by Gapped Lattice Systems\", Part V of this series (2026)",
+      "exists": true,
+      "resolved_doi": null,
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Verified structurally: papers/latex/bordism-realizability.tex exists and its title matches the bib entry.",
+      "explanation": "Companion-paper citation, checked against every one of its 5 appearances in synthesis.tex (Secs. 1.2, 1.4, 3.5 x3): every instance is correctly paired with 'Part~V', with no cross-wiring. However, this is the companion paper whose content was compressed with genuine drift into two of its own restated Recollections -- rec:VB (Ogata d=1/d=2 completeness, overclaimed) and rec:VC (Kapustin-Fidkowski/Kapustin-Spodyneiko no-go, conflated) -- see the ogata-h3-index and kapustin-fidkowski entries for full detail. The \\cite{paperRealizability} pointer itself is correctly placed in both cases; the drift is in what synthesis asserts Part V says, not in whether Part V is cited."
+    },
+    {
+      "citation": "ssh-1979 — Su, Schrieffer, Heeger, \"Solitons in Polyacetylene\", Phys. Rev. Lett. 42, 1698 (1979)",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevLett.42.1698",
+      "resolved_url": null,
+      "relevance": "high",
+      "notes": "Pre-arXiv, DOI well-established; not independently re-fetched this session (extremely high domain-knowledge confidence).",
+      "explanation": "Correctly cited for the SSH chain worked example run through all five modules (Sec. 6); the gap/winding-number proposition proved in that section is elementary and self-contained, and matches the standard SSH result. Accurate, standard attribution."
+    },
+    {
+      "citation": "thouless-pump — Thouless, \"Quantization of particle transport\", Phys. Rev. B 27, 6083 (1983)",
+      "exists": true,
+      "resolved_doi": "10.1103/PhysRevB.27.6083",
+      "resolved_url": null,
+      "relevance": "medium",
+      "notes": "Canonical Thouless-pump paper; pre-arXiv, DOI well-established. Not independently re-fetched this session.",
+      "explanation": "Correctly cited for the adiabatic charge pump unifying with the higher Berry class (Recollection IV, Sec. 3.4); standard, accurate."
+    }
+  ],
+  "missing_references": [
+    "kapustin-spodyneiko-thermal (Kapustin & Spodyneiko, \"Thermal Hall conductance and a relative topological invariant of gapped two-dimensional systems\", Phys. Rev. B 101, 235130 (2020), arXiv:1905.06488) is never cited anywhere in synthesis.tex, despite already being present and verified in the shared references.bib and cited 4 times in the Part V companion paper (bordism-realizability.tex) as the source of the 'zero chiral central charge' half of Theorem V-C -- the specific mechanism that excludes the bosonic E_8 state (which the source paper explicitly notes has sigma_H=0). Synthesis's Recollection VC (Sec. 3.5, lines 737-743) and its Introduction/stance section (Sec. 1.3, lines 362-365) both assert this exact chiral-central-charge content and both name the E_8 state as an example, under the citation and title 'Kapustin-Fidkowski no-go' alone. Recommend adding \\cite{kapustin-spodyneiko-thermal} to both passages and either retitling Recollection VC (e.g. 'Kapustin-Fidkowski/Kapustin-Spodyneiko no-go') or explicitly splitting the two-part statement as Part V itself does, so the E_8 exclusion is attributed to the correct (thermal/chiral) mechanism rather than implied to follow from nonzero electric Hall conductance."
+  ],
+  "summary": "All 36 unique \\cite keys used in synthesis.tex resolve to entries in the shared references.bib (verified programmatically), and the compiled PDF (papers/pdf/synthesis.pdf) contains zero unresolved '[?]' citation markers. No fabricated or novel sources were found: all 30 non-companion keys were cross-checked and each already appears in at least one of the five prior, independently citation-audited module papers, confirming the author's claim that no new sources were added for this capstone. All 6 companion-paper citation keys (paperLocality, paperPositivity, paperGap, paperEFT, paperRealizability, and the correctly-absent paperSynthesis) were checked at every one of their combined 23 appearances in the text: each is paired with its correct Part number with no cross-wiring, and paperSynthesis is never cited, confirming the paper does not cite itself. Of the five requested load-bearing restatement spot-checks, three are clean: Aoki's solidification theorem (Recollection, Sec. 3.2) and Kubota's Omega-spectrum theorem (Recollection, Sec. 3.4) are both faithful, near-verbatim restatements of Part II's and Part IV's own theorem statements respectively, including Aoki's Bott-inversion caveat. The other two show genuine, well-evidenced drift introduced during compression, both concentrated in the paper's treatment of Part V. First, Recollection V-B (Sec. 3.5, 'Low-dimensional completeness') states that Ogata's d=2 H^3(G,U(1)) index is a complete invariant with the realizability map a bijection, directly contradicting Part V's own Theorem V-B and two dedicated remarks ('the index exists, completeness is open' and 'Scope -- do not extrapolate'), which explicitly forbid asserting realized=invariant in d=2; this is corroborated by three other passages within synthesis.tex itself that correctly restrict the same Recollection's scope to d=1 only. Second, Recollection V-C ('Kapustin-Fidkowski no-go', Sec. 3.5) merges two logically-independent, separately-authored mechanisms -- Kapustin-Fidkowski's U(1)-symmetric electric-Hall no-go and Kapustin-Spodyneiko's symmetry-free chiral-central-charge no-go -- under a single citation and title, omitting \\cite{kapustin-spodyneiko-thermal} even while asserting its content, and consequently misclassifies the bosonic E_8 state (which Part V explicitly states has zero electric Hall conductance) as an example of nonzero-Hall-conductance exclusion rather than the chiral-central-charge exclusion Part V actually invokes for it; the identical conflation recurs in the Introduction. Both issues are attribution/compression drift relative to an already-clean module source, not fabrication, and both are isolated to the paper's restatement of Part V (Recollections VB and VC); all other recollections, including the two additional Part V theorems checked incidentally (V-A and the stability trio of Part III), were found faithful.",
+  "confidence": 0.87
+}

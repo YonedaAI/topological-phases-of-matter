@@ -1,0 +1,57 @@
+cabal-version:      2.4
+name:               spectral-gap-stability
+version:            0.1.0.0
+synopsis:           Companion code for Part III -- the uniformly gapped substack
+description:        Exact diagonalization of the open-boundary transverse-field Ising
+                    chain by a base-only cyclic Jacobi eigensolver (a mutable buffer via
+                    Foreign.Marshal.Array; no array/containers/vector/hmatrix), the
+                    spectral gap across the coupling g in [0,2] rendering the gapless
+                    discriminant Sigma = {g = 1}, a perturbation experiment illustrating
+                    the Theorem III-A Lipschitz bound, a QuickCheck suite whose exact
+                    trace identities double as a validation of the eigensolver, and a
+                    deterministic theorem-instance suite (Proofs.hs) exercising the same
+                    claims at fixed points, several independently of the eigensolver.
+license:            MIT
+author:             Matthew Long
+maintainer:         matthew@yonedaai.com
+build-type:         Simple
+
+-- Note on structure: the modules TFIM (base-only) / Properties (QuickCheck) / Proofs
+-- (base-only) are shared source, listed as other-modules in both components below
+-- rather than factored into a separate `library` stanza -- with hs-source-dirs: .
+-- shared by every component in this flat, single-directory layout, an internal
+-- library and an executable/test-suite both reading from `.` causes GHC's
+-- -Wmissing-home-modules to reject the build (it cannot tell whether TFIM.hs et al.
+-- belong to the library or are local, unlisted modules of the exe/test component).
+-- Duplicating the module list across stanzas avoids that ambiguity.
+
+-- Main.hs prints the gap table and the critical-point trend, runs the perturbation
+-- experiment, and then runs the same two verification suites as the test-suite
+-- below, exiting non-zero on any failure: `cabal run sgs-demo` is the full demo
+-- described in Section 8.5 of the paper. Only base and QuickCheck are required (TFIM
+-- and Proofs are base-only; QuickCheck is used solely by Properties.hs).
+executable sgs-demo
+    main-is:          Main.hs
+    other-modules:    TFIM
+                    , Properties
+                    , Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+-- TestMain.hs runs only the QuickCheck property suite and the deterministic
+-- theorem-instance suite (no demo tables), so `cabal test` is a plain pass/fail
+-- check rather than a repeat of the demo.
+test-suite properties
+    type:             exitcode-stdio-1.0
+    main-is:          TestMain.hs
+    other-modules:    TFIM
+                    , Properties
+                    , Proofs
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , QuickCheck
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror

@@ -1,0 +1,132 @@
+{
+  "claims": [
+    {
+      "id": "prop-uhf-af-structure",
+      "claim": "The quasi-local algebra A of a finite-on-site-dimension spin system is a separable unital AF C*-algebra, and the uniformly hyperfinite algebra of type n^infinity in the homogeneous case (Proposition 2.1).",
+      "location": "Proposition 2.1 (prop:uhf), Section 2.2",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Standard C*-inductive-limit argument: cofinal finite subsets Lambda_k give an increasing union of full matrix algebras with unital connecting maps whose closure is AF; the countable Gaussian-rational (Q(i)) subalgebra gives separability; the homogeneous case yields M_n^{tensor-infinity}. The proof is complete and correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-condcstar-sheaf-light",
+      "claim": "Condensation A |-> cond(A), cond(A)(S)=C(S,A), is a C*-algebra object in condensed sets with the C*-identity inherited pointwise; if A is separable then cond(A) is a light condensed set (Proposition 2.2).",
+      "location": "Proposition 2.2 (prop:condcstar), Section 2.3",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "For compact S and a C*-algebra A, C(S,A) with the supremum norm is a C*-algebra (isometrically C(S) tensor A), and the pointwise C*-identity computation is correct; the sheaf property is the defining property of the condensation of a topological space. 'Separable implies light' is correct in the light-condensed framework of Clausen-Scholze: a second-countable space is determined by its values on light (second-countable) profinite probes.",
+      "suggested_fix": null
+    },
+    {
+      "id": "lem-alaoglu-weakstar-compact",
+      "claim": "The state space S(A) is a weak-* closed convex, hence weak-* compact Hausdorff, subset of the dual ball; for separable A it is metrizable Polish and equals the closed convex hull of its pure states (Lemma 3.1).",
+      "location": "Lemma 3.1 (lem:alaoglu), Section 3.1",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Banach-Alaoglu gives compactness of the dual ball; weak-* continuity of evaluations makes positivity and normalization closed conditions; metrizability of the dual ball for separable A; Krein-Milman yields the closed convex hull of the extreme points (the pure states). Correct and standard.",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-statespace-condensed-IIA",
+      "claim": "cond(S(A)) is a compact Hausdorff condensed set on which condensation is fully faithful, and positivity plus normalization exhibit it as a closed condensed subobject of the condensed dual ball, with the displayed level-S description (Theorem II-A).",
+      "location": "Theorem II-A (thm:statespace), Section 3.2",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "A point of cond(S(A))(S) is a continuous map S -> S(A); each positivity/normalization condition is the preimage of a closed set under a continuous evaluation, hence closed, and their intersection is closed. Full faithfulness of condensation on compact Hausdorff spaces and its preservation of closed embeddings are the cited Clausen-Scholze facts. This is a correct condensed repackaging of weak-* closedness.",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-cone-positive",
+      "claim": "Condensation carries the positive cone A_+ to a closed sub-condensed-set of cond(A_sa) with cond(A_+)(S)=C(S,A_+), and a state is exactly a probewise-R-linear condensed morphism cond(A_sa)->cond(R) carrying the cone to R_{>=0} and the unit to 1 (Proposition 3.4).",
+      "location": "Proposition 3.4 (prop:cone), Section 3.3",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "A_+ is closed in A_sa, so a continuous map into A_sa lands in A_+ iff it does pointwise, giving cond(A_+)(S)=C(S,A_+). A_sa is a Banach (metrizable, hence compactly generated) space, so full faithfulness of condensation identifies probewise-R-linear condensed morphisms to cond(R) with continuous R-linear functionals; the cone- and unit-preservation conditions are exactly the state conditions. Correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-gns-functor",
+      "claim": "GNS is a functor on the category of pointed C*-algebras (A,phi); a state-preserving map theta induces an intertwining isometry V_theta with V_theta Omega_phi = Omega_psi and the cocycle identities (Proposition 4.2).",
+      "location": "Proposition 4.2 (prop:gns), Section 4.1",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "psi o theta = phi gives <theta(a),theta(b)>_psi = <a,b>_phi, so theta maps N_phi into N_psi and [a]_phi |-> [theta(a)]_psi is a well-defined isometry extending to the completions; the intertwining relation and functoriality follow on representatives. The \\cyc macro rendering typo flagged in the round-1 external (Gemini) review no longer appears (the statement reads V_theta Omega_phi = Omega_psi).",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-groundstate-continuity",
+      "claim": "For a C^1, uniformly gapped family of interactions there is a strongly continuous family of quasi-local automorphisms alpha_s with omega_s = omega_0 o alpha_s, and s |-> omega_s is weak-* continuous into S(A), hence a point of the condensed state space over the gapped locus (Theorem 4.3).",
+      "location": "Theorem 4.3 (thm:groundstate), Section 4.2, statement line 689 and proof line 701",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MINOR ('norm-continuous family of automorphisms', ambiguous with operator-norm continuity of Aut(A)); the statement and proof now read 'strongly continuous family', with the per-local-observable norm-continuity of s|->alpha_s(a) retained. The BMNS-based weak-* continuity argument (density of A_loc + uniform boundedness + epsilon/3) is unchanged and correct. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "ex-ssh-winding-k1",
+      "claim": "The SSH winding number nu = (1/2 pi i) contour-integral u^{-1} du in Z is the class [u] in K_1(A), equal to 1 for |t1|<|t2| and 0 for |t1|>|t2| (Example 5.1).",
+      "location": "Example 5.1 (ex:ssh), Section 5.2",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "q(k)=t1+t2 e^{ik} traces a circle of radius |t2| about t1, winding once around 0 iff |t2|>|t1| and not at all iff |t2|<|t1|; chiral symmetry sigma_z H(k) sigma_z = -H(k) holds for the stated H(k); identifying the winding with a K_1 / Toeplitz-index class is standard (Prodan-Schulz-Baldes). Formula, gap condition, and values nu=1,0 are correct. Re-checked post-fix: the added Bott-inversion phrasing in the SSH note (nu in Solid(Kalg(cond A))[beta^-1]) is consistent, since K_1 is a nonnegative degree where connective and periodic K-theory agree.",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-aoki-bott-inversion-IIB",
+      "claim": "Theorem II-B: solidification of the connective algebraic K-theory of cond(A) recovers connective semitopological K-theory (Friedlander-Walker/Blanc); and for a real Banach algebra the full Bott-periodic operator K-theory is Kop(A) ~ Solid(Kalg(cond A))[beta^-1], with beta the complex K_2 (2-periodic) resp. order-8 real (KO) Bott class.",
+      "location": "Theorem II-B (thm:aoki), Section 6.1: displayed equivalences at lines 852 and 858, bookkeeping paragraph 865-881",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MAJOR: the clause-2 equivalence had been printed as Kop(A) = Solid(Kalg(cond A)) with no Bott inversion, conflating connective and Bott-periodic K-theory (false in negative degrees). The restatement now matches Aoki (arXiv:2409.01462, Theorem A) exactly -- clause 1 identifies the connective solidification with connective semitopological K-theory, clause 2 gives Kop(A) ~ Solid(Kalg(cond A))[beta^-1] as an equivalence of spectra, and an added bookkeeping paragraph states explicitly that the two agree only in nonnegative degrees and that writing the equivalence without [beta^-1] 'would be false in negative degrees'. The Bott class is specified correctly (beta in K_2^top(C)=Z complex; order-8 real KO class). The preamble now labels Kalg as connective K-theory. Fully resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "aoki-semitopological-misattribution",
+      "claim": "In Theorem II-B clause 1, semitopological K-theory is attributed to Friedlander-Walker (and Blanc).",
+      "location": "Theorem II-B (thm:aoki) statement, lines 849-850",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MINOR: the paper had attributed semitopological K-theory to 'Weibel'. It now reads 'connective semitopological K-theory of A in the sense of Friedlander-Walker (and Blanc)', matching the attribution in the cited source (arXiv:2409.01462). Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "cor-condinvariant-inherits-imprecision",
+      "claim": "Corollary 6.2: the tenfold-way invariant nu in Kop(A) is the value of the composite A |-> cond A |-> Kalg(cond A) |-> Solid(Kalg(cond A))[beta^-1] ~ Kop(A); it factors through condensation, solidification, and Bott inversion.",
+      "location": "Corollary 6.2 (cor:condinvariant), Section 6.2, lines 885-915; SSH note 900-905",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. The displayed composite, the proof, and the SSH note now all carry the Bott inversion [beta^-1] consistently (proof: 'the operator K-theory group in which nu lives is Solid(Kalg(cond A))[beta^-1]'). No new error introduced; the un-inflated 'organizational provenance' framing (invariant unchanged, only its construction route is condensed) is preserved. Resolved.",
+      "suggested_fix": null
+    },
+    {
+      "id": "prop-hullAF-condensation",
+      "claim": "For a profinite hull Omega = Q^{Z^d}, C(Omega) is isomorphic to varinjlim C(Omega_i), a separable commutative unital AF algebra with state space Prob(Omega), and cond(C(Omega))(S) = C(S x Omega) (Proposition 7.1).",
+      "location": "Proposition 7.1 (prop:hullAF), Section 7.1",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Cylinder functions are dense by Stone-Weierstrass; the finite-dimensional C(Omega_i) with unital monomorphisms exhibit C(Omega) as AF; Riesz representation gives states = Borel probability measures; the exponential law / C(S) tensor C(Omega) = C(S x Omega) for compact Hausdorff spaces gives the condensation. Correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "thm-crossed-functoriality-IIC",
+      "claim": "The disorder algebra A = C(Omega) x_T Z^d is a separable unital C*-algebra whose K-theory carries the disorder-averaged invariants (an invariant ergodic measure induces a trace giving gap-labelling on K_0), and its condensation is functorial in T-equivariant finite quotients of Omega (Theorem II-C).",
+      "location": "Theorem II-C (thm:crossed), Section 7.2, proof lines 1010-1027",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED after fix. Originally flagged MINOR: the proof now states that Z^d is 'countable discrete and amenable, so the full and reduced crossed products coincide' before invoking the crossed-product universal property, removing the earlier ambiguity between full and reduced functoriality. Separable-unitality and the Bellissard gap-labelling citation are unchanged and correct. Resolved. (Minor standing caveat, not a defect: 'faithful trace' presumes the ergodic measure has full support, the standard Bellissard setting.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "conjectures-honestly-marked",
+      "claim": "The five open statements (Conjectures II-1..II-5) are labelled Conjecture, kept separate from the proved core, and each names the rigorous result it would extend, honoring the series' theorem-versus-conjecture discipline.",
+      "location": "Section 8 (Conjectures); stance stated in Section 1.2",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED. conj:substack, conj:solidnat, conj:real, conj:classifying, and conj:split are genuine open problems, correctly not proved and not mislabeled as theorems; conj:real correctly frames Theorem II-B as a 'real, not yet Real (KR)' statement. The earlier blemish on the discipline (an overstated periodic equivalence printed inside Theorem II-B) is removed by the Theorem II-B restatement, so the theorem-versus-conjecture separation is cleanly honored throughout.",
+      "suggested_fix": null
+    }
+  ],
+  "overall_correctness": "sound",
+  "confidence": 0.9
+}

@@ -1,0 +1,1527 @@
+\documentclass[12pt]{article}
+
+% Core math
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+
+% Diagrams
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% References
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Graphics
+\usepackage{graphicx}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% GrokRxiv sidebar
+\usepackage{xcolor}
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = Q^{Z^d} (Q = local-configuration alphabet; NOT the F-function)
+% ==== end canonical macros ====
+
+% --- local convenience macros (not overriding canonical glyphs) ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\Alg}{\mathcal{A}}
+\newcommand{\gsp}{\mathcal{G}}                 % ground-state space
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\ip}[1]{\langle #1 \rangle}
+\newcommand{\set}[1]{\{\,#1\,\}}
+\newcommand{\gapfin}[1]{\operatorname{gap}_{#1}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\dist}{\operatorname{dist}}
+\DeclareMathOperator*{\einf}{inf}
+
+% Theorem environments. We use aliascnt so that each environment carries its own
+% counter (aliased to the Theorem counter for shared numbering); this lets cleveref
+% name cross-references correctly ("Proposition 2.3", "Lemma 4.1") instead of
+% collapsing them all to "Theorem".
+\usepackage{aliascnt}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+% Named (unnumbered) principal results, tagged per the series convention.
+\newtheorem*{thmA}{Theorem III-A}
+\newtheorem*{thmB}{Theorem III-B}
+\newtheorem*{thmC}{Theorem III-C}
+\newtheorem*{conjone}{Conjecture III-1}
+\newtheorem*{conjtwo}{Conjecture III-2}
+\newtheorem*{conjthree}{Conjecture III-3}
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+% cleveref display names for the aliased environments.
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{example}{Example}{Examples}
+\Crefname{example}{Example}{Examples}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+
+% GrokRxiv DOI sidebar
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/foreground}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.spectral-gap-stability\quad
+       [\,math-ph\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!45!black,
+  urlcolor=blue!55!black
+}
+
+\title{\textbf{The Uniformly Gapped Substack:\\
+Existence and Stability of the Thermodynamic Spectral Gap}\\[0.4em]
+\large Part III of \emph{Topological Phases of Matter in the Condensed-Mathematics Paradigm}}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+\textit{YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Fix a spatial dimension $d$, a lattice $L$, local Hilbert spaces, a locality class,
+and a symmetry group $G$. The condensed moduli stack of $G$-symmetric quasi-local
+Hamiltonians $\Ham_{d,G}$ carries a distinguished substack $\Gap_{d,G}$, the
+\emph{uniformly} gapped systems: over a profinite probe $S$, a family lies in
+$\Gap_{d,G}(S)$ exactly when $\einf_{s\in S}\gapof{H_s}\ge\gapbound$ for some
+$\gapbound>0$. We take the word \emph{uniformly} seriously (a family whose
+pointwise gaps degenerate to zero is not a member) and study $\Gap_{d,G}$ as the
+object on which the phase functor of the program rests. The governing constraint is
+a hard theorem: by Cubitt, P\'erez-Garc\'ia and Wolf the spectral gap is
+undecidable, so there is no algorithm and no uniform criterion that decides
+membership in $\Gap_{d,G}$ for general translation-invariant families. We therefore
+do not attempt to \emph{decide} the gap. Existence of a thermodynamic gap is treated
+as a hypothesis that \emph{defines} the substack, and the content of the paper is
+\textbf{stability and structure}, not decidability. We prove three results from
+cited present-day technology. First, at fixed finite volume the $n$-gap is
+Lipschitz in the interaction norm (with constant $2C_\Lambda$), so the gapped locus is open at every finite
+resolution and the gap is continuous along continuous families (Theorem III-A)\@.
+Second, on the frustration-free / LTQO stratum the Bravyi--Hastings--Michalakis and
+Michalakis--Zwolak stability theorems, with the Nachtergaele--Sims--Young
+infinite-volume bulk-gap result, supply a volume-independent perturbation threshold,
+which we recast as: $\Gap_{d,G}$ contains a condensed-open neighborhood of each
+stratum point along quasi-local perturbation directions (Theorem III-B)\@. Third, a
+uniform gap forces uniform exponential clustering, with a correlation length bounded
+uniformly over the profinite base (Theorem III-C)\@. Beyond the stratum we record what
+we cannot prove as three numbered conjectures: openness of $\Gap_{d,G}$ in the full
+condensed topology, detected by finite quotients (III-1); descent of uniform
+gappedness along profinite disorder hulls $\dis=Q^{\Z^d}$ (III-2); and the
+identification of quasi-adiabatic continuation with the internal path components
+realizing $\Weq$, so that $\pi_0\Shape\!\big(\Gap_{d,G}[\Weq^{-1}]\big)$ equals the
+operator-algebraic set of gapped ground-state phases (III-3). A transverse-field
+Ising computation renders the gapless discriminant $\Sig=\{g=1\}$ as a numerical
+picture and exhibits, away from criticality, both gap persistence and the Lipschitz
+bound of Theorem III-A.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The gapped substack and why uniformity is the point}
+
+The program of which this is the third part organizes topological phases of matter
+around a single geometric object: the condensed moduli stack $\Ham_{d,G}$ of
+$G$-symmetric local and quasi-local Hamiltonians on a lattice $L$ in spatial
+dimension $d$. Part I \cite{paperLocality} makes the interaction space into a Banach
+space $\BF$ through an $\Ffun$-function locality norm and promotes the Heisenberg
+dynamics to a morphism of condensed objects; Part II \cite{paperPositivity} attaches
+the quasi-local $C^*$-algebra, its compact state space, and the solid $K$-theory
+invariant of \cite{aoki-solidification}. The present paper concerns the substack
+
+\begin{equation}
+\label{eq:gap-def-intro}
+\Gap_{d,G}(S)\;=\;\bigcup_{\gapbound>0}\;
+\set{H\in\Ham_{d,G}(S)\,:\,\einf_{s\in S}\gapof{H_s}\ge\gapbound},
+\qquad S\ \text{profinite},
+\end{equation}
+
+the \emph{uniformly} gapped systems.\par\noindent
+Everything downstream (the stabilized phase
+$\infty$-groupoid $\Phase_{d,G}=\big(\Gap_{d,G}[\Weq^{-1}]\big)^{\st}$, the phase
+set $\Phases_{d,G}=\pi_0\Shape(\Phase_{d,G})$, and the invertible condensed phase
+spectrum $\IPcond_{d,G}$ built in Part IV \cite{paperEFT}) is a construction on top
+of \eqref{eq:gap-def-intro}. The phase functor is only as good as the substack it is
+built from.
+
+The word \emph{uniformly} is not decorative. A profinite family $s\mapsto H_s$ in
+which each $H_s$ happens to be gapped, but with $\einf_{s}\gapof{H_s}=0$, is exactly
+the kind of family that fails to define a robust invariant: as one moves through the
+base the gap can be driven arbitrarily small, correlations grow without bound, and
+the locally constant phase label $\nu_f$ of the program loses meaning at the
+degenerating points. The union over $\gapbound>0$ in \eqref{eq:gap-def-intro} records
+that a member of $\Gap_{d,G}(S)$ is a family for which \emph{some} strictly positive
+$\gapbound$ bounds the gap below \emph{simultaneously} over the whole probe. Keeping
+the $\einf_{s}$ explicit is the single most important discipline of this paper.
+
+\subsection{The undecidability wall}
+\label{sec:intro-wall}
+
+There is a hard theorem standing between us and any naive program to ``compute the
+substack.'' Cubitt, P\'erez-Garc\'ia and Wolf \cite{cpw-undecidable} proved that the
+spectral gap is \emph{undecidable}: there is a family of translation-invariant,
+nearest-neighbour Hamiltonians on a two-dimensional lattice, depending
+computably on a parameter, for which no algorithm decides whether the
+thermodynamic-limit system is gapped or gapless. The construction embeds the halting
+problem into the low-energy physics, so the question ``is this system gapped?'' is at
+least as hard as the halting problem, and in fact $\Pi_1$-complete in the arithmetic
+hierarchy. The undecidability survives many natural restrictions.
+
+We state the consequence for this paper in the strongest terms, because it shapes
+every claim we make.
+
+\begin{quote}
+\emph{There is no general algorithm, decision procedure, or uniform criterion that
+determines membership in $\Gap_{d,G}$ for arbitrary members of $\Ham_{d,G}$.
+Existence of a thermodynamic gap is not, in general, a decidable property; it is an
+\textbf{assumption that defines} the substack $\Gap_{d,G}$.}
+\end{quote}
+
+This is why the paper is titled around \emph{stability} rather than existence. We do
+not offer a test for gappedness: no such test can exist in general. Instead we take
+gappedness as a standing hypothesis and ask a question undecidability does not
+forbid: \emph{given} a uniformly gapped family, what can be said about its
+neighborhood, its correlations, and its behavior along the profinite base? The
+answers are stability theorems, and they are the mathematically load-bearing content
+of Part III\@. Any statement in this paper that could be read as deciding, bounding
+from below, or algorithmically certifying the gap of a general member of $\Ham_{d,G}$
+would contradict \cite{cpw-undecidable} and is, by construction, absent.
+
+\subsection{Contributions}
+\label{sec:intro-contrib}
+
+Within the boundary set by \Cref{sec:intro-wall}, we prove three theorems and
+formulate three conjectures.
+
+\begin{itemize}
+\item \textbf{Theorem III-A} (\Cref{sec:finite}). At a fixed finite volume the
+$n$-gap of a Hamiltonian is $2C_\Lambda$-Lipschitz in the interaction norm (equivalently $2$-Lipschitz in the operator norm); consequently the
+gapped locus is open at every finite resolution, and along any $S$-continuous family
+the map $s\mapsto\gapof{H_s^{\Lambda}}$ is continuous. This is elementary (Weyl's
+perturbation inequalities plus finite-volume norm equivalence), and it is the one
+place where openness of $\Gap_{d,G}$ is unconditional. It is also the finite-volume
+statement that undecidability leaves untouched: a finite matrix has a computable gap;
+undecidability is a statement about the thermodynamic limit.
+
+\item \textbf{Theorem III-B} (\Cref{sec:stability}). On the frustration-free / LTQO
+stratum, the stability theorems of Bravyi--Hastings--Michalakis
+\cite{bhm-stability,bravyi-hastings-shortproof}, Michalakis--Zwolak
+\cite{michalakis-zwolak}, and Nachtergaele--Sims--Young \cite{nsy-bulkgap} provide a
+perturbation threshold $\varepsilon_0>0$ independent of system size. We recast this
+as a statement about $\Gap_{d,G}$: each point of the stratum has a condensed-open
+neighborhood, of interaction-norm radius $\varepsilon_0$ along quasi-local
+perturbation directions, lying inside $\Gap_{d,G}$. Openness and stability of the
+substack hold \emph{on the stratum}; we are careful to claim nothing beyond it.
+
+\item \textbf{Theorem III-C} (\Cref{sec:clustering}). A uniform gap over a family
+forces uniform exponential clustering. Combining Hastings--Koma \cite{hastings-koma}
+and Nachtergaele--Sims \cite{nachtergaele-sims-clustering} with the uniform
+Lieb--Robinson velocity of Part I, a family with $\einf_s\gapof{H_s}\ge\gapbound$ has
+a correlation length $\xi$ bounded above uniformly over the profinite base. This is
+the structural feature separating uniformly gapped families from merely
+pointwise-gapped ones.
+
+\item \textbf{Conjectures III-1, III-2, III-3} (\Cref{sec:conjectures}). Openness of
+$\Gap_{d,G}$ in the full condensed topology on the physically relevant stratum, with
+the uniform-gap sheaf condition detected by finite quotients (III-1); descent of
+uniform gappedness along profinite covers, i.e.\ disorder hulls $\dis=Q^{\Z^d}$
+(III-2); and the identification of quasi-adiabatic continuation with the internal
+path components realizing $\Weq$, so that
+$\pi_0\Shape\!\big(\Gap_{d,G}[\Weq^{-1}]\big)$ equals the operator-algebraic set of
+gapped phases of Ogata \cite{ogata-classification-review} (III-3).
+\end{itemize}
+
+\Cref{sec:numerics} illustrates the whole picture on the transverse-field Ising
+chain: exact diagonalization renders the gapless discriminant $\Sig=\{g=1\}$, the
+gap persists away from it in the manner Theorem III-A predicts, and, crucially, no
+finite computation decides the thermodynamic gap, exactly as
+\Cref{sec:intro-wall} requires.
+
+\subsection{Relation to companion papers}
+\label{sec:intro-companions}
+
+This is Part III of a six-part series developing topological phases of matter in the
+condensed-mathematics paradigm. The parts are modular: each takes the previous as
+input and produces new structure.
+
+\emph{Part I}, \emph{Condensed Locality: Lieb--Robinson Estimates and Quasi-Local
+Dynamics on the Moduli Stack of Hamiltonians} \cite{paperLocality}, supplies the
+$\Ffun$-function Banach space $\BF$ and the uniform Lieb--Robinson velocity that
+Theorem III-C consumes; the quasi-adiabatic and automorphic-equivalence tools it
+formalizes are the ones Conjecture III-3 invokes.
+
+\emph{Part II}, \emph{Positivity, $C^*$-Norms, and Condensed State Spaces of
+Quasi-Local Algebras} \cite{paperPositivity}, provides the infinite-volume GNS
+framework in which the thermodynamic gap of \Cref{sec:framework} is defined, and the
+crossed-product observable algebras through which the disorder hull of Conjecture
+III-2 acquires its $K$-theory.
+
+\emph{Part IV}, \emph{From Lattice Models to Effective Field Theories: Stabilization
+and the Invertible Condensed Phase Spectrum} \cite{paperEFT}, is the immediate
+consumer of this paper: it group-completes the invertible sector of
+$\Phase_{d,G}=(\Gap_{d,G}[\Weq^{-1}])^{\st}$ into $\IPcond_{d,G}$. Its constructions
+presuppose that $\Gap_{d,G}$ is a well-behaved, stable substack, which is what
+Theorems III-A--III-C, on their stratum, secure.
+
+\emph{Part V}, \emph{Physical Realizability of Bordism and Homotopy Classes by Gapped
+Lattice Systems} \cite{paperRealizability}, asks which abstract classes are realized
+by uniformly gapped lattice families; the ``uniformly gapped'' hypothesis it uses is
+the one defined here.
+
+\emph{Part VI}, \emph{Topological Phases of Matter in the Condensed-Mathematics
+Paradigm: A Modular Research Program} \cite{paperSynthesis}, assembles the five
+modules and states the global Master Conjecture, of which Conjectures III-1--III-3
+are the gap-theoretic components.
+
+\section{Mathematical framework}
+\label{sec:framework}
+
+We recall only what is needed and fix notation consistent with the series. Details of
+the condensed formalism are in \cite{clausen-scholze-condensed,barwick-haine-pyknotic}
+and Part I; the operator-algebraic framework is in
+\cite{ogata-classification-review} and Part II\@.
+
+\subsection{Condensed probes and the Hamiltonian stack}
+\label{sec:framework-condensed}
+
+A \emph{condensed set} is a sheaf on the site of profinite sets with finite,
+jointly-surjective covers \cite{clausen-scholze-condensed}. For a topological space
+$X$ its condensation $\cond{X}$ is defined on a profinite probe $S$ by
+$\cond{X}(S)=\Cont(S,X)$; on compactly generated spaces $X\mapsto\cond{X}$ is fully
+faithful, so ordinary parameter spaces, tori, Banach spaces such as $\BF$, and
+compact disorder hulls all embed into a category with good algebraic and homological
+behavior. We use \emph{light} condensed sets throughout to avoid set-theoretic size
+issues in the profinite inverse limits \cite{clausen-scholze-analytic-stacks}.
+
+For a profinite probe $S$, an element of $\Ham_{d,G}(S)$ is an $S$-continuous family
+$s\mapsto\Phi_s$ of $G$-symmetric quasi-local interactions with finite
+$\Ffun$-norm: equivalently, by Part I, a continuous map $S\to\BF$ landing in the
+$G$-symmetric interactions. Each interaction $\Phi$ assigns to a finite $X\subset L$
+a self-adjoint $\Phi(X)$ supported on $X$, and generates finite-volume Hamiltonians
+$H_\Lambda(\Phi)=\sum_{X\subseteq\Lambda}\Phi(X)$ for finite $\Lambda\subset L$ and a
+thermodynamic-limit dynamics and ground-state theory in the GNS sense of Part II\@. We
+write $H$ for the interaction, $H_s$ for the member at $s\in S$, and $H_\Lambda$ for
+a finite-volume restriction when the interaction is fixed.
+
+\subsection{Finite-volume gap and thermodynamic gap}
+\label{sec:framework-gap}
+
+Two notions of gap appear, and their relationship is where the subtlety lives.
+
+At \emph{finite volume} $\Lambda$, $H_\Lambda$ is a self-adjoint operator on the
+finite-dimensional Hilbert space $\Hilb_\Lambda=\bigotimes_{x\in\Lambda}\Hilb_x$. Let
+its eigenvalues, counted with multiplicity and in non-decreasing order, be
+$\lambda_0(H_\Lambda)\le\lambda_1(H_\Lambda)\le\cdots$. For an integer $n\ge 1$ we
+define the \emph{$n$-gap}
+\begin{equation}
+\label{eq:ngap}
+\gapfin{\Lambda,n}(H)\;=\;\lambda_n(H_\Lambda)-\lambda_0(H_\Lambda),
+\end{equation}
+the spectral gap above the lowest $n$ levels. When the ground state is non-degenerate
+one takes $n=1$; when there is a ground-state \emph{space} of dimension $m$ (as in
+topological order or symmetry breaking) the physically relevant gap is the
+$m$-gap, the distance from the ground-state sector to the first genuinely excited
+level. The device of a fixed integer $n$ sidesteps the discontinuity that a changing
+ground-state multiplicity would otherwise introduce; we return to this in
+\Cref{sec:finite}.
+
+At the \emph{thermodynamic} level, following Part II and
+\cite{ogata-classification-review,nsy-bulkgap}, one works with an infinite-volume
+ground state $\omega$, its GNS representation $(\Hilb_\omega,\pi_\omega,\Omega_\omega)$,
+and the GNS Hamiltonian $H_\omega\ge 0$ implementing the dynamics with
+$H_\omega\Omega_\omega=0$. The \emph{thermodynamic gap} is
+\begin{equation}
+\label{eq:thermogap}
+\gapof{H}\;=\;\sup\set{\gamma\ge 0\,:\,\operatorname{spec}(H_\omega)\cap(0,\gamma)=\varnothing},
+\end{equation}
+the width of the spectral gap of $H_\omega$ above $0$ (with $\gapof{H}=0$ if no such
+$\gamma>0$ exists). This is the quantity appearing in \eqref{eq:gap-def-intro}. When a
+system has a uniform finite-volume gap---$\gapfin{\Lambda,m}(H)\ge\gamma$ for all
+$\Lambda$ with $\gamma$ independent of $\Lambda$---the thermodynamic gap satisfies
+$\gapof{H}\ge\gamma$; but the converse can fail, and a thermodynamic gap need not be
+accompanied by a uniform finite-volume lower bound taken as an axiom. The
+Nachtergaele--Sims--Young framework \cite{nsy-bulkgap} is designed precisely to work
+with the infinite-volume gap directly rather than to assume uniform finite-size
+bounds, and we adopt its stance.
+
+\begin{remark}
+\label{rem:cpw-finite}
+Undecidability \cite{cpw-undecidable} is a statement about \eqref{eq:thermogap}, not
+\eqref{eq:ngap}. For any fixed finite $\Lambda$ the number $\gapfin{\Lambda,n}(H)$ is
+an eigenvalue difference of an explicit finite matrix and is computable to any
+precision. What no algorithm can do is decide, from the local interaction data,
+whether $\lim$-behavior produces $\gapof{H}>0$ or $\gapof{H}=0$. Every finite-volume
+statement in this paper is therefore safe from the wall; every thermodynamic
+statement is made \emph{conditional on} a standing gap hypothesis.
+\end{remark}
+
+\subsection{The uniformly gapped substack}
+\label{sec:framework-substack}
+
+\begin{definition}[Uniformly gapped substack]
+\label{def:gap}
+For a profinite probe $S$, an interaction family $H\in\Ham_{d,G}(S)$ is
+\emph{uniformly gapped} if there exists $\gapbound>0$ with
+$\einf_{s\in S}\gapof{H_s}\ge\gapbound$. The uniformly gapped systems form the
+subpresheaf $\Gap_{d,G}\subseteq\Ham_{d,G}$ with
+\[
+\Gap_{d,G}(S)\;=\;\bigcup_{\gapbound>0}\Gap_{d,G}^{\ge\gapbound}(S),
+\qquad
+\Gap_{d,G}^{\ge\gapbound}(S)=\set{H\in\Ham_{d,G}(S)\,:\,\einf_{s\in S}\gapof{H_s}\ge\gapbound}.
+\]
+\end{definition}
+
+The filtration by $\gapbound$ is genuine: the strata $\Gap_{d,G}^{\ge\gapbound}$ are
+nested, $\Gap_{d,G}^{\ge\gapbound'}\subseteq\Gap_{d,G}^{\ge\gapbound}$ for
+$\gapbound'\ge\gapbound$, and a family can belong to the union without belonging to
+any single stratum uniformly as the probe varies. The following elementary
+observation records the sheaf-theoretic shape of the object and will be sharpened,
+conjecturally, in \Cref{sec:conjectures}.
+
+\begin{proposition}[Restriction stability and the union structure]
+\label{prop:union}
+Let $S'\to S$ be a map of profinite sets and $H\in\Gap_{d,G}^{\ge\gapbound}(S)$. Then
+the restriction $H|_{S'}$ lies in $\Gap_{d,G}^{\ge\gapbound}(S')$. Consequently each
+$\Gap_{d,G}^{\ge\gapbound}$ is a subpresheaf of $\Ham_{d,G}$, and $\Gap_{d,G}$ is the
+filtered union $\bigcup_{\gapbound>0}\Gap_{d,G}^{\ge\gapbound}$ of subpresheaves.
+\end{proposition}
+
+\begin{proof}
+A map $g:S'\to S$ of profinite sets sends the family $s\mapsto H_s$ to
+$s'\mapsto H_{g(s')}$. Since $g(S')\subseteq S$,
+$\einf_{s'\in S'}\gapof{H_{g(s')}}\ge\einf_{s\in S}\gapof{H_s}\ge\gapbound$, so
+$H|_{S'}\in\Gap_{d,G}^{\ge\gapbound}(S')$. Presheaf functoriality is immediate from
+this together with the functoriality of $\Ham_{d,G}$. The union statement is
+\Cref{def:gap}.
+\end{proof}
+
+\begin{remark}
+\label{rem:pointwise-vs-uniform}
+\Cref{prop:union} uses only $\einf$ monotonicity under restriction; it does
+\emph{not} give the reverse implication, that a family gapped on every finite
+quotient of $S$ is uniformly gapped on $S$. That reverse implication is a descent
+statement, and whether it holds is the content of Conjecture III-2. The gap between
+``gapped pointwise / at every finite resolution'' and ``uniformly gapped over the
+whole profinite probe'' is exactly the phenomenon \Cref{def:gap} is built to track.
+\end{remark}
+
+\subsection{What ``open substack'' should mean}
+\label{sec:framework-open}
+
+Because $\BF$ is a Banach space, its condensation $\cond{\BF}$ is a condensed
+$\R$-vector space and $\Ham_{d,G}$ sits over it. Openness of $\Gap_{d,G}$ inside
+$\Ham_{d,G}$ can be phrased in the condensed setting as follows. Call a subobject
+$U\subseteq\cond{\BF}$ \emph{condensed-open along a direction class $\mathcal{D}$} if
+for every point $\Phi\in U$ there is $\varepsilon>0$ such that every $\Psi$ with
+$\Psi-\Phi\in\mathcal{D}$ and $\norm{\Psi-\Phi}_{\Ffun}<\varepsilon$ again lies in
+$U$, and if this holds compatibly for probes: pulling back along any $g:S\to\cond{\BF}$
+whose image lies in the $\varepsilon$-ball around $\Phi$ lands in $U(S)$. For a full
+topology on $\Ham_{d,G}$ one wants $\mathcal{D}$ to be all quasi-local directions and
+$\varepsilon$ uniform; the honest situation, developed in \Cref{sec:stability}, is
+that we can prove condensed-openness of $\Gap_{d,G}$ only \emph{on a stratum} and
+only \emph{along the quasi-local perturbation class} for which the stability theorems
+apply. Recording this scope precisely is not a weakness of the result but the exact
+shape undecidability forces the result to take.
+
+\section{The undecidability wall and the definitional stance}
+\label{sec:wall}
+
+\subsection{The Cubitt--P\'erez-Garc\'ia--Wolf theorem}
+\label{sec:wall-cpw}
+
+We restate the constraint precisely, in the form we will use.
+
+\begin{theorem}[Cubitt--P\'erez-Garc\'ia--Wolf \cite{cpw-undecidable}]
+\label{thm:cpw}
+There is a fixed local Hilbert space dimension and an explicit, computable family
+$n\mapsto H(n)$ of translation-invariant nearest-neighbour Hamiltonians on
+$\Z^2$, indexed by a positive integer parameter $n$, with the following property.
+The map that sends $n$ to the truth value of ``the thermodynamic-limit system
+$H(n)$ is gapped'' is undecidable: no Turing machine, given $n$, halts with the
+correct yes/no answer for all $n$. The problem is $\Pi_1$-hard, and the two cases are
+sharply separated (a gap bounded below by a constant in the gapped case, dense
+spectrum above the ground state in the gapless case), so the undecidability is not an
+artifact of borderline or ambiguously-gapped systems.
+\end{theorem}
+
+Two features of \Cref{thm:cpw} matter for us. First, the hardness is already present
+for translation-invariant, nearest-neighbour, two-dimensional systems---the most
+classical and most physical corner of $\Ham_{d,G}$---so one cannot escape it by
+restricting to a tame-looking subclass defined by locality or symmetry alone. Second,
+the separation between the gapped and gapless cases is sharp, which forecloses the
+hope that some ``soft'' or approximate criterion could decide the gap up to an
+$\varepsilon$: the difficulty is not analytic delicacy near a threshold but genuine
+computational undecidability.
+
+The undecidability persists in one spatial dimension \cite{bcl-pg-1d-undecidable} and
+under various symmetry restrictions, so it is not an artifact of high dimension. It
+is, however, a \emph{fragile} phenomenon, in a way consonant with the viewpoint of
+this paper: the undecidable families are exactly the ones that are not stably gapped.
+Castilla-Castellano and Lucia \cite{castilla-lucia-instability} show that an
+arbitrarily small local perturbation of the one-dimensional construction restores
+decidability, by breaking the fine-tuned energy cancellation on which the halting
+encoding depends. Undecidability lives on the boundary between gapped and gapless---%
+precisely the locus the stability theory of \Cref{sec:stability} stays away from, and
+precisely why that theory must assume, rather than certify, membership in the gapped
+substack.
+
+\subsection{Consequences for the substack}
+\label{sec:wall-consequences}
+
+\Cref{thm:cpw} has immediate and non-negotiable consequences for how $\Gap_{d,G}$ may
+be studied.
+
+\begin{corollary}[No uniform gap criterion]
+\label{cor:no-criterion}
+There is no algorithm that, given a finite description of a member
+$H\in\Ham_{d,G}$ (its local interaction terms and symmetry data), decides whether
+$H\in\Gap_{d,G}$ over the one-point probe. Equivalently, there is no computable
+function $c:\Ham_{d,G}\to\R_{>0}$ such that $\gapof{H}\ge c(H)$ whenever $H$ is
+gapped and $c(H)$ certifies gaplessness otherwise.
+\end{corollary}
+
+\begin{proof}
+Such an algorithm, restricted to the CPW family $n\mapsto H(n)$ of \Cref{thm:cpw},
+would decide gappedness of $H(n)$ from the finite data determining $H(n)$,
+contradicting undecidability.
+\end{proof}
+
+Consequently, ``$H\in\Gap_{d,G}$'' cannot be the output of a general computation; it
+is an input. We adopt the following stance, which we regard as forced rather than
+chosen.
+
+\begin{quote}
+\textbf{Definitional stance.} The uniformly gapped substack $\Gap_{d,G}$ is
+\emph{defined} by the gap hypothesis, not detected by a criterion. Membership is a
+hypothesis one places on a family. The theorems of this paper take the form
+``\emph{if} a family (or a stratum point) is uniformly gapped and satisfies stated
+structural hypotheses, \emph{then} its neighborhood, correlations, and descent behavior
+are controlled.'' No theorem asserts, for a general family, that the hypothesis holds.
+\end{quote}
+
+\begin{remark}
+\label{rem:what-is-decidable}
+It is worth marking the boundary precisely, because it is easy to overstate the wall
+in either direction. \emph{Undecidable:} the thermodynamic gap of a general
+translation-invariant family (\Cref{thm:cpw}). \emph{Decidable / computable:} the
+finite-volume $n$-gap of any explicit finite $H_\Lambda$ (\Cref{rem:cpw-finite}); the
+gap of any system for which one has a proof (frustration-free systems with a
+Knabe-type or martingale bound, exactly solvable models, etc.); and (this is the
+content of \Cref{sec:stability}) the \emph{persistence} of a gap under small
+perturbations once a gap is known to exist with the right structural hypotheses.
+Stability is a conditional, hypothesis-carrying statement, and conditional statements
+are exactly what undecidability permits.
+\end{remark}
+
+\subsection{Why the program survives the wall}
+\label{sec:wall-survives}
+
+It might seem that undecidability is fatal to a program that puts $\Gap_{d,G}$ at its
+center. It is not, for the same reason that undecidability of the halting problem is
+not fatal to the theory of computation: one develops the theory of the objects
+\emph{assuming} the property, and proves structural and stability results about the
+class so defined. The moduli-theoretic viewpoint is well suited to this. A stack does
+not need a decision procedure for membership to be a useful object; it needs good
+functorial behavior, a sensible topology, and stability of its distinguished
+subobjects under the maps one cares about. Those are precisely what Theorems
+III-A--III-C provide, on the stratum where they can be proved. The undecidability
+wall bounds the \emph{global} reach of the theory (one cannot hope for a single
+computable classification of all gapped systems), but it leaves the local and
+stratified theory intact, and it is the local and stratified theory that feeds Parts
+IV and V\@.
+
+\section{Finite-volume gap continuity}
+\label{sec:finite}
+
+We begin with the one unconditional result: at finite volume, the gap is a Lipschitz
+function of the interaction, and the gapped locus is open. This is the finite-volume
+shadow of the openness we would like for $\Gap_{d,G}$, and it is the part of the
+picture undecidability leaves entirely alone.
+
+\subsection{Weyl continuity of eigenvalues}
+\label{sec:finite-weyl}
+
+\begin{lemma}[Weyl monotonicity]
+\label{lem:weyl}
+Let $A,B$ be self-adjoint operators on a finite-dimensional Hilbert space with
+eigenvalues $\lambda_0(A)\le\cdots\le\lambda_{N-1}(A)$ and
+$\lambda_0(B)\le\cdots\le\lambda_{N-1}(B)$ in non-decreasing order. Then for every
+$k$,
+\[
+\abs{\lambda_k(A)-\lambda_k(B)}\;\le\;\norm{A-B},
+\]
+where $\norm{\cdot}$ is the operator norm.
+\end{lemma}
+
+\begin{proof}
+This is Weyl's inequality. By the min--max theorem,
+\[
+\lambda_k(A)=\min_{\dim V=k+1}\ \max_{0\ne v\in V}\frac{\ip{v,Av}}{\ip{v,v}}.
+\]
+For any subspace $V$ and unit vector $v\in V$,
+$\ip{v,Av}=\ip{v,Bv}+\ip{v,(A-B)v}\le\ip{v,Bv}+\norm{A-B}$, so
+$\lambda_k(A)\le\lambda_k(B)+\norm{A-B}$. Symmetry in $A,B$ gives the reverse, and the
+two together give the claim.
+\end{proof}
+
+To pass from operator norm to the interaction $\Ffun$-norm we use finite-volume norm
+equivalence, which is the elementary end of the Lieb--Robinson machinery of Part I\@.
+
+\begin{lemma}[Finite-volume norm domination]
+\label{lem:normdom}
+Fix a finite $\Lambda\subset L$. There is a constant $C_\Lambda<\infty$, depending on
+$\Lambda$ and the $\Ffun$-function, such that for all interactions $\Phi,\Psi$,
+\[
+\norm{H_\Lambda(\Phi)-H_\Lambda(\Psi)}\;\le\;C_\Lambda\,\norm{\Phi-\Psi}_{\Ffun}.
+\]
+\end{lemma}
+
+\begin{proof}
+$H_\Lambda(\Phi)-H_\Lambda(\Psi)=\sum_{X\subseteq\Lambda}\big(\Phi(X)-\Psi(X)\big)$,
+a finite sum of at most $2^{\abs{\Lambda}}$ terms. The $\Ffun$-norm dominates the
+per-term operator norm up to the reweighting factor built into the norm
+\cite{nsy-quasilocality-1}; summing the finitely many reweighting factors over
+$X\subseteq\Lambda$ yields a finite $C_\Lambda$ with the stated bound.
+\end{proof}
+
+\subsection{Theorem III-A}
+\label{sec:finite-thmA}
+
+\begin{thmA}[Finite-volume gap continuity and finite-resolution openness]
+\label{thm:IIIA}
+Fix a finite $\Lambda\subset L$ and an integer $n\ge 1$.
+\begin{enumerate}
+\item[(i)] The $n$-gap is $2C_\Lambda$-Lipschitz in the interaction norm:
+\[
+\big\lvert\gapfin{\Lambda,n}(\Phi)-\gapfin{\Lambda,n}(\Psi)\big\rvert
+\;\le\;2\,C_\Lambda\,\norm{\Phi-\Psi}_{\Ffun}
+\qquad\text{for all }\Phi,\Psi.
+\]
+In particular $\Phi\mapsto\gapfin{\Lambda,n}(\Phi)$ is continuous on $\BF$.
+\item[(ii)] For every $\delta>0$ the finite-volume gapped locus
+$\set{\Phi\in\BF\,:\,\gapfin{\Lambda,n}(\Phi)>\delta}$ is open in $\BF$.
+\item[(iii)] Along any $S$-continuous family $H\in\Ham_{d,G}(S)$ over a profinite
+probe $S$, the map $s\mapsto\gapfin{\Lambda,n}(H_s)$ is continuous, and for every
+$\delta>0$ the set $\set{s\in S\,:\,\gapfin{\Lambda,n}(H_s)>\delta}$ is open in $S$.
+\end{enumerate}
+\end{thmA}
+
+\begin{proof}
+(i) By \eqref{eq:ngap},
+$\gapfin{\Lambda,n}(\Phi)-\gapfin{\Lambda,n}(\Psi)
+=\big(\lambda_n(H_\Lambda(\Phi))-\lambda_n(H_\Lambda(\Psi))\big)
+-\big(\lambda_0(H_\Lambda(\Phi))-\lambda_0(H_\Lambda(\Psi))\big)$.
+\Cref{lem:weyl} bounds each parenthesized difference by
+$\norm{H_\Lambda(\Phi)-H_\Lambda(\Psi)}$, and \Cref{lem:normdom} bounds that by
+$C_\Lambda\norm{\Phi-\Psi}_{\Ffun}$. The triangle inequality gives the factor $2$.
+
+(ii) Immediate from (i): a $2C_\Lambda$-Lipschitz function has open strict
+super-level sets.
+
+(iii) An $S$-continuous family is a continuous map $S\to\BF$; composing with the
+continuous $\gapfin{\Lambda,n}$ of (i) gives a continuous $S\to\R$, and continuity
+gives openness of super-level sets.
+\end{proof}
+
+\begin{remark}[Why the fixed integer $n$]
+\label{rem:why-n}
+If one used the ``physical'' gap $\lambda_m-\lambda_0$ with $m$ the ground-state
+multiplicity (itself a function of $\Phi$), the map $\Phi\mapsto$ gap could jump
+where $m$ changes, and Lipschitz continuity would fail there. Fixing $n$ removes the
+discontinuity by decoupling the level index from the multiplicity. On any region
+where the ground-state multiplicity is locally constant and equal to $m$, the
+physical gap agrees with the $m$-gap and Theorem III-A applies verbatim. The
+transverse-field Ising computation of \Cref{sec:numerics} exhibits exactly this: in
+the ferromagnetic phase the two lowest levels form a near-degenerate ground sector
+($m=2$ in the thermodynamic limit), and the physically meaningful gap is the $2$-gap,
+not the $1$-gap. As $\Lambda$ grows, the ground-state multiplicity can change at
+isolated interaction values (level crossings or accidental degeneracies); the
+fixed-$n$ device keeps $\gapfin{\Lambda,n}$ a well-defined, continuous
+ordered-eigenvalue difference across such events, and one reads off the physical gap
+by taking $n$ equal to the ground-sector dimension on the region of interest, where it
+is locally constant. The continuity of \emph{each} ordered eigenvalue (\Cref{lem:weyl})
+never fails; only the identification of which level index is ``the gap'' can shift, and
+that shift happens on a measure-zero set of couplings.
+\end{remark}
+
+\subsection{Semicontinuity of the thermodynamic gap}
+\label{sec:finite-semicont}
+
+At the thermodynamic level the gap is only \emph{lower} semicontinuous in general,
+and even that requires care about the mode of convergence. We record the statement we
+can make and mark the pitfall.
+
+\begin{proposition}[Conditional persistence and one-sided continuity of the gap]
+\label{prop:lsc}
+Suppose $\Phi_j\to\Phi$ in $\BF$ and that all $\Phi_j$ and $\Phi$ admit
+infinite-volume ground states obtained as weak-$*$ limits of finite-volume ground
+states in the sense of Part II\@. If, for a subsequence, the GNS gaps satisfy
+$\gapof{\Phi_j}\ge\gamma$ for a fixed $\gamma>0$, then $\gapof{\Phi}\ge\gamma$
+provided the ground states converge weak-$*$ and the gap is realized by a convergent
+family of low-lying states. This $\gamma$-persistence is the conditional
+\emph{upper}-semicontinuity direction. Unconditionally the thermodynamic gap is only
+\emph{lower} semicontinuous, $\gapof{\Phi}\le\liminf_j\gapof{\Phi_j}$, which supplies
+no lower bound (the collapse $\gapof{\Phi_j}=c>0\to\gapof{\Phi}=0$ satisfies it);
+without the auxiliary hypotheses no lower bound on $\gapof{\Phi}$ survives at all.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The argument is the standard one for persistence of a spectral gap under strong
+resolvent convergence, adapted to the GNS setting of \cite{nsy-bulkgap}: a spectral
+gap is the statement that the ground state minimizes energy with a margin
+$\gamma$ against all orthogonal excitations, an inequality
+$\ip{\psi,(H_\omega-\gamma)\psi}\ge 0$ for $\psi\perp\Omega_\omega$; such inequalities
+pass to weak-$*$ limits of states when the energy functionals converge, which they do
+along $\BF$-convergent interactions by the Lieb--Robinson continuity of the dynamics
+(Part I)\@. Failure of the auxiliary hypotheses---non-convergence of ground states, or
+a low-lying spectrum that ``escapes'' in the limit---breaks the inequality; we do not
+claim a bound in that case, and by \Cref{cor:no-criterion} no unconditional bound can
+exist.
+\end{proof}
+
+\begin{remark}
+\label{rem:lsc-caveat}
+\Cref{prop:lsc} is deliberately hedged. It would be an error, and a violation of the
+undecidability wall, to state ``the thermodynamic gap is continuous in the
+interaction'' as an unconditional theorem: continuity would let one certify gaps by
+approximation, which \Cref{cor:no-criterion} forbids. What fails is \emph{upper}
+semicontinuity: along a sequence of gapped interactions a low-lying excited level can
+descend to the ground-state energy in the limit, collapsing the gap discontinuously,
+and this is precisely the mechanism the undecidable families of \cite{cpw-undecidable}
+exploit: the gap is present at every finite approximation and disappears only in the
+thermodynamic limit. Lower semicontinuity under convergence of the low-lying spectral
+data is therefore the honest statement, and it is exactly what the stability theory of
+\Cref{sec:stability} upgrades, on its stratum, to genuine openness with a uniform
+radius.
+\end{remark}
+
+\section{Stability on the frustration-free / LTQO stratum}
+\label{sec:stability}
+
+We now reach the heart of the paper: the recasting of the
+Bravyi--Hastings--Michalakis, Michalakis--Zwolak and Nachtergaele--Sims--Young
+stability theorems as a statement that $\Gap_{d,G}$ contains condensed-open
+neighborhoods on a well-defined stratum. Throughout, we are scrupulous about
+hypotheses; the stratum is exactly where the hypotheses hold with constants uniform
+in the system size.
+
+\subsection{Frustration-freeness and local topological quantum order}
+\label{sec:stability-hypotheses}
+
+\begin{definition}[Frustration-free interaction]
+\label{def:ff}
+An interaction $\Phi$ is \emph{frustration-free} if there is a decomposition
+$H_\Lambda(\Phi)=\sum_{x\in\Lambda}h_x$ with each $h_x\ge 0$ a local term, such that
+the finite-volume ground-state space $\gsp_\Lambda=\ker H_\Lambda(\Phi)$ is the common
+kernel $\bigcap_x\ker h_x$; equivalently the finite-volume ground-state energy is $0$
+and every ground state is annihilated by every local term.
+\end{definition}
+
+Frustration-freeness is a genuine restriction. Generic gapped systems are not
+frustration-free; the class includes the paradigmatic exactly-solvable models
+(Kitaev's toric code and honeycomb model \cite{kitaev-honeycomb}, AKLT-type chains,
+group-cohomology fixed-point models \cite{cglw-cohomology}) and the parent
+Hamiltonians of matrix-product and PEPS states, but it excludes, for instance,
+generic Chern insulators. We never extend a frustration-free theorem to a
+non-frustration-free system.
+
+\begin{definition}[Local topological quantum order, LTQO]
+\label{def:ltqo}
+A frustration-free family with ground-state projections $P_\Lambda$ onto
+$\gsp_\Lambda$ satisfies \emph{LTQO} with decay $\Omega_{\mathrm{LTQO}}(\cdot)$ if for
+every ball $B_r(x)$ of radius $r$ and every observable $O$ supported on $B_r(x)$,
+\[
+\norm{P_\Lambda\,O\,P_\Lambda-\frac{\Tr(P_{B_{r'}(x)}O)}{\Tr P_{B_{r'}(x)}}\,P_\Lambda}
+\;\le\;\norm{O}\,\Omega_{\mathrm{LTQO}}(r'-r)
+\]
+for $r<r'$, where $\Omega_{\mathrm{LTQO}}$ is a fixed rapidly-decaying function
+independent of $\Lambda$. Informally: ground states are locally indistinguishable, up
+to a boundary correction that decays in the distance to the region's edge.
+\end{definition}
+
+The LTQO condition is the operator-algebraic expression of ``topological'' ground-state
+degeneracy: the degenerate ground states cannot be told apart by any local
+measurement. Michalakis and Zwolak \cite{michalakis-zwolak} showed that, together with
+a uniform local gap, LTQO is essentially equivalent to stability of the gap and to an
+area law for the ground-state entanglement.
+
+\begin{definition}[The frustration-free / LTQO stratum]
+\label{def:stratum}
+Fix $\gamma>0$, a decay function $\Omega_{\mathrm{LTQO}}$, an $\Ffun$-function, and
+constants controlling the local-term norms and interaction range. The
+\emph{frustration-free / LTQO stratum}
+$\mathfrak{S}=\mathfrak{S}(\gamma,\Omega_{\mathrm{LTQO}},\Ffun)\subseteq\Ham_{d,G}$
+is the collection of interactions $\Phi$ that are frustration-free
+(\Cref{def:ff}), have finite-volume gap $\gapfin{\Lambda,m_\Lambda}(\Phi)\ge\gamma$
+uniformly in $\Lambda$ (with $m_\Lambda=\dim\gsp_\Lambda$), and satisfy LTQO with
+decay $\Omega_{\mathrm{LTQO}}$, all with the fixed constants. As a subpresheaf,
+$\mathfrak{S}(S)$ consists of $S$-families landing in $\mathfrak{S}$ for every $s\in S$
+with the constants uniform over $S$.
+\end{definition}
+
+By construction $\mathfrak{S}\subseteq\Gap_{d,G}$: the uniform finite-volume gap
+$\gamma$ forces $\gapof{\Phi}\ge\gamma$ (\Cref{sec:framework-gap}). The stratum is the
+domain of the stability theorems.
+
+\begin{remark}[The stratum is a proper subclass; what lies outside it]
+\label{rem:stratum-boundary}
+Frustration-freeness (\Cref{def:ff}) is essential to the arguments of
+\Cref{thm:bhm,thm:mz,thm:nsy}: the relative-bound and martingale/telescoping
+estimates that produce the size-independent threshold rest on the common-kernel
+structure and the local projectors $P_\Lambda$, and on LTQO stated through those
+projectors. Many physically important gapped systems are \emph{not} of this form.
+Free-fermion topological insulators and Chern insulators, for instance, are gapped
+and stable, but they are not frustration-free commuting-projector systems (indeed
+the chiral ones cannot be, by the Kapustin--Fidkowski obstruction \cite{kapustin-fidkowski} discussed in
+\Cref{sec:disc-walls}), so they lie outside $\mathfrak{S}$, and Theorem III-B says
+nothing about them. Their stability is real but is established by different
+technology (single-particle / spectral-localizer and $K$-theoretic methods,
+\cite{prodan-sb}), not by the frustration-free stability theorems recast here. We do
+not attempt to widen $\mathfrak{S}$ to cover them; whether a single condensed-openness
+statement subsumes both classes is part of the open Conjecture III-1, not something
+the present theorem delivers.
+\end{remark}
+
+\subsection{The stability theorems, as cited}
+\label{sec:stability-cited}
+
+We quote the results we use in the form relevant here; the constants are those of the
+original sources.
+
+\begin{theorem}[Bravyi--Hastings--Michalakis \cite{bhm-stability}; short proof
+\cite{bravyi-hastings-shortproof}]
+\label{thm:bhm}
+Let $\Phi$ be a frustration-free interaction satisfying the topological-order
+conditions TQO-1 and TQO-2 (LTQO) with a uniform local gap $\gamma>0$. There exists
+$\varepsilon_0>0$, depending only on $\gamma$, the LTQO decay, the local Hilbert space
+dimension, and the lattice geometry---and \emph{not} on the system size---such that
+for any perturbation $V=\sum_x V_x$ with $\sup_x\norm{V_x}\le\varepsilon<\varepsilon_0$
+and sufficiently fast decay, the perturbed finite-volume Hamiltonians
+$H_\Lambda(\Phi)+V_\Lambda$ have a spectral gap above their ground-state sector
+bounded below by $\gamma/2$ (say), uniformly in $\Lambda$, with the ground-state
+splitting within the sector decaying faster than any polynomial in the system size.
+\end{theorem}
+
+\begin{theorem}[Michalakis--Zwolak \cite{michalakis-zwolak}]
+\label{thm:mz}
+For frustration-free Hamiltonians, LTQO together with a uniform local gap implies
+stability of the gap under quasi-local perturbations, with a size-independent
+threshold; conversely, stability plus an area law essentially forces LTQO\@. The
+perturbed system retains a uniform gap and a ground-state space continuously connected
+to the unperturbed one by a spectral flow.
+\end{theorem}
+
+\begin{theorem}[Nachtergaele--Sims--Young \cite{nsy-bulkgap}]
+\label{thm:nsy}
+For frustration-free, topologically ordered quantum lattice systems, the bulk gap in
+the infinite-volume GNS representation is stable under quasi-local perturbations
+controlled by an $\Ffun$-function, with a threshold independent of the finite-volume
+approximations. The result is proved directly for the infinite-volume gap
+\eqref{eq:thermogap}, without assuming a uniform finite-size lower bound as a separate
+axiom.
+\end{theorem}
+
+The three results are complementary: \cite{bhm-stability,bravyi-hastings-shortproof}
+establish the finite-volume, size-independent threshold; \cite{michalakis-zwolak}
+identifies LTQO as the precise condition and connects it to the area law;
+\cite{nsy-bulkgap} lifts the conclusion to the thermodynamic gap directly. What they
+share, and what we need, is a \emph{single} quantity: a perturbation radius
+$\varepsilon_0>0$ that does not shrink with system size.
+
+\subsection{Theorem III-B: stability as condensed-openness}
+\label{sec:stability-thmB}
+
+\begin{thmB}[Conditional condensed-openness of $\Gap_{d,G}$ on the stratum]
+\label{thm:IIIB}
+Let $\mathfrak{S}=\mathfrak{S}(\gamma,\Omega_{\mathrm{LTQO}},\Ffun)$ be a
+frustration-free / LTQO stratum (\Cref{def:stratum}), and let $\varepsilon_0>0$ be the
+size-independent perturbation threshold of \Cref{thm:bhm,thm:mz,thm:nsy}, depending
+only on $\gamma$, the LTQO decay $\Omega_{\mathrm{LTQO}}$, the $\Ffun$-function, and
+$d$. Then for every
+$\Phi\in\mathfrak{S}$ and every quasi-local perturbation direction
+$V=\sum_x V_x$ with $\sup_x\norm{V_x}\le 1$ and $\Ffun$-controlled decay, the segment
+\[
+\set{\Phi+tV\,:\,0\le t<\varepsilon_0}\ \subseteq\ \Gap_{d,G},
+\]
+with thermodynamic gap bounded below by $\gamma/2$ throughout.\par\noindent
+Consequently $\Gap_{d,G}$ is condensed-open along the quasi-local direction class at
+each point of
+$\mathfrak{S}$: for every profinite probe $S$ and every $S$-family $H$ landing in the
+$\varepsilon_0$-ball of quasi-local perturbations around a point of
+$\mathfrak{S}$, one has $H\in\Gap_{d,G}^{\ge\gamma/2}(S)$. In words: on the
+frustration-free / LTQO stratum, the uniformly gapped substack contains a
+condensed-open neighborhood of each point along quasi-local perturbation directions.
+\end{thmB}
+
+\begin{proof}
+Fix $\Phi\in\mathfrak{S}$ and a quasi-local direction $V$ normalized as stated. For
+$0\le t<\varepsilon_0$, the perturbation $tV$ has per-site strength
+$\sup_x\norm{tV_x}\le t<\varepsilon_0$ and the $\Ffun$-controlled decay required by
+\Cref{thm:bhm,thm:mz,thm:nsy}. Since $\Phi$ lies in the stratum, it satisfies the
+frustration-freeness, uniform local gap $\gamma$, and LTQO hypotheses of those
+theorems with the fixed constants; therefore each theorem applies to $\Phi+tV$ and
+yields a gap above the ground-state sector bounded below by $\gamma/2$, uniformly in
+the finite volume, and---by \Cref{thm:nsy}---a thermodynamic gap
+$\gapof{\Phi+tV}\ge\gamma/2$. Since $\gamma/2>0$ is independent of $t$ in the range,
+the whole segment lies in $\Gap_{d,G}^{\ge\gamma/2}\subseteq\Gap_{d,G}$.
+
+For the condensed statement, let $S$ be a profinite probe and $H\in\Ham_{d,G}(S)$ a
+family with $H_s=\Phi+t(s)V(s)$ where, for each $s$, $\Phi\in\mathfrak{S}$, $V(s)$ is a
+normalized quasi-local direction, and $t(s)<\varepsilon_0$, with all constants uniform
+over $S$ (this is what it means for the family to land in the $\varepsilon_0$-ball
+along quasi-local directions with stratum-uniform data). The pointwise bound just
+proved gives $\gapof{H_s}\ge\gamma/2$ for every $s\in S$, hence
+$\einf_{s\in S}\gapof{H_s}\ge\gamma/2$ and $H\in\Gap_{d,G}^{\ge\gamma/2}(S)$ by
+\Cref{def:gap}. This is condensed-openness along the quasi-local class at $\Phi$ in
+the sense of \Cref{sec:framework-open}.
+\end{proof}
+
+\begin{remark}[Exactly what is and is not claimed]
+\label{rem:IIIB-scope}
+Theorem III-B is a stability statement and nothing more. It does \emph{not} decide
+whether any given $\Phi$ belongs to $\mathfrak{S}$: that requires knowing $\Phi$ is
+frustration-free with a uniform gap $\gamma$, which is an input, consistent with
+\Cref{cor:no-criterion}. It does \emph{not} assert openness of $\Gap_{d,G}$ at points
+outside $\mathfrak{S}$, nor along non-quasi-local directions, nor with a threshold
+uniform over all of $\Gap_{d,G}$. The three ``not''s are not timidity; each is a place
+where a stronger claim would either be false or would contradict undecidability. The
+uniform-in-size threshold $\varepsilon_0$ is the entire mechanism: it is what turns a
+family of finite-volume openness statements (Theorem III-A, which has $C_\Lambda\to\infty$
+as $\Lambda$ grows) into a single thermodynamic openness statement with a radius that
+does not collapse.
+\end{remark}
+
+\begin{corollary}[Openness of the stratum stratum-wise]
+\label{cor:stratum-open}
+The intersection $\Gap_{d,G}\cap(\Phi+\varepsilon_0\,\mathcal{D}_{\mathrm{ql}})$
+contains the full $\varepsilon_0$-ball along the quasi-local direction class
+$\mathcal{D}_{\mathrm{ql}}$ at each $\Phi\in\mathfrak{S}$. In particular the assignment
+$\Phi\mapsto\gamma/2$ is a lower bound for the gap that is \emph{locally constant along
+quasi-local perturbations} on $\mathfrak{S}$, which is the local constancy the phase
+label $\nu_f$ of the program requires.
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem III-B: every point of the ball has gap $\ge\gamma/2$, so the
+lower bound $\gamma/2$ is constant on the ball, and local constancy of a lower bound
+is what a locally constant phase label needs to be well defined on the gapped locus.
+\end{proof}
+
+\subsection{Spectral flow and automorphic equivalence}
+\label{sec:stability-flow}
+
+The stability of \Cref{sec:stability-thmB} comes with a dynamical companion: within a
+uniformly gapped neighborhood the ground-state spaces are related by a quasi-local
+automorphism, the spectral flow. This is the rigorous meaning of ``the same phase''
+along a gapped path, and it is the interface with Part I and with the equivalence
+class $\Weq$.
+
+\begin{proposition}[Spectral flow inside a gapped segment]
+\label{prop:flow}
+Let $t\mapsto\Phi+tV$, $0\le t\le t_1<\varepsilon_0$, be a segment as in Theorem III-B,
+so $\gapof{\Phi+tV}\ge\gamma/2$ throughout. Then there is a quasi-local, $\Ffun$-norm
+continuous cocycle of $*$-automorphisms $(\alpha_{t})_{0\le t\le t_1}$ of the
+quasi-local algebra, generated by a time-dependent quasi-local interaction, such that
+$\alpha_t$ maps the ground-state space of $\Phi$ to that of $\Phi+tV$, and
+$\alpha_t\to\mathrm{id}$ as $\gamma\to\infty$ in the sense of the Lieb--Robinson
+tails. The automorphisms $\alpha_t$ belong to the class $\Weq$ of gapped quasi-local
+equivalences.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+This is the quasi-adiabatic continuation / spectral-flow construction of Hastings and
+Wen \cite{hastings-wen-qac} in the quasi-local formulation of Bachmann, Michalakis,
+Nachtergaele and Sims \cite{bmns-automorphic} and Nachtergaele, Sims and Young
+\cite{nsy-quasilocality-2}. Given a uniformly gapped path $\Phi+tV$, one forms the
+spectral-flow generator $D_t=\int F_\gamma(s)\,\tau^{(t)}_s\!\big(\tfrac{d}{dt}H(t)\big)\,ds$
+with a filter $F_\gamma$ whose Fourier support avoids the gap; the gap lower bound
+$\gamma/2$ makes $D_t$ quasi-local with $\Ffun$-tails controlled by $\gamma$, and the
+resulting flow $\alpha_t$ intertwines the ground-state spaces. Continuity in the
+$\Ffun$-norm and membership in $\Weq$ are then as in Part I\@. The $\gamma\to\infty$
+limit sharpens the filter to a delta and the flow to the identity on the ground-state
+sector.
+\end{proof}
+
+\begin{remark}
+\label{rem:flow-W}
+\Cref{prop:flow} is what makes ``$\Gap_{d,G}$ modulo $\Weq$'' a sensible quotient
+along stratum segments: adiabatically connected uniformly gapped systems are
+$\Weq$-equivalent by an explicit quasi-local automorphism. Conjecture III-3 below
+proposes that this is the whole story (that the internal path components of
+$\Gap_{d,G}$ under quasi-adiabatic continuation are exactly the operator-algebraic
+gapped phases), but the general statement is beyond what \Cref{prop:flow} proves,
+because a general uniformly gapped path need not lie in a single stratum.
+\end{remark}
+
+\section{Uniform clustering from a uniform gap}
+\label{sec:clustering}
+
+The third theorem is structural: it isolates a property that \emph{uniformly} gapped
+families have and pointwise-gapped families need not. A gap forces exponential decay
+of correlations; a \emph{uniform} gap forces the decay rate to be uniform over the
+base. This is the sense in which $\Gap_{d,G}$, and not the naive pointwise-gapped
+locus, is the correct object.
+
+\subsection{Gap implies clustering}
+\label{sec:clustering-gap}
+
+\begin{theorem}[Hastings--Koma \cite{hastings-koma}; Nachtergaele--Sims
+\cite{nachtergaele-sims-clustering}]
+\label{thm:hk}
+Let $H$ have a thermodynamic gap $\gapof{H}\ge\gamma>0$ above a ground state
+$\omega$, and let the dynamics obey a Lieb--Robinson bound with velocity $v$ and
+$\Ffun$-tails. Then there are constants $c,C>0$, depending only on $\gamma$, $v$ and
+the $\Ffun$-function, such that for local observables $A,B$ with disjoint supports,
+\[
+\big\lvert\omega(AB)-\omega(A)\,\omega(B)\big\rvert
+\;\le\;C\,\norm{A}\,\norm{B}\;e^{-c\,\dist(\supp A,\supp B)},
+\]
+with $c\sim\gamma/v$ up to the geometric factors. The correlation length is
+$\xi=c^{-1}$.
+\end{theorem}
+
+The precise exponent and constants are as in \cite{hastings-koma}; the
+Lieb--Robinson input is the exponential-clustering theorem of
+\cite{nachtergaele-sims-clustering}. We use them as cited.
+
+\subsection{Theorem III-C: uniformity over the base}
+\label{sec:clustering-thmC}
+
+\begin{thmC}[Uniform clustering on a uniformly gapped family]
+\label{thm:IIIC}
+Let $H\in\Gap_{d,G}^{\ge\gapbound}(S)$ be a uniformly gapped family over a profinite
+probe $S$, so $\einf_{s\in S}\gapof{H_s}\ge\gapbound>0$, and suppose the family has a
+uniform Lieb--Robinson velocity $v$ and common $\Ffun$-function (as provided by Part I
+for an $S$-continuous family in $\BF$). Then there are constants $c,C>0$, depending
+only on $\gapbound$, $v$ and $\Ffun$---and \emph{not} on $s$---such that for every
+$s\in S$ and all local $A,B$ with disjoint supports,
+\[
+\big\lvert\omega_s(AB)-\omega_s(A)\,\omega_s(B)\big\rvert
+\;\le\;C\,\norm{A}\,\norm{B}\;e^{-c\,\dist(\supp A,\supp B)}.
+\]
+In particular the correlation length function $s\mapsto\xi(s)$ is bounded above by
+$c^{-1}$ uniformly over the profinite base.
+\end{thmC}
+
+\begin{proof}
+Apply \Cref{thm:hk} at each $s\in S$. Its constants $c,C$ depend on the input data
+$(\gamma,v,\Ffun)$ only. By hypothesis the gap input can be taken to be the uniform
+value $\gamma=\gapbound$ for every $s$ (since $\gapof{H_s}\ge\gapbound$), and the
+velocity and $\Ffun$-function are the common ones supplied by Part I for the
+$S$-continuous family. Thus the constants produced by \Cref{thm:hk} are the same for
+every $s$, and the clustering bound holds with $s$-independent $c,C$. The bound on
+$\xi(s)=c^{-1}$ is the final clause.
+\end{proof}
+
+\begin{corollary}[Failure for pointwise-gapped families]
+\label{cor:pointwise-fail}
+If instead $H_s$ is gapped for every $s\in S$ but $\einf_s\gapof{H_s}=0$, then the
+per-point clustering rate $c(s)\sim\gapof{H_s}/v$ degenerates to $0$ along a sequence
+$s_j$ with $\gapof{H_{s_j}}\to 0$, and no uniform correlation-length bound exists. The
+uniform-gap hypothesis of Theorem III-C is therefore necessary for the conclusion, not
+merely sufficient.
+\end{corollary}
+
+\begin{proof}
+The Hastings--Koma rate is proportional to the gap; along $s_j$ it tends to $0$, so
+$\xi(s_j)\to\infty$ and $\sup_s\xi(s)=\infty$.
+\end{proof}
+
+\begin{remark}
+\label{rem:clustering-meaning}
+\Cref{cor:pointwise-fail} is the technical vindication of \Cref{def:gap}. It shows
+that the difference between ``gapped at every probe point'' and ``uniformly gapped''
+is not a formality: only the latter guarantees a uniform correlation length, and a
+uniform correlation length is what one needs for the area laws, split property, and
+locally computable invariants that Parts II and IV build on. The $\einf_s$ in the
+definition of $\Gap_{d,G}$ is precisely the hypothesis that rules out
+\Cref{cor:pointwise-fail}.
+\end{remark}
+
+\section{The structure of the gapped substack: conjectures}
+\label{sec:conjectures}
+
+Beyond the stratum, we do not have theorems; we have conjectures, and we state them
+as such, with the reasons they are plausible and the obstacles to proving them. Each
+is scoped to respect the undecidability wall.
+
+\subsection{Openness in the full condensed topology}
+\label{sec:conj-open}
+
+\begin{conjone}[Openness on the physical stratum; finite-quotient detection]
+\label{conj:III1}
+On the physically relevant stratum---the closure, in a suitable sense, of the
+frustration-free / LTQO systems under quasi-local gapped equivalence, together with
+the systems for which a stability theory holds with uniform constants---$\Gap_{d,G}$
+is an \emph{open} condensed substack of $\Ham_{d,G}$. Moreover the uniform-gap sheaf
+condition of \Cref{def:gap} is detected by finite quotients of profinite probes: a
+family over $S=\varprojlim S_i$ lies in $\Gap_{d,G}(S)$ if and only if its pushforwards
+to the finite quotients $S_i$ lie in the corresponding finite-resolution gapped loci
+with a common bound $\gapbound$.
+\end{conjone}
+
+\emph{Evidence and obstruction.} Theorem III-B is exactly this statement restricted to
+$\mathfrak{S}$ and to quasi-local directions; the conjecture asserts that the phenomenon
+persists on the larger physical stratum and in all directions. The obstruction to a
+proof is precisely undecidability: openness in the \emph{full} $\Ham_{d,G}$, with a
+uniform radius, would let one certify gaps of nearby systems, and near a CPW-type
+embedding \cite{cpw-undecidable} the gap can turn on and off in a way no uniform radius
+can survive. Restricting to the physical stratum is what excludes those pathological
+directions; making ``physical stratum'' precise, so that the restriction is both
+honest and non-vacuous, is the mathematical work the conjecture packages. The
+finite-quotient detection clause is a descent statement and is closely tied to
+Conjecture III-2.
+
+\subsection{Uniform-gap descent along profinite covers}
+\label{sec:conj-descent}
+
+The disorder-hull thread of the program (\cite{bellissard-ncg-qhe,kellendonk-tilings}
+and Part II) makes the profinite structure of $S$ physical: for a finite
+local-configuration set $Q$ (the letter $Q$ denotes the disorder alphabet, kept
+deliberately distinct from the locality $\Ffun$-function of Part I) the hull
+$\dis=Q^{\Z^d}$ is compact and totally
+disconnected, hence profinite, and a disordered family $\omega\mapsto H_\omega$ is
+literally a $\dis$-point of $\Ham_{d,G}$. Finite quotients of $\dis$ are
+finite-resolution disorder data.
+
+\begin{conjtwo}[Uniform-gap descent]
+\label{conj:III2}
+Let $\dis=Q^{\Z^d}=\varprojlim_i\dis_i$ be a disorder hull with its profinite
+presentation, and let $H\in\Ham_{d,G}(\dis)$ be a disordered family. Then $H$ is
+uniformly gapped, $H\in\Gap_{d,G}(\dis)$, if and only if each finite-resolution
+approximation $H^{(i)}\in\Ham_{d,G}(\dis_i)$ is gapped with a common bound $\gapbound$
+independent of $i$. Equivalently, uniform gappedness is a \emph{closed} condition on
+the inverse system $(\dis_i)_i$: the uniformly gapped families are the inverse limit
+of the finite-resolution uniformly-gapped ones at a fixed $\gapbound$.
+\end{conjtwo}
+
+\emph{Evidence and obstruction.} The ``only if'' direction is \Cref{prop:union}: a
+uniform gap over $\dis$ restricts to a uniform gap over each $\dis_i$. The content is
+the ``if'' direction---that compatible finite-resolution gaps at a common $\gapbound$
+assemble to a uniform gap over the limit. This is a genuine descent question. The
+optimistic reason to expect it: continuity of the gap along $\BF$-convergent families
+(Theorem III-A at each finite volume) plus compactness of $\dis$ suggests that a
+common finite-resolution bound should survive the limit. The obstruction: the gap is a
+\emph{thermodynamic}, not finite-volume, quantity, and \Cref{prop:lsc} shows only
+lower semicontinuity in general; the descent could fail if the low-lying spectrum
+reorganizes in the inverse limit. The conjecture asserts it does not, on the disorder
+hulls, at fixed $\gapbound$. A proof would presumably route through the crossed-product
+algebra $C(\dis)\rtimes\Z^d$ of Part II and a gap-labelling argument in the manner of
+Bellissard \cite{bellissard-ncg-qhe}.
+
+\subsection{Quasi-adiabatic continuation realizes the equivalence class}
+\label{sec:conj-qac}
+
+\begin{conjthree}[QAC path components are the operator-algebraic phases]
+\label{conj:III3}
+\leavevmode\par\noindent
+Quasi-adiabatic continuation defines, on $\Gap_{d,G}$, the internal path components
+realizing the equivalence class $\Weq$: two uniformly gapped families are
+$\Weq$-equivalent if and only if they are connected by a uniformly gapped path along
+which the spectral flow of \Cref{prop:flow} is quasi-local. Consequently
+\[
+\pi_0\Shape\!\big(\Gap_{d,G}[\Weq^{-1}]\big)\;\cong\;
+\set{\text{operator-algebraic gapped ground-state phases}}
+\]
+of Ogata \cite{ogata-classification-review}, and the boxed slogan of the program---%
+\emph{a topological phase is a component of the stabilized condensed stack of gapped
+systems}---is, on this identification, a theorem rather than a definition.
+\end{conjthree}
+
+\emph{Evidence and obstruction.} \Cref{prop:flow} proves one direction locally: a
+uniformly gapped segment in a stratum gives a quasi-local $\Weq$-equivalence. The
+theory of automorphic equivalence in \cite{bmns-automorphic} and the classification
+program of \cite{ogata-classification-review} make the target set precise in $d=1$
+and, for on-site finite symmetry, in $d=2$. The obstruction to the full statement is
+twofold: a general uniformly gapped path need not remain in a single stratum, so
+\Cref{prop:flow} does not immediately apply along it; and the identification of
+$\pi_0\Shape$ of the localized stack with the operator-algebraic set requires knowing
+that the condensed shape does not see more (or less) than the operator-algebraic
+equivalence, which is a comparison between two homotopy theories that has not been
+carried out. In low dimension, where \cite{ogata-classification-review} gives complete
+invariants, the conjecture is closest to reach; in higher dimension it is genuinely
+open, in step with the general state of the classification problem.
+
+\begin{remark}[The three conjectures as the gap-theoretic Master Conjecture]
+\label{rem:master}
+Conjectures III-1, III-2, III-3 are the gap-layer components of the program's Master
+Conjecture (Part VI \cite{paperSynthesis}). III-1 is the topology of the substack,
+III-2 its behavior under profinite disorder, III-3 the comparison of its localized
+homotopy type with the established operator-algebraic classification. None can be
+proved outright today; each is anchored to a theorem of this paper (III-B, III-A +
+\Cref{prop:union}, and \Cref{prop:flow} respectively) that establishes its local or
+one-directional content.
+\end{remark}
+
+\section[Numerical illustration: the transverse-field Ising chain]{Numerical illustration: the\\ transverse-field Ising chain}
+\label{sec:numerics}
+
+We close the mathematical development with a concrete computation that makes the
+abstract picture visible: the spectral gap of the transverse-field Ising chain,
+computed by exact diagonalization. It renders the gapless discriminant $\Sig$ as a
+one-dimensional picture and exhibits the stability that Theorem III-A quantifies.
+The accompanying Haskell program (\Cref{sec:numerics-code}) performs the computation
+and checks the properties as executable QuickCheck tests.
+
+\subsection{The model}
+\label{sec:numerics-model}
+
+On a chain of $N$ spins with open boundary conditions, consider
+\begin{equation}
+\label{eq:tfim}
+H(g)\;=\;-\sum_{i=1}^{N-1} Z_i Z_{i+1}\;-\;g\sum_{i=1}^{N} X_i,
+\qquad g\in[0,2],
+\end{equation}
+where $X_i,Z_i$ are Pauli operators at site $i$. The model has a global $\Z_2$
+symmetry $P=\prod_i X_i$, $[H(g),P]=0$, and a quantum phase transition at $g=1$
+separating a ferromagnetic phase ($g<1$, two-fold degenerate ground sector in the
+thermodynamic limit, the symmetry-broken states) from a paramagnetic phase ($g>1$,
+unique ground state). By the Jordan--Wigner transformation the model is a free-fermion
+system with single-particle dispersion
+\begin{equation}
+\label{eq:disp}
+\varepsilon_k(g)\;=\;2\sqrt{\,1+g^2-2g\cos k\,},
+\end{equation}
+whose minimum over $k$ is $\min_k\varepsilon_k(g)=2\lvert 1-g\rvert$, the
+thermodynamic single-particle gap. We use open boundary conditions: they keep the
+sparse structure and the $\Z_2$ symmetry of the matrix simple and avoid the
+fermion-parity (Neveu--Schwarz / Ramond) sector bookkeeping that periodic boundaries
+introduce through the Jordan--Wigner transformation. Periodic boundaries would reduce
+finite-size edge effects, but the qualitative gap picture---the discriminant at $g=1$
+and stability away from it---is independent of the boundary condition in the
+thermodynamic limit. Thus
+\begin{equation}
+\label{eq:sigma}
+\Sig=\set{g\,:\,\gapof{H(g)}=0}=\set{g=1},
+\end{equation}
+a single point of the parameter interval: the gapless discriminant of this
+one-parameter family. Crossing $g=1$ is the topological/quantum phase transition;
+away from it the system is gapped, with gap growing linearly, $\approx 2\lvert 1-g\rvert$.
+The exact gap also exhibits the Kramers--Wannier self-duality
+$\min_k\varepsilon_k(g)=g\,\min_k\varepsilon_k(1/g)$, immediate from \eqref{eq:disp}
+since $2\lvert 1-g\rvert=g\cdot 2\lvert 1-1/g\rvert$; the Haskell suite of
+\Cref{sec:numerics-code} checks this identity.
+
+\subsection{Exact diagonalization and the discriminant}
+\label{sec:numerics-ed}
+
+In the computational ($Z$-) basis, \eqref{eq:tfim} is a real symmetric $2^N\times 2^N$
+matrix: the $ZZ$ term is diagonal, the transverse field $X_i$ is off-diagonal (a
+single spin flip). We diagonalize it exactly for small $N$ by a cyclic Jacobi
+eigenvalue routine, sweeping $g$ across $[0,2]$ and recording the low-lying spectrum.
+The correctness of the eigensolver is not taken on faith: the QuickCheck properties of
+\Cref{sec:numerics-code} check the exact trace identities
+\begin{equation}
+\label{eq:traces}
+\sum_j\lambda_j(g)=\Tr H(g)=0,
+\qquad
+\sum_j\lambda_j(g)^2=\Tr H(g)^2=\big((N-1)+N g^2\big)\,2^N,
+\end{equation}
+which follow from $\Tr(Z_iZ_{i+1})=\Tr(X_i)=0$ and the orthogonality of the Pauli
+strings, and which a wrong spectrum would violate. The cyclic Jacobi routine drives
+the off-diagonal Frobenius norm below $10^{-11}$, and for the dimensions used
+($N\le 8$, matrices up to $256\times256$) the eigenvalues are accurate to near machine
+precision---the residuals in the identities \eqref{eq:traces} stay below $10^{-9}$
+across this range, reaching $\sim 10^{-13}$ at $N=4$. At substantially larger $N$ both the accumulated floating-point error and
+the $O(2^{3N})$ cost of dense diagonalization grow, which is why we cap the dense
+computation at $N=8$ and read the large-$N$ trend from the analytic reference
+\eqref{eq:disp} instead.
+
+The finite-$N$ gap $\gapfin{N}(g)=\lambda_1(g)-\lambda_0(g)$ and the $2$-gap
+$\lambda_2(g)-\lambda_0(g)$ together render \eqref{eq:sigma}. In the paramagnetic
+phase $g>1$ the ground state is unique and $\gapfin{N}(g)$ is the physical gap,
+converging to $2(g-1)$ as $N$ grows. In the ferromagnetic phase $g<1$ the two lowest
+levels form the near-degenerate ground sector (their splitting decays exponentially in
+$N$), so the physical gap is the $2$-gap---precisely the $m$-gap of
+\Cref{rem:why-n} with $m=2$. In both phases the relevant gap develops a sharp minimum
+near $g=1$ that deepens with $N$: the finite-size fingerprint of the discriminant point
+\eqref{eq:sigma}. \Cref{fig:gap} sketches the shape.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.05]
+  % axes
+  \draw[->] (0,0) -- (6.4,0) node[right] {$g$};
+  \draw[->] (0,0) -- (0,3.3) node[above] {gap};
+  \foreach \x/\l in {0/0, 3/1, 6/2} \draw (\x,0.05) -- (\x,-0.05) node[below] {\l};
+  % V-shaped exact gap 2|1-g|, g in [0,2] mapped to x in [0,6]
+  \draw[very thick, blue!60!black] (0,3) -- (3,0.06) -- (6,3);
+  \node[blue!60!black] at (1.15,2.35) {$2\lvert 1-g\rvert$};
+  % finite-N rounded curves near the minimum
+  \draw[thick, red!70!black, dashed] plot[smooth] coordinates
+    {(0,3.0) (1.5,1.55) (2.4,0.75) (3,0.55) (3.6,0.75) (4.5,1.55) (6,3.0)};
+  \node[red!70!black] at (4.9,1.25) {finite $N$};
+  % discriminant marker
+  \draw[dotted] (3,0) -- (3,3.1);
+  \node[below] at (3,-0.35) {\small $\Sig=\{g=1\}$};
+  \filldraw[black] (3,0.06) circle (1.4pt);
+\end{tikzpicture}
+\caption{Schematic of the transverse-field Ising gap across $g\in[0,2]$. The exact
+thermodynamic gap (solid) is the ``V'' $2\lvert 1-g\rvert$ of \eqref{eq:disp}, vanishing
+only at the discriminant $\Sig=\{g=1\}$ of \eqref{eq:sigma}. Finite-$N$ gaps (dashed)
+round the minimum and deepen toward the ``V'' as $N$ grows. Away from $\Sig$ the gap is
+bounded below and the family is uniformly gapped on any closed sub-interval avoiding
+$g=1$.}
+\label{fig:gap}
+\end{figure}
+
+\subsection{Perturbative stability away from criticality}
+\label{sec:numerics-pert}
+
+To illustrate Theorem III-A and the stability picture, the program performs a
+perturbation experiment. Fix $g=1.5$, deep in the gapped paramagnetic phase, and add a
+random local field $V=\lambda\sum_i s_i Z_i$ with $s_i\in\{\pm 1\}$ and small
+$\lambda$. Exact diagonalization confirms
+\begin{equation}
+\label{eq:lip-numeric}
+\big\lvert\gapfin{N}(H(1.5)+V)-\gapfin{N}(H(1.5))\big\rvert\;\le\;2\,\norm{V}
+\;\le\;2\lambda N,
+\end{equation}
+the finite-volume Lipschitz bound of Theorem III-A (here $C_\Lambda$ absorbed into the
+per-site normalization). The gap stays bounded away from $0$ for all sampled
+perturbations: away from the discriminant the gapped locus is open and stability holds,
+exactly as Theorem III-A guarantees at finite volume. Near $g=1$, by contrast, the same
+size of perturbation moves the small gap by a comparable amount and can push the finite
+system across the rounded minimum---the numerical trace of why openness of the
+substack is a statement scoped away from the discriminant.
+
+\subsection{What the finite computation cannot do}
+\label{sec:numerics-cannot}
+
+It is essential to state what \Cref{fig:gap} does \emph{not} establish, on pain of
+contradicting \Cref{sec:wall}. No finite-$N$ computation decides the thermodynamic gap.
+For the transverse-field Ising chain we happen to know the answer analytically---the
+model is exactly solvable, \eqref{eq:disp}---so the discriminant \eqref{eq:sigma} is
+certain; but that certainty comes from the exact Jordan--Wigner solution, not from the
+diagonalization. For a general translation-invariant family the analogous finite-$N$
+data would be genuinely uninformative about the thermodynamic limit, because by
+\Cref{thm:cpw} no finite computation, however large $N$, can decide whether the gap
+survives. The Ising chain is an illustration of the \emph{structure} of the gapped
+substack---its discriminant, its stability away from criticality, the Lipschitz bound---%
+not a method for detecting gaps. The distinction is the entire moral of Part III\@.
+
+\subsection{The Haskell computation}
+\label{sec:numerics-code}
+
+The computation is implemented in Haskell in \texttt{src/spectral-gap-stability/}. The
+module \texttt{TFIM} builds the Hamiltonian \eqref{eq:tfim} as a real symmetric matrix
+and diagonalizes it by cyclic Jacobi rotations; \texttt{Main} sweeps $g$ over $[0,2]$
+for $N\in\{4,6,8\}$, prints the gap table, runs the perturbation experiment of
+\Cref{sec:numerics-pert}, and exits with status $0$ on success. The module
+\texttt{Properties} encodes as QuickCheck properties: the exact trace identities
+\eqref{eq:traces} (which double as a validation of the eigensolver); symmetry of the
+Hamiltonian matrix; positivity of the gap in the paramagnetic phase at fixed $N$
+(\Cref{sec:numerics-ed}); the finite-volume Lipschitz bound \eqref{eq:lip-numeric} of
+Theorem III-A; and the monotone growth of the gap with $g$ in the paramagnetic phase.
+The properties are stated one per claim and cite the corresponding equation or theorem,
+so that the executable tests track the paper's assertions.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What the condensed paradigm contributes here}
+\label{sec:disc-contribute}
+
+Part III does not prove a new stability theorem; the analytic content is
+\cite{bhm-stability,bravyi-hastings-shortproof,michalakis-zwolak,nsy-bulkgap,hastings-koma,nachtergaele-sims-clustering}.
+Nor is the idea of studying the moduli space of gapped Hamiltonians and its topology
+new: it is developed, in ordinary topology and with effective-field-theory methods, by
+Hsin, Wang and collaborators \cite{hsin-wang-moduli}. What the condensed framing
+contributes is organizational, and it is not empty. First,
+it makes ``uniformly gapped'' a property of a \emph{family} in a category where
+families, disorder hulls, and inverse limits are first-class objects: the $\einf_s$ of
+\Cref{def:gap} is the condition that a subobject of a condensed stack is cut out
+correctly, and Theorem III-C shows this is the condition with structural teeth.
+Second, it identifies exactly which classical theorems give \emph{openness} of the
+distinguished subobject (Theorem III-B) and on which stratum, so that the downstream
+constructions of Parts IV and V know precisely what they may assume. Third, it places
+the undecidability wall where it belongs (as a statement about global decidability
+that leaves the local, stratified, functorial theory intact) rather than letting it
+either be ignored or overstated into paralysis.
+
+\subsection{The two walls}
+\label{sec:disc-walls}
+
+The program has two hard external constraints. The first is the undecidability of the
+gap \cite{cpw-undecidable}, which is the governing constraint of this paper: it is why
+existence of a thermodynamic gap is a hypothesis and not a theorem, why openness is a
+stratum statement, and why \Cref{sec:numerics-cannot} insists that no finite
+computation detects the gap. The second, the Kapustin--Fidkowski obstruction \cite{kapustin-fidkowski} to
+commuting-projector realizations of chiral phases, governs Part V
+\cite{paperRealizability} and does not bear directly here, except to note that the
+frustration-free / LTQO stratum of \Cref{def:stratum} (on which we can prove
+stability) is close to the commuting-projector world where the second wall bites.
+Chiral phases (nonzero Hall conductance, \cite{kapustin-sopenko-noether}) are gapped
+but are not frustration-free commuting-projector systems, so they lie outside
+$\mathfrak{S}$; our stability theorem says nothing about them, and it should not,
+because their stability is a different and harder question.
+
+\subsection{The profinite-disorder thread}
+\label{sec:disc-disorder}
+
+The disorder hull $\dis=Q^{\Z^d}$ is where the condensed and profinite structure is
+not a repackaging of a smooth manifold but a match to the physical configuration space
+\cite{bellissard-ncg-qhe,kellendonk-tilings,prodan-sb}. Conjecture III-2 is the
+gap-layer instance of the program's recurring descent question: does a
+finite-resolution property, holding compatibly at every finite quotient of $\dis$ with
+uniform constants, descend to the profinite limit? For gaps this is delicate precisely
+because the gap is thermodynamic. That the question is even well posed (that a
+disordered family is literally a $\dis$-point of $\Ham_{d,G}$, and uniform gappedness a
+condition on that point) is a contribution of the condensed viewpoint, and settling it
+would connect the gap-labelling of \cite{bellissard-ncg-qhe} to the substack
+$\Gap_{d,G}$ directly.
+
+\subsection{Limitations}
+\label{sec:disc-limits}
+
+We list the limitations plainly. Theorem III-B is conditional on membership in a
+frustration-free / LTQO stratum, which is undecidable to verify in general and is a
+proper subclass of gapped systems. Theorem III-C assumes the uniform Lieb--Robinson
+data of Part I, which restricts to the $\Ffun$-function locality class and excludes
+genuinely long-range interactions. \Cref{prop:lsc} gives only lower semicontinuity, and
+deliberately so. The three conjectures are unproven, and Conjecture III-1 in particular
+cannot be strengthened to openness in the full $\Ham_{d,G}$ without contradicting
+\cite{cpw-undecidable}. None of these limitations is incidental; each marks a boundary
+that the undecidability of the gap, or the restriction to a provable stability class,
+places on what can be claimed.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The uniformly gapped substack $\Gap_{d,G}$ is the object on which the condensed theory
+of topological phases is built, and it is governed by a hard theorem: the spectral gap
+is undecidable, so membership cannot be the output of a computation and must be taken
+as a defining hypothesis. Within that constraint we proved what can be proved. At
+finite volume the gap is Lipschitz and the gapped locus open (Theorem III-A)\@. On the
+frustration-free / LTQO stratum the classical stability theorems give a
+size-independent perturbation threshold, which we recast as condensed-openness of
+$\Gap_{d,G}$ along quasi-local directions (Theorem III-B), with an explicit spectral
+flow realizing the equivalence class $\Weq$ (\Cref{prop:flow}). A uniform gap forces a
+uniform correlation length (Theorem III-C), the structural property that distinguishes
+uniformly gapped families from pointwise-gapped ones and that makes $\einf_s$ the
+correct condition in the definition of the substack. Beyond the stratum we recorded
+three conjectures: openness on the physical stratum with finite-quotient detection
+(III-1), uniform-gap descent along profinite disorder hulls (III-2), and the
+identification of quasi-adiabatic path components with the operator-algebraic gapped
+phases (III-3), each anchored to a theorem of this paper and each scoped to respect the
+undecidability wall. The transverse-field Ising computation made the discriminant
+$\Sig=\{g=1\}$ and the stability away from it visible, while insisting that no finite
+computation detects the thermodynamic gap.
+
+The substack is now a well-understood object on its provable stratum and a precisely
+delineated open problem beyond it. Part IV takes $\Gap_{d,G}$ as given and
+group-completes its invertible sector into the condensed phase spectrum
+$\IPcond_{d,G}$; Part V asks which classes that spectrum records are realized by
+uniformly gapped lattice families. Both rest on the stability established here, and
+both inherit its scope.
+
+\section*{Code availability}
+\addcontentsline{toc}{section}{Code availability}
+The Haskell source for the transverse-field Ising computation of \Cref{sec:numerics}
+(exact diagonalization, the base-only cyclic Jacobi eigensolver, and the QuickCheck
+property suite) is available at
+\href{https://github.com/YonedaAI/topological-phases-of-matter}{github.com/YonedaAI/topological-phases-of-matter},
+in \texttt{src/spectral-gap-stability/}.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

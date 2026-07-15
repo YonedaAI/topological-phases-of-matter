@@ -1,0 +1,38 @@
+{
+  "project_title": "Topological Phases of Matter in the Condensed-Mathematics Paradigm",
+  "latex_dir": "papers/latex",
+  "html_dir": "docs/papers",
+  "template": "scripts/paper-template.html",
+  "papers": [
+    {
+      "name": "lieb-robinson-locality",
+      "title": "Condensed Locality: Lieb–Robinson Estimates and Quasi-Local Dynamics on the Moduli Stack of Hamiltonians",
+      "part": "Part I"
+    },
+    {
+      "name": "positivity-cstar-norms",
+      "title": "Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras",
+      "part": "Part II"
+    },
+    {
+      "name": "spectral-gap-stability",
+      "title": "The Uniformly Gapped Substack: Existence and Stability of the Thermodynamic Spectral Gap",
+      "part": "Part III"
+    },
+    {
+      "name": "lattice-eft-equivalence",
+      "title": "From Lattice Models to Effective Field Theories: Stabilization and the Invertible Condensed Phase Spectrum",
+      "part": "Part IV"
+    },
+    {
+      "name": "bordism-realizability",
+      "title": "Physical Realizability of Bordism and Homotopy Classes by Gapped Lattice Systems",
+      "part": "Part V"
+    },
+    {
+      "name": "synthesis",
+      "title": "Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program",
+      "part": "Part VI"
+    }
+  ]
+}

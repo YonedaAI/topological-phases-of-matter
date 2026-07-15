@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "lieb-robinson-locality",
+    "title": "Condensed Locality: Lieb–Robinson Estimates and Quasi-Local Dynamics on the Moduli Stack of Hamiltonians",
+    "part": "Part I",
+    "abstract": "Condensing the space of quasi-local interactions and proving a uniform Lieb–Robinson bound over profinite families of Hamiltonians.",
+    "pages": 21,
+    "hasCode": true,
+    "category": "math-ph"
+  },
+  {
+    "slug": "positivity-cstar-norms",
+    "title": "Positivity, C*-Norms, and Condensed State Spaces of Quasi-Local Algebras",
+    "part": "Part II",
+    "abstract": "Quasi-local C*-algebras, condensed state spaces, and the solid K-theory invariant built from positivity and GNS representations.",
+    "pages": 21,
+    "hasCode": true,
+    "category": "math.OA"
+  },
+  {
+    "slug": "spectral-gap-stability",
+    "title": "The Uniformly Gapped Substack: Existence and Stability of the Thermodynamic Spectral Gap",
+    "part": "Part III",
+    "abstract": "The uniformly gapped substack of the moduli stack of Hamiltonians: existence, stability, and the undecidability wall at its edge.",
+    "pages": 26,
+    "hasCode": true,
+    "category": "math-ph"
+  },
+  {
+    "slug": "lattice-eft-equivalence",
+    "title": "From Lattice Models to Effective Field Theories: Stabilization and the Invertible Condensed Phase Spectrum",
+    "part": "Part IV",
+    "abstract": "Stacking phases into a commutative monoid and group-completing it into the invertible condensed phase spectrum IP^cond.",
+    "pages": 24,
+    "hasCode": true,
+    "category": "math.KT"
+  },
+  {
+    "slug": "bordism-realizability",
+    "title": "Physical Realizability of Bordism and Homotopy Classes by Gapped Lattice Systems",
+    "part": "Part V",
+    "abstract": "Which bordism and homotopy classes in the invertible phase spectrum are actually realized by explicit gapped lattice Hamiltonians.",
+    "pages": 25,
+    "hasCode": true,
+    "category": "math.AT"
+  },
+  {
+    "slug": "synthesis",
+    "title": "Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program",
+    "part": "Part VI",
+    "abstract": "The capstone: composing all five modules into one spine from local interactions to the invertible condensed phase spectrum.",
+    "pages": 26,
+    "hasCode": false,
+    "category": "math-ph"
+  }
+]

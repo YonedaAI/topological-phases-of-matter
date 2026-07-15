@@ -1,0 +1,46 @@
+{
+  "name": "condensed-spectrum",
+  "display_name": "Topological Phases of Matter",
+  "tagline": "Topological phase transitions and topological phases of matter in a condensed-mathematics paradigm",
+  "description": "A dark, ultraviolet-and-indigo theme built for a six-part modular research program on condensed mathematics and topological phases of matter. The palette reads as three registers of the program itself: deep indigo-void for the profinite/condensed substrate, electric ultraviolet for the moduli stack of Hamiltonians (the object being built), and a spectral cyan reserved for the gapless discriminant and phase-boundary motifs (the locus being excluded). A quantized amber accent is held in reserve for the invertible/capstone material only.",
+  "colors": {
+    "bg": "#06060d",
+    "surface": "#100f1e",
+    "surface_hover": "#181733",
+    "accent": "#7c4dff",
+    "accent_hover": "#9a72ff",
+    "accent_glow": "rgba(124,77,255,0.28)",
+    "accent_secondary": "#22d3ee",
+    "text": "#f1f0fa",
+    "text_muted": "#a8a6c4",
+    "text_dim": "#726f94",
+    "border": "#242238",
+    "code_bg": "#0b0b16",
+    "success": "#2dd4a8",
+    "warning": "#f0b429"
+  },
+  "fonts": {
+    "heading": "Space Grotesk",
+    "body": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "radii": {
+    "sm": "6px",
+    "md": "12px",
+    "lg": "20px",
+    "pill": "999px"
+  },
+  "motif": {
+    "background": "Faint Z^d lattice-dot grid at very low opacity over the void background, with a soft ultraviolet radial glow centered on the hero.",
+    "gradientPhase": "linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%) — the 'phase transition' gradient, used on card top-edges and the hero spine diagram.",
+    "capstone": "Part VI (synthesis) is the only surface allowed to use --warning (quantized amber) as a border/glow accent, marking it as the invertible capstone."
+  },
+  "partAccent": {
+    "I": "accent",
+    "II": "accent",
+    "III": "accent_secondary",
+    "IV": "accent",
+    "V": "accent_secondary",
+    "VI": "warning"
+  }
+}

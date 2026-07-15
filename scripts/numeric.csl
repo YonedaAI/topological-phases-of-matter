@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+  <info>
+    <title>Minimal Numeric</title>
+    <id>local:minimal-numeric-inline</id>
+    <category citation-format="numeric"/>
+    <category field="science"/>
+    <summary>Minimal self-contained numeric citation style ([1], [2,3]) for the topological-phases-of-matter LaTeX-to-HTML pipeline. Not derived from any third-party CSL file.</summary>
+    <updated>2026-07-14T00:00:00Z</updated>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="first" and="text" delimiter=", " initialize-with=". " et-al-min="7" et-al-use-first="3"/>
+      <substitute>
+        <names variable="editor"/>
+        <text macro="title"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="container">
+    <group delimiter=" ">
+      <text variable="container-title" font-style="italic"/>
+      <text variable="volume"/>
+      <text variable="issue" prefix="(" suffix=")"/>
+    </group>
+  </macro>
+  <macro name="identifier">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </if>
+      <else-if variable="URL">
+        <text variable="URL"/>
+      </else-if>
+    </choose>
+  </macro>
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=",">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography entry-spacing="1" line-spacing="1">
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <group delimiter=", " suffix=". ">
+        <text macro="author"/>
+        <text macro="title" quotes="true"/>
+        <text macro="container"/>
+        <text variable="publisher"/>
+        <text variable="page"/>
+        <text macro="issued-year"/>
+      </group>
+      <text macro="identifier"/>
+    </layout>
+  </bibliography>
+</style>

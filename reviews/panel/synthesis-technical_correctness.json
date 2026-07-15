@@ -1,0 +1,123 @@
+{
+  "claims": [
+    {
+      "id": "TC1",
+      "claim": "rec:VB scopes low-dimensional completeness correctly: in d=1 Ogata's H^2(G,U(1)) index is a COMPLETE invariant, so real is a bijection and realized = invariant; in d=2 the H^3(G,U(1)) index EXISTS and real is SURJECTIVE onto the in-cohomology classes, but whether the index is complete is OPEN and the paper explicitly does not assert realized = invariant in d=2.",
+      "location": "rec:VB, synthesis.tex lines 734-746; echoes at lines 421-422 (contributions) and 1192-1193 (VI-2)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED, FIX APPLIED -- the prior CRITICAL overclaim (previous round) is fully resolved. rec:VB now reads: 'For on-site finite symmetry in d=1, Ogata's H^2(G,U(1))-valued index is a COMPLETE invariant of the symmetric phase, so real is a bijection onto H^2(G,U(1)) and realized = invariant. In d=2 the situation is genuinely weaker: Ogata's H^3(G,U(1))-valued index EXISTS and is a well-defined invariant, and together with the group-cohomology models of rec:VA this makes real SURJECTIVE onto the in-cohomology classes -- so every such class is realized -- but whether the index is complete (separates all d=2 SPT phases with on-site finite symmetry) is OPEN. We therefore do NOT assert realized = invariant in d=2; only the surjectivity half is settled there.' This now matches the source Part V rem:VB2d (bordism-realizability.tex: d=2 index exists + surjectivity settled, completeness open) exactly, and the recollection title correctly cites 'Theorem V-B and Remark V-B\\''. The abstract/contributions echo (lines 421-422) now reads 'completeness of the operator-algebraic index in d=1 for on-site finite symmetry, with the d=2 index surjective but its completeness open,' and VI-2 (lines 1192-1193) says 'holds at pi_0 in d=1 for on-site finite symmetry ... and is open in general.' Grep-confirmed: no residual unscoped 'complete invariant'/'bijection' claim for d=2 remains anywhere in the file.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC2",
+      "claim": "rec:VC is now the two-part commuting-projector no-go: (i) Electric (Kapustin--Fidkowski) sigma_H = 0 for a U(1)-symmetric model; (ii) Thermal (Kapustin--Spodyneiko) c_- = 0 with no symmetry hypothesis. The bosonic E_8 state (sigma_H = 0, c_- = 8) is excluded via the thermal mechanism (ii), not by sigma_H.",
+      "location": "rec:VC, synthesis.tex lines 748-759; intro lines 364-368; abstract line 214; walls lines 853-854; SSH lines 1093-1094; conclusion line 1329",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED, FIX APPLIED -- the prior MAJOR misattribution/misfiling is fully resolved. rec:VC now carries both citations \\cite{kapustin-fidkowski,kapustin-spodyneiko-thermal} and states: 'two logically independent no-gos. (i) Electric (Kapustin--Fidkowski): if it is U(1)-symmetric, its zero-temperature electric Hall conductance vanishes, sigma_H = 0. (ii) Thermal (Kapustin--Spodyneiko): its chiral central charge vanishes, c_- = 0, with no symmetry hypothesis. Hence a U(1)-symmetric phase with sigma_H != 0 (the integer quantum Hall states, Chern insulators) is excluded by (i), and any phase with c_- != 0 -- including the bosonic E_8 state, which carries no U(1) charge (so sigma_H = 0) yet has c_- = 8 -- is excluded by the chiral mechanism (ii), not by sigma_H.' This matches the source split (bordism-realizability.tex thm:VC (i)/(ii)) exactly, correctly routes E_8 through the thermal no-go with sigma_H = 0 stated explicitly, and restores the Kapustin--Spodyneiko attribution. The intro echo (lines 364-368) now names both theorems and 'every chiral invertible class (nonzero sigma_H under U(1), or nonzero c_-)'; the abstract (line 214), contributions (line 424), walls ('combining the electric Kapustin--Fidkowski and the thermal Kapustin--Spodyneiko no-gos', lines 853-854), the SSH non-chiral note ('sigma_H = 0 and c_- = 0', lines 1093-1094), and the conclusion (line 1329) are all consistent. The required electric/thermal split is preserved throughout.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC3",
+      "claim": "The SSH transition worked example now sets the phase label at degree q = 0: nu in K^0(U) is the locally-constant Z-valued winding label (explicitly distinguished from the momentum-space K^1 tenfold-way class), the relative charge rc = d nu in K^1(B,U), and the codimension-1 linking sphere S^0 carries the +/-1 charge in reduced K^0(S^0) = Z.",
+      "location": "sec:ssh 'The transition charge' paragraph, synthesis.tex lines 1097-1111",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED, FIX APPLIED -- the prior MAJOR degree error is fully resolved and the bookkeeping is now internally consistent end-to-end. The paragraph now reads: 'In the parameter plane B = (t1,t2) the invariant relevant to the transition calculus is not the momentum-space K^1 class of the tenfold way but the winding number it produces: a locally constant Z-valued label on the gapped locus, an element nu in K^0(U) of degree q = 0. ... the linking sphere of eq:linking is S^0 and the local charge is read in the reduced group tilde-K^0(S^0) = Z -- the winding difference +/-1 across the wall, in agreement with the degree shift E^{q-c+1}(pt) = K^0(pt) = Z of eq:linking' and 'rc in K^1(B,U) is nonzero.' Re-checked against the paper's own general formulas with q = 0, c = 1: local charge tilde-E^0(S^0) = K^0(pt) = Z contains +/-1; rc = d nu in E^{q+1}(B,U) = K^1(B,U); Thom value K^{q+1-c}(Sig) = K^0(Sig) = Z per component -- all nonzero and mutually consistent, reproducing the +/-1 unit jump. The momentum-space K^1 observable-algebra invariant (line 1075) is preserved and now explicitly separated from the parameter-space degree q, exactly resolving the earlier conflation. The general localization formalism (see TC12) was already correct and is unchanged; the codimension-2 origin note is retained and correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC4",
+      "claim": "The Table 1 consolidating prose now states 'VI-1 gathers the ten structural conjectures, VI-2 the four comparison/refinement conjectures, VI-3 the single boundary-map conjecture, and VI-4 the four descent conjectures (10+4+1+4=19),' matching the 'Feeds' column.",
+      "location": "sec:opentable, synthesis.tex lines 1271-1273; vs Table 1 'Feeds' column",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "RE-VERIFIED, FIX APPLIED -- the prior MINOR miscount is resolved. The prose now reads 'VI-1 gathers the ten structural conjectures, VI-2 the four comparison/refinement conjectures, VI-3 the single boundary-map conjecture, and VI-4 the four descent conjectures (10+4+1+4=19),' which matches the 'Feeds' column counts (VI-1: 10, VI-2: 4, VI-3: 1, VI-4: 4) and the stated total of nineteen module-level conjectures. The explicit arithmetic '(10+4+1+4=19)' was added. The dependency graph remains a tree rooted at I-1, and III-2 and V-3 both correctly feed VI-4 (no erroneous edge), as verified in the prior round.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC5",
+      "claim": "Recollection rec:aoki carries the Bott-inversion bookkeeping: Solid(K_alg(cond A)) = K^semi(A) is connective; the full Bott-periodic operator K-theory is recovered only after inverting the Bott class, K_op(A) = Solid(K_alg(cond A))[beta^{-1}]; writing it without [beta^{-1}] is false in negative degrees; the two agree in nonnegative degrees.",
+      "location": "rec:aoki + following remark, synthesis.tex lines 565-591 (eq:bottinv line 578)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful to and fully consistent with the source Part II (positivity-cstar-norms.tex thm:aoki, lines 845-871): connective solidification recovers connective semitopological K-theory; for a real Banach algebra this is the connective part of operator K-theory; K_op(A) = Solid(K_alg(cond A))[beta^{-1}] with beta in K_2^top(C) = Z (complex) and the real Bott class in the KO case; the source remark (lines 866-871) states the connective-vs-periodic caveat verbatim ('would be false in negative degrees,' 'agree only in nonnegative degrees'). The synthesis reproduces this precisely, including the load-bearing point that SSH winding (a nonnegative-degree class) needs no Bott inversion. Minor upgrade, not a defect: the synthesis calls beta 'the period-eight real Bott class (an infinite-order generator of the eightfold KO periodicity),' which is more accurate than the source's loose 'order-eight real Bott class' (the KO Bott element generates KO_8(pt) = Z and has infinite order; 'eight' is the period, not the element order). The Bott-inversion caveat the review brief required is present and correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC6",
+      "claim": "Recollection rec:cpw states the CPW undecidability wall: a computable family of translation-invariant nearest-neighbour 2D Hamiltonians for which no algorithm decides gapped vs gapless; the property is Pi_1-complete. The paper never claims Gap_{d,G} is decidable; gap existence is a substack-defining hypothesis.",
+      "location": "rec:cpw line 616-622; stance/wall usage lines 358-365, 616-626, 830-841, 1121-1123, 1283-1285",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful to the source (spectral-gap-stability.tex CPW theorem lines 532-546 and discussion lines 259-266): computable sequence n->H(n) of translation-invariant nearest-neighbour 2D Hamiltonians, deciding gappedness undecidable, 'Pi_1-hard ... in fact Pi_1-complete in the arithmetic hierarchy.' The 'Pi_1-complete' characterization matches the source verbatim (line 265). The wall is respected throughout: 'membership in Gap_{d,G} is not, in general, decidable, and Part III does not attempt to decide it. Existence of a thermodynamic gap DEFINES the substack' (lines 624-626); the walls section (lines 830-835) explicitly scopes stability/openness/descent to neighborhoods of gapped systems, not gappedness tests. The conjectural 'detected by finite quotients' phrasing (III-1/III-2, VI-1, VI-4) concerns descent/assembly of the uniform-gap sheaf condition at a FIXED bound Delta ('the inverse limit of the finite-resolution ones at a fixed Delta'), i.e. compatibility of already-given gap data, not decision of gap existence -- no wall violation. (Line numbers cited are from the prior round; the wall statement and stance are unchanged by the fix pass.)",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC7",
+      "claim": "Recollection rec:III restates III-A/III-B on the frustration-free/LTQO stratum: the n-gap is 2C_Lambda-Lipschitz in the interaction norm (finite-volume openness); on the FF/LTQO stratum BHM + Michalakis-Zwolak + NSY give a size-independent threshold eps_0 with perturbed gap >= gamma/2, so Gap_{d,G} is condensed-open along the quasi-local direction class at each stratum point.",
+      "location": "rec:III lines 628-640; emergent-structure scoping lines 649-657",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful and correctly scoped to the stratum, matching the source (spectral-gap-stability.tex Theorem III-A lines 685-716 and Theorem III-B / sec:stability, summary lines 295-312). The synthesis uses the precise constant '2C_Lambda-Lipschitz in the interaction norm' (line 630), matching source III-A(i) (line 692) and avoiding the loose '2-Lipschitz' the gap paper's own abstract used. It keeps openness ON the FF/LTQO stratum along quasi-local directions only, with the size-independent eps_0 and gap >= gamma/2, exactly as the source ('substack hold on the stratum; we are careful to claim nothing beyond it,' source lines 309-312). The synthesis correctly defers full-stratum openness to Conjecture III-1, hull descent to III-2, and Ogata-phase identification to III-3. The required 'stay on the FF/LTQO stratum' constraint is satisfied.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC8",
+      "claim": "Recollection rec:IIIc (Theorem III-C) restates uniform clustering: a uniformly gapped family over a profinite base with a uniform Lieb-Robinson velocity from rec:Ic has exponential clustering with base-uniform constants (a base-uniform correlation length).",
+      "location": "rec:IIIc lines 642-647",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Consistent with the source (spectral-gap-stability.tex Theorem III-C, summary lines 314-323) and with the imported Part I uniform Lieb-Robinson (rec:Ic). Hastings-Koma/Nachtergaele-Sims clustering constants depend on (gap, v, F); with the uniform gap Delta and the common v, F from Theorem I-C, the constants are base-uniform. Correctly cited to hastings-koma and nachtergaele-sims-clustering. No over-reach: the necessity of the uniform-gap hypothesis (pointwise gaps -> 0 defeats uniform clustering) is the technical justification for 'uniformly' in eq:gapdef and is consistent with the framework.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC9",
+      "claim": "Recollections rec:groth and rec:kubota: group completion of the commutative monoid of phases has the stated universal property (with the stabilization element the shadow of ancilla stacking); Kubota's Omega-spectrum IP^* is the rigorous carrier whose homotopy groups are the invertible gapped systems; applying the recognition principle for grouplike E_infty-spaces yields the CONNECTIVE spectrum IPcond_{d,G}, a connective cover of Kubota's IP^*.",
+      "location": "rec:groth lines 666-673; rec:kubota lines 675-682; connective claim lines 684-685; VI-1 line 1148-1149",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful to the source Part IV (lattice-eft-equivalence.tex): group completion universal property = Theorem IV-A (lines 548-560); 'recognition principle for grouplike E_infty-spaces yields a connective spectrum, the invertible condensed phase spectrum IPcond_{d,G}; Kubota's [Omega-spectrum carrier]' (lines 185-190, 278-282); Kubota Theorem IV-B (thm:kubota). The synthesis's 'connective' designation for IPcond and 'connective cover of Kubota's IP^*' (VI-1) match the source's connective-spectrum construction. Kitaev's periodic-table proposal is correctly credited as the physical motivation (kitaev-periodic-table). Internally consistent (abstract also calls IPcond connective).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC10",
+      "claim": "Recollection rec:hall attributes to Kapustin--Sopenko that the 2D SRE Hall conductance is locally computable, an integer multiple of e^2/h, constant on gapped phases (a homomorphism Phases_{2,G}^x -> Z), with the higher Berry class generalizing it to families and unifying it with the Thouless pump.",
+      "location": "rec:hall lines 690-696",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful to the source Part IV Theorem IV-C (lattice-eft-equivalence.tex lines 1153-1160), cited to kapustin-sopenko-hall and kapustin-sopenko-noether, with the Thouless-pump unification (thouless-pump). Attribution and quantization statements match exactly.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC11",
+      "claim": "Recollection rec:VA (Theorem V-A): for every finite G and omega in H^{d+1}(G,U(1)) there is an explicit G-symmetric local commuting-projector H_omega with a unique SRE ground state on any closed d-manifold, anomalous boundary G-action with obstruction omega, and omega -> [H_omega] a homomorphism H^{d+1}(G,U(1)) -> SRE_{d,G} injective on the group-cohomology subgroup.",
+      "location": "rec:VA lines 718-726",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Faithful to the source Theorem V-A (bordism-realizability.tex lines 416-434): unique gapped SRE ground state on any closed d-manifold (RG fixed point), homomorphism H^{d+1}(G,U(1)) -> SRE_{d,G} 'injective on the group-cohomology subgroup,' anomalous boundary G-action with obstruction exactly omega. The 'injective on the group-cohomology subgroup' qualifier (not a global iso) is preserved -- correctly avoiding an over-claim of surjectivity/completeness onto all SRE classes. This recollection was already correctly scoped and is unaffected by the fix pass.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC12",
+      "claim": "The relative-charge localization formalism: excision E^{q+1}(B,B\\Sig) = (+)_alpha E^{q+1}(N_alpha, N_alpha\\Sig^alpha); Thom E^{q+1}(N_alpha,N_alpha\\Sig^alpha) = E^{q+1-c}(Sig^alpha) (degree shift by codimension c); linking-sphere restriction reduced tilde-E^q(S^{c-1}) = E^{q-c+1}(pt), the same shift; c=1 reduces to S^0 and the difference of the two phase labels.",
+      "location": "sec:linking lines 974-1009 (eq:linking line 989)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Degree bookkeeping verified correct. (N, N\\Sig) deformation-retracts to the Thom space of the E-oriented rank-c normal bundle, so E^{q+1}(N,N\\Sig) = tilde-E^{q+1}(Thom) = E^{q+1-c}(Sig) by the Thom isomorphism -- shift by codimension c, as written. Linking sphere: tilde-E^n(S^m) = E^{n-m}(pt), so tilde-E^q(S^{c-1}) = E^{q-(c-1)}(pt) = E^{q-c+1}(pt), matching E^{q+1-c} evaluated at a point -- the claimed 'same degree shift' is exact. The c=1 reduction to S^0 (reduced cohomology of two points = difference of phase labels) is correct. prop:obstruction (rc=0 iff nu extends over B) is the standard exactness of the pair LES and is proved correctly. This general apparatus was sound in the prior round and is unchanged; its SSH instantiation is now correctly instantiated at q=0 (see TC3).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC13",
+      "claim": "Program-level Conjectures VI-1..VI-4 are stated as open (never proven), each built as a coherent join of module conjectures I-1..V-3; the two hard walls (CPW undecidability, commuting-projector no-go) are declared permanent and never crossed; SSH gap/winding proposition prop:sshgap and its codimension-2 origin note are mathematically correct.",
+      "location": "sec:stance 343-365; progconj VI-1..VI-4 lines ~1160-1215; prop:sshgap lines 1044-1063; codim-2 note lines 1105-1107",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Conjecture/theorem discipline is honest: VI-1..VI-4 are in progconj environments, explicitly 'stated below as a numbered Conjecture VI-k and never asserted as proven' (lines 353-356), each honestly restricted (e.g. VI-2 'holds at pi_0 in d=1 ... open in general'). prop:sshgap verified: q(k)=t1+t2 e^{ik} vanishes iff |t1|=|t2| (gap closes exactly on Sig), winding 0 for |t1|>|t2| (circle radius |t2| about t1 excludes origin) and 1 for |t1|<|t2| (encloses origin), jump +/-1 across Sig -- all correct. Codim-2 origin note: at (0,0) the two nodal lines t1=+/-t2 cross (k=pi node from t1=t2, k=0 node from t1=-t2 coincide) and the codimension jumps to 2 -- a correct description of the two codim-1 walls meeting at a point; not an error. The walls are respected as an invariant (see TC6 for CPW; the two-part no-go conclusion holds and, after the fix, its attribution/example are now also correct, see TC2).",
+      "suggested_fix": null
+    }
+  ],
+  "overall_correctness": "sound",
+  "confidence": 0.9
+}

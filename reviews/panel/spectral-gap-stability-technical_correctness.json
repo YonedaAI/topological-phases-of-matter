@@ -1,0 +1,159 @@
+{
+  "claims": [
+    {
+      "id": "TC1",
+      "claim": "THE CPW WALL: the paper never claims, explicitly or implicitly, that the thermodynamic spectral gap is decidable, checkable, or characterizable by a general criterion; gap existence is treated throughout as a substack-DEFINING hypothesis, per Cubitt-Perez-Garcia-Wolf undecidability.",
+      "location": "Whole paper; esp. sec:intro-wall (lines 255-286), boxed quote lines 271-276 and 579-586, thm:cpw (lines 532-543), cor:no-criterion (lines 560-573), rem:cpw-finite (445-454), rem:what-is-decidable (588-600), rem:lsc-caveat (766-780), sec:numerics-cannot (1366-1379), Conj III-1 evidence (1147-1157), Limitations (1449-1461)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Combed every occurrence of decide/criterion/certify/checkable/algorithm/compute/detect. Every one sits in a wall-respecting or finite-volume-computability context: (a) explicit negations ('no general algorithm ... determines membership', l.272-273; cor:no-criterion 'there is no computable function c with gap(H)>=c(H)', l.564-566; 'no finite-N computation decides the thermodynamic gap', l.1370; 'not a method for detecting gaps', l.1379); (b) the finite-volume n-gap, which IS computable and which undecidability leaves untouched (rem:cpw-finite: undecidability is about eq:thermogap, not eq:ngap, l.447-448 -- correct: a finite matrix has a computable eigenvalue gap); (c) the correct statement of CPW itself (the family n|->H(n) is computable, deciding its gap is not). The 'detected by finite quotients' phrases (l.204, 1141, 1478) belong to Conjecture III-1/III-2, are marked conjectural, and concern descent of the uniform-gap SHEAF condition at a FIXED common bound Delta (assembly of already-given finite-resolution gap data), not decision of gap existence of a single Hamiltonian -- no violation. Theorem III-A's openness is of the FINITE-VOLUME n-gap locus {gap_{Lambda,n}>delta} (decidable); Theorems III-B/III-C are explicitly CONDITIONAL (if uniformly gapped / if in the stratum, then ...). The definitional stance (l.579-586) and the self-policing sentence l.284-286 ('Any statement ... that could be read as ... algorithmically certifying the gap ... is, by construction, absent') are honored. No CRITICAL finding: the wall is respected without exception.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC2",
+      "claim": "The uniformly-gapped substack definition matches coordination/notation.md: Gap_{d,G}(S)=union over Delta>0 of {H : inf_{s in S} gap(H_s) >= Delta}, with 'uniformly' load-bearing (a family gapped pointwise but with inf_s gap = 0 is NOT a member).",
+      "location": "def:gap (lines 459-470), eq:gap-def-intro (230-235); vs notation.md lines 26, 53-54",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "def:gap reads verbatim: 'there exists Delta>0 with inf_{s in S} gap(H_s) >= Delta', Gap(S)=union_{Delta>0} Gap^{>=Delta}(S), Gap^{>=Delta}(S)={H : inf_{s in S} gap(H_s) >= Delta}. This is exactly the notation.md entry (inf over probe points >= Delta; union over Delta>0). The macro block in the preamble (tex lines 25-68) is the canonical block (notation.md lines 69-113) copied verbatim. The 'uniformly' discipline is not merely stated but given technical teeth by cor:pointwise-fail (l.1100-1107) and rem:clustering-meaning (l.1114-1123). \\einf/gap(H_s)/Delta usage consistent throughout. No deviation.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC3",
+      "claim": "Restriction stability (prop:union): for g:S'->S profinite and H in Gap^{>=Delta}(S), the restriction H|_{S'} lies in Gap^{>=Delta}(S'); hence each Gap^{>=Delta} is a subpresheaf and Gap is their filtered union.",
+      "location": "prop:union (lines 479-494)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. g(S') subset of S, so inf_{s' in S'} gap(H_{g(s')}) = inf over the image g(S') >= inf_{s in S} gap(H_s) >= Delta (infimum over a subset dominates the infimum over the whole set). Presheaf functoriality follows from functoriality of Ham. The union statement is def:gap. rem:pointwise-vs-uniform (l.496-504) correctly notes this gives only the 'only if' half (restriction), NOT the reverse descent, which is deferred to Conjecture III-2 -- honest.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC4",
+      "claim": "Weyl monotonicity (lem:weyl): for self-adjoint A,B on a finite-dimensional space, |lambda_k(A)-lambda_k(B)| <= ||A-B|| in operator norm, for every ordered eigenvalue index k.",
+      "location": "lem:weyl (lines 630-651)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Standard Weyl inequality; proof via Courant-Fischer min-max is correct. For any (k+1)-dim V and unit v in V, <v,Av> = <v,Bv> + <v,(A-B)v> <= <v,Bv> + ||A-B||, so lambda_k(A) <= lambda_k(B)+||A-B||; symmetry in A,B gives the reverse. Correct.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC5",
+      "claim": "Finite-volume norm domination (lem:normdom): for fixed finite Lambda there is C_Lambda<infty with ||H_Lambda(Phi)-H_Lambda(Psi)|| <= C_Lambda ||Phi-Psi||_F.",
+      "location": "lem:normdom (lines 656-671)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. H_Lambda(Phi)-H_Lambda(Psi)=sum_{X subset Lambda}(Phi(X)-Psi(X)) is a finite sum (at most 2^{|Lambda|} terms); the F-norm dominates each per-term operator norm up to the F-reweighting factor (cited nsy-quasilocality-1), and summing the finitely many factors over X subset Lambda yields a finite C_Lambda. The paper is careful that C_Lambda depends on Lambda and F (and, per rem:IIIB-scope l.973, C_Lambda -> infinity as Lambda grows), which is exactly why III-A is a finite-resolution statement only.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC6",
+      "claim": "Theorem III-A: at fixed finite Lambda and integer n>=1, the n-gap is 2C_Lambda-Lipschitz in the F-norm; the finite-volume gapped locus {gap_{Lambda,n}>delta} is open; and s|->gap_{Lambda,n}(H_s) is continuous along S-continuous families with open super-level sets.",
+      "location": "thm:IIIA (lines 676-710)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Inequality chain verified. gap_{Lambda,n}(Phi)-gap_{Lambda,n}(Psi) = (lambda_n(H_Lambda(Phi))-lambda_n(H_Lambda(Psi))) - (lambda_0(H_Lambda(Phi))-lambda_0(H_Lambda(Psi))); lem:weyl bounds EACH parenthesized ordered-eigenvalue difference by ||H_Lambda(Phi)-H_Lambda(Psi)||, lem:normdom bounds that by C_Lambda||Phi-Psi||_F, and the triangle inequality over the two differences gives the factor 2, hence <= 2C_Lambda||Phi-Psi||_F. (ii) a Lipschitz function has open strict super-level sets. (iii) an S-continuous family is a continuous map S->B_F; post-composing with the continuous gap_{Lambda,n} gives continuity and openness of super-level sets. All correct. This is the one unconditional (finite-resolution) openness result and it is correctly confined to the finite-volume n-gap, so it does not touch the CPW wall.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC7",
+      "claim": "The abstract and Contributions describe the finite-volume n-gap as '2-Lipschitz in the interaction norm'.",
+      "location": "Abstract (lines 193-195), sec:intro-contrib (lines 295-297); cf. exact theorem thm:IIIA(i) line 680",
+      "assessment": "partially_supported",
+      "severity": "minor",
+      "evidence": "Imprecision (non-load-bearing). The precise theorem thm:IIIA(i) correctly states the constant as 2C_Lambda in the interaction (F-)norm: |gap_{Lambda,n}(Phi)-gap_{Lambda,n}(Psi)| <= 2 C_Lambda ||Phi-Psi||_F. The constant '2' alone is the OPERATOR-norm Lipschitz constant (each of lambda_n, lambda_0 moves by <= ||V||_op, so the gap moves by <= 2||V||_op -- exactly the form used in the numerics, eq:lip-numeric l.1355, with C_Lambda 'absorbed into the per-site normalization'). In the interaction norm the constant is 2C_Lambda, and C_Lambda is generally not 1 (indeed -> infinity with Lambda). So 'the n-gap is 2-Lipschitz in the interaction norm' conflates the two norms and drops C_Lambda. The load-bearing Theorem statement is correct; only the abstract/intro paraphrase is loose.",
+      "suggested_fix": "In the abstract and Contributions write '2-Lipschitz in the operator norm (equivalently 2C_Lambda-Lipschitz in the interaction norm)', or simply 'Lipschitz in the interaction norm', to match thm:IIIA(i)."
+    },
+    {
+      "id": "TC8",
+      "claim": "The fixed-integer-n device (rem:why-n) removes the discontinuity a variable ground-state multiplicity m(Phi) would introduce; on any region where the multiplicity is locally constant = m the physical gap agrees with the m-gap and III-A applies verbatim.",
+      "location": "rem:why-n (lines 712-731)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. Fixing the level index n decouples 'the gap' from the (Phi-dependent) multiplicity, so gap_{Lambda,n} is a difference of two ordered eigenvalues, each continuous by lem:weyl; only the identification of which index is 'the physical gap' shifts, at isolated level-crossing couplings. The remark's 'measure-zero set of couplings' is a generic-position heuristic (rigorous for real-analytic families), stated as such; it is not load-bearing for III-A, whose continuity holds for every fixed n regardless. Consistent with the numerics (ferromagnetic phase m=2, physical gap = 2-gap).",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC9",
+      "claim": "Lower semicontinuity of the thermodynamic gap (prop:lsc): under weak-* convergence of ground states and convergence of the low-lying spectral data, gap(Phi_j)>=gamma implies gap(Phi)>=gamma; 'in general one has only gap(Phi) >= limsup ... not equality, and no lower bound at all without them.'",
+      "location": "prop:lsc (lines 740-750) and rem:lsc-caveat (766-780)",
+      "assessment": "partially_supported",
+      "severity": "minor",
+      "evidence": "The physics is correct and wall-respecting, but the statement mislabels the semicontinuity direction and the final inequality clause is inconsistent as written. The general fact (correctly given in rem:lsc-caveat, l.771-777) is that UPPER semicontinuity FAILS -- a low-lying level can descend to the ground energy in the limit, collapsing the gap -- so the gap is only LOWER semicontinuous, i.e. gap(Phi) <= liminf_j gap(Phi_j) (limit gap bounded ABOVE by nearby gaps; the CPW collapse gap(Phi_j)=c>0 -> gap(Phi)=0 satisfies this). But prop:lsc's conditional conclusion 'gap(Phi) >= gamma' is a LOWER bound on the limit gap = gap PERSISTENCE = the upper-semicontinuity direction, obtainable only via the extra hypotheses that forbid collapse -- so titling the result 'Lower semicontinuity' while its content is conditional persistence is confusing. Worse, the fallback clause 'one has only gap(Phi) >= limsup' is the full upper-semicontinuity inequality gap(Phi) >= limsup_j gap(Phi_j), which is exactly what the paper says FAILS; as a weaker 'only ...' fallback it is also inconsistent (limsup gap(Phi_j) >= gamma, so '>= limsup' is stronger than the preceding '>= gamma', not weaker). The intended honest fallback is the true LSC bound gap(Phi) <= liminf_j gap(Phi_j) (which gives no lower bound, matching 'no lower bound at all without them'). NON-LOAD-BEARING: prop:lsc feeds none of Theorems III-A/B/C; it is cited only in Conjecture III-2's heuristic 'evidence' (l.1187). The proof sketch (strong-resolvent-convergence persistence in the NSY GNS setting) is a legitimate sketch of the CONDITIONAL persistence claim; the defect is in the statement's direction/wording.",
+      "suggested_fix": "Rewrite the last sentence as 'In general the gap is only lower semicontinuous, gap(Phi) <= liminf_j gap(Phi_j), giving no lower bound; equality (continuity) can fail, and without the auxiliary hypotheses no lower bound on gap(Phi) survives.' Retitle the proposition 'Conditional persistence / one-sided continuity of the gap' or state explicitly that the gamma-persistence conclusion is the (conditional) upper-semicontinuity direction while lower semicontinuity is the unconditional fact."
+    },
+    {
+      "id": "TC10",
+      "claim": "The three cited stability inputs are transcribed with their true hypotheses: BHM (thm:bhm) frustration-freeness + TQO-1/TQO-2(LTQO) + uniform local gap gamma => a size-independent threshold eps_0 (independent of system size) with perturbed gap >= gamma/2; Michalakis-Zwolak (thm:mz) LTQO + uniform local gap <=> stability with size-independent threshold; NSY (thm:nsy) the same for the infinite-volume bulk gap directly.",
+      "location": "thm:bhm (875-887), thm:mz (889-892), thm:nsy (898-906)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "All three are stated in agreement with the literature. thm:bhm: eps_0 depends only on gamma, LTQO decay, local Hilbert dimension, lattice geometry -- explicitly NOT on system size -- with sub-polynomial ground-state splitting; correct BHM statement (bhm-stability, bravyi-hastings-shortproof both resolve in references.bib). thm:mz: correct MZ statement including the converse (stability + area law => LTQO). thm:nsy: correct -- the NSY result works with eq:thermogap directly 'without assuming a uniform finite-size lower bound as a separate axiom', matching the framework stance (l.438-443). The paragraph l.908-913 correctly identifies the single shared quantity used downstream: a perturbation radius eps_0 that does not shrink with system size.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC11",
+      "claim": "The frustration-free/LTQO stratum S (def:stratum) is a genuine proper subclass (frustration-free + uniform finite-volume gap gamma + LTQO with fixed constants), S subset of Gap, and the paper never extends a frustration-free theorem to a non-frustration-free system.",
+      "location": "def:ff (795-802), def:ltqo (812-824), def:stratum (832-844), rem:stratum-boundary (850-867)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct and scrupulously scoped. def:ff (common-kernel/local-term-0 characterization) and def:ltqo (BHM TQO-2 local-indistinguishability with a fixed rapidly-decaying Omega_LTQO) are standard. def:stratum requires all three with constants uniform in Lambda and over S; 'By construction S subset of Gap: the uniform finite-volume gap gamma forces gap(Phi)>=gamma' matches sec:framework-gap (uniform finite-volume gap => thermodynamic gap >= gamma). rem:stratum-boundary correctly places chiral/Chern insulators OUTSIDE S (they are gapped and stable but not frustration-free commuting-projector systems; their stability is via spectral-localizer/K-theory, prodan-sb) and defers a unifying statement to Conjecture III-1 -- no over-reach.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC12",
+      "claim": "Theorem III-B recasts BHM/MZ/NSY as: for Phi in S and quasi-local direction V (sup_x ||V_x||<=1, F-controlled decay), the segment {Phi+tV : 0<=t<eps_0} subset of Gap with thermodynamic gap >= gamma/2; consequently Gap is condensed-open along the quasi-local direction class at each point of S.",
+      "location": "thm:IIIB (918-938), proof (940-961), sec:framework-open (506-522)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "The recast is faithful and does not smuggle in more than the cited theorems give. Proof: for 0<=t<eps_0 the perturbation tV has per-site strength sup_x ||tV_x|| <= t < eps_0 and the required F-decay; since the UNPERTURBED Phi is in S (frustration-free, uniform local gap gamma, LTQO with fixed constants), thm:bhm/thm:mz/thm:nsy apply to Phi+tV and give a thermodynamic gap >= gamma/2; gamma/2>0 is t-independent so the whole segment lies in Gap^{>=gamma/2}. The condensed clause correctly checks the sec:framework-open definition POINTWISE at each Phi in S (openness 'at Phi'), and the S-family s|->Phi+t(s)V(s) with stratum-uniform data is exactly the general family in the eps_0-ball around Phi, giving inf_s gap(H_s)>=gamma/2. Three correct guardrails: (1) it does NOT require the PERTURBED system to be frustration-free (only the base point), matching the stability theorems; (2) openness is claimed only AT stratum points and only ALONG the quasi-local class, never at non-stratum points, never along non-quasi-local directions, never with a threshold uniform over all of Gap (rem:IIIB-scope l.963-976); (3) the threshold's size-independence is the whole mechanism, correctly contrasted with C_Lambda->infinity in III-A. MINOR caveat (not smuggling, presentational): 'interaction-norm radius eps_0' (l.310-311, 934) identifies eps_0 with an F-norm radius, whereas eps_0 is properly the BHM per-site sup-norm threshold with a decay condition; the two are compatible for the F-controlled quasi-local direction class used, but the exact per-site-vs-F-norm translation constant is left implicit.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC13",
+      "claim": "Spectral flow inside a gapped segment (prop:flow): along a stratum segment with gap>=gamma/2 there is a quasi-local, F-norm-continuous cocycle of *-automorphisms alpha_t mapping ground-state spaces and lying in the equivalence class W.",
+      "location": "prop:flow (1003-1013), proof sketch (1015-1027), rem:flow-W (1029-1038)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct as proof-by-citation: the quasi-adiabatic/spectral-flow construction of Hastings-Wen (hastings-wen-qac) in the quasi-local F-function formulation of Bachmann-Michalakis-Nachtergaele-Sims (bmns-automorphic) and NSY (nsy-quasilocality-2), all of which resolve. The gap lower bound gamma/2 controlling the filter F_gamma and the F-tails of the generator D_t is the correct mechanism; membership in W and F-norm continuity are as in Part I. rem:flow-W correctly limits the claim to WITHIN a single stratum segment and defers the general (cross-stratum) statement to Conjecture III-3 -- no over-reach.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC14",
+      "claim": "Theorem III-C: a uniformly gapped family H in Gap^{>=Delta}(S) with uniform Lieb-Robinson velocity v and common F-function has s-independent clustering constants c,C (depending only on Delta, v, F), hence a correlation length xi(s) <= c^{-1} uniform over the profinite base.",
+      "location": "thm:hk (1052-1065), thm:IIIC (1074-1088), proof (1090-1098); consistency vs Part I prop:clustering",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct and consistent with the Part I clustering proposition it imports. thm:hk is the standard Hastings-Koma / Nachtergaele-Sims exponential clustering (both keys resolve). III-C applies thm:hk at each s: its constants depend on (gamma,v,F) only; by hypothesis the gap input is the uniform gamma=Delta for every s (since gap(H_s)>=Delta), and v, F are the COMMON data supplied by Part I's Theorem I-C (uniform Lieb-Robinson) for an S-continuous family in B_F -- so the produced c,C are the same for all s. This reproduces Part I's Proposition 5.4 (uniform clustering, constants depending on B_a,C_{F_a},a,Delta 'not on s'); since v=2 B_a C_{F_a}/a the two dependency sets coincide -- NO inconsistency (III-C is the Part III packaging of the Part I result, honestly crediting Part I for the uniform LR data at l.1454). The representative rate c ~ gamma/v is hedged ('up to the geometric factors'); the only thing consumed downstream, s-independence of c,C, is sound.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC15",
+      "claim": "Necessity of the uniform-gap hypothesis (cor:pointwise-fail): if H_s is gapped for every s but inf_s gap(H_s)=0, the per-point rate c(s) ~ gap(H_s)/v degenerates along a sequence and no uniform correlation-length bound exists.",
+      "location": "cor:pointwise-fail (1100-1112), rem:clustering-meaning (1114-1123)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Correct. The Hastings-Koma rate is proportional to the gap, so along s_j with gap(H_{s_j})->0 one gets xi(s_j)->infinity and sup_s xi(s)=infinity. This establishes that the uniform-gap hypothesis is necessary (not merely sufficient) for uniform clustering, which is the technical justification for keeping inf_s in def:gap. Consistent with the notation.md warning that 'uniformly' is essential.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC16",
+      "claim": "Numerical illustration (TFIM): H(g)=-sum Z_iZ_{i+1} - g sum X_i has Z_2 symmetry, JW dispersion eps_k=2 sqrt(1+g^2-2g cos k) with min = 2|1-g|, gapless discriminant Sigma={g=1}, exact trace identities Tr H=0 and Tr H^2=((N-1)+N g^2)2^N, and finite-volume Lipschitz check |gap_N(H+V)-gap_N(H)|<=2||V||<=2 lambda N.",
+      "location": "sec:numerics (1238-1395); eq:tfim (1252-1256), eq:disp (1263-1266), eq:sigma (1275-1278), eq:traces (1292-1297), eq:lip-numeric (1353-1357)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Independently verified. Z_2 symmetry: P=prod X_i, P Z_iZ_{i+1} P = Z_iZ_{i+1}, so [H,P]=0. Dispersion: 1+g^2-2g cos k is minimized at k=0 giving (1-g)^2, so min_k eps_k = 2|1-g|, vanishing only at g=1 => Sigma={g=1}. Trace identities: Tr H=0 since Tr(Z_iZ_{i+1})=Tr(X_i)=0; Tr H^2 = sum_{i=1}^{N-1} Tr[(Z_iZ_{i+1})^2] + g^2 sum_{i=1}^N Tr[X_i^2] (all cross terms are non-identity Pauli strings with trace 0) = (N-1)2^N + g^2 N 2^N = ((N-1)+N g^2)2^N -- matches eq:traces exactly, and is a genuine eigensolver validation. Lipschitz numeric: V=lambda sum s_i Z_i has ||V|| <= lambda N, and 2||V|| is the operator-norm Weyl bound (gap moves by <= 2||V||) -- correct instance of III-A. O(2^{3N}) dense-diagonalization cost and the N<=8 cap are accurate. sec:numerics-cannot (l.1366-1379) explicitly disclaims any gap-detection reading, consistent with the wall.",
+      "suggested_fix": null
+    },
+    {
+      "id": "TC17",
+      "claim": "Conjectures III-1 (openness on the physical stratum with finite-quotient detection), III-2 (uniform-gap descent along profinite disorder hulls), III-3 (QAC path components = operator-algebraic gapped phases) are labelled conjectures, each anchored to a proved theorem of the paper and each scoped to respect the undecidability wall.",
+      "location": "conj:III1 (1135-1157), conj:III2 (1169-1192), conj:III3 (1197-1225), rem:master (1227-1236)",
+      "assessment": "supported",
+      "severity": "info",
+      "evidence": "Honest conjecture-vs-theorem discipline. Each is stated in a conjone/conjtwo/conjthree environment with an 'Evidence and obstruction' paragraph. III-1 is anchored to III-B (its stratum/quasi-local restriction), and its obstruction is stated to BE the wall: 'openness in the full Ham, with a uniform radius, would let one certify gaps ... which no uniform radius can survive' -- i.e. the conjecture is deliberately NOT strengthened to full Ham (reaffirmed in Limitations l.1457-1459). III-2 is anchored to prop:union (the 'only if' half) with the genuine descent 'if' half open, obstruction correctly attributed to the gap being thermodynamic (prop:lsc). III-3 is anchored to prop:flow (one direction, locally) with the cross-stratum and homotopy-comparison obstructions stated. No conjecture is used as if proved anywhere. Consistent with the series stance in notation.md (theorems only when provable with cited technology; everything else a numbered Conjecture).",
+      "suggested_fix": null
+    }
+  ],
+  "overall_correctness": "mostly_sound",
+  "confidence": 0.86
+}

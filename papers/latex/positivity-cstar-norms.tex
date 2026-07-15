@@ -1,0 +1,1369 @@
+\documentclass[12pt]{article}
+
+% ==== topological-phases-of-matter : canonical macros (v1, 2026-07-14) ====
+% Requires amsmath, amssymb, amsfonts (mathfrak, mathbf, mathcal all standard).
+\usepackage{amsmath,amssymb,amsfonts}
+
+% --- condensation / probes ---
+\newcommand{\cond}[1]{\underline{#1}}          % condensation X |-> \cond{X}
+\newcommand{\cg}[1]{\underline{#1}}            % condensed group (alias, for readability)
+\newcommand{\Cont}{\operatorname{Cont}}        % Cont(S,X)
+\newcommand{\Shape}{\operatorname{Shape}}      % shape / homotopy type
+
+% --- interaction space & locality ---
+\newcommand{\Int}{\mathcal{I}}                 % \Int_{d,G} interaction space
+\newcommand{\Ffun}{F}                          % F-function (interaction decay)
+\newcommand{\BF}{\mathcal{B}_{F}}              % interaction Banach space for F
+
+% --- moduli stacks ---
+\newcommand{\Ham}{\mathfrak{Ham}}              % \Ham_{d,G}
+\newcommand{\Gap}{\mathfrak{Gap}}              % \Gap_{d,G}
+\newcommand{\Phase}{\mathfrak{Phase}}          % \Phase_{d,G}
+\newcommand{\Phases}{\operatorname{Phases}}    % \Phases_{d,G} = pi_0 Shape Phase
+\newcommand{\Weq}{\mathcal{W}}                 % class of equivalences to invert
+\newcommand{\st}{\mathrm{st}}                  % stabilization superscript
+\newcommand{\hfix}[1]{h#1}                     % homotopy-fixed-point superscript, e.g. \Phase_d^{\hfix{\cg{G}}}
+\newcommand{\quotstack}[2]{[#1/#2]}            % action stack [Y/\cg{G}]
+
+% --- gap ---
+\newcommand{\gapof}[1]{\operatorname{gap}(#1)} % gap(H)
+\newcommand{\gapbound}{\Delta}                  % uniform gap bound
+
+% --- stacking / spectrum ---
+% \boxtimes is built in (stacking product)
+\newcommand{\IPcond}{\mathbf{IP}^{\mathrm{cond}}}  % invertible condensed phase spectrum
+
+% --- transitions / discriminant / charge ---
+\newcommand{\Sig}{\Sigma}                       % \Sig_f gapless discriminant
+\newcommand{\rc}{\partial\nu}                   % relative transition charge in E^{q+1}(B,U_f)
+
+% --- observables & solid K-theory ---
+\newcommand{\Kop}{K_{\mathrm{op}}}             % operator / topological K-theory
+\newcommand{\Kalg}{K_{\mathrm{alg}}}           % algebraic K-theory
+\newcommand{\Solid}{\operatorname{Solid}}      % solidification functor
+
+% --- disorder ---
+\newcommand{\dis}{\Omega}                       % disorder hull \Omega = F^{Z^d}
+% ==== end canonical macros ====
+
+
+% amsthm only (amsmath, amssymb, amsfonts are loaded by the canonical macro block above)
+\usepackage{amsthm}
+
+% Diagrams
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+% References
+\usepackage{thmtools}      % shared-counter theorem envs with correct cleveref names
+\usepackage{needspace}     % keep short environments off page breaks
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Graphics
+\usepackage{graphicx}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% GrokRxiv sidebar (uses the modern kernel shipout hook, not the obsolete everypage)
+\usepackage{xcolor}
+
+% --- paper-local macros (Part II) ---
+\newcommand{\qla}{\mathcal{A}}                  % quasi-local C*-algebra
+\newcommand{\loc}{\mathrm{loc}}                 % local subalgebra subscript
+\newcommand{\St}{\mathcal{S}}                   % state space S(A)
+\newcommand{\Pu}{\mathcal{P}}                   % pure states (extreme points)
+\newcommand{\Hil}{\mathcal{H}}                  % Hilbert space
+\newcommand{\Rep}{\pi}                          % representation
+\newcommand{\cyc}{\Omega_{\phi}}                % GNS cyclic vector (context-clear)
+\newcommand{\Aut}{\operatorname{Aut}}          % automorphism group
+\newcommand{\Prob}{\operatorname{Prob}}        % probability measures
+\newcommand{\dalg}{\mathfrak{A}}               % disordered observable algebra
+\newcommand{\CAlg}{\mathsf{C^{*}Alg}}          % category of C*-algebras
+\newcommand{\CStar}{\mathsf{C^{*}St}}          % C*-algebras with a state
+\newcommand{\Cond}{\mathsf{Cond}}              % condensed sets
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\TT}{\mathbb{T}}
+\newcommand{\Mn}{M_{n}(\CC)}
+\newcommand{\wkstar}{\mathrm{w\text{-}\ast}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\ip}[2]{\langle #1 , #2 \rangle}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\id}{\mathbf{1}}
+\DeclareMathOperator{\ev}{ev}
+
+% --- theorem environments ---
+% thmtools 'sibling=theorem' keeps shared numbering (Theorem 2.1, Proposition 2.2, ...)
+% while registering the correct cleveref name for each environment, so cross-references
+% print "Proposition"/"Lemma"/... rather than mislabelling everything "Theorem".
+\declaretheorem[name=Theorem,numberwithin=section]{theorem}
+\declaretheorem[name=Proposition,sibling=theorem]{proposition}
+\declaretheorem[name=Lemma,sibling=theorem]{lemma}
+\declaretheorem[name=Corollary,sibling=theorem]{corollary}
+\declaretheorem[name=Definition,style=definition,sibling=theorem]{definition}
+\declaretheorem[name=Example,style=definition,sibling=theorem]{example}
+\declaretheorem[name=Remark,style=remark,sibling=theorem]{remark}
+% program-labelled headline theorems: II-A, II-B, II-C (stable across the series)
+\theoremstyle{plain}
+\newtheorem{progthm}{Theorem}
+\renewcommand{\theprogthm}{II-\Alph{progthm}}
+% conjectures with stable II-N numbering (kept fixed across papers)
+\newtheorem{conjecture}{Conjecture}
+\renewcommand{\theconjecture}{II-\arabic{conjecture}}
+
+% Make hyperref anchors carry the section number: with a section-reset shared
+% counter the bare anchors (proposition.2, definition.1, ...) otherwise collide
+% across sections and mis-target links.
+\makeatletter
+\newcommand{\fixtheH}[1]{%
+  \@ifundefined{theH#1}{}%
+    {\expandafter\renewcommand\csname theH#1\endcsname{\thesection.\arabic{theorem}}}}
+\fixtheH{theorem}\fixtheH{proposition}\fixtheH{lemma}\fixtheH{corollary}%
+\fixtheH{definition}\fixtheH{example}\fixtheH{remark}
+\makeatother
+
+\crefname{progthm}{Theorem}{Theorems}
+\Crefname{progthm}{Theorem}{Theorems}
+\crefname{conjecture}{Conjecture}{Conjectures}
+\Crefname{conjecture}{Conjecture}{Conjectures}
+\frenchspacing            % consistent inter-sentence / abbreviation spacing
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=green!45!black,
+  urlcolor=blue!55!black
+}
+
+% --- GrokRxiv DOI sidebar ---
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddToHook{shipout/background}{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        rotate=90,
+        anchor=south,
+        font=\Large\sffamily\bfseries\color{grokgray},
+        inner sep=0pt
+      ] at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.07.positivity-cstar-norms\quad
+       [\,math.OA\,]\quad
+       14 Jul 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+\title{\bfseries Positivity, $C^{*}$-Norms, and Condensed State Spaces of
+Quasi-Local Algebras\\[0.4em]
+\large Part II of \emph{Topological Phases of Matter in the
+Condensed-Mathematics Paradigm}}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration, YonedaAI Research Collective} \\
+Chicago, IL \\
+\texttt{matthew@yonedaai.com} $\cdot$ \url{https://yonedaai.com}}
+
+\date{14 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The observable side of a quantum lattice system is a quasi-local $C^{*}$-algebra;
+its states, its positivity structure, and its $K$-theory are the raw material from
+which topological invariants of phases are cut. This paper recasts that material in
+condensed mathematics, separating what is provable today from what is not. For a spin
+system with finite on-site dimension the
+quasi-local algebra $\qla$ is a separable unital approximately finite-dimensional
+(AF) algebra, uniformly hyperfinite (UHF) in the homogeneous case, and its
+condensation $\cond{\qla}(S)=C(S,\qla)$ is a sheaf of $C^{*}$-algebras on the site
+of profinite sets, \emph{light} because $\qla$ is separable. We prove that the
+weak-$\ast$ compact convex state space $\St(\qla)$ condenses to a compact Hausdorff
+condensed set on which the condensation functor is fully faithful, and that
+positivity together with normalization cuts it out as a closed condensed subobject
+of the condensed dual ball (Theorem~II-A). The Gelfand--Naimark--Segal construction
+is a functor on pointed $C^{*}$-algebras, and on a uniformly gapped family the
+ground-state section is weak-$\ast$ continuous by the
+Bachmann--Michalakis--Nachtergaele--Sims spectral-flow cocycle, so it is a genuine
+point of the condensed state space over the gapped locus, the interface with
+Parts~I and~III. The load-bearing bridge is Aoki's solidification theorem:
+solidification of the connective algebraic $K$-theory of the condensed algebra
+recovers connective semitopological $K$-theory, and, for a real Banach algebra, the
+full operator $K$-theory after inverting the Bott class (Theorem~II-B). The
+tenfold-way invariants of free-fermion and disordered phases are then values of an
+intrinsically condensed-mathematical functor, though the numbers themselves are
+unchanged. For disorder we recall Bellissard's
+crossed product $C(\dis)\rtimes\ZZ^{d}$ over a profinite hull $\dis=Q^{\ZZ^{d}}$ and
+show that its condensation is functorial in the finite quotients of $\dis$
+(Theorem~II-C), so profinite probes \emph{match} the physical configuration space.
+Five numbered conjectures record what remains open. Accompanying Haskell code
+verifies positivity, the GNS construction, and the qubit Bloch ball.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The problem this paper addresses}
+
+The program that this series develops treats a topological phase of matter as a
+connected component of a stabilized condensed stack of uniformly gapped local
+Hamiltonians. The prospectus for the program lists five analytic inputs that the
+condensed formalism organizes but does not by itself supply: locality and
+Lieb--Robinson estimates; positivity and $C^{*}$-norm conditions; existence and
+stability of a thermodynamic gap; the passage from lattice models to effective
+field theories; and the physical realizability of abstract classes. This is the
+paper for the second input.
+
+The word ``positivity'' is doing real work. A quantum lattice system is presented
+combinatorially (sites, local Hilbert spaces, a decaying interaction), but its
+physical content is carried by an algebra of observables and by the states on that
+algebra. That algebra is not an arbitrary Banach algebra: it is a $C^{*}$-algebra,
+and the extra axiom $\norm{a^{*}a}=\norm{a}^{2}$ forces a positivity structure that
+determines its state space, its representation theory, and ultimately its
+$K$-theory. Topological invariants of free-fermion and disordered phases are, in the
+end, classes in the operator $K$-theory of this algebra. If the condensed
+reformulation is to reach those invariants, it must first carry the $C^{*}$-algebra,
+its states, and its positivity into the condensed world without loss. Our task is
+to check that this transfer is faithful, to identify what becomes provable once it
+is done, and to name the bridge that turns the operator-$K$ invariant into an
+intrinsically condensed object.
+
+\subsection{Results and stance}
+
+We hold to the editorial discipline of the series: a statement is labelled
+\emph{Theorem} or \emph{Proposition} only when it has a complete proof assembled
+from cited, present-day mathematics, and everything else is a numbered
+\emph{Conjecture}. Under that discipline the paper proves the following.
+
+\begin{itemize}
+\item The quasi-local algebra of a finite-on-site-dimension spin system is a
+separable unital AF (UHF in the homogeneous case) $C^{*}$-algebra
+(\Cref{prop:uhf}), and its condensation $\cond{\qla}$ is a sheaf of $C^{*}$-algebras
+on profinite sets, light because $\qla$ is separable (\Cref{prop:condcstar}).
+
+\item The state space $\St(\qla)$ is weak-$\ast$ compact convex Hausdorff, its
+condensation is a compact Hausdorff condensed set on which condensation is fully
+faithful, and positivity plus normalization exhibit it as a closed condensed
+subobject of the condensed dual ball (\Cref{thm:statespace}, labelled II-A in the
+program).
+
+\item GNS is a functor on the category of $C^{*}$-algebras with a state
+(\Cref{prop:gns}), and on a uniformly gapped $C^{1}$-family the ground-state
+section is weak-$\ast$ continuous (\Cref{thm:groundstate}), hence a point of the
+condensed state space over the gapped locus.
+
+\item Aoki's solidification theorem identifies operator $K$-theory of a real Banach
+algebra with the solidification of the algebraic $K$-theory of its condensation
+(\Cref{thm:aoki}, labelled II-B); consequently the tenfold-way invariants factor
+through a condensed-mathematical functor (\Cref{cor:condinvariant}), a statement we
+are careful not to inflate.
+
+\item For a profinite disorder hull the covariant observable algebra is Bellissard's
+crossed product $C(\dis)\rtimes\ZZ^{d}$, a separable $C^{*}$-algebra whose
+$K$-theory carries the disorder-averaged invariants, and its condensation is
+functorial in the finite quotients of $\dis$ (\Cref{thm:crossed}, labelled II-C).
+\end{itemize}
+
+The open content is organized as \Cref{conj:substack,conj:solidnat,conj:real,conj:classifying,conj:split}:
+that positivity and the $C^{*}$-identity cut the Hamiltonian stack out as a closed
+condensed substack; that the solid invariant is natural in the disorder hull; that
+a Real/$KKO$ refinement recovers the eightfold $KO$-degrees of the Kitaev table;
+that the condensed state space is a classifying object for condensed
+representations; and that the split property and superselection structure admit
+condensed enhancements.
+
+A word on what this paper does \emph{not} claim. It does not produce a new physical
+invariant. The Chern number of a Chern insulator, the $\ZZ_{2}$ index of a
+time-reversal-invariant insulator, and the winding number of the SSH chain
+are unchanged. What changes is their provenance: they are exhibited as values of a
+functor whose inputs and intermediate objects are condensed. The value proposition
+is organizational, and we say so plainly rather than dress it as a breakthrough.
+
+\subsection{Relation to companion papers}
+\label{sec:companions}
+
+This is Part~II of six. Part~I,
+\emph{Condensed Locality}~\cite{paperLocality}, builds the interaction Banach space
+$\BF$ and shows that the Heisenberg dynamics is a morphism of light condensed sets
+$\RR\times\cond{\BF}\to\cond{\Aut(\qla)}$; that action is by automorphisms of the
+very algebra whose states we condense here, and the equivalence class $\Weq$ that
+Part~I generates through quasi-adiabatic continuation is what makes the ground-state
+section of \Cref{thm:groundstate} well defined up to the physically correct notion
+of sameness. Part~III,
+\emph{The Uniformly Gapped Substack}~\cite{paperGap}, is where the uniform-gap
+hypothesis of \Cref{thm:groundstate} is analyzed; our continuous ground-state
+section is a section over their gapped locus $U_{f}\subset\Gap_{d,G}$, and the
+weak-$\ast$ continuity we prove is the reason $\pi_{0}$ of their localized stack is
+well posed on the observable side. Part~IV,
+\emph{From Lattice Models to Effective Field Theories}~\cite{paperEFT},
+group-completes the invertible sector into the spectrum $\IPcond_{d,G}$; the Aoki
+bridge of \Cref{thm:aoki} is precisely the analytic completion their construction
+requires, and our \Cref{cor:condinvariant} supplies the observable-algebra
+$K$-theory they compare against Freed--Hopkins bordism. Part~V,
+\emph{Physical Realizability}~\cite{paperRealizability}, studies which of the
+operator-$K$ classes we place in condensed form are realized by gapped lattice
+models; our disorder functoriality (\Cref{thm:crossed}, \Cref{conj:solidnat}) is the
+input to their functorial-realizability question over disorder hulls. Part~VI,
+\emph{A Modular Research Program}~\cite{paperSynthesis}, assembles the modules; this
+paper is module~2, the positivity/$C^{*}$ layer, and its emergent contribution to
+the synthesis is the functorial solid invariant of disordered families.
+
+\subsection{Notation}
+
+We use the canonical macros of the series: $\cond{X}$ for condensation with
+$\cond{X}(S)=\Cont(S,X)$, $\Ham_{d,G}$, $\Gap_{d,G}$, $\Phase_{d,G}$ for the moduli
+stacks, $\Weq$ for the inverted equivalences, $\Kop$ and $\Kalg$ for operator and
+algebraic $K$-theory, $\Solid$ for solidification, and $\dis=Q^{\ZZ^{d}}$ for the
+profinite disorder hull. Paper-local objects are $\qla$ (the quasi-local algebra),
+$\St(\qla)$ and $\Pu(\qla)$ (states and pure states), and $\dalg$ (the disordered
+observable algebra). Throughout, $C^{*}$-algebras are complex and unital unless we
+say otherwise; the sole exception is \Cref{sec:aoki}, where Aoki's theorem is a
+statement about \emph{real} algebras and we flag the change explicitly.
+
+\section{Condensed mathematics and quasi-local \texorpdfstring{$C^{*}$}{C*}-algebras}
+\label{sec:framework}
+
+We recall only what we use, and we fix conventions so that the later sections read
+cleanly. Nothing in this section is new; the point is to make the two categories,
+condensed sets and $C^{*}$-algebras, interoperate.
+
+\subsection{Condensed sets and profinite probes}
+
+A \emph{profinite set} is a cofiltered limit of finite sets, equivalently a compact,
+Hausdorff, totally disconnected topological space. The category of profinite sets
+carries the topology whose covers are the finite jointly surjective families; a
+\emph{condensed set} is a sheaf of sets for this topology~\cite{clausen-scholze-condensed,barwick-haine-pyknotic}.
+The basic examples come from spaces.
+
+\begin{definition}[Condensation]
+\label{def:condensation}
+For a topological space $X$, its \emph{condensation} $\cond{X}$ is the condensed set
+\[
+  \cond{X}(S) \;=\; \Cont(S,X), \qquad S \text{ profinite,}
+\]
+with restriction along maps of profinite sets given by precomposition.
+\end{definition}
+
+The assignment $X\mapsto\cond{X}$ is functorial. On the subcategory of compactly
+generated (weak Hausdorff) spaces it is fully faithful, and it preserves finite
+products, because $\Cont(S,X\times Y)=\Cont(S,X)\times\Cont(S,Y)$ for every probe
+$S$~\cite{clausen-scholze-condensed}. Full faithfulness is the technical reason a
+condensed reformulation loses nothing: an ordinary compact space and its
+condensation carry the same maps into and out of them.
+
+For the disorder applications we will want a size-controlled variant. A profinite
+set is \emph{light} if it is second countable, equivalently a countable cofiltered
+limit of finite sets; \emph{light condensed sets} are sheaves on the light profinite
+sets~\cite{clausen-scholze-analytic-stacks}. The condensation of a separable
+(metrizable, second countable) space is determined by its values on light probes,
+and it is convenient to regard it as a light condensed set. Our algebras are
+separable, so light condensed structure suffices everywhere below, and we avoid the
+set-theoretic subtleties of the unrestricted theory.
+
+\subsection{Quasi-local algebras of spin systems}
+
+Fix a countable set $L$ of sites (for definiteness a lattice $\ZZ^{d}$ with the
+graph metric, though only countability and the net of finite subsets matter here).
+To each site $x$ attach a finite-dimensional Hilbert space $\Hil_{x}$ with
+$\dim\Hil_{x}=n_{x}<\infty$, and set $\Hil_{\Lambda}=\bigotimes_{x\in\Lambda}\Hil_{x}$
+for finite $\Lambda\Subset L$. The \emph{local algebra} at $\Lambda$ is the full
+matrix algebra
+\[
+  \qla_{\Lambda} \;=\; \mathcal{B}(\Hil_{\Lambda})
+  \;\cong\; \bigotimes_{x\in\Lambda} M_{n_{x}}(\CC).
+\]
+For $\Lambda\subseteq\Lambda'$ the map $a\mapsto a\otimes\id_{\Lambda'\setminus\Lambda}$
+is a unital $\ast$-monomorphism $\qla_{\Lambda}\hookrightarrow\qla_{\Lambda'}$. The
+\emph{local subalgebra} is the union
+$\qla_{\loc}=\bigcup_{\Lambda\Subset L}\qla_{\Lambda}$, an incomplete normed
+$\ast$-algebra, and the \emph{quasi-local algebra} is its completion
+\[
+  \qla \;=\; \overline{\qla_{\loc}}^{\;\norm{\cdot}},
+\]
+the $C^{*}$-inductive limit of the net $(\qla_{\Lambda})_{\Lambda}$.
+
+\begin{proposition}[UHF/AF structure of the quasi-local algebra]
+\label{prop:uhf}
+The quasi-local algebra $\qla$ is a separable unital $C^{*}$-algebra. It is
+approximately finite-dimensional: an inductive limit of finite-dimensional
+$C^{*}$-algebras with unital connecting maps. If $L$ is infinite and $n_{x}=n$ for
+all $x$, then $\qla$ is the uniformly hyperfinite algebra of type $n^{\infty}$,
+\[
+  \qla \;\cong\; \overline{\bigotimes_{x\in L} M_{n}(\CC)}
+        \;=\; M_{n}^{\otimes\infty}.
+\]
+\end{proposition}
+
+\begin{proof}
+Enumerate $L=\{x_{1},x_{2},\dots\}$ and set $\Lambda_{k}=\{x_{1},\dots,x_{k}\}$. The
+finite subsets $\Lambda_{k}$ are cofinal in the net of all finite subsets, so
+$\qla=\overline{\bigcup_{k}\qla_{\Lambda_{k}}}$ is the closure of an increasing union
+of the finite-dimensional $C^{*}$-algebras $\qla_{\Lambda_{k}}$ along the unital
+inclusions $\qla_{\Lambda_{k}}\hookrightarrow\qla_{\Lambda_{k+1}}$. By definition
+this exhibits $\qla$ as the $C^{*}$-inductive limit
+$\varinjlim_{k}\qla_{\Lambda_{k}}$, which is AF. Each $\qla_{\Lambda_{k}}$ is finite
+dimensional, hence separable, and it contains the countable
+$\mathbb{Q}(i)$-$\ast$-subalgebra of matrices with Gaussian-rational entries; the
+union of these over $k$ is a countable norm-dense $\ast$-subalgebra of $\qla$, so
+$\qla$ is separable. The unit of $\qla_{\Lambda_{1}}$ is a unit for the limit. When
+$n_{x}=n$ for all $x$, each $\qla_{\Lambda_{k}}\cong M_{n}(\CC)^{\otimes k}\cong
+M_{n^{k}}(\CC)$ and the connecting maps are the standard unital embeddings
+$M_{n^{k}}\hookrightarrow M_{n^{k+1}}$, $a\mapsto a\otimes\id_{n}$; the inductive
+limit of this system is by definition the UHF algebra of type $n^{\infty}$.
+\end{proof}
+
+The operator-algebraic viewpoint on gapped phases takes exactly this $\qla$ as the
+algebra of quasi-local observables; the ground states of physical interest are
+states on $\qla$~\cite{ogata-classification-review,nsy-bulkgap}. That $\qla$ is AF,
+and in particular nuclear and separable, is what will make its condensation light
+and its state space metrizable.
+
+\subsection{Condensation of a \texorpdfstring{$C^{*}$}{C*}-algebra}
+\label{sec:condofalg}
+
+A $C^{*}$-algebra is an algebra object with involution in the symmetric monoidal
+category of (compactly generated) topological spaces: multiplication, addition,
+scalar action, and involution are continuous, and the norm makes the underlying set
+a complete metric space. Since condensation preserves finite products, it carries
+this structure across.
+
+\begin{proposition}[Condensation is a sheaf of $C^{*}$-algebras; separable $\Rightarrow$ light]
+\label{prop:condcstar}
+Let $A$ be a $C^{*}$-algebra. The condensation $\cond{A}$, $\cond{A}(S)=C(S,A)$, is a
+$C^{*}$-algebra object in condensed sets: for every profinite $S$ the value $C(S,A)$
+is a $C^{*}$-algebra under pointwise operations and the supremum norm, and the
+restriction maps are $\ast$-homomorphisms. If $A$ is unital, so is $\cond{A}$. If $A$
+is separable, $\cond{A}$ is a light condensed set.
+\end{proposition}
+
+\begin{proof}
+That $S\mapsto\Cont(S,A)$ is a sheaf, i.e.\ a condensed set, is the defining
+property of the condensation of the topological space
+$A$~\cite{clausen-scholze-condensed}. The $C^{*}$-operations of $A$ are continuous
+maps $A\times A\to A$ and $A\to A$; post-composition sends a continuous $S$-family
+to a continuous $S$-family, and because condensation preserves products these
+assemble into morphisms of condensed sets
+$\cond{A}\times\cond{A}\to\cond{A}$ and $\cond{A}\to\cond{A}$ satisfying the algebra
+and involution axioms levelwise. Concretely, for compact $S$ the space $C(S,A)$ with
+$(f\cdot g)(s)=f(s)g(s)$, $f^{*}(s)=f(s)^{*}$, and $\norm{f}=\sup_{s}\norm{f(s)}$ is
+a $C^{*}$-algebra: it is a Banach $\ast$-algebra, and the $C^{*}$-identity is
+inherited pointwise,
+\[
+  \norm{f^{*}f} = \sup_{s}\norm{f(s)^{*}f(s)}
+               = \sup_{s}\norm{f(s)}^{2}
+               = \Big(\sup_{s}\norm{f(s)}\Big)^{2} = \norm{f}^{2}.
+\]
+Restriction along $\theta:S'\to S$ is $f\mapsto f\circ\theta$, evidently a unital
+$\ast$-homomorphism. When $A$ is unital the constant function at $\id_{A}$ is a unit
+for each $C(S,A)$, compatible with restriction. Finally, if $A$ is separable it is
+second countable, so its condensation is determined by its restriction to light
+profinite probes and is a light condensed
+set~\cite{clausen-scholze-analytic-stacks}.
+\end{proof}
+
+\begin{remark}
+The sheaf condition here is descent for $A$-valued continuous functions along finite
+jointly surjective families $\{S_{i}\to S\}$: such a family gives a topological
+quotient $\coprod_{i}S_{i}\twoheadrightarrow S$ of compact Hausdorff spaces, and a
+continuous $A$-valued function on $S$ is the same as a compatible family on the
+$S_{i}$ agreeing on the fibered products $S_{i}\times_{S}S_{j}$. This is the reason
+condensation, and not merely the underlying set, is the right target: it remembers
+how continuous families glue.
+\end{remark}
+
+\section{Positivity and the condensed state space}
+\label{sec:states}
+
+We now condense the state space and read off positivity as a closed condition. This
+is the first place where the $C^{*}$-axiom, and not just the Banach structure, is
+used.
+
+\subsection{States, positivity, and weak-\texorpdfstring{$\ast$}{*} compactness}
+
+Let $A$ be a unital $C^{*}$-algebra. A \emph{state} is a linear functional
+$\phi:A\to\CC$ that is positive, $\phi(a^{*}a)\ge 0$ for all $a$, and normalized,
+$\phi(\id)=1$. Positivity forces continuity with $\norm{\phi}=\phi(\id)=1$, so states
+lie in the unit ball $(A^{*})_{1}$ of the dual. Write $\St(A)$ for the set of states
+and $\Pu(A)$ for its extreme points, the \emph{pure states}.
+
+\begin{lemma}[Weak-$\ast$ compactness]
+\label{lem:alaoglu}
+$\St(A)$ is a weak-$\ast$ closed, convex subset of $(A^{*})_{1}$, hence weak-$\ast$
+compact and Hausdorff. If $A$ is separable, $\St(A)$ is metrizable, so it is a
+compact convex Polish space, and $\St(A)=\overline{\operatorname{conv}}\,\Pu(A)$.
+\end{lemma}
+
+\begin{proof}
+By Banach--Alaoglu $(A^{*})_{1}$ is weak-$\ast$ compact and Hausdorff. For each fixed
+$a\in A$ the evaluation $\ev_{a}:\phi\mapsto\phi(a)$ is weak-$\ast$ continuous, so
+the sets $\{\phi:\phi(a^{*}a)\ge 0\}=\ev_{a^{*}a}^{-1}([0,\infty))$ and
+$\{\phi:\phi(\id)=1\}=\ev_{\id}^{-1}(\{1\})$ are weak-$\ast$ closed. Their
+intersection over all $a$ is $\St(A)$, which is therefore weak-$\ast$ closed in the
+compact set $(A^{*})_{1}$, hence compact; convexity is immediate from linearity of
+the conditions. When $A$ is separable the weak-$\ast$ topology on $(A^{*})_{1}$ is
+metrizable, so the closed subset $\St(A)$ is a compact metric space; it is convex
+and compact, and Krein--Milman gives
+$\St(A)=\overline{\operatorname{conv}}\,\Pu(A)$.
+\end{proof}
+
+\begin{example}[Matrix algebras and the Bloch ball]
+\label{ex:bloch}
+For $A=\Mn$ every state is $\phi_{\rho}(a)=\Tr(\rho a)$ for a unique density matrix
+$\rho\ge 0$ with $\Tr\rho=1$, so $\St(M_{n})$ is the set of density matrices and
+$\Pu(M_{n})$ is the set of rank-one projections, a copy of $\CC P^{n-1}$. For $n=2$,
+writing $\rho=\tfrac12(\id+\vec r\cdot\vec\sigma)$ with $\vec\sigma$ the Pauli
+matrices, positivity is exactly $\abs{\vec r}\le 1$: the state space $\St(M_{2})$ is
+the closed unit ball $B^{3}\subset\RR^{3}$ (the Bloch ball) and $\Pu(M_{2})$ is its
+boundary sphere $S^{2}=\CC P^{1}$. The accompanying Haskell code takes exactly this
+picture as its concrete testbed.
+\end{example}
+
+\subsection{The condensed state space}
+
+\begin{progthm}[Condensed state space]
+\label{thm:statespace}
+Let $A$ be a unital $C^{*}$-algebra. Then $\cond{\St(A)}$ is a compact Hausdorff
+condensed set, and the condensation functor is fully faithful on it. Positivity and
+normalization exhibit $\cond{\St(A)}$ as a closed condensed subobject of the
+condensed dual ball $\cond{(A^{*})_{1}}$: for every profinite $S$,
+\[
+  \cond{\St(A)}(S)
+  = \bigl\{\, f\in C\!\bigl(S,(A^{*})_{1}\bigr) :
+      f(s)(a^{*}a)\ge 0 \ \text{and}\ f(s)(\id)=1
+      \ \text{for all } s\in S,\ a\in A \,\bigr\},
+\]
+a weak-$\ast$ closed subset of $C(S,(A^{*})_{1})$. If $A$ is separable the subobject
+is a closed inclusion of light condensed sets.
+\end{progthm}
+
+\begin{proof}
+By \Cref{lem:alaoglu}, $\St(A)$ is a compact Hausdorff space, so its condensation is
+a compact Hausdorff condensed set, and full faithfulness of $\cond{(-)}$ on compact
+Hausdorff spaces is~\cite{clausen-scholze-condensed}. For a profinite $S$ a point of
+$\cond{\St(A)}(S)$ is a continuous map $f:S\to\St(A)$, i.e.\ a continuous map
+$f:S\to(A^{*})_{1}$ each of whose values is a state; this is the displayed set. Each
+defining condition is closed: for fixed $a$ and $s$ the map $f\mapsto f(s)(a^{*}a)$
+is continuous on $C(S,(A^{*})_{1})$ (composite of evaluation at $s$ and $\ev_{a^{*}a}$),
+so $\{f:f(s)(a^{*}a)\ge 0\}$ is closed, and likewise for normalization; the
+intersection over $s\in S$ and $a\in A$ is closed. Because the inclusion
+$\St(A)\hookrightarrow(A^{*})_{1}$ is a closed embedding of compact Hausdorff spaces
+and condensation preserves closed embeddings of such spaces, the induced map
+$\cond{\St(A)}\to\cond{(A^{*})_{1}}$ is a closed inclusion of condensed sets. When
+$A$ is separable both spaces are second countable, so both condensations are light
+by \Cref{prop:condcstar} and the inclusion is one of light condensed sets.
+\end{proof}
+
+\begin{remark}[Why closedness is the right statement]
+A condensed reformulation of ``the state space'' has to answer: what is a
+\emph{family} of states over a parameter, and when does a limit of states stay a
+state? \Cref{thm:statespace} answers both at once. A family over $S$ is a point of
+$\cond{\St(A)}(S)$; positivity is preserved under the profinite probes because it is
+a closed condition, so a profinite limit of states is a state. This is the condensed
+avatar of the elementary fact that the state space is weak-$\ast$ closed, upgraded
+to a statement about all profinite families simultaneously.
+\end{remark}
+
+\subsection{Positivity as a condensed order structure}
+\label{sec:cone}
+
+It is worth saying what ``positivity is a closed condition'' means at the level of
+the algebra, not just the dual, because that is where the $C^{*}$-identity enters and
+because it is the form the condition takes when one tries to characterize
+$\Ham_{d,G}$ intrinsically (\Cref{conj:substack}). The positive cone of a
+$C^{*}$-algebra $A$ is
+\[
+  A_{+} \;=\; \{\, a^{*}a : a\in A \,\} \;=\; \{\, a\in A_{\mathrm{sa}} : \sigma(a)\subseteq[0,\infty) \,\},
+\]
+a closed convex cone in the real Banach space $A_{\mathrm{sa}}$ of self-adjoint
+elements, with $A_{+}\cap(-A_{+})=\{0\}$; together with the order unit $\id$ it makes
+$(A_{\mathrm{sa}},A_{+},\id)$ an order-unit space whose order-unit state space is
+exactly $\St(A)$.
+
+\begin{proposition}[Condensation preserves the positive cone and order unit]
+\label{prop:cone}
+Let $A$ be a unital $C^{*}$-algebra. The condensation $\cond{A_{+}}$ is a closed
+sub-condensed-set of $\cond{A_{\mathrm{sa}}}$, and for every profinite $S$,
+\[
+  \cond{A_{+}}(S) \;=\; \{\, f\in C(S,A_{\mathrm{sa}}) : f(s)\in A_{+} \text{ for all } s\in S \,\}
+  \;=\; C(S,A_{+}).
+\]
+The order unit condenses to the constant section $\id$, and a state on $A$ is the
+same as a morphism of condensed sets $\cond{A_{\mathrm{sa}}}\to\cond{\RR}$ that is
+$\RR$-linear on probes, carries $\cond{A_{+}}$ into $\cond{\RR_{\ge 0}}$, and sends
+$\id$ to $1$.
+\end{proposition}
+
+\begin{proof}
+The cone $A_{+}$ is a closed subset of $A_{\mathrm{sa}}$, so a continuous map
+$f:S\to A_{\mathrm{sa}}$ takes values in $A_{+}$ if and only if $f(s)\in A_{+}$ for
+every $s$; this is the displayed equality $\cond{A_{+}}(S)=C(S,A_{+})$, and
+closedness of the inclusion into $\cond{A_{\mathrm{sa}}}$ follows as in
+\Cref{thm:statespace}. That condensation carries the order unit to the constant
+section is immediate. For the last clause, a probe-wise $\RR$-linear morphism
+$\cond{A_{\mathrm{sa}}}\to\cond{\RR}$ is, by full faithfulness of condensation on the
+compactly generated space $A_{\mathrm{sa}}$, a continuous $\RR$-linear functional
+$\phi:A_{\mathrm{sa}}\to\RR$; the conditions $\phi(A_{+})\subseteq\RR_{\ge0}$ and
+$\phi(\id)=1$ are precisely those making $\phi$ extend to a state on $A$.
+\end{proof}
+
+This is the internal counterpart of \Cref{thm:statespace}: positivity lives on the
+algebra as a closed condensed cone, and a state is a cone- and unit-preserving
+condensed functional. The $C^{*}$-identity is what pins this cone to the spectrum,
+and it is the relation \Cref{conj:substack} would use to cut $\Ham_{d,G}$ out of a
+formal-interaction stack.
+
+\section{The GNS construction as a functor}
+\label{sec:gns}
+
+The link between a state and a Hilbert-space representation is the
+Gelfand--Naimark--Segal construction. We record its functoriality (elementary, but
+what lets it interact with the condensed structure) and then
+prove the continuity statement that matters for phases: on a uniformly gapped
+family, the ground-state section into $\St(\qla)$ is weak-$\ast$ continuous.
+
+\subsection{Functoriality of GNS}
+
+\begin{definition}[The category of pointed $C^{*}$-algebras]
+Let $\CStar$ be the category whose objects are pairs $(A,\phi)$ of a unital
+$C^{*}$-algebra and a state, and whose morphisms $(A,\phi)\to(B,\psi)$ are unital
+$\ast$-homomorphisms $\theta:A\to B$ with $\psi\circ\theta=\phi$ (state-preserving
+maps).
+\end{definition}
+
+Given $(A,\phi)$, the sesquilinear form $\ip{a}{b}_{\phi}=\phi(a^{*}b)$ is positive
+semidefinite; its kernel $N_{\phi}=\{a:\phi(a^{*}a)=0\}$ is a closed left ideal (by
+the Cauchy--Schwarz inequality $\abs{\phi(a^{*}b)}^{2}\le\phi(a^{*}a)\phi(b^{*}b)$);
+the completion $\Hil_{\phi}=\overline{A/N_{\phi}}$ is a Hilbert space; left
+multiplication descends to a $\ast$-representation $\Rep_{\phi}(a)[b]=[ab]$; and the
+class $\cyc=[\id]$ is a cyclic unit vector with
+$\phi(a)=\ip{\cyc}{\Rep_{\phi}(a)\cyc}$.
+
+\begin{proposition}[GNS is a functor]
+\label{prop:gns}
+The assignment $(A,\phi)\mapsto(\Hil_{\phi},\Rep_{\phi},\cyc)$ extends to a functor
+from $\CStar$ to the category of pointed cyclic representations with intertwining
+isometries. A state-preserving map $\theta:(A,\phi)\to(B,\psi)$ induces the isometry
+\[
+  V_{\theta}:\Hil_{\phi}\to\Hil_{\psi}, \qquad V_{\theta}[a]_{\phi}=[\theta(a)]_{\psi},
+\]
+satisfying $V_{\theta}\cyc=\Omega_{\psi}$ and
+$V_{\theta}\,\Rep_{\phi}(a)=\Rep_{\psi}(\theta(a))\,V_{\theta}$, with
+$V_{\theta'\circ\theta}=V_{\theta'}V_{\theta}$ and $V_{\mathrm{id}}=\mathrm{id}$.
+\end{proposition}
+
+\begin{proof}
+Because $\psi\circ\theta=\phi$ we have
+$\ip{\theta(a)}{\theta(b)}_{\psi}=\psi(\theta(a)^{*}\theta(b))
+=\psi(\theta(a^{*}b))=\phi(a^{*}b)=\ip{a}{b}_{\phi}$, so $\theta$ maps $N_{\phi}$
+into $N_{\psi}$ and the map $[a]_{\phi}\mapsto[\theta(a)]_{\psi}$ is a well-defined
+isometry on the dense subspaces, extending to an isometry $V_{\theta}$ of the
+completions. Evaluating on the unit gives $V_{\theta}\Omega_{\phi}=\Omega_{\psi}$,
+and for $a,b\in A$,
+$V_{\theta}\Rep_{\phi}(a)[b]_{\phi}=V_{\theta}[ab]_{\phi}=[\theta(a)\theta(b)]_{\psi}
+=\Rep_{\psi}(\theta(a))[\theta(b)]_{\psi}=\Rep_{\psi}(\theta(a))V_{\theta}[b]_{\phi}$,
+i.e.\ $V_{\theta}$ intertwines. Functoriality in $\theta$ is immediate from the
+definition on representatives.
+\end{proof}
+
+\subsection{Continuity of the ground-state section on gapped families}
+
+The physically decisive continuity statement is not about GNS of a single state but
+about a \emph{family} of ground states. We use the automorphic-equivalence theorem
+for gapped phases, which is the interface with Parts~I and~III.
+
+\begin{theorem}[Weak-$\ast$ continuity of the ground-state section]
+\label{thm:groundstate}
+Let $s\mapsto\Phi_{s}$, $s\in[0,1]$, be a family of interactions that is $C^{1}$ in
+the interaction Banach norm $\BF$ of Part~I, and suppose the family is
+\emph{uniformly gapped}: the thermodynamic-limit dynamics has a unique ground state
+$\omega_{s}$ on $\qla$ separated from the rest of the spectrum by a gap
+$\ge\gapbound>0$ uniformly in $s$. Then there is a strongly continuous family of
+quasi-local automorphisms $\alpha_{s}\in\Aut(\qla)$ with
+$\omega_{s}=\omega_{0}\circ\alpha_{s}$, and for every local observable
+$a\in\qla_{\loc}$ the map $s\mapsto\omega_{s}(a)$ is continuous. Consequently
+$s\mapsto\omega_{s}$ is a weak-$\ast$ continuous map $[0,1]\to\St(\qla)$; taking a
+profinite probe $S\to[0,1]$ landing in the gapped locus, the ground state is a point
+of $\cond{\St(\qla)}(S)$.
+\end{theorem}
+
+\begin{proof}
+Under the stated hypotheses the Bachmann--Michalakis--Nachtergaele--Sims theorem on
+automorphic equivalence within a gapped phase produces the quasi-adiabatic spectral-flow
+cocycle: a strongly continuous family of $\ast$-automorphisms $\alpha_{s}$ of $\qla$,
+generated by a time-dependent quasi-local interaction built from $\dot\Phi_{s}$ and
+the gap, with $\omega_{s}=\omega_{0}\circ\alpha_{s}$~\cite{bmns-automorphic,hastings-wen-qac}.
+The generator is quasi-local with Lieb--Robinson-controlled tails, so for a local
+observable $a$ the orbit $s\mapsto\alpha_{s}(a)$ is norm-continuous (indeed
+$C^{1}$)~\cite{nsy-quasilocality-1,paperLocality}. Hence
+$s\mapsto\omega_{s}(a)=\omega_{0}(\alpha_{s}(a))$ is continuous, being the
+composition of a norm-continuous $\qla$-valued map with the bounded functional
+$\omega_{0}$. Local observables are norm-dense in $\qla$ and each $\omega_{s}$ is a
+state with $\norm{\omega_{s}}=1$; a uniformly bounded net of functionals that
+converges on a dense set converges weak-$\ast$, so continuity on $\qla_{\loc}$
+upgrades to weak-$\ast$ continuity on all of $\qla$. Thus $s\mapsto\omega_{s}$ is a
+continuous map into $\St(\qla)$ with its weak-$\ast$ topology. For a profinite
+$S$ with a continuous map $S\to[0,1]$ whose image lies in the gapped locus, the
+composite $S\to\St(\qla)$ is continuous, i.e.\ an element of $\cond{\St(\qla)}(S)$ by
+\Cref{thm:statespace}.
+\end{proof}
+
+\begin{remark}[What is used, and what is deferred]
+The theorem uses the uniform gap as a hypothesis; whether a given family satisfies it
+is the subject of Part~III, and in general the question is undecidable, so we do not
+attempt a criterion here. The output is exactly the datum the program needs on the
+observable side: a continuous section of states over the gapped locus, which is what
+makes the phase label $\nu_{f}$ locally constant and the whole $\pi_{0}$ story well
+posed. The representation-theoretic refinement (that GNS assembles into a
+continuous field of Hilbert spaces over the base) is delicate because the GNS
+representation can jump in dimension, and we record the clean version we can prove
+(continuity of the vector-state section) rather than overclaim a continuous field.
+The full statement is part of \Cref{conj:classifying}.
+\end{remark}
+
+\section{Free fermions and the real observable algebra}
+\label{sec:freefermion}
+
+Before invoking Aoki's theorem we make concrete the algebra to which it will be
+applied. Free-fermion systems are the best-developed setting for topological
+classification, and they are where the \emph{real} structure that Aoki's theorem
+requires is visible on the nose. This section fixes the observable algebra, its
+quasi-free ground states, and the real structure imposed by the antiunitary
+symmetries, and it identifies the SSH winding number as an operator-$K$ class so that
+the corollary of \Cref{sec:aoki} lands on a familiar object.
+
+\subsection{The CAR algebra and quasi-free ground states}
+
+For a free-fermion system with single-particle Hilbert space $\mathfrak{h}=\ell^{2}(L)$
+(one orbital per site, for simplicity) the observable algebra is the algebra of
+canonical anticommutation relations $\mathrm{CAR}(\mathfrak{h})$, the unital
+$C^{*}$-algebra generated by $\{a(v):v\in\mathfrak{h}\}$ with $v\mapsto a(v)^{*}$
+linear and
+\[
+  \{a(v),a(w)^{*}\}=\ip{v}{w}\id, \qquad \{a(v),a(w)\}=0 ,
+\]
+where the inner product is linear in its second argument (the physics convention),
+so that $v\mapsto a(v)$ is antilinear and $v\mapsto a(v)^{*}$ is linear.
+For separable infinite-dimensional $\mathfrak{h}$ the algebra
+$\mathrm{CAR}(\mathfrak{h})$ is the UHF algebra of type $2^{\infty}$; in particular it
+is a special case of the quasi-local algebra of \Cref{prop:uhf}, and everything in
+\Cref{sec:framework,sec:states,sec:gns} applies to it verbatim.
+
+A quadratic Hamiltonian is specified by a self-adjoint single-particle operator
+$h=h^{*}$ on $\mathfrak{h}$, and when $h$ has a spectral gap at the Fermi level $0$ the
+ground state is the \emph{quasi-free} state $\omega_{P}$ determined by the Fermi
+projection $P=\chi_{(-\infty,0)}(h)$, through the two-point function
+\[
+  \omega_{P}\bigl(a(v)^{*}a(w)\bigr)=\ip{w}{Pv},
+\]
+with Wick's theorem fixing all higher correlators. Two facts connect this to the earlier
+sections. First, $\omega_{P}$ is a state on $\mathrm{CAR}(\mathfrak{h})$, hence a point
+of $\St(\mathrm{CAR}(\mathfrak{h}))$, and the map $P\mapsto\omega_{P}$ is weak-$\ast$
+continuous in $P$; a uniformly gapped family of single-particle Hamiltonians thus
+gives a continuous ground-state section exactly as in \Cref{thm:groundstate}, and one
+does not even need the full automorphic-equivalence machinery in the quasi-free case
+because the section is visibly continuous in the Fermi projection. Second, the spectral
+gap forces $P$ to have exponentially decaying off-diagonal, so $P$ is a
+\emph{controlled} (quasi-local) projection --- the free-fermion shadow of the
+clustering established from a gap in Part~I and used throughout Part~III.
+
+\subsection{Real structure and the tenfold way}
+
+The tenfold way arranges gapped free-fermion phases by their behavior under the
+antiunitary symmetries: time reversal $T$, particle--hole $C$, and their product, the
+chiral symmetry $S=TC$. Implemented on $\mathfrak{h}$, these are antilinear (for $T,C$)
+or linear (for $S$) operators squaring to $\pm\id$, and they endow the observable
+algebra with a \emph{Real} structure in the sense of Atiyah: a real form
+$A^{\RR}\subseteq\mathrm{CAR}(\mathfrak{h})$ (or a $\ZZ_{2}$-graded, Clifford-module
+refinement thereof) whose operator $K$-theory, in the degree fixed by the symmetry
+class, is the group of the Kitaev periodic
+table~\cite{kitaev-periodic-table,thiang-ktheory,prodan-sb}. The eight real classes are
+carried by $KO$, the two complex classes by $KU$, and the eightfold Bott periodicity of
+$KO$ is the eightfold periodicity of the table. The point for us is structural: the
+algebra that classifies free-fermion phases is a \emph{real} $C^{*}$-algebra, and its
+invariant is an operator-$K$ class, precisely the input that Aoki's theorem consumes.
+
+\begin{example}[The SSH chain as a $K_{1}$-class]
+\label{ex:ssh}
+The Su--Schrieffer--Heeger chain~\cite{ssh-1979} is the two-band model with
+single-particle Bloch Hamiltonian
+\[
+  H(k)=\bigl(t_{1}+t_{2}\cos k\bigr)\sigma_{x}+t_{2}\sin k\,\sigma_{y},
+  \qquad q(k)=t_{1}+t_{2}e^{ik},
+\]
+chiral-symmetric under $\sigma_{z}H(k)\sigma_{z}=-H(k)$ and gapped precisely when
+$\abs{t_{1}}\neq\abs{t_{2}}$. Chiral symmetry flattens the Fermi projection into the
+off-diagonal unitary $u(k)=q(k)/\abs{q(k)}$, and the winding number
+\[
+  \nu=\frac{1}{2\pi i}\oint u(k)^{-1}\,du(k)\in\ZZ
+\]
+is the homotopy class of $u:S^{1}\to U(1)$. In operator-algebraic terms $\nu$ is the
+class $[u]\in K_{1}(A)$ of the observable algebra $A$ --- the translation-invariant
+algebra $C(S^{1})$ in the clean case, or the real-space (possibly disordered) chiral
+algebra in general --- and it is computed as the index of the associated Toeplitz
+operator, a genuine operator-$K$ invariant~\cite{prodan-sb,bourne-kellendonk-rennie}.
+It takes $\nu=1$ for $\abs{t_{1}}<\abs{t_{2}}$ and $\nu=0$ for $\abs{t_{1}}>\abs{t_{2}}$.
+This is the flagship example of the program's SSH transition, and it will be the
+example on which the corollary of \Cref{sec:aoki} is read.
+\end{example}
+
+The SSH class sits in $K_{1}$; the two-dimensional Chern insulator's Hall conductance
+sits in $K_{0}$ and is an integer multiple of $e^{2}/h$~\cite{tknn-1982}; the
+disordered analogues sit in the $K$-theory of the crossed product of \Cref{sec:disorder}.
+In every case the invariant is a class in the operator $K$-theory of a real (or Real)
+observable algebra, and that is all \Cref{thm:aoki} needs.
+
+\section{Solidification: operator \texorpdfstring{$K$}{K}-theory as a condensed invariant}
+\label{sec:aoki}
+
+We come to the load-bearing result. Topological invariants of free-fermion and
+disordered phases are classes in the operator $K$-theory of a Banach or
+$C^{*}$-algebra of observables. Aoki's theorem shows that this operator $K$-theory is
+recovered from an intrinsically condensed operation applied to the \emph{algebraic}
+$K$-theory of the condensed algebra. This section states that theorem with its
+hypotheses and draws the consequence for phases, taking care not to inflate it.
+
+\subsection{Aoki's theorem}
+
+We change convention for this section only: algebras are \emph{real}. This is not a
+technicality to be waved away. It is exactly the setting in which the physically
+relevant $KO$-graded invariants live, so the real hypothesis is a feature. For a
+real Banach algebra $A$ its condensation $\cond{A}$, $\cond{A}(S)=C(S,A)$, is a
+condensed (indeed solid) ring in the sense of Clausen--Scholze, and one may form its
+\emph{connective} algebraic $K$-theory $\Kalg(\cond{A})$ as a condensed spectrum. The
+solidification functor $\Solid$ is the reflection onto solid condensed spectra
+of~\cite{clausen-scholze-condensed,clausen-scholze-analytic}.
+
+\begin{progthm}[Aoki's solidification theorem~{\cite{aoki-solidification}}]
+\label{thm:aoki}
+Let $A$ be a real associative algebra and $\cond{A}$ its condensation. The
+solidification of the \emph{connective} algebraic $K$-theory of $\cond{A}$ is discrete
+and recovers the connective semitopological $K$-theory of $A$ in the sense of
+Friedlander--Walker (and Blanc),
+\[
+  \Solid\bigl(\Kalg(\cond{A})\bigr) \;\simeq\; K^{\mathrm{semi}}(A).
+\]
+If moreover $A$ is a real Banach algebra, this is the \emph{connective part} of the
+topological (operator) $K$-theory; the full, Bott-periodic operator $K$-theory is
+obtained only after inverting the Bott class $\beta$,
+\[
+  \Kop(A) \;\simeq\; \Solid\bigl(\Kalg(\cond{A})\bigr)\bigl[\beta^{-1}\bigr],
+\]
+an equivalence of spectra, where $\beta$ is the generator of the relevant Bott group
+($\beta\in K_{2}^{\mathrm{top}}(\CC)\cong\ZZ$ in the complex case; the order-eight
+real Bott class in the $KO$ case).
+\end{progthm}
+
+Two points of bookkeeping matter, and we make them explicit rather than bury them.
+First, the solidification is of the \emph{connective} algebraic $K$-theory, so it
+lands in a connective spectrum with no homotopy in negative degrees, whereas operator
+$K$-theory is Bott-periodic and does have negative-degree groups. The two therefore
+agree only in nonnegative degrees; the equivalence with the full $\Kop(A)$ holds after
+the Bott inversion $[\beta^{-1}]$, and writing
+$\Kop(A)\simeq\Solid(\Kalg(\cond{A}))$ without it would be false in negative degrees.
+Second, the real versus Real ($KR$) distinction: $\beta$ is the order-eight real Bott
+class, and the eightfold periodicity of $KO$ is the eightfold structure of the real
+symmetry classes. A word on the topology in the first clause: $A$ carries its given
+topology --- discrete when none is specified, in which case $\cond{A}$ is the
+condensation of the underlying discrete algebra, whose value on a profinite $S$ is the
+algebra of locally constant $A$-valued functions, a nontrivial condensed ring because
+profinite sets are richly disconnected, so the semitopological $K$-theory it computes
+is nontrivial even in the discrete case. The Banach clause, with its Bott inversion,
+is the one we use. The proof is Aoki's and we claim no part of it; what we contribute
+is the reading of the theorem inside the program.
+
+\subsection{Free-fermion invariants are condensed-mathematical}
+
+\begin{corollary}[Provenance of the tenfold-way invariants]
+\label{cor:condinvariant}
+Let a free-fermion or disordered topological insulator or superconductor have real
+observable Banach algebra $A$ --- the real form of the (bulk or disorder-averaged)
+observable algebra in its symmetry class. Then its tenfold-way operator-$K$
+invariant $\nu\in\Kop(A)$ is the value at $A$ of the composite functor
+\[
+  A \;\longmapsto\; \cond{A} \;\longmapsto\; \Kalg(\cond{A})
+    \;\longmapsto\; \Solid\bigl(\Kalg(\cond{A})\bigr)\bigl[\beta^{-1}\bigr]
+    \;\simeq\; \Kop(A) \ni \nu.
+\]
+In particular the invariant factors through condensation, solidification, and the
+Bott inversion.
+\end{corollary}
+
+\noindent Concretely, for the SSH chain of \Cref{ex:ssh} the winding number
+$\nu=[u]\in K_{1}(A)$ is a class in $\Solid(\Kalg(\cond{A}))[\beta^{-1}]$: the integer
+that distinguishes the two SSH phases is the value of the condensed-mathematical
+composite above. The number is the same integer computed in 1979; what
+\Cref{thm:aoki} adds is that it is the output of solidification, followed by Bott
+inversion, applied to the algebraic $K$-theory of a condensed algebra.
+
+\begin{proof}
+By the $K$-theoretic classification of free-fermion and disordered phases, the
+symmetry-class invariant of such a system is a class in the operator $K$-theory of
+its (real/Real) observable algebra $A$, in the appropriate $KO$- or
+$KU$-degree~\cite{kitaev-periodic-table,thiang-ktheory,prodan-sb}. Apply
+\Cref{thm:aoki} to $A$: the operator $K$-theory group in which $\nu$ lives is
+$\Solid(\Kalg(\cond{A}))[\beta^{-1}]$ (the Bott-inverted, periodic value), so $\nu$ is
+a class in the target of the displayed composite, and the composite computes it.
+\end{proof}
+
+\begin{remark}[Exactly how much this claims]
+It claims that the invariant's \emph{home} and \emph{construction route} are
+condensed-mathematical, not that the invariant is new or numerically different. A
+Chern number computed as a solid $K$-class equals the Chern number computed by
+integrating a curvature form. The content is that the two mature theories (the
+operator $K$-theory of topological insulators and the condensed/solid $K$-theory of
+Clausen--Scholze and Aoki) meet here, so the family-theoretic, descent-theoretic,
+and profinite-disorder machinery of the condensed side becomes available for an
+invariant that was previously computed by hand. This is the sense in which the
+program's value is organizational. We state it this way in deference to the honest
+appraisal that the program does not, on its own, produce a different Chern number.
+\end{remark}
+
+\begin{remark}[Why the real setting is the right one]
+The Kitaev periodic table is $KO$-graded: the eightfold Bott periodicity of real
+$K$-theory is the eightfold structure of the real symmetry classes, with the two
+complex classes carried by $KU$. Aoki's theorem is proved for real algebras, so it
+lands precisely where the physics lives; a complex-only statement would miss the
+time-reversal and particle--hole classes. The refinement to a genuinely Real ($KR$)
+statement matching all ten classes is \Cref{conj:real}.
+\end{remark}
+
+\section{Disorder, crossed products, and profinite probes}
+\label{sec:disorder}
+
+Disorder is where the condensed language stops repackaging manifolds and starts
+matching the physical configuration space. A disordered family is literally a point
+of the Hamiltonian moduli object over a profinite base.
+
+\subsection{The disorder hull as a profinite probe}
+
+Let $Q$ be a finite set of local configurations\footnote{The prospectus and the program's notation write this alphabet as $F$; we use $Q$ to avoid collision with the Nachtergaele--Sims--Young $F$-function of Part~I (carried here only inside the interaction Banach space $\BF$).} and
+\[
+  \dis \;=\; Q^{\ZZ^{d}},
+\]
+the space of configurations, with the product topology. It is compact, Hausdorff,
+and totally disconnected (a profinite set), and the shift action of $\ZZ^{d}$ by
+translations makes it a profinite $\ZZ^{d}$-space. Restricting a configuration to a
+finite window $\Lambda_{i}\Subset\ZZ^{d}$ gives finite quotients
+$\dis\twoheadrightarrow\dis_{i}=Q^{\Lambda_{i}}$, and $\dis=\varprojlim_{i}\dis_{i}$.
+
+\begin{proposition}[$C(\dis)$ is a commutative AF algebra]
+\label{prop:hullAF}
+For $\dis=\varprojlim_{i}\dis_{i}$ profinite, the pullbacks along
+$\dis\to\dis_{i}$ induce an isometric $\ast$-isomorphism
+\[
+  C(\dis) \;\cong\; \varinjlim_{i} C(\dis_{i}),
+\]
+so $C(\dis)$ is a separable, commutative, unital AF algebra. Its state space is the
+weak-$\ast$ compact convex set $\Prob(\dis)$ of Borel probability measures on $\dis$,
+and its condensation satisfies $\cond{C(\dis)}(S)=C(S\times\dis)$ for profinite $S$;
+in particular $\dis$ itself is an admissible probe.
+\end{proposition}
+
+\begin{proof}
+Each $\dis_{i}=Q^{\Lambda_{i}}$ is finite, so $C(\dis_{i})\cong\CC^{\abs{\dis_{i}}}$ is
+finite-dimensional. The pullback maps $C(\dis_{i})\to C(\dis_{j})$ for $i\le j$ are
+unital $\ast$-monomorphisms, and any $g\in C(\dis)$ is a uniform limit of functions
+factoring through some $\dis_{i}$: the cylinder functions are dense by
+Stone--Weierstrass, since they separate points of $\dis$ and are closed under the
+algebra operations and conjugation. Hence the natural map
+$\varinjlim_{i}C(\dis_{i})\to C(\dis)$ is an isometric $\ast$-isomorphism onto a
+dense, hence closed and therefore full, subalgebra. This exhibits $C(\dis)$ as an AF
+algebra; commutativity and unitality are clear, and separability follows as in
+\Cref{prop:uhf}. By Riesz representation, states on $C(\dis)$ are Borel probability
+measures. For the condensation, $\cond{C(\dis)}(S)=C(S,C(\dis))=C(S\times\dis)$ by the
+exponential law for continuous maps out of the compact space $S$ into $C(\dis)$
+(equivalently, the tensor identity $C(S)\otimes C(\dis)\cong C(S\times\dis)$ for
+compact Hausdorff spaces).
+\end{proof}
+
+\subsection{The Bellissard crossed product and its condensation}
+
+The observables of a homogeneous disordered system are not functions on $\dis$ alone
+but the covariant operators; the algebra that carries the physics is the crossed
+product.
+
+\begin{progthm}[Crossed-product disorder algebra]
+\label{thm:crossed}
+Let $\dis=Q^{\ZZ^{d}}$ with the shift action $T$ of $\ZZ^{d}$. The covariant
+observable algebra of a homogeneous disordered family is the crossed product
+\[
+  \dalg \;=\; C(\dis)\rtimes_{T}\ZZ^{d},
+\]
+a separable unital $C^{*}$-algebra. Its $K$-theory $K_{\ast}(\dalg)$ carries the
+disorder-averaged topological invariants of the family, and an invariant ergodic
+measure induces a trace whose range on $K_{0}$ is the gap-labelling group. The
+condensation $\cond{\dalg}$ is functorial in the finite quotients of $\dis$: a
+$T$-equivariant quotient $\dis\to\dis'$ induces a $\ast$-homomorphism
+$\dalg'\to\dalg$ and hence a morphism $\cond{\dalg'}\to\cond{\dalg}$ of condensed
+$C^{*}$-algebras, compatibly with composition.
+\end{progthm}
+
+\begin{proof}
+$C(\dis)$ is a separable unital $C^{*}$-algebra (\Cref{prop:hullAF}) and $\ZZ^{d}$ is
+countable discrete and \emph{amenable}, so the full and reduced crossed products
+coincide and $\dalg=C(\dis)\rtimes_{T}\ZZ^{d}$ is an unambiguous separable unital
+$C^{*}$-algebra by the standard construction; we write $\rtimes$ for this common
+value. That its
+$K$-theory computes the disorder-averaged invariants, and that a $T$-invariant
+ergodic probability measure $\mathbb{P}$ on $\dis$ induces a faithful trace
+$\tau_{\mathbb{P}}$ on $\dalg$ whose composition with the $K_{0}$-pairing is the
+integrated density of states and yields the gap-labelling group, is Bellissard's
+noncommutative geometry of the quantum Hall
+effect~\mbox{\cite{bellissard-ncg-qhe,kellendonk-tilings,prodan-sb}}. For functoriality, a
+$T$-equivariant continuous surjection $p:\dis\to\dis'$ induces a unital equivariant
+$\ast$-monomorphism $p^{*}:C(\dis')\hookrightarrow C(\dis)$; by the universal
+property of the crossed product an equivariant $\ast$-homomorphism of coefficient
+algebras induces a $\ast$-homomorphism
+$p^{*}\rtimes\ZZ^{d}:\dalg'=C(\dis')\rtimes_{T}\ZZ^{d}\to C(\dis)\rtimes_{T}\ZZ^{d}=\dalg$,
+functorial in $p$. Applying condensation, which is a functor
+(\Cref{prop:condcstar}), gives $\cond{\dalg'}\to\cond{\dalg}$, compatible with
+composition. Since $\dis=\varprojlim_{i}\dis_{i}$, these assemble the condensation of
+$\dalg$ over the inverse system of finite quotients.
+\end{proof}
+
+\begin{remark}[Bulk--boundary and coarse geometry]
+The $K$-theory of $\dalg$ is not only a receptacle for a number; the bulk--boundary
+correspondence realizes the boundary invariant as the image of the bulk class under
+the connecting map of the Toeplitz extension of
+$\dalg$~\cite{bourne-kellendonk-rennie}, and the coarse/Roe-algebraic picture gives
+the same invariants a controlled-topology
+description~\cite{kubota-controlled}. Each of these is a $K$-theory computation to
+which \Cref{cor:condinvariant} applies, so the boundary invariant is condensed for
+the same reason the bulk one is. The naturality of the \emph{solid} invariant in the
+disorder hull (that solidification commutes with the maps above) is the content
+of \Cref{conj:solidnat}.
+\end{remark}
+
+\section{Conjectures}
+\label{sec:conjectures}
+
+The theorems above are the provable core. The program's ambition on the
+positivity/$C^{*}$ side is larger, and we state the open part as numbered
+conjectures with stable identifiers. Each is separated cleanly from what is proved,
+and each names the nearest rigorous result it would extend.
+
+\begin{conjecture}[Positivity cuts out a closed condensed substack]
+\label{conj:substack}
+The assignment $H\mapsto(\qla,\St(\qla))$ upgrades to a morphism of condensed stacks
+from $\Ham_{d,G}$ to the stack of condensed unital $C^{*}$-algebras equipped with
+their condensed state space. Moreover, inside a larger ``formal-interaction'' stack
+in which the $C^{*}$-relations are dropped, positivity together with the
+$C^{*}$-identity $\norm{a^{*}a}=\norm{a}^{2}$ cuts out $\Ham_{d,G}$ as a
+\emph{closed} condensed substack.
+\end{conjecture}
+
+\noindent This would promote \Cref{thm:statespace} from a statement about a single
+algebra to one about the whole moduli object; the closedness is the stacky form of
+``positivity is a closed condition,'' and its natural proof would run through the
+condensed-stack technology of~\cite{clausen-scholze-analytic-stacks} together with
+the condensed-set morphism $\RR\times\cond{\BF}\to\cond{\Aut(\qla)}$ of
+Part~I~\cite{paperLocality}.
+
+\begin{conjecture}[Naturality of the solid invariant in disorder]
+\label{conj:solidnat}
+For a disordered family $H\in\Ham_{d,G}(\dis)$ with observable algebra
+$\dalg=C(\dis)\rtimes_{T}\ZZ^{d}$, the solid invariant
+$\Solid(\Kalg(\cond{\dalg}))$ agrees with the operator-$K$ invariant $\Kop(\dalg)$
+\emph{naturally in $\dis$}: the identifications of \Cref{thm:aoki} commute with the
+$\ast$-homomorphisms induced by $T$-equivariant finite quotients of \Cref{thm:crossed},
+so the invariant is compatible with every finite-resolution approximation of the
+hull.
+\end{conjecture}
+
+\noindent This is the disorder-averaged, family version of \Cref{cor:condinvariant}.
+It is the precise sense in which ``profinite probes match the configuration space'':
+the invariant is not merely definable over $\dis$ but is the limit of its values on
+the finite quotients $\dis_{i}$.
+
+\Needspace{9\baselineskip}
+\begin{conjecture}[Real/$KKO$ refinement of the periodic table]
+\label{conj:real}
+The $KO$-graded Kitaev periodic table is recovered by solidification of the
+\emph{Real} (in the sense of Atiyah's $KR$) algebraic $K$-theory of the condensed
+real observable algebra: for each of the ten symmetry classes, the class-appropriate
+$KR$-degree of $\Solid(\Kalg(\cond{A}))$ equals the operator $KKO$-invariant of the
+system, and the eightfold real periodicity matches the eightfold structure of the
+real classes.
+\end{conjecture}
+
+\noindent \Cref{thm:aoki} is a real, not yet a Real, statement, and the tenfold way
+needs the $KR$ grading that keeps track of the anti-linear time-reversal and
+particle--hole symmetries~\cite{prodan-sb,bourne-kellendonk-rennie,thiang-ktheory}.
+The conjecture is that Aoki's solidification is compatible with the Real structure so
+that the whole table, not just its complex and real-linear parts, is condensed.
+
+\begin{conjecture}[Solid state space as a classifying object]
+\label{conj:classifying}
+The condensed state space $\cond{\St(\qla)}$, with the convex structure making it a
+solid $\RR$-convex object, is a classifying object for condensed cyclic
+representations: a continuous family of states over a profinite base $S$ is the same
+as a map $S\to\cond{\St(\qla)}$, and the GNS functor of \Cref{prop:gns} descends to a
+universal condensed field of representations over $\cond{\St(\qla)}$, refining the
+continuity of \Cref{thm:groundstate} to a continuous field of Hilbert spaces on the
+locus where the GNS dimension is locally constant.
+\end{conjecture}
+
+\noindent This is the condensed form of the state-space approach to phase
+classification, in which phases are homotopy classes of sections of bundles of
+(pure) states~\cite{denittis-states,denittis-rendel-weyl}; the conjecture is that
+those bundles and their sections are the shadow of a single condensed classifying
+object, and that GNS is its universal representation.
+
+\begin{conjecture}[Condensed enhancement of the split property and superselection]
+\label{conj:split}
+The split property of gapped ground states and the
+Doplicher--Haag--Roberts superselection structure admit condensed enhancements: the
+sector structure --- a symmetric or braided tensor category in the relevant
+dimension --- is detected by a condensed invariant over profinite bases, and the
+split property provides the condensed factorization along which $\pi_{0}$ of the
+phase stack descends through finite quotients of a disorder hull.
+\end{conjecture}
+
+\noindent The split property is central to the operator-algebraic classification of
+gapped phases and to the construction of the indices that make that classification
+work~\cite{ogata-classification-review,ogata-h3-index}. The conjecture asks that this
+structure be visible to the profinite probes, so that the descent of phase labels
+along disorder approximations (the theme of \Cref{thm:crossed} and
+\Cref{conj:solidnat}) has a representation-theoretic counterpart.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+\paragraph{Scope of the solid bridge.}
+\Cref{thm:aoki} and \Cref{cor:condinvariant} reach the invariants of free-fermion
+and disordered phases (the invertible, $K$-theoretic sector). They say nothing
+about noninvertible topological order, whose excitations form a braided or modular
+tensor category rather than a $K$-theory class. A condensed account of that order
+would need a condensed \emph{higher} stack of phases and defects, not a $K$-theory
+spectrum, and it is out of scope here; Parts~V and~VI record the boundary of what the
+$K$-theoretic story can classify. Within its scope, the bridge is exact, but its
+scope is the invertible sector.
+
+\paragraph{Real versus complex, connective versus periodic.}
+We have been deliberate about Aoki's hypotheses. The theorem is about real algebras;
+the operator $K$-theory it recovers is $KO$-flavored, which is the right flavor for
+the periodic table, but the identifications carry connective-versus-periodic and
+real-versus-Real bookkeeping that we have imported rather than restated. A reader who
+wants the graded-group form must read it off the source with those conventions in
+place. Overstating the theorem as a naked Bott-periodic isomorphism would be a
+mistake, and we have avoided it.
+
+\paragraph{Unital versus nonunital.}
+Our systems have finite on-site dimension, so $\qla$ is unital and $\St(\qla)$ is
+compact: the hypotheses of \Cref{lem:alaoglu} and \Cref{thm:statespace} hold on
+the nose. For systems whose observable algebra is nonunital (for instance certain
+half-space or continuum models) the state space is only weak-$\ast$ locally compact,
+and one must pass to the multiplier algebra or unitization before condensing;
+\Cref{thm:statespace} then applies to the unitization. We flag this rather than hide
+it.
+
+\paragraph{Light versus full condensed.}
+Separability of $\qla$ and of $C(\dis)$ lets us work with light condensed sets
+throughout, which sidesteps the set-theoretic size issues of the unrestricted theory
+and is exactly matched to the countable inverse limits that describe finite-resolution
+disorder data. For systems that are genuinely non-separable this convenience is lost
+and the full condensed formalism, with its universe bookkeeping, is required.
+
+\paragraph{What is genuinely new here.}
+Nothing in \Cref{sec:framework,sec:states,sec:gns,sec:disorder} is a new theorem of
+operator algebras; the individual facts are classical or cited. The new element is
+their assembly: the state space, positivity, GNS, and the crossed product are placed
+in the condensed category so that Aoki's bridge can act on them, and the ground-state
+section is shown to be a genuine condensed point over the gapped locus. The synthesis
+is the contribution, and its honest measure is that it makes an existing invariant
+condensed, not that it makes a new one.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have carried the observable side of a quantum lattice system (its quasi-local
+$C^{*}$-algebra, its positivity structure, its state space, and its $K$-theory)
+into condensed mathematics, and we have been explicit about the line between theorem
+and conjecture. On the theorem side: the quasi-local algebra is a separable AF
+$C^{*}$-algebra whose condensation is a light sheaf of $C^{*}$-algebras
+(\Cref{prop:uhf,prop:condcstar}); the state space condenses to a compact Hausdorff
+condensed set on which positivity is a closed condition (\Cref{thm:statespace}); GNS
+is a functor and the ground-state section over a uniformly gapped family is
+weak-$\ast$ continuous (\Cref{prop:gns,thm:groundstate}); Aoki's solidification
+theorem makes the operator-$K$ invariant of a real Banach observable algebra a
+condensed-mathematical object (\Cref{thm:aoki,cor:condinvariant}); and the disorder
+crossed product condenses functorially in the finite quotients of the profinite hull
+(\Cref{prop:hullAF,thm:crossed}). On the conjecture side we have named five open
+problems (\Cref{conj:substack,conj:solidnat,conj:real,conj:classifying,conj:split})
+whose resolution would complete the positivity/$C^{*}$ module of the program.
+
+The single load-bearing insight is worth isolating. A topological invariant of a
+free-fermion or disordered phase is an operator-$K$ class, and by Aoki's theorem that
+class is the Bott-inverted solidification of the connective algebraic $K$-theory of a
+condensed algebra. The invariant is unchanged; its provenance is now condensed, and
+with that provenance comes the family-theoretic and profinite-disorder machinery that
+the rest of the program deploys. That is the whole of what this paper claims, and it
+is stated in the key of a research program rather than a finished theory.
+
+\section*{Code availability}
+The formal-verification code accompanying this paper (finite-dimensional
+$C^{*}$-algebra positivity checks, the explicit GNS construction, and the Bloch-ball
+geometry of qubit states) is at
+\href{https://github.com/YonedaAI/topological-phases-of-matter}{github.com/YonedaAI/topological-phases-of-matter},
+in \texttt{src/positivity-cstar-norms/}.
+
+\begin{thebibliography}{99}
+
+\bibitem{clausen-scholze-condensed}
+P.~Scholze (joint with D.~Clausen),
+\emph{Lectures on Condensed Mathematics},
+stable citable version of the 2019 Bonn course, \href{https://arxiv.org/abs/2605.03658}{arXiv:2605.03658}.
+
+\bibitem{clausen-scholze-analytic}
+P.~Scholze (joint with D.~Clausen),
+\emph{Lectures on Analytic Geometry},
+stable citable version of the 2019/20 Bonn course, \href{https://arxiv.org/abs/2605.03655}{arXiv:2605.03655}.
+
+\bibitem{clausen-scholze-analytic-stacks}
+D.~Clausen and P.~Scholze,
+\emph{Analytic Stacks},
+lecture course, Max Planck Institute for Mathematics / IHES, 2023--2024.
+
+\bibitem{barwick-haine-pyknotic}
+C.~Barwick and P.~Haine,
+\emph{Pyknotic objects, I. Basic notions},
+\href{https://arxiv.org/abs/1904.09966}{arXiv:1904.09966} (2019).
+
+\bibitem{aoki-solidification}
+K.~Aoki,
+\emph{(Semi)topological $K$-theory via solidification},
+\href{https://arxiv.org/abs/2409.01462}{arXiv:2409.01462} (2024).
+
+\bibitem{bmns-automorphic}
+S.~Bachmann, S.~Michalakis, B.~Nachtergaele, and R.~Sims,
+\emph{Automorphic equivalence within gapped phases of quantum lattice systems},
+Comm. Math. Phys. \textbf{309} (2012), 835--871, \href{https://arxiv.org/abs/1102.0842}{arXiv:1102.0842}.
+
+\bibitem{hastings-wen-qac}
+M.~B.~Hastings and X.-G.~Wen,
+\emph{Quasi-adiabatic continuation of quantum states: the stability of topological
+ground state degeneracy and emergent gauge invariance},
+Phys. Rev. B \textbf{72} (2005), 045141, \href{https://arxiv.org/abs/cond-mat/0503554}{arXiv:cond-mat/0503554}.
+
+\bibitem{nsy-quasilocality-1}
+B.~Nachtergaele, R.~Sims, and A.~Young,
+\emph{Quasi-locality bounds for quantum lattice systems. I. Lieb--Robinson bounds,
+quasi-local maps, and spectral flow automorphisms},
+J. Math. Phys. \textbf{60} (2019), 061101, \href{https://arxiv.org/abs/1810.02428}{arXiv:1810.02428}.
+
+\bibitem{nsy-bulkgap}
+B.~Nachtergaele, R.~Sims, and A.~Young,
+\emph{Stability of the bulk gap for frustration-free topologically ordered quantum
+lattice systems},
+Lett. Math. Phys. \textbf{114} (2024), 24, \href{https://arxiv.org/abs/2102.07209}{arXiv:2102.07209}.
+
+\bibitem{kitaev-periodic-table}
+A.~Kitaev,
+\emph{Periodic table for topological insulators and superconductors},
+AIP Conf. Proc. \textbf{1134} (2009), 22--30, \href{https://arxiv.org/abs/0901.2686}{arXiv:0901.2686}.
+
+\bibitem{thiang-ktheory}
+G.~C.~Thiang,
+\emph{On the $K$-theoretic classification of topological phases of matter},
+Ann. Henri Poincar\'e \textbf{17} (2016), 757--794, \href{https://arxiv.org/abs/1406.7366}{arXiv:1406.7366}.
+
+\bibitem{prodan-sb}
+E.~Prodan and H.~Schulz-Baldes,
+\emph{Bulk and Boundary Invariants for Complex Topological Insulators: From
+$K$-Theory to Physics},
+Mathematical Physics Studies, Springer (2016), \href{https://arxiv.org/abs/1510.08744}{arXiv:1510.08744}.
+
+\bibitem{ssh-1979}
+W.~P.~Su, J.~R.~Schrieffer, and A.~J.~Heeger,
+\emph{Solitons in polyacetylene},
+Phys. Rev. Lett. \textbf{42} (1979), 1698--1701.
+
+\bibitem{tknn-1982}
+D.~J.~Thouless, M.~Kohmoto, M.~P.~Nightingale, and M.~den Nijs,
+\emph{Quantized Hall conductance in a two-dimensional periodic potential},
+Phys. Rev. Lett. \textbf{49} (1982), 405--408.
+
+\bibitem{bellissard-ncg-qhe}
+J.~Bellissard, A.~van Elst, and H.~Schulz-Baldes,
+\emph{The noncommutative geometry of the quantum Hall effect},
+J. Math. Phys. \textbf{35} (1994), 5373--5451, \href{https://arxiv.org/abs/cond-mat/9411052}{arXiv:cond-mat/9411052}.
+
+\bibitem{kellendonk-tilings}
+J.~Kellendonk,
+\emph{Non commutative geometry of tilings and gap labelling},
+Rev. Math. Phys. \textbf{7} (1995), 1133--1180, \href{https://arxiv.org/abs/cond-mat/9403065}{arXiv:cond-mat/9403065}.
+
+\bibitem{bourne-kellendonk-rennie}
+C.~Bourne, J.~Kellendonk, and A.~Rennie,
+\emph{The $K$-theoretic bulk-edge correspondence for topological insulators},
+Ann. Henri Poincar\'e \textbf{18} (2017), 1833--1866, \href{https://arxiv.org/abs/1604.02337}{arXiv:1604.02337}.
+
+\bibitem{kubota-controlled}
+Y.~Kubota,
+\emph{Controlled topological phases and bulk-edge correspondence},
+Comm. Math. Phys. \textbf{349} (2017), 493--525, \href{https://arxiv.org/abs/1511.05314}{arXiv:1511.05314}.
+
+\bibitem{ogata-classification-review}
+Y.~Ogata,
+\emph{Classification of gapped ground state phases in quantum spin systems},
+Proc. ICM 2022, \href{https://arxiv.org/abs/2110.04675}{arXiv:2110.04675}.
+
+\bibitem{ogata-h3-index}
+Y.~Ogata,
+\emph{A $H^{3}(G,\mathbb{T})$-valued index of symmetry protected topological phases
+with on-site finite group symmetry for two-dimensional quantum spin systems},
+Forum Math. Pi \textbf{9} (2021), e13, \href{https://arxiv.org/abs/2101.00426}{arXiv:2101.00426}.
+
+\bibitem{denittis-states}
+G.~De Nittis,
+\emph{Topological phases of non-interacting systems: a general approach based on
+states},
+Lett. Math. Phys. \textbf{115} (2025), \href{https://arxiv.org/abs/2502.03590}{arXiv:2502.03590}.
+
+\bibitem{denittis-rendel-weyl}
+G.~De Nittis and S.~G.~Rendel,
+\emph{A scheme for topological phases of the Weyl $C^{*}$-algebra},
+\href{https://arxiv.org/abs/2607.01183}{arXiv:2607.01183} (2026).
+
+\bibitem{paperLocality}
+M.~Long and The YonedaAI Collaboration,
+\emph{Condensed Locality: Lieb--Robinson Estimates and Quasi-Local Dynamics on the
+Moduli Stack of Hamiltonians},
+Part~I of this series (2026).
+
+\bibitem{paperGap}
+M.~Long and The YonedaAI Collaboration,
+\emph{The Uniformly Gapped Substack: Existence and Stability of the Thermodynamic
+Spectral Gap},
+Part~III of this series (2026).
+
+\bibitem{paperEFT}
+M.~Long and The YonedaAI Collaboration,
+\emph{From Lattice Models to Effective Field Theories: Stabilization and the
+Invertible Condensed Phase Spectrum},
+Part~IV of this series (2026).
+
+\bibitem{paperRealizability}
+M.~Long and The YonedaAI Collaboration,
+\emph{Physical Realizability of Bordism and Homotopy Classes by Gapped Lattice
+Systems},
+Part~V of this series (2026).
+
+\bibitem{paperSynthesis}
+M.~Long and The YonedaAI Collaboration,
+\emph{Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular
+Research Program},
+Part~VI of this series (2026).
+
+\end{thebibliography}
+
+\end{document}

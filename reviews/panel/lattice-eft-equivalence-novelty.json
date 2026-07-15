@@ -1,0 +1,78 @@
+{
+  "novelty_score": 0.35,
+  "related_work": [
+    {
+      "citation_key": "beaudry-etal",
+      "title": "Homotopical Foundations of Parametrized Quantum Spin Systems",
+      "relation": "builds_on",
+      "delta": "Supplies the only existing rigorous ordinary-topology (non-condensed) homotopical foundation for parametrized gapped spin systems that the paper's conditional recognition-principle argument (Thm 'recognition') leans on. This paper adds no new homotopical foundations of its own; it only conjectures (IV-1) that a condensed/solid refinement of this framework exists, which Beaudry et al. do not attempt."
+    },
+    {
+      "citation_key": "kubota-omega-spectrum",
+      "title": "Stable homotopy theory of invertible gapped quantum spin systems I: Kitaev's Omega-spectrum",
+      "relation": "builds_on",
+      "delta": "Supplies the only existing rigorous Omega-spectrum of invertible gapped spin systems, built operator-algebraically, not condensed. The paper treats it as the 'rigorous carrier' for IP^cond's homotopy groups (Thm 'kubota') and explicitly defers its condensed lift to Conjecture IV-1; no new spectrum construction is given here, only a conjectural refinement of Kubota's."
+    },
+    {
+      "citation_key": "aoki-solidification",
+      "title": "(Semi)topological K-theory via solidification",
+      "relation": "builds_on",
+      "delta": "The operator-K = Solid(algebraic-K) bridge is established in the companion Part II paper, not here. This paper's new content is Conjecture IV-4, that solidification commutes with group completion of the stacking monoid -- a compatibility question Aoki's paper does not address and that this paper correctly flags as non-automatic."
+    },
+    {
+      "citation_key": "freed-hopkins",
+      "title": "Reflection positivity and invertible topological phases",
+      "relation": "competing",
+      "delta": "Defines the field-theoretic/bordism classification target (I_FH) that IP^cond is conjectured (IV-2) to match. The two classification schemes are logically independent constructions being compared, not one building on the other; the paper is explicit that agreement is unproven."
+    },
+    {
+      "citation_key": "freed-sre",
+      "title": "Short-range entanglement and invertible field theories",
+      "relation": "builds_on",
+      "delta": "Supplies the SRE-to-invertible-TQFT assignment that the paper's comparison map c_{d,G} (Def 'comp') is literally constructed from; used and extended to a map of spectra, not reproved."
+    },
+    {
+      "citation_key": "hsin-wang-moduli",
+      "title": "On topology of the moduli space of gapped Hamiltonians for topological phases",
+      "relation": "prior_art",
+      "delta": "Closest ordinary-topology precedent for studying the moduli space/homotopy type of gapped Hamiltonians via EFT methods. The paper's own Discussion concedes its contribution over Hsin-Wang is 'organizational... not a new invariant,' i.e. the same kind of invariant repackaged in a condensed environment -- an honest self-assessment that matches the actual delta."
+    },
+    {
+      "citation_key": "denittis-rendel-weyl",
+      "title": "A scheme for topological phases of the Weyl C*-algebra",
+      "relation": "prior_art",
+      "delta": "Nearest ordinary-operator-algebraic precedent, classifying phases via homotopy of a C*-algebra state space rather than condensed structures. Correctly positioned in the Discussion as parallel non-condensed work rather than absorbed or ignored."
+    },
+    {
+      "citation_key": "ogata-classification-review",
+      "title": "Classification of gapped ground state phases in quantum spin systems",
+      "relation": "builds_on",
+      "delta": "Supplies the one genuine full theorem the paper can cite in support of Conjecture IV-2 (d=1 completeness of the operator-algebraic index). Used as evidence at level (L0) only; not extended to (L1) or (L2)."
+    },
+    {
+      "citation_key": "kitaev-periodic-table",
+      "title": "Periodic table for topological insulators and superconductors",
+      "relation": "builds_on",
+      "delta": "The classical tenfold-way classification is reused verbatim as the free-fermion evidence base (Table 'tenfold'); no new invariant or extension of the periodic table is produced, only a machine-checked repackaging of its Bott periodicity."
+    },
+    {
+      "citation_key": "kapustin-fidkowski",
+      "title": "Local Commuting Projector Hamiltonians and the Quantum Hall Effect",
+      "relation": "prior_art",
+      "delta": "This no-go result is correctly cited to acknowledge one of the two ways Conjecture IV-2 could fail (non-surjectivity for chiral phases in the commuting-projector class); used to bound the paper's own claims, not circumvented or reproved."
+    },
+    {
+      "citation_key": "xiong-minimalist",
+      "title": "Minimalist approach to the classification of symmetry protected topological phases",
+      "relation": "prior_art",
+      "delta": "Already develops a stacking/monoid picture of SPT classification in essentially the spirit of this paper's Section 4 (stacking as a commutative-monoid operation with invertible elements exactly the SRE phases). Cited elsewhere in the paper for the generalized-cohomology hypothesis but not cross-referenced at the specific point (Prop 'monoid', Thm 'groth') where the closely analogous construction is presented, understating how much physics precedent already exists for that construction."
+    }
+  ],
+  "missing_prior_art": [
+    "The 'fragile topological phases' literature (Po, Vishwanath, Watanabe and follow-up work, e.g. arXiv:1709.06551) is not cited anywhere in the paper or bibliography, yet Remark 'stmeaning' and Example 'noncanc' in Section 4 describe exactly the phenomenon that literature names and studies: a phase nontrivial on its own that becomes trivial after stacking with a specific (non-arbitrary) trivial/ancilla summand, so that naive Grothendieck/K-theoretic stabilization erases it. The paper's own phrase 'fragile distinctions are invisible to it by construction' (Discussion) echoes the term without citing its source.",
+    "The general result that stacking makes SPT/SRE phases into an abelian group under a stable-equivalence relation generated by adding trivial/ancilla degrees of freedom is standard in the condensed-matter SPT literature (e.g. Chen-Gu-Liu-Wen-style stable-equivalence classifications, and explicit stacking-group treatments of fermionic SPT phases such as Phys. Rev. B 110, 235117 (2024)); these are not cited at the point in Section 4 where the construction is presented, even though the paper is honest that the underlying mathematics (Grothendieck completion) is not new.",
+    "For free-fermion systems specifically, the K-theory-of-band-structures literature documents that naively Grothendieck-completing the stacking monoid does not always recover the correct topological K-theory classification group (part of the motivation for the fragile-topology literature above); the paper's Prop 'stable' and the free-fermion evidence of Section 6.2 do not address or cite this known subtlety, which bears on how much weight the free-fermion 'evidence' for Conjecture IV-2 can carry beyond the tenfold-way table itself."
+  ],
+  "verdict": "The paper's own novelty framing is well-calibrated against its actual content: it correctly attributes the algebraic machinery (commutative monoid under stacking, Grothendieck group completion, the recognition principle for grouplike E-infinity-spaces) to standard mathematics, correctly cites Beaudry et al. (2303.07431) and Kubota (2503.12618) as the existing rigorous but non-condensed anchors, and -- crucially -- explicitly and repeatedly flags that the 'condensed' refinement named in its own central object, IP^cond, is not established here but is Conjecture IV-1 ('no condensed enhancement of IP* exists in the literature'). Checked against the calibration framing (condensed/profinite formulation, solidification mechanism, three-level comparison conjecture), the paper does not overclaim on any of the three fronts: the condensed construction is honestly conjectural, the solidification-as-EFT-limit claim is split into two separate, appropriately labeled conjectures (IV-4, IV-5) rather than asserted as one, and the explicit three-level (L0/L1/L2) stratification of the comparison conjecture is the one piece of genuine, apparently unprecedented organizational novelty this installment actually delivers -- targeted searches found no equivalent explicit sets/spectra/families hierarchy for the lattice-EFT comparison question in the prior literature. Two modest underclaiming or citation gaps temper this: the stacking-monoid-plus-group-completion picture of Section 4 already has direct, uncited physics precedent (Xiong 1701.00004, fermionic stacking-group treatments), and the 'stabilization collapses distinctions' phenomenon it isolates (Remark 'stmeaning', Example 'noncanc') closely parallels the uncited 'fragile topological phases' literature. Neither gap affects the paper's central honesty about what is proved versus conjectured; both are citation-positioning fixes rather than correctness problems. Net assessment: real but modest novelty, almost entirely organizational and synthetic, consistent with the program's own admission that the value proposition is unificatory rather than a new physical invariant.",
+  "confidence": 0.75
+}

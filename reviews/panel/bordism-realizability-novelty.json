@@ -1,0 +1,72 @@
+{
+  "novelty_score": 0.3,
+  "related_work": [
+    {
+      "citation_key": "kapustin-fidkowski",
+      "title": "Local Commuting Projector Hamiltonians and the Quantum Hall Effect",
+      "relation": "prior_art",
+      "delta": "Theorem V-C is this theorem imported and cited verbatim ('we cite the theorem verbatim and do not reprove it'); the paper's entire 'obstructed region,' its CP-versus-gapped distinction ('the crux'), and the strict-inclusion corollary are organized around this single external result, not extended by it. The paper also does not state, and does not discuss, the finite-dimensional-local-Hilbert-space hypothesis implicit in the original theorem, which recent follow-up work (see missing_prior_art) shows is load-bearing for how absolute the obstruction actually is."
+    },
+    {
+      "citation_key": "cglw-cohomology",
+      "title": "Symmetry protected topological orders and the group cohomology of their symmetry group",
+      "relation": "prior_art",
+      "delta": "Theorem V-A restates this construction in the paper's realizability vocabulary; the proof explicitly says it gives only 'the structure of the argument' and cites the theorems for the analytic steps. Scope is bosonic on-site symmetry only (Remark VAscope concedes this); the parallel interacting-fermion (super-cohomology) realizability question is not addressed anywhere in the paper despite being a natural, well-studied extension of exactly this construction."
+    },
+    {
+      "citation_key": "else-nayak",
+      "title": "Classifying symmetry-protected topological phases through the anomalous action of the symmetry on the edge",
+      "relation": "prior_art",
+      "delta": "Supplies part (iii) of Theorem V-A (the edge-anomaly characterization) verbatim; no new argument or extension is offered."
+    },
+    {
+      "citation_key": "ogata-classification-review",
+      "title": "Classification of gapped ground state phases in quantum spin systems",
+      "relation": "prior_art",
+      "delta": "Theorem V-B's completeness claim (realized = invariant in d=1,2) is Ogata's completeness theorems transported into the realizability vocabulary and composed with Theorem V-A's surjectivity. The composition step is straightforward once both cited results are in hand; the paper claims only the composition, not the underlying operator-algebraic theorems."
+    },
+    {
+      "citation_key": "walker-wang",
+      "title": "(3+1)-TQFTs and Topological Insulators",
+      "relation": "prior_art",
+      "delta": "Proposition 'ww' (beyond-cohomology commuting-projector realizations in 3+1d) imports this construction with, in the paper's own words, 'no new argument supplied.' Used only as a source of CP-realizations beyond Theorem V-A's cohomological scope."
+    },
+    {
+      "citation_key": "kapustin-cobordism",
+      "title": "Symmetry Protected Topological Phases, Anomalies, and Cobordisms: Beyond Group Cohomology",
+      "relation": "prior_art",
+      "delta": "Defines the beyond-group-cohomology cobordism classification that Theorem V-A explicitly disclaims covering (Remark VAscope); cited only to bound the theorem's scope, not engaged with or extended toward a realizability construction of its own classes beyond citing Walker-Wang."
+    },
+    {
+      "citation_key": "aasen-wang-hastings",
+      "title": "Adiabatic paths of Hamiltonians, symmetries of topological order, and automorphism codes",
+      "relation": "prior_art",
+      "delta": "Supplies the only existing (and, by the source's own admission, conjectural) construction of higher homotopy generators (pi_1, pi_2, pi_3) for the 2D space of gapped Hamiltonians. The paper correctly flags these as conjectural and adds no new construction, only re-describes them as instances of 'realizing a class in pi_n' within its own vocabulary."
+    },
+    {
+      "citation_key": "hsin-wang-moduli",
+      "title": "On topology of the moduli space of gapped Hamiltonians for topological phases",
+      "relation": "prior_art",
+      "delta": "Cited as 'the closest ordinary-topology precedent for the object Part IV condenses'; the relationship is a one-sentence gesture rather than an engagement with its actual constructions, consistent with the series' general pattern of citing this as the nearest non-condensed precedent without absorbing or extending its results here."
+    },
+    {
+      "citation_key": "kubota-omega-spectrum",
+      "title": "Stable homotopy theory of invertible gapped quantum spin systems I: Kitaev's Omega-spectrum",
+      "relation": "builds_on",
+      "delta": "The abstract target C_{d,G} that realizability (surjectivity of the comparison map) is asked about is, per Part IV, conjecturally a connective cover of this Omega-spectrum. Part V's whole framing therefore borrows its target's rigor status from this external construction and from Part IV's still-open Conjecture IV-2, rather than establishing anything new about the target itself."
+    },
+    {
+      "citation_key": "freed-hopkins",
+      "title": "Reflection positivity and invertible topological phases",
+      "relation": "competing",
+      "delta": "Named as the alternative candidate identification of C_{d,G} (the Freed-Hopkins bordism target) alongside Kubota's Omega-spectrum; the two are presented as not-yet-reconciled candidates rather than the paper adjudicating or unifying them."
+    }
+  ],
+  "missing_prior_art": [
+    "Interacting fermionic SPT realizability is not cited anywhere: Gu-Wen group-supercohomology (arXiv:1201.2648), Tarantino-Fidkowski 'Discrete spin structures and commuting projector models for two-dimensional fermionic symmetry-protected topological phases' (arXiv:1604.02145), Tarantino-Fidkowski 'Full Commuting Projector Hamiltonians of Interacting Symmetry-Protected Topological Phases of Fermions' (arXiv:1806.09709), and Wang-Gu 'Construction and Classification of Symmetry-Protected Topological Phases in Interacting Fermion Systems' (Phys. Rev. X 10, 031055 (2020)) are a decade-old, mature sub-literature answering precisely Part V's question -- which fermionic SPT classes are commuting-projector realizable -- for interacting (not merely free/quadratic) fermions. The status table's two fermionic rows ('d=1, fermionic Z2' and 'd=2, fermionic (class A)') cover only the free-fermion Kitaev chain and Chern insulator, silently leaving the interacting, supercohomology-classified fermionic SPT phases (in exactly d=1,2,3, the table's own stated range) out of the 'consolidated status table' entirely.",
+    "Literature qualifying how absolute the Kapustin-Fidkowski wall actually is was not cited or discussed: the rotor-model construction achieving a nonzero quantized Hall conductance in a commuting-projector model via an infinite-dimensional per-site Hilbert space (arXiv:2102.13057, 'A Commuting Projector Model with a Non-zero Quantized Hall Conductance'; related constructions in arXiv:2107.02817 and arXiv:2208.13785), and, more consequentially, the 2025 result that finite-dimensional-Hilbert-space commuting-projector models can carry nontrivial *generalized* Hall conductivities once generalized symmetries are admitted (arXiv:2505.20384, 'Generalized Hall Conductivities in Local Commuting Projector Models: Generalized Symmetries and Protected Surface Modes'). Theorem V-C states the Kapustin-Fidkowski conclusion without the finite-dimensionality hypothesis this literature shows is load-bearing, and Remark 'nogo' ('exactly what is and is not obstructed') does not mention that the wall is now known to admit qualifications and near-misses in the immediately adjacent literature -- a direct gap in the paper's own claimed contribution of consolidating the CP-versus-gapped boundary into one table.",
+    "Targeted searches did not turn up an existing survey or review organized exactly as the paper's Table 1 is (a single dimension x symmetry-class grid separating torsion/free parts with per-cell construction, obstruction, and realizability status), which supports the organizational-novelty claim at face value for the assembly itself. However, given the two gaps above, 'consolidated' claims more completeness than the table delivers, and -- unlike the paper's careful, explicit scope disclaimers elsewhere (e.g. Remark VAscope, Remark VBscope) -- the omission of the interacting-fermion rows and the Kapustin-Fidkowski qualification literature is nowhere flagged as a deliberate scope choice."
+  ],
+  "verdict": "The calibration is correct that every individual construction and obstruction here is old, and the paper is candid about this (the Limitations section states the three Theorems are 'repackagings of cited results' whose 'mathematical substance is due to Chen-Gu-Liu-Wen, Else-Nayak, Ogata, and Kapustin-Fidkowski'). The paper's own novelty claim rests on three organizational moves, and they hold up unevenly. The essential-surjectivity reformulation (Prop 'esssurj') is honestly disclosed as contentless ('no content beyond unwinding the notation'), so it is not an overclaim, just a very thin one. Conjecture V-3 (realizability over profinite disorder hulls as a condensed-cohomological descent problem) is the one piece of genuine novelty: targeted searches found no prior work asking whether disorder-robust realizability of a topological phase is a descent obstruction on a profinite hull, which is plausible precisely because it depends on the series' own unprecedented premise of treating disorder hulls as condensed/profinite objects (confirmed by the knowledge base's independent novelty scan for the program as a whole). This piece is legitimate but entirely conjectural and unexemplified -- the one concrete test case (a disordered Kitaev chain over a Bernoulli hull) is deferred to 'Open directions' as future work rather than carried out. The third claimed contribution, the 'consolidated status table,' is where the paper overreaches: independent spot-checks found a decade-old, mature literature on interacting fermionic SPT commuting-projector realizability (Gu-Wen supercohomology, Tarantino-Fidkowski, Wang-Gu) that answers exactly the question the table poses for fermions, and it is entirely absent from both the table's fermionic rows and the surrounding text. Independent spot-checks also found 2021-2025 follow-up literature (rotor-model and, especially, finite-dimensional generalized-Hall-conductivity constructions) that qualifies exactly how absolute the Kapustin-Fidkowski wall is -- the single result the table's whole 'obstructed' column rests on -- and this is not mentioned even as a caveat, in contrast to the paper's otherwise careful practice of flagging scope limits explicitly (Remarks VAscope, VBscope). Neither gap is fatal to the paper's honesty about what is proved versus conjectured -- nothing here is technically false as far as it goes -- but both directly weaken the 'consolidated' and 'nothing in the table is claimed beyond them' framing of the one contribution meant to carry most of this installment's novelty. No underclaiming was found; if anything the table's implicit completeness is mildly overstated. Net assessment: modest, mostly organizational novelty, concentrated almost entirely in the conjectural profinite-realizability thread (V-3), with the status-table consolidation claim weaker than presented once measured against adjacent literature the paper does not cite.",
+  "confidence": 0.78
+}

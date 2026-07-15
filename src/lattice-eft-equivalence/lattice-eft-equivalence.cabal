@@ -1,0 +1,47 @@
+cabal-version:      2.4
+name:               lattice-eft-equivalence
+version:            0.1.0.0
+synopsis:           Companion code for Part IV -- stabilization and the invertible condensed phase spectrum
+description:        Finitely presented commutative monoids of stacking labels, their
+                    Grothendieck group completion, and the free-fermion tenfold-way
+                    periodic table with machine-checked Bott periodicities.
+license:            MIT
+author:             Matthew Long
+maintainer:         matthew@yonedaai.com
+build-type:         Simple
+
+executable lattice-eft
+    main-is:          Main.hs
+    other-modules:    Monoid
+                      TenfoldWay
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , containers
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+test-suite properties
+    type:             exitcode-stdio-1.0
+    main-is:          Properties.hs
+    other-modules:    Monoid
+                      TenfoldWay
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , containers
+                    , QuickCheck
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
+
+-- Deterministic equational proofs (Theorem IV-A universal property, the toy
+-- monoid's collapse to Z, Bott periodicity), complementing the randomized
+-- QuickCheck properties above; see Proofs.hs for the derivations.
+test-suite proofs
+    type:             exitcode-stdio-1.0
+    main-is:          Proofs.hs
+    other-modules:    Monoid
+                      TenfoldWay
+    hs-source-dirs:   .
+    build-depends:    base >=4 && <5
+                    , containers
+    default-language: Haskell2010
+    ghc-options:      -Wall -Wextra -Werror
