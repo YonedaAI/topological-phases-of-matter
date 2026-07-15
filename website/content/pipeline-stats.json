@@ -1,0 +1,725 @@
+{
+  "generatedAt": "2026-07-15T04:43:09.883Z",
+  "source": "scanned",
+  "constants": {
+    "agents": {
+      "orchestrator": 1,
+      "named": 60,
+      "workerSpawnedCodexCompanions": 6
+    },
+    "models": [
+      {
+        "id": "claude-fable-5",
+        "name": "Claude Fable 5",
+        "role": "Orchestrator only — planning, hard gates, review relays, deploys. Largest single Claude-side consumer (5.5 MB transcript, hundreds of turns); authored no papers",
+        "count": 1
+      },
+      {
+        "id": "claude-opus-4-8",
+        "name": "Claude Opus 4.8",
+        "role": "ALL paper authorship: 5 research workers + synthesis; knowledge base, Lean formalizer, 6 technical reviewers, 6 meta-reviewers",
+        "count": 20
+      },
+      {
+        "id": "claude-sonnet-5",
+        "name": "Claude Sonnet 5",
+        "role": "24 panel roles, 5 Haskell verifiers, humanizers, auditors, refs-fixer, browser QA, website/social/dashboard builders + 6 codex-companion subagents",
+        "count": 44
+      },
+      {
+        "id": "claude-haiku-4-5-20251001",
+        "name": "Claude Haiku 4.5",
+        "role": "OG-image generator, pipeline validator",
+        "count": 2
+      },
+      {
+        "id": "gpt-5.5 (codex CLI, xhigh)",
+        "name": "GPT-5.5",
+        "role": "All code/LaTeX/website reviews + Lean authoring",
+        "count": "~40 runs"
+      },
+      {
+        "id": "gemini-3.1-pro (agy CLI, High)",
+        "name": "Gemini 3.1 Pro",
+        "role": "Paper peer-review loops",
+        "count": "14 calls"
+      }
+    ],
+    "modelsFootnote": "Claude model IDs verified post-run from the model field of all 66 subagent session transcripts — the papers were authored entirely on claude-opus-4-8; claude-fable-5 appears only in the orchestrator's transcript.",
+    "time": {
+      "start": "2026-07-14 14:16",
+      "setup": "14:40",
+      "finalSlack": "21:33",
+      "wallClock": "≈7h 17m",
+      "note": "includes ≈25 min usage-limit outage"
+    },
+    "tokens": {
+      "codexMeasured": 2424730,
+      "codexMeasuredRuns": 25,
+      "codexNote": "summed from per-run 'tokens used' lines; a few unlogged runs excluded",
+      "agyCalls": 14,
+      "claudeSide": "not metered in-session; est. tens of millions across 60 agents",
+      "estimateFlag": true,
+      "caveat": "GPT-5.5 measured: 2,424,730 across 25 logged runs · Claude-side unmetered in-session (orchestrator likely the largest consumer) — see claude.ai usage for exact spend"
+    },
+    "fixes": {
+      "gemini": "13 review rounds across 6 papers",
+      "codexLatex": {
+        "found": 30,
+        "fixed": 30
+      },
+      "codexHaskell": {
+        "found": 60,
+        "fixed": 60
+      },
+      "website": {
+        "found": 6,
+        "fixed": 6
+      },
+      "panelsBlocking": 21,
+      "humanizerEdits": 124
+    },
+    "postCapResolved": [
+      {
+        "topic": "lattice-eft-equivalence",
+        "track": "codexLatex",
+        "kind": "environmental",
+        "reason": "codex's sandbox is read-only and could not itself rebuild the PDF to certify PASS; the worker independently verified a clean build"
+      },
+      {
+        "topic": "bordism-realizability",
+        "track": "codexHaskell",
+        "kind": "post-cap",
+        "reason": "3-round review cap reached with one High finding open; fixed post-cap and self-verified (NaN clamp on bulkGap)"
+      },
+      {
+        "topic": "synthesis",
+        "track": "codexLatex",
+        "kind": "post-cap",
+        "reason": "3-round review cap reached with one cosmetic finding open; fixed post-cap and self-verified (Table 1 float ordering)"
+      }
+    ],
+    "timeline": [
+      {
+        "phase": "P1 Setup",
+        "start": "14:40",
+        "end": "14:41"
+      },
+      {
+        "phase": "P2 Knowledge base",
+        "start": "14:41",
+        "end": "14:58"
+      },
+      {
+        "phase": "P3 Workers ×5",
+        "start": "15:03",
+        "end": "17:12"
+      },
+      {
+        "phase": "P3.5 Panels + metas",
+        "start": "16:33",
+        "end": "17:45"
+      },
+      {
+        "phase": "P3.6 Audits",
+        "start": "17:14",
+        "end": "17:45"
+      },
+      {
+        "phase": "P4 Synthesis",
+        "start": "17:14",
+        "end": "19:25"
+      },
+      {
+        "phase": "P4.5 Syn panel + humanizer",
+        "start": "19:11",
+        "end": "19:47"
+      },
+      {
+        "phase": "P5 Haskell ×5",
+        "start": "17:56",
+        "end": "20:55"
+      },
+      {
+        "phase": "P5.5 Lean 4",
+        "start": "16:35",
+        "end": "19:38"
+      },
+      {
+        "phase": "P6 Website",
+        "start": "19:27",
+        "end": "21:13"
+      },
+      {
+        "phase": "P7 Social",
+        "start": "21:14",
+        "end": "21:29"
+      },
+      {
+        "phase": "P8 Finalize",
+        "start": "21:30",
+        "end": "21:33"
+      }
+    ]
+  },
+  "topics": [
+    {
+      "slug": "lieb-robinson-locality",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lieb-robinson-locality-review-round-1.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          }
+        ],
+        "canonical": {
+          "file": "lieb-robinson-locality-review.md",
+          "verdict": "MINOR",
+          "raw": "MINOR REVISIONS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lieb-robinson-locality-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "lieb-robinson-locality-codex-review-round-2.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "lieb-robinson-locality-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexHaskell": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lieb-robinson-locality-haskell-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX (round 1) → fixes applied, see round 2 for re-review."
+          },
+          {
+            "round": 2,
+            "file": "lieb-robinson-locality-haskell-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX (round 2) → fixes applied, see round 3 for re-review."
+          },
+          {
+            "round": 3,
+            "file": "lieb-robinson-locality-haskell-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "lieb-robinson-locality-haskell-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 5,
+        "metaReviewer": {
+          "recommendation": "minor_revision",
+          "confidence": 0.87
+        }
+      }
+    },
+    {
+      "slug": "positivity-cstar-norms",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "positivity-cstar-norms-review-round-1.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          },
+          {
+            "round": 2,
+            "file": "positivity-cstar-norms-review-round-2.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          }
+        ],
+        "canonical": {
+          "file": "positivity-cstar-norms-review.md",
+          "verdict": "MINOR",
+          "raw": "MINOR REVISIONS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "positivity-cstar-norms-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "positivity-cstar-norms-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "positivity-cstar-norms-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "positivity-cstar-norms-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexHaskell": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "positivity-cstar-norms-haskell-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "positivity-cstar-norms-haskell-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "positivity-cstar-norms-haskell-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "positivity-cstar-norms-haskell-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 1,
+        "metaReviewer": {
+          "recommendation": "minor_revision",
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "slug": "spectral-gap-stability",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "spectral-gap-stability-review-round-1.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          },
+          {
+            "round": 2,
+            "file": "spectral-gap-stability-review-round-2.md",
+            "verdict": "ACCEPT",
+            "raw": "ACCEPT"
+          }
+        ],
+        "canonical": {
+          "file": "spectral-gap-stability-review.md",
+          "verdict": "ACCEPT",
+          "raw": "ACCEPT",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "spectral-gap-stability-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "spectral-gap-stability-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "spectral-gap-stability-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "spectral-gap-stability-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexHaskell": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "spectral-gap-stability-haskell-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "spectral-gap-stability-haskell-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "spectral-gap-stability-haskell-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "spectral-gap-stability-haskell-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 4,
+        "metaReviewer": {
+          "recommendation": "minor_revision",
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "slug": "lattice-eft-equivalence",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lattice-eft-equivalence-review-round-1.md",
+            "verdict": "MAJOR",
+            "raw": "MAJOR REVISIONS"
+          },
+          {
+            "round": 2,
+            "file": "lattice-eft-equivalence-review-round-2.md",
+            "verdict": "MAJOR",
+            "raw": "MAJOR REVISIONS"
+          },
+          {
+            "round": 3,
+            "file": "lattice-eft-equivalence-review-round-3.md",
+            "verdict": "ACCEPT",
+            "raw": "ACCEPT (publishable as-is)"
+          }
+        ],
+        "canonical": {
+          "file": "lattice-eft-equivalence-review.md",
+          "verdict": "ACCEPT",
+          "raw": "ACCEPT (publishable as-is)",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lattice-eft-equivalence-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "lattice-eft-equivalence-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "lattice-eft-equivalence-codex-review-round-3.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          }
+        ],
+        "canonical": {
+          "file": "lattice-eft-equivalence-codex-review.md",
+          "verdict": "NEEDS_FIX",
+          "raw": "NEEDS_FIX",
+          "postCapFixApplied": false
+        }
+      },
+      "codexHaskell": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "lattice-eft-equivalence-haskell-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "lattice-eft-equivalence-haskell-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "lattice-eft-equivalence-haskell-codex-review-round-3.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "lattice-eft-equivalence-haskell-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 4,
+        "metaReviewer": {
+          "recommendation": "minor_revision",
+          "confidence": 0.87
+        }
+      }
+    },
+    {
+      "slug": "bordism-realizability",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "bordism-realizability-review-round-1.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          },
+          {
+            "round": 2,
+            "file": "bordism-realizability-review-round-2.md",
+            "verdict": "MAJOR",
+            "raw": "MAJOR REVISIONS"
+          },
+          {
+            "round": 3,
+            "file": "bordism-realizability-review-round-3.md",
+            "verdict": "ACCEPT",
+            "raw": "ACCEPT"
+          }
+        ],
+        "canonical": {
+          "file": "bordism-realizability-review.md",
+          "verdict": "ACCEPT",
+          "raw": "ACCEPT",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "bordism-realizability-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "bordism-realizability-codex-review-round-2.md",
+            "verdict": "PASS",
+            "raw": "PASS"
+          }
+        ],
+        "canonical": {
+          "file": "bordism-realizability-codex-review.md",
+          "verdict": "PASS",
+          "raw": "PASS",
+          "postCapFixApplied": false
+        }
+      },
+      "codexHaskell": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "bordism-realizability-haskell-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "bordism-realizability-haskell-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "bordism-realizability-haskell-codex-review-round-3.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          }
+        ],
+        "canonical": {
+          "file": "bordism-realizability-haskell-codex-review.md",
+          "verdict": "NEEDS_FIX",
+          "raw": "NEEDS_FIX",
+          "postCapFixApplied": true
+        }
+      },
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 3,
+        "metaReviewer": {
+          "recommendation": "major_revision",
+          "confidence": 0.83
+        }
+      }
+    },
+    {
+      "slug": "synthesis",
+      "gemini": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "synthesis-review-round-1.md",
+            "verdict": "MINOR",
+            "raw": "MINOR REVISIONS"
+          },
+          {
+            "round": 2,
+            "file": "synthesis-review-round-2.md",
+            "verdict": "ACCEPT",
+            "raw": "ACCEPT"
+          }
+        ],
+        "canonical": {
+          "file": "synthesis-review.md",
+          "verdict": "ACCEPT",
+          "raw": "ACCEPT",
+          "postCapFixApplied": false
+        }
+      },
+      "codexLatex": {
+        "rounds": [
+          {
+            "round": 1,
+            "file": "synthesis-codex-review-round-1.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 2,
+            "file": "synthesis-codex-review-round-2.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          },
+          {
+            "round": 3,
+            "file": "synthesis-codex-review-round-3.md",
+            "verdict": "NEEDS_FIX",
+            "raw": "NEEDS_FIX"
+          }
+        ],
+        "canonical": {
+          "file": "synthesis-codex-review.md",
+          "verdict": "NEEDS_FIX",
+          "raw": "NEEDS_FIX",
+          "postCapFixApplied": true
+        }
+      },
+      "codexHaskell": null,
+      "panel": {
+        "files": [
+          "citation",
+          "meta_reviewer",
+          "novelty",
+          "reproducibility",
+          "summary",
+          "technical_correctness"
+        ],
+        "count": 6,
+        "blockingCount": 4,
+        "metaReviewer": {
+          "recommendation": "major_revision",
+          "confidence": 0.85
+        }
+      }
+    }
+  ],
+  "totals": {
+    "reviewFileCount": 61,
+    "panelJsonCount": 36,
+    "geminiRoundsTotal": 13,
+    "codexLatexRoundsTotal": 16,
+    "codexHaskellRoundsTotal": 15,
+    "blockingTotal": 21,
+    "allGatesPass": true
+  }
+}

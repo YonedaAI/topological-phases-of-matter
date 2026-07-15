@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/copy-assets.mjs",
+    "predev": "node scripts/copy-assets.mjs && node scripts/gen-pipeline-stats.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/copy-assets.mjs",
+    "prebuild": "node scripts/copy-assets.mjs && node scripts/gen-pipeline-stats.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

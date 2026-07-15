@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program — Topological Phases of Matter in the Condensed-Mathematics Paradigm, Part VI</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a2e;
+  --text:#e4e4ef;--text-dim:#9494a7;
+  --accent:#6c5ce7;--accent2:#a29bfe;--accent-dim:rgba(108,92,231,0.15);
+  --border:#2a2a3e;--code-bg:#0d0d14;
+  --success:#00b894;--warning:#fdcb6e;--error:#e17055;
+  --font-body:Inter,system-ui,-apple-system,sans-serif;
+  --font-mono:'SF Mono','Fira Code','JetBrains Mono',monospace;
+  --max-w:860px;--sidebar-w:260px
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent);text-decoration:underline}
+
+.page-wrapper{display:flex;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 1rem;overflow-y:auto;z-index:100;transition:transform .3s}
+.sidebar-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.sidebar-header a{font-size:.85rem;color:var(--text-dim);display:flex;align-items:center;gap:.4rem}
+.sidebar-header a:hover{color:var(--accent2)}
+.sidebar-title{font-size:.8rem;font-weight:600;color:var(--accent2);margin-top:.5rem;letter-spacing:.03em}
+
+.toc-nav{font-size:.82rem}
+.toc-nav ul{list-style:none;padding:0}
+.toc-nav li{margin-bottom:.25rem}
+.toc-nav a{display:block;padding:.3rem .6rem;border-radius:6px;color:var(--text-dim);transition:all .15s;font-size:.8rem;line-height:1.4}
+.toc-nav a:hover,.toc-nav a.active{background:var(--accent-dim);color:var(--accent2);text-decoration:none}
+.toc-nav ul ul{padding-left:.8rem}
+.toc-nav ul ul a{font-size:.75rem}
+
+.main-content{margin-left:var(--sidebar-w);flex:1;max-width:var(--max-w);padding:3rem 2.5rem 4rem}
+
+.paper-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.paper-part{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);background:var(--accent-dim);padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:1rem}
+.paper-header h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:.5rem;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.paper-subtitle{font-size:1rem;color:var(--text-dim);margin-bottom:1rem}
+.paper-meta-row{display:flex;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:var(--text-dim)}
+.paper-meta-row a{font-size:.82rem}
+
+h1,h2,h3,h4,h5,h6{color:var(--text);letter-spacing:-.01em;margin-top:2.5rem;margin-bottom:.8rem}
+h2{font-size:1.5rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.05rem;font-weight:600;color:var(--accent2)}
+
+p{margin-bottom:1rem}
+ul,ol{margin-bottom:1rem;padding-left:1.5rem}
+li{margin-bottom:.3rem}
+
+code{font-family:var(--font-mono);font-size:.88em;background:var(--code-bg);color:var(--accent2);padding:.15em .4em;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0;line-height:1.5}
+pre code{background:none;padding:0;font-size:.85rem;color:var(--text)}
+
+.sourceCode{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0}
+.sourceCode pre{background:none;border:none;padding:0;margin:0}
+.sourceCode code{font-size:.85rem;color:var(--text)}
+
+blockquote{border-left:3px solid var(--accent);padding:.8rem 1.2rem;margin:1.5rem 0;background:var(--accent-dim);border-radius:0 8px 8px 0;color:var(--text-dim);font-style:italic}
+
+table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.88rem}
+th{text-align:left;padding:.6rem .8rem;background:var(--surface2);color:var(--accent2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+td{padding:.6rem .8rem;border-bottom:1px solid var(--border);color:var(--text-dim)}
+tr:hover td{background:rgba(108,92,231,0.03);color:var(--text)}
+
+.theorem,.definition,.proposition,.lemma,.corollary,.invariant,.remark{
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0
+}
+.theorem-title,.def-title{font-weight:700;color:var(--accent2);margin-bottom:.5rem;font-size:.9rem}
+
+figure{margin:1.5rem 0;text-align:center}
+figcaption{font-size:.82rem;color:var(--text-dim);margin-top:.5rem;font-style:italic}
+img{max-width:100%;height:auto;border-radius:8px}
+
+.menu-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;color:var(--text);cursor:pointer;font-size:1.2rem}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0;padding:2rem 1.2rem}
+  .menu-toggle{display:block}
+}
+
+#TOC{display:none}
+.header-section-number{color:var(--accent);margin-right:.4rem;font-weight:600}
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<div class="page-wrapper">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="../index.html">&larr; All Papers</a>
+    <div class="sidebar-title">Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program — Topological Phases of Matter in the Condensed-Mathematics Paradigm, Part VI</div>
+  </div>
+  <nav class="toc-nav" id="toc-nav"></nav>
+  <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+    <a href="../latex/synthesis.pdf" style="font-size:.8rem;color:var(--accent2);display:flex;align-items:center;gap:.4rem">PDF Version &darr;</a>
+  </div>
+</aside>
+<main class="main-content" id="content">
+  <div class="paper-header">
+    <span class="paper-part">Part VI</span>
+    <h1 style="margin-top:0">Topological Phases of Matter in the Condensed-Mathematics Paradigm: A Modular Research Program — Topological Phases of Matter in the Condensed-Mathematics Paradigm, Part VI</h1>
+    <div class="paper-meta-row">
+      <span>Matthew Long</span>
+      <span>&middot;</span>
+      <span>YonedaAI Research Collective</span>
+      <span>&middot;</span>
+      <span>Chicago, IL</span>
+      <span>&middot;</span>
+      <a href="../latex/synthesis.pdf">PDF</a>
+    </div>
+  </div>
+<h1 data-number="1" id="sec:intro"><span class="header-section-number">1</span> Introduction</h1>
+<h2 data-number="1.1" id="sec:proposal"><span class="header-section-number">1.1</span> The proposal</h2>
+<p>A quantum phase is usually presented as an entry in a classification table. This program takes a different starting point, due in outline to the seed prospectus of the series and realized in detail across Parts I–V: a phase is a <em>component of a condensed moduli object of uniformly gapped local Hamiltonians</em>. Fix a spatial dimension <span class="math inline">\(d\)</span>, a lattice or coarse metric space <span class="math inline">\(L\)</span>, on-site Hilbert spaces, a locality (interaction-decay) class, and an internal or spatial symmetry group <span class="math inline">\(G\)</span>. Let <span class="math inline">\(\mathcal{I}_{d,G}\)</span> be the space of admissible <span class="math inline">\(G\)</span>-symmetric local or quasi-local interactions. Rather than use <span class="math inline">\(\mathcal{I}_{d,G}\)</span> as an ordinary topological space, pass to its condensation <span class="math display">\[\begin{equation}
+
+X\longmapsto\underline{X},\qquad \underline{X}(S)=\operatorname{Cont}(S,X),\qquad S\ \text{profinite},
+\end{equation}\]</span> a sheaf on the site of profinite sets with finite jointly surjective covers. On compactly generated spaces the passage <span class="math inline">\(X&#8614;\underline{X}\)</span> is fully faithful <span class="citation" data-cites="clausen-scholze-condensed barwick-haine-pyknotic">[1,2]</span>, so coupling tori, Banach interaction spaces, and compact disorder hulls are not discarded but embedded into a category with exact homological algebra. Because Hamiltonians carry gauge and quasi-local automorphisms, the right object is a condensed <em>anima</em> or <em>stack</em>, not a condensed set.</p>
+<p>The whole program is the study of one geometric object and one substack. Over a profinite probe <span class="math inline">\(S\)</span> let <span class="math inline">\(\mathfrak{Ham}_{d,G}(S)\)</span> be the <span class="math inline">\(S\)</span>-continuous families of <span class="math inline">\(G\)</span>-symmetric quasi-local interactions, and let <span class="math display">\[\begin{equation}
+
+\mathfrak{Gap}_{d,G}(S)=\bigcup_{\Delta&gt;0}\{\,H\in\mathfrak{Ham}_{d,G}(S):\mathop{\mathrm{inf}}_{s\in S}\operatorname{gap}(H_s)\ge\Delta\,\}
+\end{equation}\]</span> be the <em>uniformly</em> gapped substack (the word uniformly being load-bearing, since a family whose pointwise gaps degenerate to zero must be excluded). Inverting a class <span class="math inline">\(\mathcal{W}\)</span> of gapped adiabatic / quasi-local equivalences and stabilizing by trivial ancillas produces the phase <span class="math inline">\(&infin;\)</span>-groupoid, and its shape records the phases: <span class="math display">\[\begin{equation}
+
+\mathfrak{Phase}_{d,G}:=\bigl(\mathfrak{Gap}_{d,G}[\mathcal{W}^{-1}]\bigr)^{\mathrm{st}},
+\qquad
+\operatorname{Phases}_{d,G}=\pi_0\,\operatorname{Shape}(\mathfrak{Phase}_{d,G}).
+\end{equation}\]</span> Stacking systems, <span class="math inline">\(\boxtimes\)</span>, makes <span class="math inline">\(\mathfrak{Phase}_{d,G}\)</span> symmetric monoidal; group-completing its invertible sector yields the connective condensed spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>. The two slogans of the program are the anchors of everything below: <span class="math display">\[\begin{equation}
+
+\boxed{\;\text{topological phase}=\text{a component of the stabilized condensed stack of gapped systems}\;}
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+
+\boxed{\;
+\begin{array}{c}
+\text{topological transition}={}\\[2pt]
+\text{crossing the gapless discriminant in the Hamiltonian moduli stack}.
+\end{array}
+\;}
+\end{equation}\]</span></p>
+<h2 data-number="1.2" id="sec:modular"><span class="header-section-number">1.2</span> The program as a modular hierarchy</h2>
+<p>What Parts I–V supply is not a monolith but five interoperable <em>modules</em>, each of which takes the previous module’s output as its input and produces new structure. This is the sense in which the program is modular: the composition is a hierarchy, and at each level of the hierarchy a property emerges that was not visible one level down.</p>
+<ol>
+<li><p><strong>Locality (Part I <span class="citation" data-cites="paperLocality">[3]</span>).</strong> Makes <span class="math inline">\(\mathcal{I}_{d,G}\)</span> a real Banach space <span class="math inline">\(\mathcal{B}_{F}\)</span> through a Nachtergaele–Sims–Young <span class="math inline">\(F\)</span>-function locality norm, and promotes the Heisenberg dynamics to a morphism of condensed sets with a <em>base-uniform</em> Lieb–Robinson light cone. Emergent structure: the ground floor <span class="math inline">\(\mathfrak{Ham}_{d,G}\)</span> exists as a condensed object with a well-defined notion of quasi-local time evolution over any profinite base.</p></li>
+<li><p><strong>Positivity and <span class="math inline">\(C^\ast\)</span>-norms (Part II <span class="citation" data-cites="paperPositivity">[4]</span>).</strong> Attaches the quasi-local <span class="math inline">\(C^\ast\)</span>-algebra <span class="math inline">\(\mathcal{A}\)</span>, its compact condensed state space, and, via Aoki’s solidification theorem, a <em>solid</em> <span class="math inline">\(K\)</span>-theory invariant. Emergent structure: functorial topological invariants of disordered families over profinite hulls, produced by an intrinsically condensed operation.</p></li>
+<li><p><strong>The gap (Part III <span class="citation" data-cites="paperGap">[5]</span>).</strong> Cuts out the uniformly gapped substack <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> and proves its stability where a stability theory holds with uniform constants. Emergent structure: a robust set of phases <span class="math inline">\(\operatorname{Phases}_{d,G}\)</span>, once <span class="math inline">\(\mathcal{W}\)</span> is inverted and ancillas are added.</p></li>
+<li><p><strong>Stabilization and effective field theory (Part IV <span class="citation" data-cites="paperEFT">[6]</span>).</strong> Group-completes the invertible sector into the connective condensed spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> and compares it with the Freed–Hopkins bordism classification. Emergent structure: the higher homotopy of pumps and defects, and the relative charge <span class="math inline">\(\partial\nu\)</span> as a spectral boundary map.</p></li>
+<li><p><strong>Realizability (Part V <span class="citation" data-cites="paperRealizability">[7]</span>).</strong> Identifies which spectral classes are produced by an explicit gapped lattice Hamiltonian. Emergent structure: an obstruction subgroup separating abstract classes from lattice-realizable ones.</p></li>
+</ol>
+<p>Two threads cut across all five modules and are what make the composition cohere rather than merely stack. The first is the <em>transition calculus</em> <span class="math inline">\((U_f,\Sigma_f,\nu_f,\partial\nu)\)</span>, which ties modules III–V together: the gapped locus of a family, its gapless discriminant, the locally constant phase label, and the relative charge of a crossing. The second is the <em>profinite disorder thread</em> <span class="math inline">\(\Omega=F^{\mathbb{Z}^d}\)</span>, which runs through every module: descent of Lieb–Robinson estimates in Part I, crossed-product observable algebras in Part II, uniform-gap descent in Part III, parametrized invariants in Part IV, and functorial realizability in Part V.</p>
+<h2 data-number="1.3" id="sec:stance"><span class="header-section-number">1.3</span> What is proved and what is conjectured</h2>
+<p>The stance of this synthesis is the stance of the whole series: a rigorous research <em>program</em>, not a finished theory. We are strict about the boundary. The <em>module-level</em> results (Theorems I-A through V-C, and the citations of Aoki, Kubota, Freed–Hopkins, Ogata, and Kapustin–Fidkowski as rigorous anchors) are theorems, and we restate them (as Recollections, with citations to the Parts that prove them) rather than reprove them. The <em>program-level</em> claims are open. That the modules glue into a single condensed higher stack with <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> as its invertible spectrum; that the microscopic and field-theoretic classifications agree; that the relative charge is the boundary map of that spectrum; that every program invariant descends along disorder hulls; each of these is stated below as a numbered Conjecture VI-<span class="math inline">\(k\)</span> and is never asserted as proven.</p>
+<p>Two hard theorems bound the program from outside and are quoted wherever they bite. Cubitt–Pérez-García–Wolf <span class="citation" data-cites="cpw-undecidable">[8]</span> proved that the spectral gap is undecidable, so there is no algorithm and no uniform criterion deciding membership in <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span>; existence of a thermodynamic gap is a <em>hypothesis that defines</em> the substack, not a computable property. Two commuting-projector no-gos bound realizability: Kapustin–Fidkowski <span class="citation" data-cites="kapustin-fidkowski">[9]</span> proved that a <span class="math inline">\(U(1)\)</span>-symmetric local commuting-projector Hamiltonian has zero electric Hall conductance (<span class="math inline">\(\sigma_H=0\)</span>), and Kapustin–Spodyneiko <span class="citation" data-cites="kapustin-spodyneiko-thermal">[10]</span> proved that its chiral central charge vanishes (<span class="math inline">\(c_-=0\)</span>) with no symmetry hypothesis; so every chiral invertible class (nonzero <span class="math inline">\(\sigma_H\)</span> under <span class="math inline">\(U(1)\)</span>, or nonzero <span class="math inline">\(c_-\)</span>) lies outside the commuting-projector image. Neither wall is ever crossed in what follows.</p>
+<h2 data-number="1.4" id="sec:companions"><span class="header-section-number">1.4</span> Relation to companion papers</h2>
+<p>This paper is the capstone of a six-part series and consumes the outputs of Parts I–V; it imports the canonical notation of the series verbatim and does not restate it. We summarize each companion in one paragraph, and Section 3 develops the composition in full.</p>
+<p><em>Part I, Condensed Locality</em> <span class="citation" data-cites="paperLocality">[3]</span>, is the analytic ground floor. Fixing an <span class="math inline">\(F\)</span>-function it makes the <span class="math inline">\(G\)</span>-symmetric interactions of finite <span class="math inline">\(F\)</span>-norm a real Banach space <span class="math inline">\(\mathcal{B}_{F}\)</span>, condenses it to <span class="math inline">\(\underline{\mathcal{B}_{F}}(S)=\operatorname{Cont}(S,\mathcal{B}_{F})\)</span>, and proves that Heisenberg dynamics is a strongly continuous group of <span class="math inline">\(\ast\)</span>-automorphisms obeying a Lieb–Robinson bound (Theorem I-A), that its assignment is a morphism of light condensed sets (Theorem I-B), and that a profinite family is exactly compatible finite data with a base-uniform light cone (Theorem I-C). It generates the equivalence class <span class="math inline">\(\mathcal{W}\)</span> from quasi-adiabatic continuation and states Conjectures I-1 (condensed higher stack), I-2 (condensed group of quasi-local automorphisms), and I-3 (descent of Lieb–Robinson estimates along a disorder hull).</p>
+<p><em>Part II, Positivity, <span class="math inline">\(C^\ast\)</span>-Norms, and Condensed State Spaces</em> <span class="citation" data-cites="paperPositivity">[4]</span>, is the observable side. It shows the state space <span class="math inline">\(\mathcal{S}(\mathcal{A})\)</span> condenses to a compact Hausdorff condensed set cut out by positivity and normalization (Theorem II-A), that Aoki’s solidification recovers operator <span class="math inline">\(K\)</span>-theory after Bott inversion (Theorem II-B), and that Bellissard’s crossed product <span class="math inline">\(C(\Omega)\rtimes\mathbb{Z}^d\)</span> condenses functorially in the finite quotients of the hull (Theorem II-C). It records Conjectures II-1 through II-5 (closed condensed substack; naturality of the solid invariant; Real/<span class="math inline">\(KKO\)</span> refinement; solid classifying object; condensed superselection). Following Part II we write the disorder alphabet as <span class="math inline">\(Q\)</span>, not <span class="math inline">\(F\)</span>, to avoid collision with the <span class="math inline">\(F\)</span>-function of Part I; see Section 8.</p>
+<p><em>Part III, The Uniformly Gapped Substack</em> <span class="citation" data-cites="paperGap">[5]</span>, is the gap module. It proves that the finite-volume gap is Lipschitz and the gapped locus is open at finite resolution (Theorem III-A), that <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> is condensed-open on the frustration-free / LTQO stratum (Theorem III-B), and that a uniform gap forces uniform clustering (Theorem III-C), all against the CPW undecidability wall; it states Conjectures III-1 (openness on the physical stratum), III-2 (uniform-gap descent), and III-3 (quasi-adiabatic continuation realizes <span class="math inline">\(\mathcal{W}\)</span>).</p>
+<p><em>Part IV, From Lattice Models to Effective Field Theories</em> <span class="citation" data-cites="paperEFT">[6]</span>, is the stabilization module. It makes <span class="math inline">\(\boxtimes\)</span> a symmetric-monoidal structure, group-completes <span class="math inline">\(\operatorname{Phases}_{d,G}\)</span>, assembles <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> with Kubota’s <span class="math inline">\(\Omega\)</span>-spectrum as its rigorous carrier, and sets the lattice classification against Freed–Hopkins. It states Conjectures IV-1 (condensed/solid refinement), IV-2 (lattice–EFT comparison equivalence), IV-3 (relative charge as spectral boundary map), IV-4 (solidification commutes with group completion), and IV-5 (renormalization functor).</p>
+<p><em>Part V, Physical Realizability</em> <span class="citation" data-cites="paperRealizability">[7]</span>, is the realizability module. It proves that every group-cohomology class is realized by a commuting-projector model (Theorem V-A), completeness of the operator-algebraic index in <span class="math inline">\(d=1\)</span> for on-site finite symmetry, with the <span class="math inline">\(d=2\)</span> index surjective but its completeness open (Theorem V-B and Remark V-B<span class="math inline">\(&#39;\)</span>), and the two commuting-projector no-gos, electric (Kapustin–Fidkowski) and thermal/chiral (Kapustin–Spodyneiko) (Theorem V-C). It states Conjectures V-1 (realizability image is the SRE subspectrum), V-2 (chiral realizability by non-commuting models), and V-3 (profinite-family realizability).</p>
+<h2 data-number="1.5" id="sec:outline"><span class="header-section-number">1.5</span> Outline</h2>
+<p>Section 2 recalls the condensed-mathematics substrate and fixes conventions. Section 3 is the spine: the boxed sequence, arrow by arrow, with each module’s theorems restated and cited and its emergent structure named. Section 4 makes modular composition explicit: the composition diagram, the emergent properties, and the two walls. Section 5 states the homotopy dictionary. Section 6 develops the relative-charge formalism. Section 7 works the SSH chain through all five modules. Section 8 runs the profinite disorder thread. Section 9 states the program-level Conjectures VI-1 through VI-4 and consolidates all nineteen module conjectures with dependencies. Section 10 weighs what the paradigm contributes and what it does not, and Section 11 concludes.</p>
+<h1 data-number="2" id="sec:substrate"><span class="header-section-number">2</span> The condensed-mathematics substrate</h1>
+<p>We recall only what the composition uses; Parts I and II give the careful development.</p>
+<h2 data-number="2.1" id="condensation-and-profinite-probes"><span class="header-section-number">2.1</span> Condensation and profinite probes</h2>
+<p>A condensed set is a sheaf on the site of profinite sets <span class="math inline">\(S\)</span> with covers the finite jointly surjective families <span class="citation" data-cites="clausen-scholze-condensed">[1]</span>; the pyknotic variant of Barwick–Haine <span class="citation" data-cites="barwick-haine-pyknotic">[2]</span> differs only in set-theoretic bookkeeping. The functor (1) embeds compactly generated topological spaces fully faithfully, so no information is lost in passing from <span class="math inline">\(X\)</span> to <span class="math inline">\(\underline{X}\)</span>. The point of the passage is algebraic: condensed abelian groups form a Grothendieck abelian category with exact products and derived functors, where ordinary topological abelian groups do not, and this is precisely the environment in which derived invariants, descent, and completions behave. A condensed object is <em>light</em> when it is generated under the site by a countable family (the case for separable Banach spaces and separable <span class="math inline">\(C^\ast\)</span>-algebras), which is why Parts I and II take care to work with separable data.</p>
+<h2 data-number="2.2" id="stacks-anima-and-shape"><span class="header-section-number">2.2</span> Stacks, anima, and shape</h2>
+<p>Because a Hamiltonian carries automorphisms (gauge transformations, on-site symmetry actions, quasi-local unitaries), the moduli problem <span class="math inline">\(S&#8614;\{S\text{-families of
+Hamiltonians}\}\)</span> valued in groupoids (or <span class="math inline">\(&infin;\)</span>-groupoids) is a candidate <em>condensed stack</em>, not merely a condensed set. Whether it satisfies descent along profinite covers is the content of Conjecture I-1 and is not proved. The <em>shape</em> <span class="math inline">\(\operatorname{Shape}(-)\)</span> of a condensed anima is its underlying homotopy type; <span class="math inline">\(\pi_0\operatorname{Shape}\)</span> extracts the ordinary set of components, hence <span class="math inline">\(\operatorname{Phases}_{d,G}\)</span> in (3). Throughout, fraktur denotes the moduli stacks (<span class="math inline">\(\mathfrak{Ham},\mathfrak{Gap},\mathfrak{Phase}\)</span>), calligraphic the interaction space and the equivalence class (<span class="math inline">\(\mathcal{I},\mathcal{W}\)</span>), boldface the spectra (<span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}\)</span>), and <span class="math inline">\(\underline{(-)}\)</span> condensation.</p>
+<h2 data-number="2.3" id="the-boxed-sequence"><span class="header-section-number">2.3</span> The boxed sequence</h2>
+<p>The program is summarized by one sequence, quoted from the prospectus and realized in Parts I–V: <span class="math display">\[\begin{equation}
+
+\boxed{
+\begin{array}{c}
+\text{local quantum interactions}\\[2pt]
+\big\downarrow\ \text{ Part I}\\[2pt]
+\text{condensed moduli stack of Hamiltonians }\mathfrak{Ham}_{d,G}\\[2pt]
+\big\downarrow\ \text{ Part II}\\[2pt]
+\text{condensed observable algebras and solid }K\text{-theory}\\[2pt]
+\big\downarrow\ \text{ Part III}\\[2pt]
+\text{uniformly gapped substack }\mathfrak{Gap}_{d,G}\\[2pt]
+\big\downarrow\ \text{ Part IV}\\[2pt]
+\text{stabilized phase }&infin;\text{-groupoid }\mathfrak{Phase}_{d,G}\\[2pt]
+\big\downarrow\ \text{ Part IV}\\[2pt]
+\text{invertible condensed phase spectrum }\mathbf{IP}^{\mathrm{cond}}_{d,G}\\[2pt]
+\big\downarrow\ \text{ Part V}\\[2pt]
+\text{realized subspectrum inside }\mathbf{IP}^{\mathrm{cond}}_{d,G}.
+\end{array}}
+\end{equation}\]</span> The prospectus states the middle five lines; Parts II and V add the observable-algebra and realization refinements. Each arrow is a module. Section 3 treats them in turn.</p>
+<h1 data-number="3" id="sec:spine"><span class="header-section-number">3</span> The spine: the boxed sequence and its five modules</h1>
+<p>We walk down (6). For each module we recall its principal theorems (as Recollections, attributed to the Part that proves them) and name the structure that emerges. Nothing in this section is claimed as new; the novelty of the synthesis is the composition, treated in Section 4.</p>
+<h2 data-number="3.1" id="sec:arrowI"><span class="header-section-number">3.1</span> Arrow I: local interactions to the condensed stack</h2>
+<p>The first arrow turns a physicist’s list of local couplings into a condensed object that can be probed by profinite sets. Part I fixes an <span class="math inline">\(F\)</span>-function <span class="math inline">\(F\)</span> encoding interaction decay and defines the interaction Banach space <span class="math inline">\(\mathcal{B}_{F}\)</span>.</p>
+<div id="rec:I" class="recollection">
+<p><strong>Recollection 1</strong> (Banach interaction space and condensed dynamics; Part I, Theorems I-A and I-B <span class="citation" data-cites="paperLocality">[3]</span>).  <em><span class="math inline">\(\mathcal{B}_{F}\)</span> is a real Banach space; for <span class="math inline">\(\Phi\in\mathcal{B}_{F}\)</span> the infinite-volume Heisenberg dynamics <span class="math inline">\(\tau^\Phi_t=\lim_{\Lambda\uparrow L}\tau^{\Phi,\Lambda}_t\)</span> exists in operator norm, uniformly for <span class="math inline">\(t\)</span> in compact sets, and is a strongly continuous one-parameter group of <span class="math inline">\(\ast\)</span>-automorphisms of the quasi-local algebra <span class="math inline">\(\mathcal{A}\)</span> obeying a Lieb–Robinson bound. Its condensation <span class="math display">\[\underline{D}:\underline{\mathbb{R}}&times;\underline{\mathcal{B}_{F}}\longrightarrow\underline{\operatorname{Aut}(\mathcal{A})},
+\qquad (t,\Phi)&#8614;\tau^\Phi_t,\]</span> is a morphism of (light, when the interactions are separable) condensed sets.</em></p>
+</div>
+<div id="rec:Ic" class="recollection">
+<p><strong>Recollection 2</strong> (Base-uniform light cone; Part I, Theorem I-C <span class="citation" data-cites="paperLocality">[3]</span>).  <em>Let <span class="math inline">\(S=\varprojlim_i S_i\)</span> be profinite and <span class="math inline">\(\Phi_\bullet\in\operatorname{Cont}(S,\mathcal{B}_{F})=\underline{\mathcal{B}_{F}}(S)\)</span>. Then <span class="math inline">\(\Phi_\bullet\)</span> is a norm limit of families factoring through finite quotients <span class="math inline">\(S\to S_i\)</span>; <span class="math inline">\(B=\sup_{s\in S}\lVert \Phi_s \rVert_F&lt;&infin;\)</span>; and if <span class="math inline">\(\sup_{s}\lVert \Phi_s \rVert_{F_a}&lt;&infin;\)</span> for a reweighting <span class="math inline">\(F_a(r)=e^{-ar}F(r)\)</span>, the Lieb–Robinson bound holds for all <span class="math inline">\(s\in S\)</span> simultaneously with one velocity <span class="math inline">\(v=2\sup_s\lVert \Phi_s \rVert_{F_a}C_{F_a}/a\)</span>.</em></p>
+</div>
+<p><em>Emergent structure.</em> The ground floor <span class="math inline">\(\mathfrak{Ham}_{d,G}\)</span> is a condensed object over which time evolution is quasi-local <em>uniformly in the probe</em>. Uniformity is what makes every later module’s “family over a base” well-posed: it is the reason a disordered family has a single light cone, a single clustering length, a single set of constants. Part I’s Conjectures I-1, I-2, I-3 mark the edge: stack descent, a condensed automorphism group, and Lieb–Robinson descent along a hull; none proved.</p>
+<h2 data-number="3.2" id="sec:arrowII"><span class="header-section-number">3.2</span> Arrow II: observable algebras and solid <span class="math inline">\(K\)</span>-theory</h2>
+<p>The second arrow attaches to the stack the algebra of observables and the <span class="math inline">\(K\)</span>-theory from which topological invariants are built. For a spin system with finite on-site dimension <span class="math inline">\(\mathcal{A}\)</span> is a separable unital AF algebra (UHF in the homogeneous case), and its condensation is a sheaf of <span class="math inline">\(C^\ast\)</span>-algebras, light because <span class="math inline">\(\mathcal{A}\)</span> is separable.</p>
+<div id="rec:IIa" class="recollection">
+<p><strong>Recollection 3</strong> (Condensed state space; Part II, Theorem II-A <span class="citation" data-cites="paperPositivity">[4]</span>).  <em>For a unital <span class="math inline">\(C^\ast\)</span>-algebra <span class="math inline">\(A\)</span>, the state space <span class="math inline">\(\underline{\mathcal{S}(A)}\)</span> is a compact Hausdorff condensed set on which condensation is fully faithful, and positivity together with normalization exhibit it as a closed condensed subobject of the condensed dual ball. On a uniformly gapped family the ground-state section is weak-<span class="math inline">\(\ast\)</span> continuous by the Bachmann–Michalakis–Nachtergaele–Sims spectral-flow cocycle <span class="citation" data-cites="bmns-automorphic">[11]</span>, a genuine point of <span class="math inline">\(\underline{\mathcal{S}(A)}\)</span> over the gapped locus.</em></p>
+</div>
+<p>The load-bearing bridge is Aoki’s theorem, and the honesty of the whole program depends on stating it with its Bott-inversion caveat, exactly as Part II now does.</p>
+<div id="rec:aoki" class="recollection">
+<p><strong>Recollection 4</strong> (Solidification and operator <span class="math inline">\(K\)</span>-theory; Part II, Theorem II-B, after Aoki <span class="citation" data-cites="aoki-solidification paperPositivity">[4,12]</span>).  <em>Let <span class="math inline">\(A\)</span> be a real associative algebra and <span class="math inline">\(\underline{A}\)</span> its condensation. Solidification of the <em>connective</em> algebraic <span class="math inline">\(K\)</span>-theory of <span class="math inline">\(\underline{A}\)</span> is discrete and recovers the connective semitopological <span class="math inline">\(K\)</span>-theory of <span class="math inline">\(A\)</span> (Friedlander–Walker, and Blanc), <span class="math display">\[\operatorname{Solid}\bigl(K_{\mathrm{alg}}(\underline{A})\bigr)\;\simeq\;K^{\mathrm{semi}}(A).\]</span> If <span class="math inline">\(A\)</span> is a real Banach algebra this is the connective part of operator <span class="math inline">\(K\)</span>-theory; the full, Bott-periodic operator <span class="math inline">\(K\)</span>-theory is recovered only after inverting the Bott class <span class="math inline">\(\beta\)</span>, <span class="math display">\[\begin{equation}
+
+K_{\mathrm{op}}(A)\;\simeq\;\operatorname{Solid}\bigl(K_{\mathrm{alg}}(\underline{A})\bigr)\bigl[\beta^{-1}\bigr],
+\end{equation}\]</span> with <span class="math inline">\(\beta\in K_2^{\mathrm{top}}(\mathbb{C})\cong\mathbb{Z}\)</span> complex, the period-eight real Bott class in the <span class="math inline">\(KO\)</span> case (an infinite-order generator of the eightfold <span class="math inline">\(KO\)</span> periodicity).</em></p>
+</div>
+<p>We stress the bookkeeping because it is easy to get wrong and consequential when composed. Writing <span class="math inline">\(K_{\mathrm{op}}(A)\simeq\operatorname{Solid}(K_{\mathrm{alg}}(\underline{A}))\)</span> without the inversion <span class="math inline">\([\beta^{-1}]\)</span> is false in negative degrees: solidification of connective algebraic <span class="math inline">\(K\)</span>-theory lands in a connective spectrum with no negative homotopy, whereas operator <span class="math inline">\(K\)</span>-theory is periodic. The two agree in nonnegative degrees, which is all the SSH winding (a degree-<span class="math inline">\(\ge 0\)</span> class) needs, but the periodic identification requires (7). Every later use of “the solid invariant” in this synthesis carries this qualification.</p>
+<div id="rec:crossed" class="recollection">
+<p><strong>Recollection 5</strong> (Crossed-product disorder algebra; Part II, Theorem II-C <span class="citation" data-cites="paperPositivity">[4]</span>).  <em>For <span class="math inline">\(\Omega=Q^{\mathbb{Z}^d}\)</span> with the shift action <span class="math inline">\(T\)</span>, the covariant observable algebra of a homogeneous disordered family is the crossed product <span class="math inline">\(C(\Omega)\rtimes_T\mathbb{Z}^d\)</span> <span class="citation" data-cites="bellissard-ncg-qhe">[13]</span>, a separable unital <span class="math inline">\(C^\ast\)</span>-algebra whose <span class="math inline">\(K_0\)</span>-trace range is the gap-labelling group; its condensation is functorial in the finite quotients of <span class="math inline">\(\Omega\)</span>.</em></p>
+</div>
+<p><em>Emergent structure.</em> The composition of Arrows I and II produces <em>functorial topological invariants of disordered families over profinite hulls</em>, computed by an intrinsically condensed operation (solidification) rather than imported by hand. This is the first place the condensed language does work an ordinary smooth-parameter treatment does not: the profinite probes of (1) match the physical configuration space <span class="math inline">\(\Omega\)</span> of Recollection 3.5, they do not approximate it. Part II’s Conjectures II-1 through II-5 record what is open here.</p>
+<h2 data-number="3.3" id="sec:arrowIII"><span class="header-section-number">3.3</span> Arrow III: the uniformly gapped substack</h2>
+<p>The third arrow selects the systems on which a phase invariant is even defined. The selection is governed by a wall.</p>
+<div id="rec:cpw" class="recollection">
+<p><strong>Recollection 6</strong> (Undecidability of the gap; Cubitt–Pérez-García–Wolf <span class="citation" data-cites="cpw-undecidable">[8]</span>).  <em>There is a family of translation-invariant nearest-neighbour Hamiltonians on a two-dimensional lattice, depending computably on a parameter, for which no algorithm decides whether the thermodynamic-limit system is gapped or gapless; the property is <span class="math inline">\(\Pi_1\)</span>-complete.</em></p>
+</div>
+<p>Consequently membership in <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> is not, in general, decidable, and Part III does not attempt to decide it. Existence of a thermodynamic gap <em>defines</em> the substack; the content is stability.</p>
+<div id="rec:III" class="recollection">
+<p><strong>Recollection 7</strong> (Gap continuity and stability; Part III, Theorems III-A and III-B <span class="citation" data-cites="paperGap">[5]</span>).  <em>At fixed finite volume the <span class="math inline">\(n\)</span>-gap is <span class="math inline">\(2C_\Lambda\)</span>-Lipschitz in the interaction norm, so the finite-volume gapped locus is open and the gap is continuous along continuous families (III-A). On a frustration-free / LTQO stratum, the Bravyi–Hastings–Michalakis and Michalakis–Zwolak stability theorems with the Nachtergaele–Sims–Young bulk-gap result <span class="citation" data-cites="bhm-stability michalakis-zwolak nsy-bulkgap">[14–16]</span> give a size-independent perturbation threshold <span class="math inline">\(\varepsilon_0\)</span>: for <span class="math inline">\(\Phi\)</span> in the stratum and a quasi-local direction <span class="math inline">\(V\)</span>, the segment <span class="math inline">\(\{\,\Phi+tV:0\le t&lt;\varepsilon_0\,\}\subseteq\mathfrak{Gap}_{d,G}\)</span> with gap bounded below by <span class="math inline">\(\gamma/2\)</span>. Hence <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> is condensed-open along the quasi-local direction class at each stratum point.</em></p>
+</div>
+<div id="rec:IIIc" class="recollection">
+<p><strong>Recollection 8</strong> (Uniform clustering; Part III, Theorem III-C <span class="citation" data-cites="paperGap">[5]</span>).  <em>A uniformly gapped family over a profinite base, with a uniform Lieb–Robinson velocity from Recollection 3.2, has exponential clustering with constants—hence a correlation length—bounded uniformly over the base <span class="citation" data-cites="hastings-koma nachtergaele-sims-clustering">[17,18]</span>.</em></p>
+</div>
+<p><em>Emergent structure.</em> Inverting <span class="math inline">\(\mathcal{W}\)</span> and stabilizing on <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> yields a <em>robust</em> <span class="math inline">\(\pi_0\)</span>: a set of phases stable under quasi-local deformation, disorder averaging, and finite-depth circuits. The robustness is exactly what Recollections 3.7 and 3.8 buy: openness so a phase label does not change under small perturbations, clustering so it is detected locally. But the openness holds only on the stratum where the stability hypotheses hold; Conjecture III-1 asks for it on the full physical stratum, III-2 for descent along hulls, III-3 for the identification of <span class="math inline">\(\mathcal{W}\)</span>-components with Ogata’s operator-algebraic phases <span class="citation" data-cites="ogata-classification-review">[19]</span>.</p>
+<h2 data-number="3.4" id="sec:arrowIV"><span class="header-section-number">3.4</span> Arrow IV: stabilization and the invertible condensed phase spectrum</h2>
+<p>The fourth arrow group-completes the invertible sector into a spectrum. On components <span class="math inline">\(\boxtimes\)</span> makes <span class="math inline">\(\operatorname{Phases}_{d,G}\)</span> a commutative monoid with unit the trivial product state; the short-range-entangled (SRE) phases are exactly its invertible elements.</p>
+<div id="rec:groth" class="recollection">
+<p><strong>Recollection 9</strong> (Group completion and the stabilization element; Part IV <span class="citation" data-cites="paperEFT">[6]</span>).  <em>For a commutative monoid <span class="math inline">\(M\)</span>, the Grothendieck group <span class="math inline">\(\operatorname{Groth}(M)\)</span> has the universal property that monoid maps <span class="math inline">\(M\to A\)</span> into abelian groups factor uniquely through <span class="math inline">\(M\to\operatorname{Groth}(M)\)</span>; <span class="math inline">\(\gamma_M(a)=\gamma_M(b)\)</span> iff <span class="math inline">\(a+e=b+e\)</span> for some <span class="math inline">\(e\in M\)</span>, so <span class="math inline">\(\gamma_M\)</span> is injective iff <span class="math inline">\(M\)</span> is cancellative. The element <span class="math inline">\(e\)</span> is the algebraic shadow of ancilla stabilization.</em></p>
+</div>
+<div id="rec:kubota" class="recollection">
+<p><strong>Recollection 10</strong> (Kubota’s <span class="math inline">\(\Omega\)</span>-spectrum; Part IV, after Kubota <span class="citation" data-cites="kubota-omega-spectrum paperEFT">[6,20]</span>).  <em>There is an <span class="math inline">\(\Omega\)</span>-spectrum <span class="math inline">\(\mathit{IP}^\ast\)</span>, built from the operator-algebraic formulation of invertible gapped quantum spin systems, whose homotopy groups are the groups of invertible gapped systems in each dimension. It realizes Kitaev’s proposal <span class="citation" data-cites="kitaev-periodic-table">[21]</span> that invertible phases are the homotopy groups of a spectrum and is the rigorous carrier for the homotopy of <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>.</em></p>
+</div>
+<p>Applying the recognition principle for grouplike <span class="math inline">\(E_&infin;\)</span>-spaces to the invertible sector yields a connective spectrum, the invertible condensed phase spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> <span class="citation" data-cites="beaudry-etal">[22]</span>. Against it Part IV sets the effective-field-theory target: the Freed–Hopkins Anderson-dual bordism spectrum <span class="math inline">\(I_{\mathrm{FH}}\)</span> classifying invertible topological field theories <span class="citation" data-cites="freed-hopkins freed-sre">[23,24]</span>.</p>
+<div id="rec:hall" class="recollection">
+<p><strong>Recollection 11</strong> (Hall conductance as a phase invariant; Part IV, after Kapustin–Sopenko <span class="citation" data-cites="kapustin-sopenko-hall kapustin-sopenko-noether paperEFT">[6,25,26]</span>).  <em>For a two-dimensional SRE lattice state the Hall conductance is locally computable, an integer multiple of <span class="math inline">\(e^2/h\)</span>, and constant on gapped phases, hence a homomorphism <span class="math inline">\(\operatorname{Phases}_{2,G}^&times;\to\mathbb{Z}\)</span>; the higher Berry class generalizes it to families and unifies it with the Thouless pump <span class="citation" data-cites="thouless-pump">[27]</span>.</em></p>
+</div>
+<p><em>Emergent structure.</em> Two things appear only at the spectrum level. First, the <em>higher homotopy</em>: <span class="math inline">\(\pi_1\)</span> of the phase object is loops of gapped Hamiltonians, which implement adiabatic pumps and automorphisms of topological order <span class="citation" data-cites="aasen-wang-hastings">[28]</span>; <span class="math inline">\(\pi_n\)</span> is <span class="math inline">\(n\)</span>-parameter families and higher defects. Second, the <em>transition calculus</em> becomes a long-exact-sequence computation, the relative charge <span class="math inline">\(\partial\nu\)</span> appearing as a boundary map (Section 6). Part IV’s Conjectures IV-1 through IV-5 govern the condensed refinement, the lattice–EFT comparison, the boundary-map identity, the compatibility of solidification with group completion, and the renormalization functor.</p>
+<h2 data-number="3.5" id="sec:arrowV"><span class="header-section-number">3.5</span> Arrow V: realizability</h2>
+<p>The fifth arrow asks the converse question: which classes in <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> are produced by an explicit uniformly gapped lattice Hamiltonian? Part V formalizes realizability as essential surjectivity on <span class="math inline">\(\pi_0\)</span> of the comparison map <span class="math inline">\(\operatorname{real}\)</span> from the stack of lattice models to the abstract spectrum, and separates realizability by <em>some</em> gapped local model from realizability by a local <em>commuting-projector</em> model.</p>
+<div id="rec:VA" class="recollection">
+<p><strong>Recollection 12</strong> (Cohomological realizability; Part V, Theorem V-A <span class="citation" data-cites="paperRealizability">[7]</span>).  <em>For every finite <span class="math inline">\(G\)</span> and every <span class="math inline">\(\omega\in H^{d+1}(G,U(1))\)</span> there is an explicit <span class="math inline">\(G\)</span>-symmetric local commuting-projector Hamiltonian <span class="math inline">\(H_\omega\)</span> with a unique short-range-entangled ground state on any closed <span class="math inline">\(d\)</span>-manifold, whose boundary carries the anomalous <span class="math inline">\(G\)</span>-action with obstruction <span class="math inline">\(\omega\)</span>; <span class="math inline">\(\omega&#8614;[H_\omega]\)</span> is a homomorphism <span class="math inline">\(H^{d+1}(G,U(1))\to\mathrm{SRE}_{d,G}\)</span> injective on the group-cohomology subgroup <span class="citation" data-cites="cglw-cohomology else-nayak">[29,30]</span>.</em></p>
+</div>
+<div id="rec:VB" class="recollection">
+<p><strong>Recollection 13</strong> (Low-dimensional completeness; Part V, Theorem V-B and Remark V-B<span class="math inline">\(&#39;\)</span> <span class="citation" data-cites="paperRealizability">[7]</span>).  <em>For on-site finite symmetry in <span class="math inline">\(d=1\)</span>, Ogata’s <span class="math inline">\(H^2(G,U(1))\)</span>-valued index is a <em>complete</em> invariant of the symmetric phase <span class="citation" data-cites="ogata-spt-chains ogata-classification-review">[19,31]</span>, so <span class="math inline">\(\operatorname{real}\)</span> is a bijection onto <span class="math inline">\(H^2(G,U(1))\)</span> and realized <span class="math inline">\(=\)</span> invariant. In <span class="math inline">\(d=2\)</span> the situation is genuinely weaker: Ogata’s <span class="math inline">\(H^3(G,U(1))\)</span>-valued index <em>exists</em> and is a well-defined invariant <span class="citation" data-cites="ogata-h3-index">[32]</span>, and together with the group-cohomology models of Recollection 3.12 this makes <span class="math inline">\(\operatorname{real}\)</span> <em>surjective</em> onto the in-cohomology classes—so every such class is realized—but whether the index is <em>complete</em> (separates all <span class="math inline">\(d=2\)</span> SPT phases with on-site finite symmetry) is open. We therefore do <em>not</em> assert realized <span class="math inline">\(=\)</span> invariant in <span class="math inline">\(d=2\)</span>; only the surjectivity half is settled there.</em></p>
+</div>
+<div id="rec:VC" class="recollection">
+<p><strong>Recollection 14</strong> (Commuting-projector no-gos; Part V, Theorem V-C <span class="citation" data-cites="kapustin-fidkowski kapustin-spodyneiko-thermal paperRealizability">[7,9,10]</span>).  <em>A local commuting-projector Hamiltonian in two dimensions obeys two logically independent no-gos. (i) <em>Electric</em> (Kapustin–Fidkowski <span class="citation" data-cites="kapustin-fidkowski">[9]</span>): if it is <span class="math inline">\(U(1)\)</span>-symmetric, its zero-temperature electric Hall conductance vanishes, <span class="math inline">\(\sigma_H=0\)</span>. (ii) <em>Thermal</em> (Kapustin–Spodyneiko <span class="citation" data-cites="kapustin-spodyneiko-thermal">[10]</span>): its chiral central charge vanishes, <span class="math inline">\(c_-=0\)</span>, with no symmetry hypothesis. Hence a <span class="math inline">\(U(1)\)</span>-symmetric phase with <span class="math inline">\(\sigma_H\ne0\)</span> (the integer quantum Hall states, Chern insulators) is excluded by (i), and <em>any</em> phase with <span class="math inline">\(c_-\ne0\)</span>—including the bosonic <span class="math inline">\(E_8\)</span> state, which carries no <span class="math inline">\(U(1)\)</span> charge (so <span class="math inline">\(\sigma_H=0\)</span>) yet has <span class="math inline">\(c_-=8\)</span>—is excluded by the chiral mechanism (ii), not by <span class="math inline">\(\sigma_H\)</span>.</em></p>
+</div>
+<p><em>Emergent structure.</em> The composition of all five arrows produces an <em>obstruction subgroup</em> <span class="math inline">\(\operatorname{Obs}_{d,G}=\pi_0\mathbf{IP}^{\mathrm{cond}}_{d,G}/\operatorname{im}\operatorname{real}\)</span> separating abstract classes from lattice-realizable ones, with the chiral classes of Recollection 3.14 sitting inside the commuting-projector obstruction. Part V’s Conjectures V-1, V-2, V-3 describe the image, the chiral classes, and profinite-family realizability.</p>
+<h1 data-number="4" id="sec:composition"><span class="header-section-number">4</span> Modular composition</h1>
+<p>The previous section walked the arrows in isolation. Here we make the <em>composition</em> explicit: how the modules compose, what emerges from composition that is invisible in any single module, and what bounds the composition from outside.</p>
+<h2 data-number="4.1" id="sec:compdiagram"><span class="header-section-number">4.1</span> The composition diagram</h2>
+<p>Read as modules, the five Parts form a diagram in which each object is the input to the next and each module contributes a functor. Write <span class="math inline">\(\mathsf{Loc}\)</span>, <span class="math inline">\(\mathsf{Obs}\)</span>, <span class="math inline">\(\mathsf{Gap}\)</span>, <span class="math inline">\(\mathsf{Stab}\)</span>, <span class="math inline">\(\mathsf{Real}\)</span> for the five modules.</p>
+<p><span class="math display">\[\begin{equation}
+
+\begin{tikzcd}[column sep=1.5em, row sep=2.6em]
+\{\text{loc.\ int.}\}
+  \arrow[r, &quot;\mathsf{Loc}&quot;]
+&amp; \mathfrak{Ham}_{d,G}
+  \arrow[r, &quot;\mathsf{Gap}&quot;]
+  \arrow[d, &quot;\mathsf{Obs}&quot;&#39;]
+&amp; \mathfrak{Gap}_{d,G}
+  \arrow[r, &quot;\mathsf{Stab}&quot;]
+&amp; \mathfrak{Phase}_{d,G}
+  \arrow[r, &quot;\boxtimes\text{, }\operatorname{Groth}&quot;]
+&amp; \mathbf{IP}^{\mathrm{cond}}_{d,G}
+  \arrow[d, &quot;c_{d,G}&quot;]
+  \arrow[dl, dashed, &quot;\operatorname{real}&quot;&#39;] \\
+&amp; (\mathcal{A},\ \underline{\mathcal{S}(\mathcal{A})},\ \operatorname{Solid}K_{\mathrm{alg}})
+&amp;&amp; \{\text{realized}\}
+&amp; I_{\mathrm{FH}}
+\end{tikzcd}
+\end{equation}\]</span></p>
+<p>Here <span class="math inline">\(\mathsf{Loc}\)</span>, <span class="math inline">\(\mathsf{Obs}\)</span>, <span class="math inline">\(\mathsf{Gap}\)</span>, <span class="math inline">\(\mathsf{Stab}\)</span>, and the group-completion arrow are the functors of Parts I, II, III, III–IV, and IV; the solid arrows are functors the modules construct, with the caveat that <span class="math inline">\(\mathsf{Stab}\)</span> inverts <span class="math inline">\(\mathcal{W}\)</span>, whose generation from quasi-adiabatic continuation is Conjecture III-3. The dashed arrow <span class="math inline">\(\operatorname{real}\)</span> is the realization comparison of Section 3.5 (Part V), whose essential image is Conjecture V-1; the vertical comparison <span class="math inline">\(c_{d,G}:\mathbf{IP}^{\mathrm{cond}}_{d,G}\to I_{\mathrm{FH}}\)</span> to the Freed–Hopkins target is Conjecture IV-2. The observable data <span class="math inline">\((\mathcal{A},\underline{\mathcal{S}(\mathcal{A})},\operatorname{Solid}K_{\mathrm{alg}})\)</span> produced by <span class="math inline">\(\mathsf{Obs}\)</span> feeds the homotopy of the spectrum through the solid refinement of Conjecture IV-1. The diagram commutes at the level of <span class="math inline">\(\pi_0\)</span> exactly where those conjectures hold—in <span class="math inline">\(d=1\)</span> for on-site finite symmetry (Recollection 3.13), and for the free-fermion tenfold way <span class="citation" data-cites="kitaev-periodic-table altland-zirnbauer">[21,33]</span>—and its global commutativity is the Master Conjecture of Section 9.</p>
+<h2 data-number="4.2" id="sec:emergent"><span class="header-section-number">4.2</span> Emergent properties at each level</h2>
+<p>The characteristic feature of a modular composition is that structure emerges at each level which is not a property of the parts. We collect the four emergences named in Section 3.</p>
+<ol>
+<li><p><strong>Uniformity</strong> (I<span class="math inline">\(\circ\)</span>nothing). A single light cone, clustering length, and constant set over a whole profinite base: the precondition for every “family” below.</p></li>
+<li><p><strong>Functorial disordered invariants</strong> (II<span class="math inline">\(\circ\)</span>I). Topological invariants of disordered families computed by solidification, matched to the physical configuration space rather than a smooth approximation of it.</p></li>
+<li><p><strong>A robust phase set</strong> (III<span class="math inline">\(\circ\)</span>II<span class="math inline">\(\circ\)</span>I). <span class="math inline">\(\operatorname{Phases}_{d,G}=\pi_0\operatorname{Shape}\mathfrak{Phase}_{d,G}\)</span>, stable under quasi-local deformation once <span class="math inline">\(\mathcal{W}\)</span> is inverted and ancillas added.</p></li>
+<li><p><strong>Higher homotopy and an obstruction subgroup</strong> (V<span class="math inline">\(\circ\)</span>IV<span class="math inline">\(\circ\)</span>III<span class="math inline">\(\circ\)</span>II<span class="math inline">\(\circ\)</span>I). Pumps and defects as <span class="math inline">\(\pi_{\ge1}\)</span>, and <span class="math inline">\(\operatorname{Obs}_{d,G}\)</span> separating abstract from realizable.</p></li>
+</ol>
+<p>None of these emergences is forced by the module below it alone; each requires the composite. That is the precise content of calling the program modular rather than layered: the modules interoperate, and the interoperation is where the physics of families, disorder, and defects lives.</p>
+<h2 data-number="4.3" id="sec:walls"><span class="header-section-number">4.3</span> The two walls</h2>
+<p>Two theorems bound the composition and must be respected at every level.</p>
+<p>The <em>undecidability wall</em> (Recollection 3.6) forbids any claim that <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> is decidable or algorithmically presentable. It does not forbid stability results: openness on a stratum, uniform clustering, and descent along a hull are all statements about the <em>neighborhood</em> of a gapped system, not tests for gappedness, and Part III is careful to scope them to strata with uniform constants. The wall is why the program is organized around stability, not existence.</p>
+<p>The <em>no-go wall</em> (Recollection 3.14), combining the electric Kapustin–Fidkowski and the thermal Kapustin–Spodyneiko no-gos, forbids any claim that a chiral invertible class is realized by commuting projectors. It bounds <span class="math inline">\(\operatorname{im}\operatorname{real}^{\mathrm{cp}}\)</span> to the non-chiral sector and makes the separation between “exactly solvable” and “physically realizable” structural, not incidental. Every realizability statement in the program excludes the chiral commuting-projector case by hypothesis.</p>
+<p>A third boundary is not a theorem but a scope limit: a spectrum classifies only invertible order. General anyon theories and non-invertible phases need higher categories of excitations (braided or modular tensor categories in <span class="math inline">\(2{+}1\)</span> dimensions and their higher analogues), so a condensed treatment of them would require a condensed higher stack of phases and defects, not a condensed <span class="math inline">\(K\)</span>-theory spectrum. That extension is outside the present program.</p>
+<h1 data-number="5" id="sec:dictionary"><span class="header-section-number">5</span> The homotopy dictionary</h1>
+<p>Classification by <span class="math inline">\(\pi_0\)</span> records only which phases exist. The higher homotopy of the phase object carries more, and the program fixes a dictionary between homotopy-theoretic and physical data. We quote it verbatim from the prospectus, now with each line anchored to the module that supplies it.</p>
+<p><span class="math display">\[\begin{equation}
+
+\boxed{
+\begin{aligned}
+\pi_0 &amp;= \text{phases},\\
+\pi_1 &amp;= \text{adiabatic pumps and phase automorphisms},\\
+\pi_n &amp;= \text{higher families and higher defects},\\
+\Sigma&amp;= \text{gapless transition locus},\\
+E^{q+1}(B,B\setminus\Sigma) &amp;= \text{relative charge of a transition}.
+\end{aligned}}
+\end{equation}\]</span></p>
+<p>The first line is Arrow III’s emergent structure, made precise by Conjecture III-3: the components of <span class="math inline">\(\mathfrak{Gap}_{d,G}[\mathcal{W}^{-1}]\)</span> are the operator-algebraic gapped phases of Ogata <span class="citation" data-cites="ogata-classification-review">[19]</span>. The second and third are Arrow IV’s: loops and higher families of gapped Hamiltonians realize pumps and defects, carried by the homotopy of Kubota’s spectrum <span class="citation" data-cites="kubota-omega-spectrum">[20]</span> and, conjecturally, by the higher homotopy solid modules of <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> (Conjecture IV-1); the automorphism content of <span class="math inline">\(\pi_1\)</span> is the subject of <span class="citation" data-cites="aasen-wang-hastings">[28]</span>, whose <span class="math inline">\(\pi_1,\pi_2,\pi_3\)</span> computations are themselves conjectural. The last two lines are the transition calculus, developed next.</p>
+<h1 data-number="6" id="sec:transitions"><span class="header-section-number">6</span> Phase transitions and the relative-charge formalism</h1>
+<p>This section develops the fourth and fifth lines of (9): what a transition is, and what its charge is. The development is honest obstruction theory (the long exact sequence of a pair and excision, valid for any generalized cohomology), and the only conjectural step is the identification of the abstract boundary map with the spectral boundary map of <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>, which is Conjecture IV-3 lifted to the program.</p>
+<h2 data-number="6.1" id="sec:locus"><span class="header-section-number">6.1</span> The gapped locus, the discriminant, and the phase label</h2>
+<p>Let <span class="math inline">\(B\)</span> be a parameter space (couplings, fields, pressures, disorder configurations, boundary conditions), regarded as a condensed object <span class="math inline">\(\underline{B}\)</span>, and let <span class="math inline">\(f:\underline{B}\to\mathfrak{Ham}_{d,G}\)</span> be a family of systems.</p>
+<div id="def:locus" class="definition">
+<p><strong>Definition 1</strong> (gapped locus and discriminant).  The <em>gapped locus</em> of <span class="math inline">\(f\)</span> is the pullback <span class="math display">\[U_f=\underline{B}&times;_{\mathfrak{Ham}_{d,G}}\mathfrak{Gap}_{d,G},\]</span> and the <em>gapless (critical) locus</em> or <em>discriminant</em> is its complement <span class="math inline">\(\Sigma_f=\underline{B}\setminus U_f\)</span>. On <span class="math inline">\(U_f\)</span> the phase label <span class="math display">\[\nu_f:U_f\longrightarrow\pi_0(\mathfrak{Phase}_{d,G})=\operatorname{Phases}_{d,G}\]</span> is locally constant.</p>
+</div>
+<p>That <span class="math inline">\(\nu_f\)</span> is locally constant on <span class="math inline">\(U_f\)</span> is exactly Recollection 3.7: the gapped locus is condensed-open on the physical stratum, and openness of each phase’s preimage is what “locally constant” means. A topological phase transition is a path in <span class="math inline">\(B\)</span> whose endpoints carry different values of <span class="math inline">\(\nu_f\)</span>; such a path cannot stay in <span class="math inline">\(U_f\)</span> and must meet <span class="math inline">\(\Sigma_f\)</span>. This is the boxed slogan (5).</p>
+<h2 data-number="6.2" id="sec:relcharge"><span class="header-section-number">6.2</span> The relative charge as an obstruction</h2>
+<p>Suppose the invariant is valued in a (condensed) generalized cohomology theory <span class="math inline">\(E\)</span>; in the invertible case <span class="math inline">\(E\)</span> is represented by <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>. On the gapped locus the invariant is a class <span class="math inline">\(\nu\in E^q(U_f)\)</span>. The question of the transition is whether <span class="math inline">\(\nu\)</span> extends over the critical set to all of <span class="math inline">\(B\)</span>. Obstruction theory answers it through the long exact sequence of the pair <span class="math inline">\((B,U_f)\)</span>: <span class="math display">\[\begin{equation}
+
+&middot;s\to E^q(B)\xrightarrow{\ j^\ast\ }E^q(U_f)\xrightarrow{\ \partial\ }
+E^{q+1}(B,U_f)\xrightarrow{\ \ }E^{q+1}(B)\to&middot;s,
+\end{equation}\]</span> with <span class="math inline">\(j:U_f\hookrightarrow B\)</span> the inclusion.</p>
+<div id="def:relcharge" class="definition">
+<p><strong>Definition 2</strong> (relative transition charge).  The <em>relative transition charge</em> of the family <span class="math inline">\(f\)</span> carrying the invariant <span class="math inline">\(\nu\in
+E^q(U_f)\)</span> is <span class="math display">\[\partial\nu:=\partial\nu\in E^{q+1}(B,U_f)=E^{q+1}(B,B\setminus\Sigma_f),\]</span> the image of <span class="math inline">\(\nu\)</span> under the connecting map of (10).</p>
+</div>
+<div id="prop:obstruction" class="proposition">
+<p><strong>Proposition 1</strong> (extension obstruction).  <em><span class="math inline">\(\partial\nu=0\)</span> if and only if <span class="math inline">\(\nu\)</span> is the restriction of a class on all of <span class="math inline">\(B\)</span>; that is, <span class="math inline">\(\partial\nu\)</span> is the obstruction to extending the phase invariant across the discriminant. In particular, if <span class="math inline">\(\partial\nu\ne0\)</span> the family has a genuine transition: no global invariant restricts to <span class="math inline">\(\nu\)</span> on <span class="math inline">\(U_f\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Exactness of (10) at <span class="math inline">\(E^q(U_f)\)</span>: <span class="math inline">\(\nu\in\operatorname{im}(j^\ast)\)</span> if and only if <span class="math inline">\(\partial\nu=0\)</span>. A class in <span class="math inline">\(\operatorname{im}(j^\ast)\)</span> is by definition the restriction of a class on <span class="math inline">\(B\)</span>. This is the standard long exact sequence of a pair in a generalized cohomology theory and requires nothing beyond the Eilenberg–Steenrod axioms that <span class="math inline">\(E\)</span> satisfies as a spectrum-represented theory. ◻</p>
+</div>
+<h2 data-number="6.3" id="sec:linking"><span class="header-section-number">6.3</span> Locality: linking spheres</h2>
+<p>The relative group <span class="math inline">\(E^{q+1}(B,B\setminus\Sigma_f)\)</span> is local along <span class="math inline">\(\Sigma_f\)</span>. When <span class="math inline">\(\Sigma_f\)</span> is a reasonable (say, closed, locally-flat, finite-codimension) condensed subobject with components <span class="math inline">\(\{\Sigma_f^{(\alpha)}\}\)</span>, excision identifies the relative cohomology with a sum of contributions supported near the components: <span class="math display">\[\begin{equation}
+
+E^{q+1}(B,B\setminus\Sigma_f)\ \cong\ \bigoplus_\alpha E^{q+1}\bigl(N_\alpha,N_\alpha\setminus\Sigma_f^{(\alpha)}\bigr),
+\end{equation}\]</span> <span class="math inline">\(N_\alpha\)</span> a tubular neighborhood of <span class="math inline">\(\Sigma_f^{(\alpha)}\)</span>. If <span class="math inline">\(\Sigma_f^{(\alpha)}\)</span> has codimension <span class="math inline">\(c\)</span> with an <span class="math inline">\(E\)</span>-oriented normal bundle, the Thom isomorphism identifies each summand with a degree-shifted absolute group of the component, <span class="math display">\[\begin{equation}
+
+E^{q+1}\bigl(N_\alpha,N_\alpha\setminus\Sigma_f^{(\alpha)}\bigr)\ \cong\
+E^{q+1-c}\bigl(\Sigma_f^{(\alpha)}\bigr),
+\end{equation}\]</span> the Thom class shifting degree by the codimension <span class="math inline">\(c\)</span>. The local charge is read off on a linking sphere: over a point <span class="math inline">\(x\in\Sigma_f^{(\alpha)}\)</span> the unit sphere <span class="math inline">\(S^{c-1}_{\mathrm{link}}\)</span> of the normal fibre lies in <span class="math inline">\(B\setminus\Sigma_f\)</span> and links the component, and the restriction <span class="math inline">\(\nu|_{S^{c-1}_{\mathrm{link}}}\in E^{q}\bigl(S^{c-1}_{\mathrm{link}}\bigr)\)</span> has reduced part <span class="math inline">\(\widetilde E^{\,q}(S^{c-1})\cong E^{q-c+1}(\mathrm{pt})\)</span> equal to that local charge: the same degree shift as (12). In words: the relative charge decomposes as a sum of local charges, one per component of the critical set, each detected by evaluating <span class="math inline">\(E\)</span> on a small sphere linking the component. This is the precise form of the physical picture that a band degeneracy (a Dirac node, a Weyl point) acts as a source or sink of topological charge, now valid for a generalized cohomology theory and an interacting phase spectrum rather than only for Chern numbers of free bands. This relative, defect-localized reading has a free-fermion precedent: Teo and Kane classify topological defects by the <span class="math inline">\(K\)</span>-theory of a sphere linking the defect <span class="citation" data-cites="teo-kane">[34]</span>, within the <span class="math inline">\(K\)</span>-theoretic classification of topological phases <span class="citation" data-cites="thiang-ktheory">[35]</span>; the condensed formulation of Definition 6.2 is the extension of that relative-charge picture to a generalized theory represented by <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>. The low-codimension case <span class="math inline">\(c=1\)</span> (a wall <span class="math inline">\(\Sigma_f\)</span> separating two gapped regions) reduces the linking sphere to <span class="math inline">\(S^0\)</span>: two points, one in each phase, and the local charge is the <em>difference</em> of the two phase labels: the jump of <span class="math inline">\(\nu_f\)</span> across the wall.</p>
+<h2 data-number="6.4" id="sec:boundary"><span class="header-section-number">6.4</span> The spectral boundary map</h2>
+<p>Proposition 6.3 and (12) are unconditional facts about any <span class="math inline">\(E\)</span>. The program’s substantive claim is that, for <span class="math inline">\(E=\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>-cohomology, the connecting map <span class="math inline">\(\partial\)</span> of (10) is the boundary map of the cofiber sequence of the pair for the spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>, so the transition charge is computed by a single long exact sequence in every dimension and every generalized theory simultaneously. This is Conjecture IV-3, restated at the program level as Conjecture VI-3 in Section 9. Its low-dimensional shadow (the SSH winding jump, the Dirac node as a unit source of charge) is classical; the conjecture is that this is systematically the spectral boundary map.</p>
+<h1 data-number="7" id="sec:ssh"><span class="header-section-number">7</span> The SSH transition end to end</h1>
+<p>We now run one example through all five modules, to show that the composition is not merely formal. The Su–Schrieffer–Heeger chain <span class="citation" data-cites="ssh-1979">[36]</span> is the smallest system in which every module has something to say, and its winding number is a degree-<span class="math inline">\(\ge0\)</span> class, so it sits safely on the nonnegative side of the Bott-inversion caveat of Recollection 3.4.</p>
+<div id="ex:ssh" class="example">
+<p><strong>Example 1</strong> (SSH through the spine).  The SSH Bloch Hamiltonian and its off-diagonal function are <span class="math display">\[H(k;t_1,t_2)=(t_1+t_2\cos k)\,\sigma_x+(t_2\sin k)\,\sigma_y,
+\qquad q(k)=t_1+t_2 e^{ik},\]</span> with spectrum <span class="math inline">\(E_\pm(k)=\pm\lvert q(k) \rvert\)</span>.</p>
+</div>
+<div id="prop:sshgap" class="proposition">
+<p><strong>Proposition 2</strong> (gap and winding of the SSH chain).  <em>The chain is gapped if and only if <span class="math inline">\(\lvert t_1 \rvert\ne\lvert t_2 \rvert\)</span>; the gap closes on the discriminant <span class="math inline">\(\Sigma=\{\,(t_1,t_2):\lvert t_1 \rvert=\lvert t_2 \rvert\,\}\)</span>. On the gapped locus the winding number of <span class="math inline">\(q:S^1\to\mathbb{C}^&times;\)</span> is <span class="math display">\[\nu=\begin{cases}1,&amp;\lvert t_1 \rvert&lt;\lvert t_2 \rvert,\\ 0,&amp;\lvert t_1 \rvert&gt;\lvert t_2 \rvert,\end{cases}\]</span> up to orientation, and jumps by <span class="math inline">\(\pm1\)</span> across <span class="math inline">\(\Sigma\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math inline">\(E_\pm(k)=\pm\lvert q(k) \rvert\)</span> vanishes for some <span class="math inline">\(k\)</span> iff <span class="math inline">\(q(k)=0\)</span>, i.e. iff <span class="math inline">\(t_1+t_2e^{ik}=0\)</span> for some <span class="math inline">\(k\)</span>, which happens iff <span class="math inline">\(\lvert t_1 \rvert=\lvert t_2 \rvert\)</span>; hence the gap is open exactly off <span class="math inline">\(\Sigma\)</span>. On the gapped locus <span class="math inline">\(q\)</span> misses the origin, so its winding number is defined; for <span class="math inline">\(\lvert t_1 \rvert&gt;\lvert t_2 \rvert\)</span> the curve <span class="math inline">\(k&#8614; t_1+t_2e^{ik}\)</span> is a circle of radius <span class="math inline">\(\lvert t_2 \rvert\)</span> about <span class="math inline">\(t_1\ne0\)</span> not enclosing the origin (winding <span class="math inline">\(0\)</span>), and for <span class="math inline">\(\lvert t_1 \rvert&lt;\lvert t_2 \rvert\)</span> it encloses the origin once (winding <span class="math inline">\(1\)</span>). The two regions are separated by <span class="math inline">\(\Sigma\)</span>, across which the winding jumps by <span class="math inline">\(\pm1\)</span>. ◻</p>
+</div>
+<p>Now the five modules, in order.</p>
+<p><em>Part I (dynamics).</em> The SSH couplings define a finite-range interaction of finite <span class="math inline">\(F\)</span>-norm, so the family lives in <span class="math inline">\(\underline{\mathcal{B}_{F}}\)</span> and, by Recollection 3.2, over any compact region of the <span class="math inline">\((t_1,t_2)\)</span>-plane away from <span class="math inline">\(\Sigma\)</span> carries one Lieb–Robinson velocity. The parameter torus and Brillouin circle are replaced by their condensations <span class="math inline">\(\underline{B},\underline{S^1}\)</span>; the light cone is uniform over the probe.</p>
+<p><em>Part II (algebra and <span class="math inline">\(K\)</span>-theory).</em> SSH is a class <span class="math inline">\(\mathit{AIII}\)</span> system in <span class="math inline">\(d=1\)</span>, whose tenfold-way entry is <span class="math inline">\(\mathbb{Z}\)</span> <span class="citation" data-cites="kitaev-periodic-table altland-zirnbauer">[21,33]</span>, the winding number valued in <span class="math inline">\(K^1\)</span> of the observable algebra. Because the winding is a nonnegative-degree class, Recollection 3.4 applies without invoking the Bott inversion: the solid invariant <span class="math inline">\(\operatorname{Solid}(K_{\mathrm{alg}}(\underline{A}))\)</span> computes it directly, and its provenance is condensed even though the number is the classical winding.</p>
+<p><em>Part III (gap).</em> Proposition 7.2 is exactly the finite-volume/thermodynamic gap statement of Recollection 3.7 for this family: the gapped locus is <span class="math inline">\(U=\{\,\lvert t_1 \rvert\ne\lvert t_2 \rvert\,\}\)</span>, open, and the phase label <span class="math inline">\(\nu\)</span> is locally constant on it, with the discriminant <span class="math inline">\(\Sigma=\{\,\lvert t_1 \rvert=\lvert t_2 \rvert\,\}\)</span>.</p>
+<p><em>Part IV (stabilization and EFT).</em> The low-energy theory at the gap-closing <span class="math inline">\(\lvert t_1 \rvert=\lvert t_2 \rvert\)</span>, <span class="math inline">\(k=\pi\)</span> is a massive <span class="math inline">\(1{+}1\)</span>-dimensional Dirac fermion, and the winding number is the sign of the Dirac mass—the deformation class of the Dirac effective field theory. So the comparison map <span class="math inline">\(c_{1,\mathit{AIII}}\)</span> sends the SSH phase to its EFT class and the two agree: Conjecture IV-2 holds at the level of <span class="math inline">\(\pi_0\)</span> in this box.</p>
+<p><em>Part V (realizability).</em> The nontrivial SSH phase is short-range-entangled and realized by the explicit dimerized chain; being non-chiral (<span class="math inline">\(\sigma_H=0\)</span> and <span class="math inline">\(c_-=0\)</span>), it is excluded by neither no-go of Recollection 3.14 and is in fact commuting-projector realizable in the flat-band (fully dimerized) limit. It sits in <span class="math inline">\(\operatorname{im}\operatorname{real}\)</span>.</p>
+<p><em>The transition charge.</em> In the parameter plane <span class="math inline">\(B=(t_1,t_2)\)</span> the invariant relevant to the transition calculus is not the momentum-space <span class="math inline">\(K^1\)</span> class of the tenfold way but the <em>winding number</em> it produces: a locally constant <span class="math inline">\(\mathbb{Z}\)</span>-valued label on the gapped locus, an element <span class="math inline">\(\nu\in K^0(U)\)</span> of degree <span class="math inline">\(q=0\)</span>. The discriminant <span class="math inline">\(\Sigma=\{\,\lvert t_1 \rvert=\lvert t_2 \rvert\,\}\)</span> is the pair of lines <span class="math inline">\(t_1=\pm t_2\)</span>; away from their intersection it has codimension <span class="math inline">\(c=1\)</span>, so the linking sphere of (12) is <span class="math inline">\(S^0\)</span> and the local charge is read in the reduced group <span class="math inline">\(\widetilde K^0(S^0)\cong\mathbb{Z}\)</span>—the winding difference <span class="math inline">\(\pm1\)</span> across the wall, in agreement with the degree shift <span class="math inline">\(E^{q-c+1}(\mathrm{pt})=K^0(\mathrm{pt})=\mathbb{Z}\)</span> of (12). (At the origin <span class="math inline">\((0,0)\)</span> the two lines cross, the gap closes at <span class="math inline">\(k=0\)</span> and <span class="math inline">\(k=\pi\)</span> simultaneously, and the codimension jumps to <span class="math inline">\(2\)</span>; the generic crossing is the codimension-one one just described.) By Proposition 6.3 the relative charge <span class="math inline">\(\partial\nu\in K^{1}(B,U)\)</span> is nonzero precisely because the winding label does not extend across <span class="math inline">\(\Sigma\)</span>: the transition is real, and its charge is the unit jump. Conjecture VI-3 is the assertion that this <span class="math inline">\(\partial\)</span> is the spectral boundary map of <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{1,\mathit{AIII}}\)</span>; here it is the elementary winding jump, and the two agree.</p>
+<h1 data-number="8" id="sec:disorder"><span class="header-section-number">8</span> Disorder and the profinite thread</h1>
+<p>The profinite disorder thread is where condensed mathematics does work that ordinary smooth-parameter topology cannot, and it runs through all five modules. We collect it.</p>
+<h2 data-number="8.1" id="the-hull-as-a-profinite-probe"><span class="header-section-number">8.1</span> The hull as a profinite probe</h2>
+<p>If <span class="math inline">\(Q\)</span> is a finite set of local configurations, the configuration space <span class="math display">\[\begin{equation}
+
+\Omega=Q^{\mathbb{Z}^d}
+\end{equation}\]</span> is compact, totally disconnected, hence profinite; this is the disorder (or tiling) hull of Bellissard’s noncommutative geometry of aperiodic media <span class="citation" data-cites="bellissard-ncg-qhe kellendonk-tilings">[13,37]</span>. (We follow Part II in writing the alphabet <span class="math inline">\(Q\)</span> rather than the prospectus’s <span class="math inline">\(F\)</span>, to avoid collision with the Nachtergaele–Sims–Young <span class="math inline">\(F\)</span>-function of Part I; the two never denote the same object.) A disordered Hamiltonian family <span class="math inline">\(\omega&#8614; H_\omega\)</span> is literally an <span class="math inline">\(\Omega\)</span>-point of the moduli stack, <span class="math inline">\(H\in\mathfrak{Ham}_{d,G}(\Omega)\)</span>, and finite quotients of <span class="math inline">\(\Omega\)</span> are finite-resolution disorder data. The sheaf condition of (1) is the compatibility of families and invariants across finite approximations, so the profinite probes match the physical configuration space rather than repackage a smooth one.</p>
+<h2 data-number="8.2" id="the-thread-through-the-modules"><span class="header-section-number">8.2</span> The thread through the modules</h2>
+<ul>
+<li><p><strong>Part I</strong> (Conjecture I-3): the Lieb–Robinson estimates over <span class="math inline">\(\Omega\)</span> should be the right Kan extension of their restrictions to finite quotients: quasi-local dynamics determined by finite-resolution data. Its unconditional shadow is the uniform light cone of Recollection 3.2.</p></li>
+<li><p><strong>Part II</strong> (Recollection 3.5, Conjecture II-2): the observable algebra is the crossed product <span class="math inline">\(C(\Omega)\rtimes_T\mathbb{Z}^d\)</span>, its condensation functorial in finite quotients, and the solid invariant should agree with operator <span class="math inline">\(K\)</span>-theory naturally in <span class="math inline">\(\Omega\)</span>.</p></li>
+<li><p><strong>Part III</strong> (Conjecture III-2): uniform gappedness over <span class="math inline">\(\Omega\)</span> should be a closed condition on the inverse system: the uniformly gapped families the inverse limit of the finite-resolution ones at a fixed <span class="math inline">\(\Delta\)</span>.</p></li>
+<li><p><strong>Part IV</strong>: parametrized invariants over <span class="math inline">\(\Omega\)</span>, the base level (L2) of the lattice–EFT comparison Conjecture IV-2.</p></li>
+<li><p><strong>Part V</strong> (Conjecture V-3): realizability over <span class="math inline">\(\Omega\)</span> is disorder-robust iff a condensed-cohomological descent obstruction <span class="math inline">\(o(c)\in H^1_{\mathrm{cond}}(\Omega,\underline{\operatorname{Aut}}(c))\)</span> vanishes, detected by finite quotients.</p></li>
+</ul>
+<p>The common shape of all five is descent along the finite quotients of <span class="math inline">\(\Omega\)</span>. That the five descent statements are facets of one principle is Conjecture VI-4.</p>
+<h1 data-number="9" id="sec:conjectures"><span class="header-section-number">9</span> The program-level conjectures</h1>
+<p>We now state the open claims of the program. Each is built as the coherent join of module-level conjectures from Parts I–V, and none is proved. We write them as named Conjectures VI-1 through VI-4; the first is the Master Conjecture.</p>
+<div id="conj:VI1" class="progconj">
+<p><strong>Conjecture 1</strong> (Master Conjecture: the modules glue into one condensed higher stack).  <em>The five module-level structural conjectures hold simultaneously and coherently: <span class="math inline">\(\mathfrak{Ham}_{d,G}\)</span> is a condensed higher stack (Conjecture I-1); positivity and the <span class="math inline">\(C^\ast\)</span>-identity cut it out as a closed condensed substack of a formal-interaction stack (Conjecture II-1); <span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> is an open condensed substack on the physical stratum with the uniform-gap sheaf condition detected by finite quotients (Conjecture III-1); the stabilized invertible sector is a connective condensed/solid spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> whose shape is a connective cover of Kubota’s <span class="math inline">\(\mathit{IP}^\ast\)</span> (Conjecture IV-1); and the realizability image is the short-range-entangled subspectrum (Conjecture V-1). Consequently the boxed sequence (6) is a diagram of condensed higher stacks and spectra, <span class="math inline">\(\operatorname{Phases}_{d,G}=\pi_0\operatorname{Shape}(\mathfrak{Phase}_{d,G})\)</span> is the operator-algebraic set of gapped phases, and <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> is the invertible phase spectrum of the whole.</em></p>
+</div>
+<div id="conj:VI2" class="progconj">
+<p><strong>Conjecture 2</strong> (microscopic <span class="math inline">\(=\)</span> field-theoretic).  <em>Under short-range-entanglement hypotheses the comparison map <span class="math inline">\(c_{d,G}:\mathbf{IP}^{\mathrm{cond}}_{d,G}\to I_{\mathrm{FH}}\)</span> to the Freed–Hopkins invertible-TQFT spectrum is an equivalence after solidification/completion (Conjecture IV-2), and its <span class="math inline">\(\pi_0\)</span> image coincides with the realized SRE subspectrum <span class="math inline">\(\operatorname{im}\operatorname{real}=\mathrm{SRE}_{d,G}\)</span> (Conjecture V-1). Thus the microscopic classification of <span class="math inline">\(\operatorname{Phases}_{d,G}^&times;\)</span> and the bordism classification of <span class="math inline">\(\pi_0I_{\mathrm{FH}}\)</span> agree exactly on the realizable classes, with the chiral part realizable by non-commuting gapped models but never by commuting projectors (Conjecture V-2, Recollection 3.14). The statement holds at <span class="math inline">\(\pi_0\)</span> in <span class="math inline">\(d=1\)</span> for on-site finite symmetry (Recollection 3.13) and for the free-fermion tenfold way, and is open in general.</em></p>
+</div>
+<div id="conj:VI3" class="progconj">
+<p><strong>Conjecture 3</strong> (the relative charge is a spectral boundary map).  <em>For <span class="math inline">\(E=\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span>-cohomology, the connecting map <span class="math inline">\(\partial\)</span> of (10) is the boundary map of the cofiber sequence of the pair <span class="math inline">\((B,U_f)\)</span> for the spectrum <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> (Conjecture IV-3). Hence the relative transition charge <span class="math inline">\(\partial\nu=\partial\nu\in E^{q+1}(B,B\setminus\Sigma_f)\)</span> of Definition 6.2 is computed by a single long exact sequence in every dimension and generalized theory, and its linking-sphere localization (12) is the systematic form of “a band degeneracy is a source of topological charge.” The SSH box (Example 7.1) is the codimension-one, winding-number instance.</em></p>
+</div>
+<div id="conj:VI4" class="progconj">
+<p><strong>Conjecture 4</strong> (all program invariants descend along disorder hulls).  <em>For a profinite disorder hull <span class="math inline">\(\Omega=Q^{\mathbb{Z}^d}=\varprojlim_i\Omega_i\)</span>, the disorder facets of the five modules—Lieb–Robinson descent (I-3), naturality of the solid invariant (II-2), uniform-gap descent (III-2), parametrized comparison over <span class="math inline">\(\Omega\)</span> (IV-2 at level L2), and profinite-family realizability (V-3)—are facets of one descent principle: every program invariant over <span class="math inline">\(\Omega\)</span> is the right Kan extension of its restrictions to the finite quotients <span class="math inline">\(\Omega_i\)</span>, and uniform gappedness, the solid invariant, and realizability are all detected by finite quotients with a common bound. This is the precise sense in which “profinite probes match the configuration space.”</em></p>
+</div>
+<h2 data-number="9.1" id="sec:opentable"><span class="header-section-number">9.1</span> Consolidated open problems</h2>
+<p>Table 1 lists the nineteen module-level conjectures of Parts I–V, with the module each depends on and the program-level conjecture it feeds. The dependency column records which <em>earlier</em> module’s output a conjecture presupposes; the “feeds” column records which Conjecture VI-<span class="math inline">\(k\)</span> consolidates it. The table is the program’s to-do list.</p>
+<table id="tab:conjectures">
+<caption>The nineteen module-level conjectures of Parts I–V and their dependencies. “Feeds” names the program-level Conjecture VI-<span class="math inline">\(k\)</span> that consolidates each.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Statement (abbreviated)</th>
+<th style="text-align: left;">Depends on</th>
+<th style="text-align: left;">Feeds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">I-1</td>
+<td style="text-align: left;"><span class="math inline">\(\mathfrak{Ham}_{d,G}\)</span> is a condensed higher stack (descent of the automorphism groupoid)</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">I-2</td>
+<td style="text-align: left;">Quasi-local automorphisms form a condensed group; QAC is internal path-lifting</td>
+<td style="text-align: left;">I-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">I-3</td>
+<td style="text-align: left;">Lieb–Robinson estimates descend along a disorder hull</td>
+<td style="text-align: left;">I-1</td>
+<td style="text-align: left;">VI-4</td>
+</tr>
+<tr>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">Positivity <span class="math inline">\(+\)</span> <span class="math inline">\(C^\ast\)</span>-identity cut <span class="math inline">\(\mathfrak{Ham}_{d,G}\)</span> out as a closed condensed substack</td>
+<td style="text-align: left;">I-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">II-2</td>
+<td style="text-align: left;">Solid invariant <span class="math inline">\(=\)</span> operator <span class="math inline">\(K\)</span> of the crossed product, naturally in <span class="math inline">\(\Omega\)</span></td>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">VI-4</td>
+</tr>
+<tr>
+<td style="text-align: left;">II-3</td>
+<td style="text-align: left;">Real/<span class="math inline">\(KKO\)</span> refinement recovering the <span class="math inline">\(KO\)</span>-graded periodic table</td>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">VI-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">II-4</td>
+<td style="text-align: left;">Solid state space is a classifying object for condensed representations</td>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">II-5</td>
+<td style="text-align: left;">Condensed enhancement of the split property / DHR superselection</td>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">III-1</td>
+<td style="text-align: left;"><span class="math inline">\(\mathfrak{Gap}_{d,G}\)</span> open on the physical stratum; sheaf condition detected by finite quotients</td>
+<td style="text-align: left;">II-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">III-2</td>
+<td style="text-align: left;">Uniform-gap descent along profinite hulls (closed on the inverse system)</td>
+<td style="text-align: left;">III-1</td>
+<td style="text-align: left;">VI-4</td>
+</tr>
+<tr>
+<td style="text-align: left;">III-3</td>
+<td style="text-align: left;">QAC path components realize <span class="math inline">\(\mathcal{W}\)</span>; <span class="math inline">\(\pi_0\operatorname{Shape}(\mathfrak{Gap}[\mathcal{W}^{-1}])=\)</span> Ogata phases</td>
+<td style="text-align: left;">III-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV-1</td>
+<td style="text-align: left;"><span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> is a connective condensed/solid spectrum covering Kubota’s <span class="math inline">\(\mathit{IP}^\ast\)</span></td>
+<td style="text-align: left;">III-3</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV-2</td>
+<td style="text-align: left;">Lattice–EFT comparison <span class="math inline">\(c_{d,G}:\mathbf{IP}^{\mathrm{cond}}_{d,G}\to I_{\mathrm{FH}}\)</span> is an equivalence after completion</td>
+<td style="text-align: left;">IV-1</td>
+<td style="text-align: left;">VI-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV-3</td>
+<td style="text-align: left;">Relative charge <span class="math inline">\(\partial\nu\)</span> is the spectral boundary map of <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span></td>
+<td style="text-align: left;">IV-1</td>
+<td style="text-align: left;">VI-3</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV-4</td>
+<td style="text-align: left;">Solidification commutes with group completion</td>
+<td style="text-align: left;">IV-1</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV-5</td>
+<td style="text-align: left;">Renormalization is a filtered pro-endofunctor computing the EFT on the SRE stratum</td>
+<td style="text-align: left;">IV-1</td>
+<td style="text-align: left;">VI-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">V-1</td>
+<td style="text-align: left;">Realizability image <span class="math inline">\(=\)</span> SRE subspectrum; <span class="math inline">\(\operatorname{Obs}_{d,G}=\pi_0\mathbf{IP}^{\mathrm{cond}}_{d,G}/\operatorname{im}\operatorname{real}\)</span></td>
+<td style="text-align: left;">IV-2</td>
+<td style="text-align: left;">VI-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">V-2</td>
+<td style="text-align: left;">Chiral classes realizable by non-commuting gapped, never commuting-projector</td>
+<td style="text-align: left;">V-1</td>
+<td style="text-align: left;">VI-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">V-3</td>
+<td style="text-align: left;">Profinite-family realizability iff a condensed descent obstruction vanishes</td>
+<td style="text-align: left;">V-1</td>
+<td style="text-align: left;">VI-4</td>
+</tr>
+</tbody>
+</table>
+<p>Two features of Table 1 are worth naming. First, the dependency graph is a tree rooted at I-1: every conjecture presupposes the stack structure of the ground floor, which is why Conjecture I-1 is the true foundation and the Master Conjecture VI-1 leads with it. Second, the “feeds” column shows the program-level conjectures are not independent wishes but bundles: VI-1 gathers the ten structural conjectures, VI-2 the four comparison/refinement conjectures, VI-3 the single boundary-map conjecture, and VI-4 the four descent conjectures (<span class="math inline">\(10+4+1+4=19\)</span>). Proving any program-level conjecture means proving its whole bundle.</p>
+<h1 data-number="10" id="sec:contributions"><span class="header-section-number">10</span> Contributions and limitations</h1>
+<h2 data-number="10.1" id="contributions"><span class="header-section-number">10.1</span> Contributions</h2>
+<p>The framework contributes three structural advantages, none of which is a new numerical invariant. First, one category holds ordinary continuous families, profinite disorder families, compact inverse limits, and topological symmetry groups at once; the passage (1) is fully faithful, so nothing classical is lost. Second, condensed abelian groups and solid modules supply exact derived operations and descent where ordinary topological groups and modules are poorly behaved: the environment Recollection 3.4 needs to make operator <span class="math inline">\(K\)</span>-theory a condensed invariant. Third, the sheaf and stack viewpoint organizes local families, defects, interfaces, boundary conditions, symmetry actions, and gluing uniformly, which is what the transition calculus of Section 6 and the disorder thread of Section 8 exploit.</p>
+<p>On novelty we are precise, because the reviewer should be. Condensed and pyknotic mathematics <span class="citation" data-cites="clausen-scholze-condensed barwick-haine-pyknotic">[1,2]</span> and the solidification bridge <span class="citation" data-cites="aoki-solidification">[12]</span> are established in pure mathematics; the moduli/space-of-states viewpoint on gapped systems is established in physics <span class="citation" data-cites="hsin-wang-moduli beaudry-etal kubota-omega-spectrum denittis-states denittis-rendel-weyl">[20,22,38–40]</span>. What is new is the <em>synthesis</em>: no prior work applies condensed or pyknotic machinery to topological phases, and the individual analytic ingredients (Lieb–Robinson bounds, <span class="math inline">\(C^\ast\)</span>-positivity, gap stability, stabilization, realizability) are not new in themselves. The value is unificatory and organizational, and the honest content is the Master Conjecture and its bundle.</p>
+<h2 data-number="10.2" id="what-it-does-not-do"><span class="header-section-number">10.2</span> What it does not do</h2>
+<p>By itself the paradigm does not solve the hard analysis of many-body theory: one still needs locality estimates (Part I), positivity and <span class="math inline">\(C^\ast\)</span>-norm conditions (Part II), the existence and stability of a thermodynamic gap (Part III), the lattice–EFT correspondence (Part IV), and physical realizability (Part V), and each is a genuine theorem or a genuine conjecture, not a corollary of the formalism. It does not decide the gap: the undecidability wall (Recollection 3.6) is permanent. It does not realize chiral phases by commuting projectors: the no-go wall (Recollection 3.14) is permanent. It does not, by construction, classify non-invertible topological order, which needs a condensed higher stack of phases and defects rather than a spectrum. And it does not produce a different Chern number: the winding of Proposition 7.2 is the classical winding; only its provenance is condensed. The genuinely new thesis is the single environment, and the genuinely open mathematics is Conjectures VI-1 through VI-4.</p>
+<h1 data-number="11" id="sec:conclusion"><span class="header-section-number">11</span> Conclusion</h1>
+<p>The six papers of this series are one program with five modules and a spectrum-level payoff. Part I makes the interaction space condensed and the dynamics a base-uniform morphism; Part II attaches observable algebras, a compact condensed state space, and the solid <span class="math inline">\(K\)</span>-invariant with its Bott-inversion bookkeeping; Part III cuts out the uniformly gapped substack and stabilizes it against the undecidability wall; Part IV group-completes the invertible sector into <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> and confronts the field-theoretic classification; Part V asks which classes a lattice realizes, bounded by the commuting-projector no-gos of Kapustin–Fidkowski and Kapustin–Spodyneiko. Composed, the modules give the boxed sequence (6), the homotopy dictionary (9), and the transition calculus in which a transition is the crossing of the discriminant and its charge is the relative class <span class="math inline">\(\partial\nu\)</span> localized by linking spheres.</p>
+<p>We have been careful to keep the ledger honest. The module results are theorems, cited to Parts I–V. The program results (that the modules glue into one condensed higher stack with <span class="math inline">\(\mathbf{IP}^{\mathrm{cond}}_{d,G}\)</span> its invertible spectrum, that microscopic and field-theoretic classifications agree, that the relative charge is a spectral boundary map, that all invariants descend along disorder hulls) are Conjectures VI-1 through VI-4, and Table 1 records exactly what each would need. The program is not a completed classification and does not claim to be. It is a single categorical and homological environment in which continuous families, profinite disorder, analytic completions, operator <span class="math inline">\(K\)</span>-theory, symmetry, stacking, defects, and phase-transition loci can be treated at once, and a precise list of what remains to prove.</p>
+<h1 class="unnumbered" id="code-availability">Code availability</h1>
+<p>The formal-verification suites accompanying the six-paper series are at <a href="https://github.com/YonedaAI/topological-phases-of-matter">github.com/YonedaAI/topological-phases-of-matter</a>; each module’s code lives in a per-topic subdirectory (for example <code>src/bordism-realizability/</code> and <code>src/lattice-eft-equivalence/</code>). This synthesis introduces no new code of its own; it composes the results verified in Parts I–V.</p>
+<h1 class="unnumbered" id="acknowledgements">Acknowledgements</h1>
+<p>This is Part VI of a six-part series by the author and The YonedaAI Collaboration; it depends entirely on the analytic and topological content of Parts I–V and on the foundational work cited throughout.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-clausen-scholze-condensed" class="csl-entry" role="listitem">
+[1] Scholze, P., <span>“Lectures on condensed mathematics,”</span> 2026. <a href="https://arxiv.org/abs/2605.03658">https://arxiv.org/abs/2605.03658</a>
+</div>
+<div id="ref-barwick-haine-pyknotic" class="csl-entry" role="listitem">
+[2] Barwick, C. and P. Haine, <span>“Pyknotic objects, <span>I</span>. <span>B</span>asic notions,”</span> 2019. <a href="https://arxiv.org/abs/1904.09966">https://arxiv.org/abs/1904.09966</a>
+</div>
+<div id="ref-paperLocality" class="csl-entry" role="listitem">
+[3] Long, M. and The YonedaAI Collaboration, <span>“Condensed locality: Lieb–robinson estimates and quasi-local dynamics on the moduli stack of hamiltonians,”</span> 2026.
+</div>
+<div id="ref-paperPositivity" class="csl-entry" role="listitem">
+[4] Long, M. and The YonedaAI Collaboration, <span>“Positivity, <span>C</span>*-norms, and condensed state spaces of quasi-local algebras,”</span> 2026.
+</div>
+<div id="ref-paperGap" class="csl-entry" role="listitem">
+[5] Long, M. and The YonedaAI Collaboration, <span>“The uniformly gapped substack: Existence and stability of the thermodynamic spectral gap,”</span> 2026.
+</div>
+<div id="ref-paperEFT" class="csl-entry" role="listitem">
+[6] Long, M. and The YonedaAI Collaboration, <span>“From lattice models to effective field theories: Stabilization and the invertible condensed phase spectrum,”</span> 2026.
+</div>
+<div id="ref-paperRealizability" class="csl-entry" role="listitem">
+[7] Long, M. and The YonedaAI Collaboration, <span>“Physical realizability of bordism and homotopy classes by gapped lattice systems,”</span> 2026.
+</div>
+<div id="ref-cpw-undecidable" class="csl-entry" role="listitem">
+[8] Cubitt, T. S., D. Pérez-García, and M. M. Wolf, <span>“Undecidability of the spectral gap,”</span> <em>Nature</em> 528, 207–211, 2015. <a href="https://doi.org/10.1038/nature16059">https://doi.org/10.1038/nature16059</a>
+</div>
+<div id="ref-kapustin-fidkowski" class="csl-entry" role="listitem">
+[9] Kapustin, A. and L. Fidkowski, <span>“Local commuting projector hamiltonians and the quantum hall effect,”</span> <em>Communications in Mathematical Physics</em> 373 (2), 763–769, 2019. <a href="https://doi.org/10.1007/s00220-019-03444-1">https://doi.org/10.1007/s00220-019-03444-1</a>
+</div>
+<div id="ref-kapustin-spodyneiko-thermal" class="csl-entry" role="listitem">
+[10] Kapustin, A. and L. Spodyneiko, <span>“Thermal <span>H</span>all conductance and a relative topological invariant of gapped two-dimensional systems,”</span> <em>Physical Review B</em> 101, 045137, 2020. <a href="https://doi.org/10.1103/PhysRevB.101.045137">https://doi.org/10.1103/PhysRevB.101.045137</a>
+</div>
+<div id="ref-bmns-automorphic" class="csl-entry" role="listitem">
+[11] Bachmann, S., S. Michalakis, B. Nachtergaele, and R. Sims, <span>“Automorphic equivalence within gapped phases of quantum lattice systems,”</span> <em>Communications in Mathematical Physics</em> 309, 835–871, 2012. <a href="https://doi.org/10.1007/s00220-011-1380-0">https://doi.org/10.1007/s00220-011-1380-0</a>
+</div>
+<div id="ref-aoki-solidification" class="csl-entry" role="listitem">
+[12] Aoki, K., <span>“(Semi)topological <span><span class="math inline">\(K\)</span></span>-theory via solidification,”</span> 2024. <a href="https://arxiv.org/abs/2409.01462">https://arxiv.org/abs/2409.01462</a>
+</div>
+<div id="ref-bellissard-ncg-qhe" class="csl-entry" role="listitem">
+[13] Bellissard, J., A. van Elst, and H. Schulz-Baldes, <span>“The noncommutative geometry of the quantum hall effect,”</span> <em>Journal of Mathematical Physics</em> 35 (10), 5373–5451, 1994. <a href="https://doi.org/10.1063/1.530758">https://doi.org/10.1063/1.530758</a>
+</div>
+<div id="ref-bhm-stability" class="csl-entry" role="listitem">
+[14] Bravyi, S., M. B. Hastings, and S. Michalakis, <span>“Topological quantum order: Stability under local perturbations,”</span> <em>Journal of Mathematical Physics</em> 51 (9), 093512, 2010. <a href="https://doi.org/10.1063/1.3490195">https://doi.org/10.1063/1.3490195</a>
+</div>
+<div id="ref-michalakis-zwolak" class="csl-entry" role="listitem">
+[15] Michalakis, S. and J. P. Zwolak, <span>“Stability of frustration-free hamiltonians,”</span> <em>Communications in Mathematical Physics</em> 322, 277–302, 2013. <a href="https://doi.org/10.1007/s00220-013-1762-6">https://doi.org/10.1007/s00220-013-1762-6</a>
+</div>
+<div id="ref-nsy-bulkgap" class="csl-entry" role="listitem">
+[16] Nachtergaele, B., R. Sims, and A. Young, <span>“Stability of the bulk gap for frustration-free topologically ordered quantum lattice systems,”</span> <em>Letters in Mathematical Physics</em> 114, 24, 2024. <a href="https://doi.org/10.1007/s11005-023-01767-8">https://doi.org/10.1007/s11005-023-01767-8</a>
+</div>
+<div id="ref-hastings-koma" class="csl-entry" role="listitem">
+[17] Hastings, M. B. and T. Koma, <span>“Spectral gap and exponential decay of correlations,”</span> <em>Communications in Mathematical Physics</em> 265, 781–804, 2006. <a href="https://doi.org/10.1007/s00220-006-0030-4">https://doi.org/10.1007/s00220-006-0030-4</a>
+</div>
+<div id="ref-nachtergaele-sims-clustering" class="csl-entry" role="listitem">
+[18] Nachtergaele, B. and R. Sims, <span>“Lieb-robinson bounds and the exponential clustering theorem,”</span> <em>Communications in Mathematical Physics</em> 265, 119–130, 2006. <a href="https://doi.org/10.1007/s00220-006-1556-1">https://doi.org/10.1007/s00220-006-1556-1</a>
+</div>
+<div id="ref-ogata-classification-review" class="csl-entry" role="listitem">
+[19] Ogata, Y., <span>“Classification of gapped ground state phases in quantum spin systems,”</span> 2021. <a href="https://arxiv.org/abs/2110.04675">https://arxiv.org/abs/2110.04675</a>
+</div>
+<div id="ref-kubota-omega-spectrum" class="csl-entry" role="listitem">
+[20] Kubota, Y., <span>“Stable homotopy theory of invertible gapped quantum spin systems <span>I</span>: <span>K</span>itaev’s <span><span class="math inline">\(\Omega\)</span></span>-spectrum,”</span> 2025. <a href="https://arxiv.org/abs/2503.12618">https://arxiv.org/abs/2503.12618</a>
+</div>
+<div id="ref-kitaev-periodic-table" class="csl-entry" role="listitem">
+[21] Kitaev, A., <span>“Periodic table for topological insulators and superconductors,”</span> <em>AIP Conference Proceedings</em> 1134, 22–30, 2009. <a href="https://doi.org/10.1063/1.3149495">https://doi.org/10.1063/1.3149495</a>
+</div>
+<div id="ref-beaudry-etal" class="csl-entry" role="listitem">
+[22] Beaudry, A., M. Hermele, J. Moreno, M. J. Pflaum, M. Qi, and D. Spiegel, <span>“Homotopical foundations of parametrized quantum spin systems,”</span> <em>Reviews in Mathematical Physics</em> 36 (9), 2460003, 2024. <a href="https://doi.org/10.1142/S0129055X24600037">https://doi.org/10.1142/S0129055X24600037</a>
+</div>
+<div id="ref-freed-hopkins" class="csl-entry" role="listitem">
+[23] Freed, D. S. and M. J. Hopkins, <span>“Reflection positivity and invertible topological phases,”</span> <em>Geometry &amp; Topology</em> 25, 1165–1330, 2021. <a href="https://doi.org/10.2140/gt.2021.25.1165">https://doi.org/10.2140/gt.2021.25.1165</a>
+</div>
+<div id="ref-freed-sre" class="csl-entry" role="listitem">
+[24] Freed, D. S., <span>“Short-range entanglement and invertible field theories,”</span> 2014. <a href="https://arxiv.org/abs/1406.7278">https://arxiv.org/abs/1406.7278</a>
+</div>
+<div id="ref-kapustin-sopenko-hall" class="csl-entry" role="listitem">
+[25] Kapustin, A. and N. Sopenko, <span>“Hall conductance and the statistics of flux insertions in gapped interacting lattice systems,”</span> <em>Journal of Mathematical Physics</em> 61 (10), 101901, 2020. <a href="https://doi.org/10.1063/5.0022944">https://doi.org/10.1063/5.0022944</a>
+</div>
+<div id="ref-kapustin-sopenko-noether" class="csl-entry" role="listitem">
+[26] Kapustin, A. and N. Sopenko, <span>“Local noether theorem for quantum lattice systems and topological invariants of gapped states,”</span> <em>Journal of Mathematical Physics</em> 63 (9), 091903, 2022. <a href="https://doi.org/10.1063/5.0085964">https://doi.org/10.1063/5.0085964</a>
+</div>
+<div id="ref-thouless-pump" class="csl-entry" role="listitem">
+[27] Thouless, D. J., <span>“Quantization of particle transport,”</span> <em>Physical Review B</em> 27 (10), 6083–6087, 1983. <a href="https://doi.org/10.1103/PhysRevB.27.6083">https://doi.org/10.1103/PhysRevB.27.6083</a>
+</div>
+<div id="ref-aasen-wang-hastings" class="csl-entry" role="listitem">
+[28] Aasen, D., Z. Wang, and M. B. Hastings, <span>“Adiabatic paths of hamiltonians, symmetries of topological order, and automorphism codes,”</span> <em>Physical Review B</em> 106, 085122, 2022. <a href="https://doi.org/10.1103/PhysRevB.106.085122">https://doi.org/10.1103/PhysRevB.106.085122</a>
+</div>
+<div id="ref-cglw-cohomology" class="csl-entry" role="listitem">
+[29] Chen, X., Z.-C. Gu, Z.-X. Liu, and X.-G. Wen, <span>“Symmetry protected topological orders and the group cohomology of their symmetry group,”</span> <em>Physical Review B</em> 87, 155114, 2013. <a href="https://doi.org/10.1103/PhysRevB.87.155114">https://doi.org/10.1103/PhysRevB.87.155114</a>
+</div>
+<div id="ref-else-nayak" class="csl-entry" role="listitem">
+[30] Else, D. V. and C. Nayak, <span>“Classifying symmetry-protected topological phases through the anomalous action of the symmetry on the edge,”</span> <em>Physical Review B</em> 90, 235137, 2014. <a href="https://doi.org/10.1103/PhysRevB.90.235137">https://doi.org/10.1103/PhysRevB.90.235137</a>
+</div>
+<div id="ref-ogata-spt-chains" class="csl-entry" role="listitem">
+[31] Ogata, Y., <span>“Classification of symmetry protected topological phases in quantum spin chains,”</span> 2021. <a href="https://arxiv.org/abs/2110.04671">https://arxiv.org/abs/2110.04671</a>
+</div>
+<div id="ref-ogata-h3-index" class="csl-entry" role="listitem">
+[32] Ogata, Y., <span>“A <span><span class="math inline">\(H^3(G,\mathbb{T})\)</span></span>-valued index of symmetry protected topological phases with on-site finite group symmetry for two-dimensional quantum spin systems,”</span> <em>Forum of Mathematics, Pi</em> 9, e13, 2021. <a href="https://doi.org/10.1017/fmp.2021.17">https://doi.org/10.1017/fmp.2021.17</a>
+</div>
+<div id="ref-altland-zirnbauer" class="csl-entry" role="listitem">
+[33] Altland, A. and M. R. Zirnbauer, <span>“Nonstandard symmetry classes in mesoscopic normal-superconducting hybrid structures,”</span> <em>Physical Review B</em> 55 (2), 1142–1161, 1997. <a href="https://doi.org/10.1103/PhysRevB.55.1142">https://doi.org/10.1103/PhysRevB.55.1142</a>
+</div>
+<div id="ref-teo-kane" class="csl-entry" role="listitem">
+[34] Teo, J. C. Y. and C. L. Kane, <span>“Topological defects and gapless modes in insulators and superconductors,”</span> <em>Physical Review B</em> 82 (11), 115120, 2010. <a href="https://doi.org/10.1103/PhysRevB.82.115120">https://doi.org/10.1103/PhysRevB.82.115120</a>
+</div>
+<div id="ref-thiang-ktheory" class="csl-entry" role="listitem">
+[35] Thiang, G. C., <span>“On the <span>K</span>-theoretic classification of topological phases of matter,”</span> <em>Annales Henri Poincaré</em> 17, 757–794, 2016. <a href="https://doi.org/10.1007/s00023-015-0418-9">https://doi.org/10.1007/s00023-015-0418-9</a>
+</div>
+<div id="ref-ssh-1979" class="csl-entry" role="listitem">
+[36] Su, W. P., J. R. Schrieffer, and A. J. Heeger, <span>“Solitons in polyacetylene,”</span> <em>Physical Review Letters</em> 42 (25), 1698–1701, 1979. <a href="https://doi.org/10.1103/PhysRevLett.42.1698">https://doi.org/10.1103/PhysRevLett.42.1698</a>
+</div>
+<div id="ref-kellendonk-tilings" class="csl-entry" role="listitem">
+[37] Kellendonk, J., <span>“Non commutative geometry of tilings and gap labelling,”</span> <em>Reviews in Mathematical Physics</em> 7 (7), 1133–1180, 1995. <a href="https://doi.org/10.1142/S0129055X95000426">https://doi.org/10.1142/S0129055X95000426</a>
+</div>
+<div id="ref-hsin-wang-moduli" class="csl-entry" role="listitem">
+[38] Hsin, P.-S. and Z. Wang, <span>“On topology of the moduli space of gapped hamiltonians for topological phases,”</span> <em>Journal of Mathematical Physics</em> 64 (4), 041901, 2023. <a href="https://doi.org/10.1063/5.0136906">https://doi.org/10.1063/5.0136906</a>
+</div>
+<div id="ref-denittis-states" class="csl-entry" role="listitem">
+[39] De Nittis, G., <span>“Topological phases of non-interacting systems: A general approach based on states,”</span> <em>Letters in Mathematical Physics</em> 115, 2025. <a href="https://doi.org/10.1007/s11005-025-01994-1">https://doi.org/10.1007/s11005-025-01994-1</a>
+</div>
+<div id="ref-denittis-rendel-weyl" class="csl-entry" role="listitem">
+[40] De Nittis, G. and S. G. Rendel, <span>“A scheme for topological phases of the <span>W</span>eyl <span><span class="math inline">\(C^*\)</span></span>-algebra,”</span> 2026. <a href="https://arxiv.org/abs/2607.01183">https://arxiv.org/abs/2607.01183</a>
+</div>
+</div>
+
+</main>
+</div>
+<script>
+// Build sidebar TOC from h2/h3 in content
+(function(){
+  var nav=document.getElementById('toc-nav');
+  var headings=document.querySelectorAll('.main-content h2, .main-content h3');
+  if(!headings.length)return;
+  var items=[];
+  for(var i=0;i<headings.length;i++){
+    var h=headings[i];
+    if(!h.id){
+      h.id=h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+$/,'');
+    }
+    items.push({tag:h.tagName,id:h.id,text:h.textContent.trim()});
+  }
+  var ul=document.createElement('ul');
+  var currentLi=null;
+  var subUl=null;
+  for(var j=0;j<items.length;j++){
+    var item=items[j];
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+item.id;
+    a.textContent=item.text;
+    if(item.tag==='H2'){
+      if(subUl&&currentLi){currentLi.appendChild(subUl);subUl=null;}
+      li.appendChild(a);
+      ul.appendChild(li);
+      currentLi=li;
+    } else {
+      if(!subUl)subUl=document.createElement('ul');
+      li.appendChild(a);
+      subUl.appendChild(li);
+    }
+  }
+  if(subUl&&currentLi)currentLi.appendChild(subUl);
+  nav.appendChild(ul);
+
+  // Active tracking on scroll
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var links=nav.querySelectorAll('a');
+        for(var k=0;k<links.length;k++)links[k].classList.remove('active');
+        var link=nav.querySelector('a[href="#'+e.target.id+'"]');
+        if(link)link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  for(var m=0;m<headings.length;m++)observer.observe(headings[m]);
+})();
+</script>
+</body>
+</html>

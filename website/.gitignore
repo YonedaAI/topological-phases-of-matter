@@ -14,8 +14,14 @@
 /out/
 
 # vendored from ../docs/papers, ../papers/pdf, ../images by
-# scripts/copy-assets.mjs (npm prebuild/predev) — not the source of truth
-/content/
+# scripts/copy-assets.mjs (npm prebuild/predev) — not the source of truth,
+# EXCEPT content/papers/ and content/pipeline-stats.json, which ARE committed
+# on purpose: they're the fallback copy-assets.mjs / gen-pipeline-stats.mjs
+# read when the repo parent (../docs, ../reviews, etc.) isn't present on disk
+# (e.g. a Vercel build with website/ as an isolated project root).
+/content/*
+!/content/pipeline-stats.json
+!/content/papers/
 /public/pdf/
 /public/images/
 

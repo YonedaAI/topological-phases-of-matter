@@ -66,6 +66,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <nav aria-label="Primary">
             <a href="/">Papers</a>
+            <a href="/pipeline/">Pipeline</a>
             <a href="https://github.com/YonedaAI/topological-phases-of-matter" target="_blank" rel="noreferrer">
               GitHub
             </a>
