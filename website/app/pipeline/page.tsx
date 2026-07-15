@@ -241,7 +241,7 @@ export default function PipelinePage() {
   const codexModel = constants.models.find((m) => m.name.startsWith('GPT-5.5'));
   const tokensM = (constants.tokens.codexMeasured / 1e6).toFixed(2);
   const modelFamilies = Array.from(new Set(constants.models.map((m) => m.name.split(' ')[0]))).join(' · ');
-  const tokensStatusLabel = constants.tokens.estimateFlag ? 'Estimate only' : 'Measured';
+  const claudeTokensM = (constants.tokens.claudeMeasured.totalAllTypes / 1e6).toFixed(1);
   const exemptions = constants.postCapResolved;
   const postCapCount = exemptions.filter((e) => e.kind === 'post-cap').length;
   const environmentalCount = exemptions.filter((e) => e.kind === 'environmental').length;
@@ -301,9 +301,9 @@ export default function PipelinePage() {
             <div className="note">{constants.tokens.codexMeasuredRuns} logged codex runs</div>
           </div>
           <div className="stat-tile caveat">
-            <div className="value">{tokensStatusLabel}</div>
-            <div className="label">Claude-side tokens</div>
-            <div className="note">{constants.tokens.caveat}</div>
+            <div className="value">{`${claudeTokensM}M`}</div>
+            <div className="label">Measured Claude tokens</div>
+            <div className="note">{constants.tokens.claudeSide}</div>
           </div>
         </div>
 

@@ -57,6 +57,16 @@ export interface PipelineConstants {
     codexMeasuredRuns: number;
     codexNote: string;
     agyCalls: number;
+    claudeMeasured: {
+      totalAllTypes: number;
+      output: number;
+      cacheRead: number;
+      cacheWrite: number;
+      freshInput: number;
+      assistantMessages: number;
+      perModel: { model: string; msgs: number; output: number; allTypes: number }[];
+      note: string;
+    };
     claudeSide: string;
     estimateFlag: boolean;
     caveat: string;

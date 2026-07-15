@@ -40,13 +40,13 @@ const CONSTANTS = {
     {
       id: 'claude-fable-5',
       name: 'Claude Fable 5',
-      role: 'Orchestrator only — planning, hard gates, review relays, deploys. Largest single Claude-side consumer (5.5 MB transcript, hundreds of turns); authored no papers',
+      role: 'Orchestrator only — planning, hard gates, review relays, deploys. Largest output producer (469,534 output tokens across 484 messages); authored no papers',
       count: 1,
     },
     {
       id: 'claude-opus-4-8',
       name: 'Claude Opus 4.8',
-      role: 'ALL paper authorship: 5 research workers + synthesis; knowledge base, Lean formalizer, 6 technical reviewers, 6 meta-reviewers',
+      role: 'ALL paper authorship — 2,610/2,610 paper-writer assistant messages (transcript census): 5 research workers + synthesis; knowledge base, Lean formalizer, 6 technical reviewers, 6 meta-reviewers',
       count: 20,
     },
     {
@@ -75,7 +75,7 @@ const CONSTANTS = {
     },
   ],
   modelsFootnote:
-    "Claude model IDs verified post-run from the model field of all 66 subagent session transcripts — the papers were authored entirely on claude-opus-4-8; claude-fable-5 appears only in the orchestrator's transcript.",
+    "Claude model IDs and token counts measured post-run from the model and usage fields of every assistant message in the session transcripts (orchestrator + 66 subagents) — all 2,610 paper-writer assistant messages carry claude-opus-4-8; claude-fable-5 appears only in the orchestrator's transcript.",
   time: {
     start: '2026-07-14 14:16',
     setup: '14:40',
@@ -88,10 +88,26 @@ const CONSTANTS = {
     codexMeasuredRuns: 25,
     codexNote: "summed from per-run 'tokens used' lines; a few unlogged runs excluded",
     agyCalls: 14,
-    claudeSide: 'not metered in-session; est. tens of millions across 60 agents',
-    estimateFlag: true,
+    claudeMeasured: {
+      totalAllTypes: 996035228,
+      output: 801909,
+      cacheRead: 949584134,
+      cacheWrite: 45589688,
+      freshInput: 59497,
+      assistantMessages: 3531,
+      perModel: [
+        { model: 'claude-sonnet-5', msgs: 1784, output: 228608, allTypes: 385120055 },
+        { model: 'claude-opus-4-8', msgs: 1214, output: 103697, allTypes: 326999842 },
+        { model: 'claude-fable-5', msgs: 484, output: 469534, allTypes: 282208424 },
+        { model: 'claude-haiku-4-5-20251001', msgs: 42, output: 70, allTypes: 1706907 },
+      ],
+      note: "summed from the usage field of every assistant message in the session transcripts (orchestrator + 66 subagents), deduplicated by message id — covers all billing pools; 95% of the volume is prompt-cache reads",
+    },
+    claudeSide:
+      'measured: 996.0M tokens all types — 949.6M cache reads · 45.6M cache writes · 0.8M output — across 3,531 assistant messages',
+    estimateFlag: false,
     caveat:
-      'GPT-5.5 measured: 2,424,730 across 25 logged runs · Claude-side unmetered in-session (orchestrator likely the largest consumer) — see claude.ai usage for exact spend',
+      'GPT-5.5 measured: 2,424,730 tokens across 25 logged runs · Claude measured: 996.0M tokens all types across 3,531 assistant messages (95% prompt-cache reads; output tokens: 801,909)',
   },
   fixes: {
     gemini: '13 review rounds across 6 papers',
